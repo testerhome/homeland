@@ -23,6 +23,24 @@ module UsersHelper
     options[:class] ||= "#{user_type}-name"
     options["data-name"] = name
 
+    if options[:reply].present?
+      reply = options.delete(:reply)
+
+      if reply.real_user
+        Faker::Config.random = random_from_two_id(reply.real_user.id, reply.topic.id)
+        label = Faker::Name.name
+      end
+    end
+
+    if options[:topic].present?
+      topic = options.delete(:topic)
+
+      if topic.real_user
+        Faker::Config.random = random_from_two_id(topic.real_user.id, topic.id)
+        label = Faker::Name.name
+      end
+    end
+
     link_to(label, "/#{login}", options)
   end
   alias team_name_tag user_name_tag
@@ -34,6 +52,25 @@ module UsersHelper
     if name.blank?
       name = login
     end
+
+    if options[:reply].present?
+      reply = options.delete(:reply)
+
+      if reply.real_user
+        Faker::Config.random = random_from_two_id(reply.real_user.id, reply.topic.id)
+        name = Faker::Name.name
+      end
+    end
+
+    if options[:topic].present?
+      topic = options.delete(:topic)
+
+      if topic.real_user
+        Faker::Config.random = random_from_two_id(topic.real_user.id, topic.id)
+        name = Faker::Name.name
+      end
+    end
+
     content_tag(:span, name, class: "user-name")
   end
 
@@ -48,7 +85,7 @@ module UsersHelper
     end
   end
 
-  def user_avatar_tag(user, version = :md, link: true, timestamp: nil)
+  def user_avatar_tag(user, version = :md, link: true, timestamp: nil, reply: nil, topic: nil)
     width     = user_avatar_width_for_size(version)
     img_class = "media-object avatar-#{width}"
 
@@ -65,6 +102,20 @@ module UsersHelper
 
     html_options = {}
     html_options[:title] = user.fullname
+
+    if reply
+      if reply.real_user
+        Faker::Config.random = random_from_two_id(reply.real_user.id, reply.topic.id)
+        img = image_tag(Faker::Avatar.image, class: img_class)
+      end
+    end
+
+    if topic
+      if topic.real_user
+        Faker::Config.random = random_from_two_id(topic.real_user.id, topic.id)
+        img = image_tag(Faker::Avatar.image, class: img_class)
+      end
+    end
 
     if link
       link_to(raw(img), "/#{user.login}", html_options)
@@ -132,5 +183,10 @@ module UsersHelper
     return "" unless user.reward_enabled?
     opts[:class] ||= "btn btn-success"
     link_to icon_tag("qrcode", label: "打赏支持"), main_app.reward_user_path(user), remote: true, class: opts[:class]
+  end
+
+  private
+  def random_from_two_id(user_id, topic_id)
+    Random.new(user_id + topic_id)
   end
 end

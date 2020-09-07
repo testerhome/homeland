@@ -14,11 +14,11 @@
     <% elsif reply.system_event? %>
       <%= render '/replies/system_event', reply: reply %>
     <% elsif !reply.exposed_to_author_only? || (current_user && (reply.topic && reply.topic.user == current_user || reply.user == current_user)) %>
-      <div class="avatar"><%= user_avatar_tag(reply.user, :md) %></div>
+      <div class="avatar"><%= user_avatar_tag(reply.user, :md, reply: reply) %></div>
       <div class="infos">
         <div class="info">
           <span class="name">
-            <%= user_name_tag(reply.user) %>
+            <%= user_name_tag(reply.user, reply: reply) %>
           </span>
           <span class="sub-info">
             <span class='floor'>#<%= floor %></span> ·
@@ -60,11 +60,11 @@
       </div>
     <% else %>
       <div class="author-only-no-content">
-        <div class="avatar"><%= user_avatar_tag(reply.user, :md) %></div>
+        <div class="avatar"><%= user_avatar_tag(reply.user, :md, reply: reply) %></div>
         <div class="infos">
           <div class="info">
             <span class="name">
-              <%= user_name_tag(reply.user) %>
+              <%= user_name_tag(reply.user, reply: reply) %>
             </span> ·
             <span class='floor'>#<%= floor %></span> ·
             <a class="time" href="#reply-<%= reply.id %>"><%= timeago(reply.created_at) %></a>

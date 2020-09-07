@@ -57,7 +57,7 @@ window.TopicView = Backbone.View.extend({
 
   setReplyTo(id) {
     $('input[name="reply[reply_to_id]"]').val(id);
-    const replyEl = $(`.reply[data-id=${id}]`);
+    const replyEl = $(`#replies .reply[data-id=${id}]`);
     const targetAnchor = replyEl.attr('id');
     const replyToPanel = $(".editor-toolbar .reply-to");
     const userNameEl = replyEl.find("a.user-name:first-child");
