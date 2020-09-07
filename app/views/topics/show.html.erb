@@ -55,7 +55,7 @@
     <% else %>
       <!--先显示最佳回复-->
       <% if !@suggest_replies.blank? %>
-        <div id="replies" class="card" data-last-floor="<%= @replies.count(:all) %>">
+        <div id="best-replies" class="card" data-last-floor="<%= @replies.count(:all) %>">
           <div class="best-reply card-header hide-ios">
             <i class="fa fa-check check-green" aria-hidden="true"> </i> 最佳回复
           </div>

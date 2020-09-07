@@ -7,10 +7,10 @@
     <div class="info">
       对
       <% if show_body %>
-        <%= user_avatar_tag(user, :xs) %><%= user_name_tag(user) %>
+        <%= user_avatar_tag(user, :xs, reply: reply_to) %><%= user_name_tag(user, reply: reply_to) %>
       <% else %>
         <%= link_to reply_to_topic_reply_path(reply.topic, reply), remote: true do %>
-          <%= user_avatar_tag(user, :xs, link: false) %><%= user_name_plain_span(user) %>
+          <%= user_avatar_tag(user, :xs, link: false, reply: reply_to) %><%= user_name_plain_span(user, reply: reply_to) %>
           <span class='reply-floor'></span>
         <% end %>
       <% end %>
@@ -20,7 +20,7 @@
     <% if show_body %>
       <div class="markdown">
         <% if !reply.exposed_to_author_only? %>
-          <% if !reply_to.exposed_to_author_only? || current_user == @topic.user || current_user == user %>
+          <% if !reply_to.exposed_to_author_only? || current_user == reply.topic.user || current_user == user %>
             <%= markdown(reply_to.body) %>
           <% else %>
             <i class="fa fa-lock"></i>

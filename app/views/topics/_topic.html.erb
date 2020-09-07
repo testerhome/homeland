@@ -1,7 +1,7 @@
 <% cache([topic, topic.user_avatar_raw, suggest]) do %>
 <div class="topic media topic-<%= topic.id %>">
   <div class="avatar">
-    <%= user_avatar_tag(topic.user, :md) %>
+    <%= user_avatar_tag(topic.user, :md, topic: topic) %>
   </div>
   <div class="infos media-body">
     <div class="title media-heading">
@@ -16,13 +16,13 @@
       <%= topic_close_tag(topic) %>
     </div>
     <div class="info">
-      <%= user_name_tag(topic.user) %>
+      <%= user_name_tag(topic.user, topic: topic) %>
       <span class="hidden-mobile">
       •
       <% if topic.last_reply_user_login.blank? %>
         <%= raw t("common.created_at", time: timeago(topic.created_at))%>
       <% else %>
-        <%= t("common.last_by")%> <%= user_name_tag(topic.last_reply_user_login) %> <%= raw t("common.reply_at", time: timeago(topic.replied_at))%>
+        <%= t("common.last_by")%> <%= user_name_tag(topic.last_reply_user_login, reply: topic.last_reply) %> <%= raw t("common.reply_at", time: timeago(topic.replied_at))%>
       <% end %>
       </span>
     </div>
