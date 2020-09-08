@@ -52,6 +52,7 @@ class Setting < RailsSettings::Base
     editor_languages
     sorted_plugins
     github_stats_repos
+    certify_questions
   ]
 
   # = Basic
@@ -170,6 +171,7 @@ class Setting < RailsSettings::Base
   field :recaptcha_key, default: "6Lcalg8TAAAAAFhLrcbC4QmxNuseboteXxP3wLxI"
   field :recaptcha_secret, default: "6Lcalg8TAAAAAN-nZr547ORtmtpw78mTLWtVWFW2"
   field :google_analytics_key, default: ""
+  field :certify_questions, default: "", type: :string
 
   class << self
     def editable_keys
@@ -217,6 +219,10 @@ class Setting < RailsSettings::Base
 
     def sso_provider_enabled?
       self.sso[:enable_provider] == true
+    end
+
+    def certify_questions_list
+      self.certify_questions.split("\n")
     end
   end
 end

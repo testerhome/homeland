@@ -71,6 +71,7 @@
     captcha: 'Captcha'
     search_result: 'Search results'
     tip_off: 'Tip Off'
+    no_need_to_cerify: 'No need to cerify'
   reply:
     edit_reply: "Edit Reply"
     delete_reply_success: 'Delete successfully.'

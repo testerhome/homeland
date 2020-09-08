@@ -7,7 +7,7 @@ class Ability
 
   def initialize(u)
     @user = u
-    if @user.blank?
+    if @user.blank? || !@user.certified?
       roles_for_anonymous
     elsif @user.admin?
       can :manage, :all

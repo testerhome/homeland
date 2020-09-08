@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ColumnsController < ApplicationController
   before_action :authenticate_user!, only: %i[new edit create update destroy follow unfollow block unblock]
   load_and_authorize_resource only: %i[new edit create update destroy], find_by: :slug
