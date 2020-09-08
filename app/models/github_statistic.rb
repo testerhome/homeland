@@ -1,16 +1,17 @@
 # frozen_string_literal: true
+
 class GitHubStatistic < ApplicationRecord
   extend ActiveSupport::Concern
 
   validates :github_user, presence: true
 
-  scope :current_month_data, -> { where('data_of_month = ?', Date.today.beginning_of_month)}
-  scope :specific_month_data, -> (first_day_of_month) { where('data_of_month = ?', first_day_of_month)}
-  scope :available_months, -> { select('data_of_month').group('data_of_month').order(data_of_month: :desc).limit(5) }
+  scope :current_month_data, -> { where("data_of_month = ?", Date.today.beginning_of_month) }
+  scope :specific_month_data, -> (first_day_of_month) { where("data_of_month = ?", first_day_of_month) }
+  scope :available_months, -> { select("data_of_month").group("data_of_month").order(data_of_month: :desc).limit(5) }
 
-  scope :order_by_ttf_contribution, -> { where('ttf_contribution IS NOT NULL AND ttf_contribution > 0').order(ttf_contribution: :desc).limit(100) }
-  scope :order_by_monthly_contribution, -> { where('monthly_contribution IS NOT NULL AND monthly_contribution > 0').order(monthly_contribution: :desc).limit(100) }
-  scope :order_by_discovery_contribution, -> { where('discovery_contribution IS NOT NULL AND discovery_contribution > 0').order(discovery_contribution: :desc).limit(100) }
+  scope :order_by_ttf_contribution, -> { where("ttf_contribution IS NOT NULL AND ttf_contribution > 0").order(ttf_contribution: :desc).limit(100) }
+  scope :order_by_monthly_contribution, -> { where("monthly_contribution IS NOT NULL AND monthly_contribution > 0").order(monthly_contribution: :desc).limit(100) }
+  scope :order_by_discovery_contribution, -> { where("discovery_contribution IS NOT NULL AND discovery_contribution > 0").order(discovery_contribution: :desc).limit(100) }
 
   def self.until_date
     Date.today
@@ -48,7 +49,6 @@ class GitHubStatistic < ApplicationRecord
     end
 
     Sidekiq.logger.info("Finish running fetch_github_repo_statistics")
-
   end
 
 
@@ -58,16 +58,16 @@ class GitHubStatistic < ApplicationRecord
     users = User.with_github
 
     users.map.with_index do |user, user_index|
-      Sidekiq.logger.info("Fetch github user statistics progress: #{user_index+1}:#{users.size}")
+      Sidekiq.logger.info("Fetch github user statistics progress: #{user_index + 1}:#{users.size}")
 
       followers = get_url_data(github_user_api_url(user.github))["followers"]
 
       current_month_events = get_current_month_events(user.github)
 
       # 挖潜榜贡献指数
-      if !followers.nil? and !current_month_events.nil?  # 确认接口均可以正常返回数据，才更新潜力榜指数
+      if !followers.nil? && !current_month_events.nil?  # 确认接口均可以正常返回数据，才更新潜力榜指数
         statistic_record = GitHubStatistic.find_or_create_by_github_and_data_of_month(
-            user.github, until_date.at_beginning_of_month)
+          user.github, until_date.at_beginning_of_month)
         statistic_record.discovery_contribution = followers + current_month_events * 0.2
         statistic_record.testerhome_user = user.login
         statistic_record.updated_at = Time.now.utc
@@ -165,7 +165,7 @@ class GitHubStatistic < ApplicationRecord
 
 
 
-    return json
+    json
   end
 
 
@@ -175,7 +175,7 @@ class GitHubStatistic < ApplicationRecord
     repos = []
 
     repo_urls.map.with_index do |repo_url, repo_url_index|
-      Sidekiq.logger.info("Fetch github statistics by repo url progress: #{repo_url_index+1}:#{repo_urls.size}")
+      Sidekiq.logger.info("Fetch github statistics by repo url progress: #{repo_url_index + 1}:#{repo_urls.size}")
 
       match_result = repo_url.match('https:\/\/github.com\/(?<repo_owner>[a-zA-Z].*)\/(?<repo_name>[a-zA-Z].*)\z')
 
@@ -192,7 +192,7 @@ class GitHubStatistic < ApplicationRecord
 
       github_contributors.collect do |github_contributor|
         # author 有可能为 null ，需要略过
-        if github_contributor == nil or github_contributor["author"] == nil
+        if (github_contributor == nil) || (github_contributor["author"] == nil)
           next
         end
         # 做个适配，后续即使 github api 数据结构有变化，通过这个地方适配即可
@@ -214,10 +214,10 @@ class GitHubStatistic < ApplicationRecord
         # 给 contributors 加上当月提交数统计数据。获取最多25页的数据（实际 github 支持更多页数，但基本上25页够用了）
         (1..25).collect do |page|
           url = github_repo_commits_api_url(
-              repo_owner,
+            repo_owner,
               repo_name,
-              until_date.beginning_of_month.strftime('%Y-%m-%dT%H:%M:%SZ'),
-              until_date.strftime('%Y-%m-%dT%H:%M:%SZ'),
+              until_date.beginning_of_month.strftime("%Y-%m-%dT%H:%M:%SZ"),
+              until_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
               contributor["github_login"],
               page: page
           )
@@ -250,10 +250,10 @@ class GitHubStatistic < ApplicationRecord
     sum_contributors = []
 
     repos.map.with_index do |repo, repo_index|
-      Sidekiq.logger.info("Sum contributors by repos progress: #{repo_index+1}:#{repos.size}")
+      Sidekiq.logger.info("Sum contributors by repos progress: #{repo_index + 1}:#{repos.size}")
       repo["contributors"].collect do |repo_contributor|
         # 寻找是否已有同名的贡献者
-        exist_sum_contributors = sum_contributors.select {|x| x["github_login"] == repo_contributor["github_login"] }
+        exist_sum_contributors = sum_contributors.select { |x| x["github_login"] == repo_contributor["github_login"] }
         if exist_sum_contributors.size > 0
           # 已存在，需要累加统计数据
           exist_sum_contributors[0]["total"] += repo_contributor["total"]
@@ -347,6 +347,4 @@ class GitHubStatistic < ApplicationRecord
 
     current_month_events
   end
-
-
 end

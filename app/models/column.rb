@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Column < ApplicationRecord
   include SoftDelete, MarkdownBody, Searchable
 

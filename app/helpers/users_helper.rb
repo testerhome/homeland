@@ -186,7 +186,7 @@ module UsersHelper
   end
 
   private
-  def random_from_two_id(user_id, topic_id)
-    Random.new(user_id + topic_id)
-  end
+    def random_from_two_id(user_id, topic_id)
+      Random.new(user_id + topic_id)
+    end
 end

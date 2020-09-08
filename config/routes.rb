@@ -101,6 +101,8 @@ Rails.application.routes.draw do
 
   get "/search", to: "search#index", as: "search"
   get "/search/users", to: "search#users", as: "search_users"
+  get "certify", to: "certify#index"
+  post "certify/answer", to: "certify#answer", as: :certify_answer
 
   namespace :admin do
     root to: "dashboards#index", as: "root"

@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-header">认证表单</div>
+  <div class="card-body">
+    <%= form_with url: certify_answer_path, method: "post" do %>
+      <% @certify_question_choice_list.each do |question, answers| %>
+        <div class="form-group">
+          <%= content_tag :h1, question %>
+          <div class="checkbox">
+            <% answers.each do |answer| %>
+              <div>
+                <%= label_tag answer %>
+                <%= check_box_tag "#{question}[]", answer, false, id: answer %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <button type="submit" class="btn btn-default">提交</button>
+    <% end %>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">扫码关注社区公众号，才能轻松答题</div>
+  <div class="panel-body">
+    <div class="center-block">
+      <img src="https://testerhome.com/weixin.jpg" class="img-responsive" alt="Responsive image">
+    </div>
+  </div>
+</div>

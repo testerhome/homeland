@@ -76,6 +76,15 @@ class User < ApplicationRecord
     12
   end
 
+  def certified?
+    self.certified_at.present?
+  end
+
+  def certified
+    self.certified_at = Time.now
+    save(validate: false)
+  end
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     login = conditions.delete(:login).downcase
