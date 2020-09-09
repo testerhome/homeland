@@ -311,7 +311,7 @@ body {
 .btn-default {
   border-color: var(--btn-default-border-color);
   background: var(--btn-default-background-color);
-  color: var(--btn-default-text-color) !important;
+  color: var(--btn-default-text-color);
 
   &:hover {
     border-color: var(--btn-default-hover-border-color);

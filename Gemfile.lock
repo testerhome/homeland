@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/testerhome/homeland-opensource_project.git
-  revision: 0d059eebf9eac3f9f49ff64609d604ea82abb4fe
+  revision: e6126be445965b1d393ef013436e15c512dcb533
   branch: upgrade
   specs:
     homeland-opensource_project (0.1.0)
