@@ -97,6 +97,7 @@ Rails.application.routes.draw do
 
   resources :photos
   resources :likes
+  resources :opencourses
   resources :tip_offs
 
   get "/search", to: "search#index", as: "search"

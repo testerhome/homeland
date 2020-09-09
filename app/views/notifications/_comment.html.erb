@@ -1,6 +1,6 @@
 <%
-  comment = notification.target
-  second_target = notification.second_target
+comment = notification.target
+second_target = notification.second_target
 %>
 <% if second_target.blank? %>
   <div class="media-body">相关信息已删除</div>
@@ -8,22 +8,31 @@
   <%
   case notification.second_target_type
   when "Post" %>
-  <% if respond_to?(:homeland_press) %>
-    <div class="media-heading">
-      在你发布的 <a href="<%= homeland_press.post_path(second_target) %>"><%= second_target.title %></a> 评论了：
-    </div>
-    <div class="media-content summary markdown">
-      <%= comment.body_html %>
-    </div>
-  <% end %>
+    <% if respond_to?(:homeland_press) %>
+      <div class="media-heading">
+        在你发布的 <a href="<%= homeland_press.post_path(second_target) %>"><%= second_target.title %></a> 评论了：
+      </div>
+      <div class="media-content summary markdown">
+        <%= comment.body_html %>
+      </div>
+    <% end %>
+  <% when "OpensourceProject" %>
+    <% if Setting.has_module? :opensource_project %>
+      <div class="media-heading">
+        在你发布的 <a href="<%= homeland_opensource_project.opensource_project_path(second_target) %>"><%= second_target.title %></a> 评论了：
+      </div>
+      <div class="media-content summary markdown">
+        <%= comment.body_html %>
+      </div>
+    <% end %>
   <% when "Page" %>
-  <% if respond_to?(:homeland_wiki) %>
-    <div class="media-heading">
-      在你发布的 <a href="<%= homeland_wiki.page_path(second_target) %>"><%= second_target.title %></a> 评论了：
-    </div>
-    <div class="media-content summary markdown">
-      <%= comment.body_html %>
-    </div>
+    <% if respond_to?(:homeland_wiki) %>
+      <div class="media-heading">
+        在你发布的 <a href="<%= homeland_wiki.page_path(second_target) %>"><%= second_target.title %></a> 评论了：
+      </div>
+      <div class="media-content summary markdown">
+        <%= comment.body_html %>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
 <% end %>

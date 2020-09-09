@@ -192,6 +192,35 @@ ActiveRecord::Schema.define(version: 2020_09_08_144817) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  create_table "opensource_projects", id: :serial, force: :cascade do |t|
+    t.string "title", null: false
+    t.string "avatar"
+    t.string "license"
+    t.string "dev_language"
+    t.string "operator_os"
+    t.string "doc_url"
+    t.string "proj_url"
+    t.string "slug", null: false
+    t.text "body", null: false
+    t.string "summary", limit: 5000
+    t.string "banner"
+    t.integer "user_id"
+    t.integer "likes_count", default: 0, null: false
+    t.integer "comments_count", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "published_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.datetime "suggested_at"
+    t.index ["deleted_at"], name: "index_opensource_projects_on_deleted_at"
+    t.index ["published_at"], name: "index_opensource_projects_on_published_at"
+    t.index ["slug"], name: "index_opensource_projects_on_slug"
+    t.index ["status"], name: "index_opensource_projects_on_status"
+    t.index ["suggested_at"], name: "index_opensource_projects_on_suggested_at"
+    t.index ["user_id"], name: "index_opensource_projects_on_user_id"
+  end
+
   create_table "page_versions", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "page_id", null: false

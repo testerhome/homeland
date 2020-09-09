@@ -1,0 +1,8 @@
+<% if Setting.has_module?(:opensource_project) %>
+<div class="home_suggest_topics card">
+<div class="card-header">最新收录开源测试项目</div>
+<div class="card-body">
+    <%= render partial: "shared/opensource_project", collection: @opensource_projects %>
+</div>
+</div>
+<% end %>

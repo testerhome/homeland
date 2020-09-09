@@ -3,6 +3,10 @@
 class HomeController < ApplicationController
   def index
     @excellent_topics = Topic.excellent.without_draft.recent.fields_for_list.limit(20).to_a
+
+    if Setting.has_module?(:opensource_project)
+      @opensource_projects = OpensourceProject.includes(:user).published.latest.limit(5).to_a
+    end
   end
 
   def uploads
