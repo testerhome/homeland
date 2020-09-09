@@ -20,6 +20,31 @@ class Node < ApplicationRecord
   after_save :update_cache_version
   after_destroy :update_cache_version
 
+  # 内建 [NoPoint] 节点
+  def self.no_point
+    @no_point ||= self.find_builtin_node(55, "NoPoint")
+  end
+
+  def self.ban_id
+    55
+  end
+
+  def self.bugs_id
+    47
+  end
+
+  def self.opencourse_id
+    67
+  end
+
+  def self.questions_id
+    20
+  end
+
+  def self.job_id
+    19
+  end
+
   def self.find_builtin_node(id, name)
     node = self.find_by_id(id)
     return node if node

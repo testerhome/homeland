@@ -6,6 +6,14 @@ GIT
     faker (2.13.0)
       i18n (>= 1.6, < 2)
 
+GIT
+  remote: https://github.com/testerhome/homeland-opensource_project.git
+  revision: 0d059eebf9eac3f9f49ff64609d604ea82abb4fe
+  branch: upgrade
+  specs:
+    homeland-opensource_project (0.1.0)
+      rails (~> 6, >= 5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -469,6 +477,7 @@ DEPENDENCIES
   factory_bot_rails
   faker!
   form-select
+  homeland-opensource_project!
   html-pipeline
   html-pipeline-auto-correct
   http_accept_language

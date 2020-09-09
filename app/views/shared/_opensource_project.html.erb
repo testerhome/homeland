@@ -1,0 +1,8 @@
+<div class="sidebar_topic topic-<%= opensource_project.id %>">
+  <div class="title">
+        <img class="avatar-small" src="<%= opensource_project.avatar.url %>">
+        <%= link_to(Homeland::OpensourceProject::Engine.routes.url_helpers.opensource_project_path(opensource_project), title: opensource_project.title) do %>
+        <%= opensource_project.title %>
+    <% end %>
+  </div>
+</div>

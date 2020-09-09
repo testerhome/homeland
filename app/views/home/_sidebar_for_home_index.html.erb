@@ -1,0 +1,43 @@
+<%= raw Setting.index_sidebar_top_html %>
+
+<% if !@hot_topics.blank? %>
+    <div class="home_suggest_topics card">
+      <div class="card-header">七日最热 Top10</div>
+      <div class="card-body">
+          <%= render partial: "home/sidebar_topic", collection: @hot_topics, locals: {suggest: false, show_nu: true, show_avatar: false} %>
+      </div>
+    </div>
+<% end %>
+
+<% if !@open_bugs.blank? %>
+    <div class="home_suggest_topics card">
+      <div class="card-header">最新 bug <i class="fa fa-bug" aria-hidden="true"></i></div>
+      <div class="card-body">
+        <%= render partial: "home/sidebar_topic", collection: @open_bugs, locals: {suggest: false, show_nu: true, show_avatar: false} %>
+      </div>
+    </div>
+<% end %>
+
+<%= render "shared/opensource_projects" %>
+
+<% if !@users.blank? %>
+<div id="hall-of-fames" class="card">
+  <div class="card-header">最新加入 <i class='fa fa-fire'></i>（新同学）</div>
+  <div class="card-body">
+    <%= render "home/user_list" %>
+  </div>
+</div>
+<% end %>
+
+<%= raw Setting.index_sidebar_bottom_html %>
+
+<% cache(["sidebar_statistics",Time.now.strftime("%Y-%m-%d %H")]) do %>
+    <div class="card">
+      <div class="card-header"><%= t("common.statics")%></div>
+      <ul class="list-group">
+        <li class="list-group-item">社区会员: <%= User.unscoped.count %> 人</li>
+        <li class="list-group-item">帖子数: <%= Topic.unscoped.count %> 个</li>
+        <li class="list-group-item">回帖数: <%= Reply.unscoped.count %> 条</li>
+      </ul>
+    </div>
+<% end %>

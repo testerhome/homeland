@@ -53,6 +53,8 @@ class Setting < RailsSettings::Base
     sorted_plugins
     github_stats_repos
     certify_questions
+    index_sidebar_top_html
+    index_sidebar_bottom_html
   ]
 
   # = Basic
@@ -139,6 +141,8 @@ class Setting < RailsSettings::Base
   field :custom_head_html, default: ""
   field :navbar_html, default: ""
   field :footer_html, default: ""
+  field :index_sidebar_top_html, default: ""
+  field :index_sidebar_bottom_html, default: ""
   field :index_html, default: ""
   field :wiki_index_html, default: ""
   field :wiki_sidebar_html, default: ""
