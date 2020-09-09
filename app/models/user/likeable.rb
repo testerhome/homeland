@@ -8,8 +8,12 @@ class User
     included do
       # Action for Topic
       action_store :like, :topic, counter_cache: true
+      # Action for Article
+      action_store :like, :article, counter_cache: true
       # Action for Reply
       action_store :like, :reply, counter_cache: true
+      # Action for OpensourceProject
+      action_store :like, :opensource_project, counter_cache: true
     end
 
     # 赞
