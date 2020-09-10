@@ -17,7 +17,15 @@
 <head>
   <meta charset='utf-8' />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="keywords" content="移动测试,游戏测试,性能测试,软件测试,软件测试社区,软件测试资料,软件测试工具,软件测试报告,软件测试方法,自动化测试,软件测试招聘,">
+  <meta name="description" content="TesterHome软件测试社区，人气最旺的软件测试技术门户，提供软件测试社区交流，测试沙龙。">
   <title><%= content_for?(:title) ? yield(:title) : Setting.app_name %></title>
+
+  <link rel="icon" href="<%= asset_pack_path('media/images/favicon.png') %>"/>
+  <link rel="apple-touch-icon-precomposed" href="<%= asset_pack_path("media/images/ios-icon.png") %>"/>
+  <link rel="shortcut icon" href="<%= asset_pack_path("media/images/big_logo.png") %>"/>
+  <link rel="apple-touch-icon" href="<%= asset_pack_path('media/images/favicon.png') %>">
+
   <meta name="apple-mobile-web-app-capable" content="no">
   <meta content='True' name='HandheldFriendly' />
   <link rel="alternate" type="application/rss+xml" title="订阅最新帖" href="<%= main_app.feed_topics_url %>" />
