@@ -40,6 +40,21 @@ module Homeland
         valid_video_url = true
       end
 
+      # myslide
+      if node["src"].match?(%r{\A(?:http[s]{0,1}?:)?//myslide\.cn/})
+        valid_video_url = true
+      end
+
+      # jinshuju
+      if node["src"].match?(%r{\A(?:http[s]{0,1}?:)?//([A-Za-z0-9_\-]*\.)?jinshuju\.(net|com)/})
+        valid_video_url = true
+      end
+
+      # baomitu
+      if node["src"].match?(%r{\A(?:http[s]{0,1}?:)?//ppt\.baomitu\.com/})
+        valid_video_url = true
+      end
+
       return unless valid_video_url
 
       # We're now certain that this is a YouTube embed, but we still need to run
@@ -59,7 +74,7 @@ module Homeland
     DEFAULT = ::Sanitize::Config.freeze_config(
       elements: %w[
         p br img h1 h2 h3 h4 h5 h6 blockquote pre code b i del
-        strong em table tr td tbody th strike del u a ul ol li span hr
+        strong em table tr td tbody th strike del u a ul ol li span hr sub sup
       ],
       attributes: ::Sanitize::Config.merge({},
                                            # 这里要确保是 :all, 而不是 'all'
