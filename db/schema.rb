@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_08_144817) do
+ActiveRecord::Schema.define(version: 2020_09_11_144935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -359,6 +359,7 @@ ActiveRecord::Schema.define(version: 2020_09_08_144817) do
     t.integer "column_id"
     t.integer "modified_admin_id"
     t.boolean "cannot_be_shared", default: false
+    t.integer "suggested_node"
     t.index ["deleted_at"], name: "index_topics_on_deleted_at"
     t.index ["grade"], name: "index_topics_on_grade"
     t.index ["last_active_mark"], name: "index_topics_on_last_active_mark"

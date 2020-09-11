@@ -1,0 +1,10 @@
+<% cache(["hot-nodes",Time.now.strftime("%Y-%m-%d")]) do %>
+    <div class="index-locations card">
+      <div class="card-header"><%=t("common.hot_nodes")%> <i class="fas fa-dot-circle"></i></div>
+      <div class="card-body location-list" style="text-align:center;">
+        <% Node.hots.limit(35).each do |node| %>
+            <span class="name"><%= link_to(node.name, main_app.node_topics_path(node), title: node.name, data: { id: node.id })%></span>
+        <% end %>
+      </div>
+    </div>
+<% end %>

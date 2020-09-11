@@ -64,6 +64,7 @@
     at: "在"
     hot_topics: "熱門討論"
     hot_locations: "熱門城市"
+    hot_nodes: "熱門节点"
     replies_count: "回覆"
     likes_count: 贊
     has_deleted: 已刪除
@@ -82,6 +83,7 @@
     topics: "社區"
     wiki: "Wiki"
     gems: "Gems"
+    bugs: "Bug 曝光台"
     users: "會員"
     admin: "後臺"
     nodes: "節點"

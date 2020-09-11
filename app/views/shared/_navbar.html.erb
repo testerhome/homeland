@@ -1,7 +1,7 @@
 <ul id="main-nav-menu" class="navbar-nav d-flex">
   <%= render_list_items do |li|
     li << link_to(t("menu.topics"), Setting.has_module?(:home) ? main_app.topics_path : main_app.root_path, class: "nav-link")
-
+    li << link_to(t("menu.bugs"), main_app.bugs_path, class: "nav-link") if Setting.has_module?(:bug)
     Homeland.navbar_plugins.each do |plugin|
       li << link_to(plugin.display_name, plugin.root_path, class: "nav-link")
     end

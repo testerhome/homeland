@@ -66,6 +66,7 @@
     at: "on"
     hot_topics: "Hot topics"
     hot_locations: "Hot cities"
+    hot_nodes: "Hot nodes"
     has_deleted: "has deleted"
     auth_with_other_services: "Sign in with other services"
     captcha: 'Captcha'
@@ -83,6 +84,7 @@
     topics: "Discussion"
     wiki: "Wiki"
     gems: "Gems"
+    bugs: "Bug Tracker"
     users: "Users"
     admin: "Control Panel"
     nodes: "Nodes"
