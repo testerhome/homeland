@@ -1,0 +1,65 @@
+<% if !@suggest_topics.blank? %>
+  <div class="home_suggest_topics card">
+    <div class="card-header">社区置顶</div>
+    <div class="card-body topics row">
+      <% cache(["home_suggest_topics", @suggest_topics]) do %>
+        <%
+        odd_topics, even_topics = @suggest_topics.partition.each_with_index { |t, i| i.odd?  }
+        %>
+        <div class="col-md-6 topics-group">
+          <%= render partial: "topics/topic", collection: even_topics, locals: { suggest: false } %>
+        </div>
+
+        <div class="col-md-6 topics-group">
+          <%= render partial: "topics/topic", collection: odd_topics, locals: { suggest: false } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if !@latest_topics.blank? %>
+  <div class="home_suggest_topics card">
+    <div class="card-header">最新帖子</div>
+    <div class="card-body topics row">
+      <% cache(["home_suggest_topics", @latest_topics]) do %>
+        <%
+        odd_topics, even_topics = @latest_topics.partition.each_with_index { |t, i| i.odd?  }
+        %>
+        <div class="col-md-6 topics-group">
+          <%= render partial: "topics/topic", collection: even_topics, locals: { suggest: false } %>
+        </div>
+
+        <div class="col-md-6 topics-group">
+          <%= render partial: "topics/topic", collection: odd_topics, locals: { suggest: false } %>
+        </div>
+      <% end %>
+    </div>
+    <div class="card-footer hidden-mobile">
+      <%= link_to "查看更多...", last_topics_path %>
+    </div>
+  </div>
+<% end %>
+
+<% if !@excellent_topics.blank? %>
+  <div class="home_suggest_topics card">
+    <div class="card-header">精华帖子</div>
+    <div class="card-body topics row">
+      <% cache(["home_suggest_topics", @excellent_topics]) do %>
+        <%
+        odd_topics, even_topics = @excellent_topics.partition.each_with_index { |t, i| i.odd?  }
+        %>
+        <div class="col-md-6 topics-group">
+          <%= render partial: "topics/topic", collection: even_topics, locals: { suggest: false } %>
+        </div>
+
+        <div class="col-md-6 topics-group">
+          <%= render partial: "topics/topic", collection: odd_topics, locals: { suggest: false } %>
+        </div>
+      <% end %>
+    </div>
+    <div class="card-footer hidden-mobile">
+      <%= link_to "查看更多精华帖...", excellent_topics_path %>
+    </div>
+  </div>
+<% end %>

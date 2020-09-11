@@ -97,6 +97,7 @@ Rails.application.routes.draw do
 
   resources :photos
   resources :likes
+  resources :bugs
   resources :opencourses
   resources :tip_offs
 
@@ -151,6 +152,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v3 do
       get "hello", to: "root#hello"
+      get '/bug_search', to: 'bug_search#index', as: 'bug_search'
 
       resource :devices
       resource :likes

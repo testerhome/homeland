@@ -55,6 +55,8 @@ class Setting < RailsSettings::Base
     certify_questions
     index_sidebar_top_html
     index_sidebar_bottom_html
+    index_roll_card_html
+    index_footer_card_html
   ]
 
   # = Basic
@@ -143,6 +145,8 @@ class Setting < RailsSettings::Base
   field :footer_html, default: ""
   field :index_sidebar_top_html, default: ""
   field :index_sidebar_bottom_html, default: ""
+  field :index_roll_card_html, default: ""
+  field :index_footer_card_html, default: ""
   field :index_html, default: ""
   field :wiki_index_html, default: ""
   field :wiki_sidebar_html, default: ""

@@ -1,0 +1,12 @@
+<% cache :hall_of_fames, :expires_in => 1.hour do %>
+    <div class="users-label">
+      <% @users.each do |user| %>
+          <% cache user do %>
+              <a class="users-label-item" href="<%= user_path(user) %>" title="<%= user.name %>">
+                <img class="avatar-small inline-block" src="<%= user.avatar.url(:sm) %>">
+                <%= user.login %>
+              </a>
+          <% end %>
+      <% end %>
+    </div>
+<% end %>

@@ -1,6 +1,7 @@
 <% cache(["index-locations",Time.now.strftime("%Y-%m-%d")]) do %>
   <% if !Location.hot.blank? %>
     <div class="index-locations card">
+      <div class="card-header"><%=t("common.hot_locations")%> <i class="fas fa-map-marker-alt"></i></div>
       <div class="card-body location-list" style="text-align:center;">
         <% Location.hot.limit(12).each do |item| %>
           <span class="name"><%= location_name_tag(item) %></span>

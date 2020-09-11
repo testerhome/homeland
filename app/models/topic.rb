@@ -28,15 +28,20 @@ class Topic < ApplicationRecord
   # scopes
   scope :last_actived,       -> { order(last_active_mark: :desc) }
   scope :suggest,            -> { where("suggested_at IS NOT NULL").order(suggested_at: :desc) }
+  scope :no_suggest,         -> { where('suggested_at IS NULL and suggested_node is NULL') }
   scope :without_suggest,    -> { where(suggested_at: nil) }
   scope :suggest_all_parts,  -> { where("suggested_at IS NOT NULL").order(suggested_at: :desc) }
   scope :high_likes,         -> { order(likes_count: :desc).order(id: :desc) }
   scope :high_replies,       -> { order(replies_count: :desc).order(id: :desc) }
   scope :last_reply,         -> { where("last_reply_id IS NOT NULL").order(last_reply_id: :desc) }
+  scope :with_replies_or_likes,       -> { where('replies_count >= 1 or likes_count >= 1') }
   scope :no_reply,           -> { where(replies_count: 0) }
   scope :popular,            -> { where("likes_count > 5") }
   scope :without_ban,        -> { where.not(grade: :ban) }
   scope :without_hide_nodes, -> { exclude_column_ids("node_id", Topic.topic_index_hide_node_ids) }
+
+  scope :in_seven_days,         ->{ where('created_at >= ?', 1.week.ago) }
+  scope :open, -> { where('closed_at IS NULL').order(created_at: :desc) }
 
   scope :without_node_ids,   ->(ids) { exclude_column_ids("node_id", ids) }
   scope :without_users,      ->(ids) { exclude_column_ids("user_id", ids) }

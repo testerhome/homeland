@@ -1,0 +1,18 @@
+<div class="sidebar_topic topic-<%= sidebar_topic.id %>">
+  <div class="title">
+    <% if show_nu %>
+        <% if sidebar_topic_counter < 3 %>
+            <span class="badge badge-light top3"><%= sidebar_topic_counter + 1 %></span></a>
+        <% else %>
+            <span class="badge badge-light"><%= sidebar_topic_counter + 1 %></span></a>
+        <% end %>
+    <% end %>
+
+    <% if show_avatar %>
+        <img class="avatar-small" src="<%= sidebar_topic.user.avatar.url(:sm) %>">
+    <% end %>
+    <%= link_to(main_app.topic_path(sidebar_topic), title: sidebar_topic.title) do %>
+        <%= sidebar_topic.title %>
+    <% end %>
+  </div>
+</div>
