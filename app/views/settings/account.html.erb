@@ -22,9 +22,11 @@
         <div class="heading">绑定其他帐号用于登录</div>
 
         <% if !Setting.sso_enabled? %>
-          <% if Setting.has_module?(:github) %>
-            <ul class="list-group col-sm-6">
-              <% ["github"].each do |provider| %>
+          <ul class="list-group col-sm-6">
+            <% list = ["github", "wechat"] %>
+            <% list.push("developer") if Rails.env.development? %>
+
+            <% list.each do |provider| %>
               <li class="list-group-item">
                 <% if @user.bind?(provider) %>
                   <%= t("omniauth.#{provider}") %>
@@ -33,9 +35,8 @@
                   <%= link_to(t("omniauth.#{provider}"), omniauth_authorize_path(:user, provider), rel: "twitsy", title: "点击绑定" )%>
                 <% end %>
               </li>
-              <% end %>
-            </ul>
-          <% end %>
+            <% end %>
+          </ul>
         <% end %>
       </div>
     </div>
