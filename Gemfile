@@ -72,6 +72,7 @@ gem "form-select"
 # 三方平台 OAuth 验证登录
 gem "omniauth"
 gem "omniauth-github"
+gem "omniauth-wechat-oauth2"
 
 # Permission
 gem "cancancan"

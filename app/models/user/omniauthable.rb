@@ -47,22 +47,64 @@ class User
         end
       end
 
-      %w[github].each do |provider|
-        define_method "find_or_create_for_#{provider}" do |response|
+      %w[github wechat developer].each do |provider|
+        define_method "find_for_#{provider}" do |response|
           uid  = response["uid"].to_s
           data = response["info"]
 
-          user = Authorization.find_by(provider: provider, uid: uid).try(:user)
-          return user if user
+          Authorization.find_by(provider: provider, uid: uid).try(:user)
+        end
+      end
 
-          user = User.new_from_provider_data(provider, uid, data)
-          if user.save(validate: false)
-            Authorization.find_or_create_by(provider: provider, uid: uid, user_id: user.id)
-            return user
+      def save_by_provider(user, provider, response)
+        user.save
+        uid  = response["uid"].to_s
+        data = response["info"]
+        Authorization.find_or_create_by(provider: provider, uid: uid, user_id: user.id)
+
+        if %w[developer wechat].include?(provider)
+          user.update(remote_avatar_url: data["headimgurl"])
+        end
+      end
+
+      def new_for_github(response)
+        uid  = response["uid"].to_s
+        data = response["info"]
+        provider = response["provider"]
+
+        User.new do |user|
+          user.email =
+            if data["email"].present? && !User.where(email: data["email"]).exists?
+              data["email"]
+            else
+              "#{provider}+#{uid}@example.com"
+            end
+
+          user.name  = data["name"]
+          user.login = Homeland::Username.sanitize(data["nickname"])
+          user.github = data["nickname"]
+
+          if user.login.blank?
+            user.login = "u#{Time.now.to_i}"
           end
+        end
+      end
 
-          Rails.logger.warn("User.create_from_hash 失败，#{user.errors.inspect}")
-          return nil
+      def new_for_developer(response)
+        # new_for_github(response)
+        new_for_wechat(response)
+      end
+
+      def new_for_wechat(response)
+        uid  = response["uid"].to_s
+        data = response["info"]
+        provider = response["provider"]
+
+        User.new do |user|
+          user.email = "#{provider}+#{uid}@example.com"
+          user.login = "u#{Time.now.to_i}"
+          user.name = data["nickname"]
+          user.location = "#{data["city"]}"
         end
       end
     end

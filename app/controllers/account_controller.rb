@@ -5,7 +5,11 @@ class AccountController < Devise::RegistrationsController
   before_action :require_no_sso!, only: %i[new create]
 
   def new
-    super
+    if provider
+      @user = User.send("new_for_#{provider}", provider_data)
+    else
+      super
+    end
   end
 
   def edit
@@ -27,7 +31,7 @@ class AccountController < Devise::RegistrationsController
     build_resource(sign_up_params)
     resource.login = params[resource_name][:login]
     resource.email = params[resource_name][:email]
-    if verify_complex_captcha?(resource) && resource.save
+    if verify_complex_captcha?(resource) && User.save_by_provider(resource, provider, provider_data)
       Rails.cache.write(cache_key, sign_up_count + 1)
 
       sign_in(resource_name, resource)
@@ -41,5 +45,13 @@ class AccountController < Devise::RegistrationsController
     # Note: resource param can't miss, because it's the super caller way.
     def after_update_path_for(_)
       edit_user_registration_path
+    end
+
+    def provider
+      @provider ||= session["devise.provider"]
+    end
+
+    def provider_data
+      session["devise.#{provider}_data"]
     end
 end

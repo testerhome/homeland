@@ -12,18 +12,25 @@ module Auth
             return
           end
 
-          @user = User.send("find_or_create_for_#{provider}", request.env["omniauth.auth"])
-          if @user.persisted?
+          @user = User.send("find_for_#{provider}", auth)
+          if @user
             flash[:notice] = t("devise.sessions.signed_in")
             sign_in_and_redirect @user, event: :authentication
           else
+            session["devise.#{provider}_data"] = request.env["omniauth.auth"].except(:info)
+            session["devise.provider"] = provider
             redirect_to new_user_registration_url
           end
         end
       end
     end
 
-    provides_callback_for :github, :twitter, :douban, :google
+    provides_callback_for :github, :wechat, :developer
+
+    protected
+    def auth
+      request.env["omniauth.auth"]
+    end
 
     # This is solution for existing accout want bind Google login but current_user is always nil
     # https://github.com/intridea/omniauth/issues/185

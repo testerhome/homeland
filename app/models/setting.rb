@@ -115,6 +115,8 @@ class Setting < RailsSettings::Base
   # = API Keys
   field :github_token, default: ENV["github_token"], readonly: true
   field :github_secret, default: ENV["github_secret"], readonly: true
+  field :wechat_app_id, default: (ENV["wechat_app_id"]), readonly: true
+  field :wechat_app_secret, default: (ENV["wechat_app_secret"]), readonly: true
   field :github_stats_repos, default: "", type: :string
 
   # = Other Site Configs
