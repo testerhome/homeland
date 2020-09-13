@@ -38,6 +38,14 @@
         <li class="list-group-item">
           <%= link_to raw("<i class='fab fa-github'></i> GitHub"), omniauth_authorize_path(:user, :github), class: "btn btn-default btn-lg btn-block" %>
         </li>
+        <li class="list-group-item">
+          <%= link_to raw("<i class='fab fa-weixin'></i> Wechat"), omniauth_authorize_path(:user, :wechat), class: "btn btn-default btn-lg btn-block" %>
+        </li>
+        <% if Rails.env.development? %>
+        <li class="list-group-item">
+          <%= link_to raw("<i class='fas fa-code'></i> Developer"), omniauth_authorize_path(:user, :developer), class: "btn btn-default btn-lg btn-block" %>
+        </li>
+        <% end %>
       </ul>
     </div>
     <% end %>
