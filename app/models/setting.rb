@@ -28,6 +28,7 @@ class Setting < RailsSettings::Base
     ban_words_on_reply
     ban_words_in_body
     newbie_notices
+    new_tags
     tips
     apns_pem
     blacklist_ips
@@ -162,6 +163,7 @@ class Setting < RailsSettings::Base
   field :ban_words_on_reply, default: [], type: :array, separator: /[\n]+/
   field :ban_words_in_body, default: [], type: :array, separator: /[\n]+/
   field :newbie_notices, default: ""
+  field :new_tags, default: "", type: :string
   field :tips, default: [], type: :array, separator: /[\n]+/
   field :editor_languages, default: %w[rb go js py java rs php css html yml json xml], type: :array, separator: /[\s,]+/
 

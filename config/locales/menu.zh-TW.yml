@@ -1,4 +1,4 @@
-"zh-TW":
+ug"zh-TW":
   common:
     justnow: "剛剛"
     hour: "小時"
@@ -84,6 +84,8 @@
     wiki: "Wiki"
     gems: "Gems"
     bugs: "Bug 曝光台"
+    open_course: "公開課"
+    questions: "問答"
     users: "會員"
     admin: "後臺"
     nodes: "節點"

@@ -85,6 +85,8 @@
     wiki: "Wiki"
     gems: "Gems"
     bugs: "Bug Tracker"
+    open_course: "Open Course"
+    questions: "QA"
     users: "Users"
     admin: "Control Panel"
     nodes: "Nodes"

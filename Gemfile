@@ -112,8 +112,6 @@ gem "faker", git: "https://github.com/faker-ruby/faker.git", branch: "master"
 # Homeland Plugins
 gem "homeland-opensource_project", github: "testerhome/homeland-opensource_project"
 # gem "homeland-opensource_project", path: "../homeland-opensource_project"
-# gem 'homeland-jobs'
-# gem 'homeland-site'
 
 # API cors
 gem "rack-cors", require: "rack/cors"
