@@ -31,6 +31,10 @@
         }
       </script>
     <% end %>
+
+    <% if !mobile? %>
+      <%= render "/shared/index_sections" %>
+    <% end %>
   </div>
   <div class="sidebar col-md-3">
     <%= render "topics/sidebar_for_topic_index" %>

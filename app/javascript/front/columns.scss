@@ -120,6 +120,10 @@
   .sidebar-column {
     border: 1px solid #e5e5e5;
     padding: 10px 20px 10px 20px;
+
+    p {
+      margin: 0;
+    }
   }
 
   .sidebar-description {

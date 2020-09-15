@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-header">急聘 <i class="fa fa-bolt"></i></div>
+  <div class="card-body">
+
+    <% Topic.where(node_id: Node.job_id).recent.without_draft.limit(5).each_with_index do |topic, i| %>
+
+        <div class="topic media topic-<%= topic.id %>">
+          <div class="avatar mr-2">
+            <%= user_avatar_tag(topic.user, :sm) %>
+          </div>
+          <div class="infos media-body">
+            <div class="title media-heading">
+              <%= link_to(main_app.topic_path(topic), title: topic.title) do %>
+                  <%= topic.title %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+    <% end %>
+<!--    <hr>-->
+<!--    <div class="input-group">-->
+<!--      <input type="text" class="form-control disabled" readonly="readonly" placeholder="我要内推！">-->
+<!--      <span class="input-group-btn">-->
+<!--        <a href="https://jinshuju.net/f/V3TeyX" class="btn btn-default" type="button">Go!</a>-->
+<!--      </span>-->
+<!--    </div>-->
+  </div>
+</div>
