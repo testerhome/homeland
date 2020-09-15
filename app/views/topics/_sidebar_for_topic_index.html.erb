@@ -11,20 +11,44 @@
   <div class="card-body">
     <%= link_to t('topics.new_topic'), main_app.new_topic_path, class: 'btn btn-primary btn-block' %>
   </div>
+
+  <% if current_user && current_user.has_draft? %>
+    <div class="text-center alert alert-warning draft-box">
+      <%= link_to  main_app.drafts_user_path(current_user) do %>
+        <i class="fa fa-edit"></i> 草稿 <%=	 current_user.draft_size %> 篇
+      <% end %>
+    </div>
+  <% end %>
 </div>
 <% end %>
+
+<% if current_user && current_user.just_new_from_github? %>
+  <div class="card alert-warning">
+    <div class="card-header">Github 登录必读</div>
+    <div class="card-body">
+      <%= raw Setting.new_from_github_notices  %>
+    </div>
+  </div>
+<% end %>
+
+<%= raw Setting.topic_index_sidebar_important_ads_html %>
+
+<% cache(["hot-nodes",Time.now.strftime("%Y-%m-%d")]) do %>
+    <div class="index-locations card">
+      <div class="card-header"><%=t("common.hot_nodes")%> <i class="fas fa-dot-circle" aria-hidden="true"></i></div>
+      <div class="card-body location-list" style="text-align:center;">
+        <% Node.hots.limit(10).each do |node| %>
+          <span class="name"><%= link_to(node.name, main_app.node_topics_path(node), title: node.name, data: { id: node.id })%></span>
+        <% end %>
+      </div>
+    </div>
+<% end %>
+
+
+<%= render "topics/sidebar_columns" %>
+
+<%= render "topics/sidebar_jobs" %>
 
 <%= render "topics/sidebar_box_tips" %>
 
 <%= raw Setting.topic_index_sidebar_html %>
-
-<% cache(["sidebar_statistics",Time.now.strftime("%Y-%m-%d %H")]) do %>
-<div class="card">
-  <div class="card-header"><%= t("common.statics")%></div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">社区会员: <%= User.unscoped.count %> 人</li>
-    <li class="list-group-item">帖子数: <%= Topic.unscoped.count %> 个</li>
-    <li class="list-group-item">回帖数: <%= Reply.unscoped.count %> 条</li>
-  </ul>
-</div>
-<% end %>

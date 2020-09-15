@@ -16,6 +16,10 @@ class User
       authorizations.create(provider: provider, uid: uid)
     end
 
+    def just_new_from_github?
+      email.include? "@example.com"
+    end
+
     module ClassMethods
       def new_from_provider_data(provider, uid, data)
         User.new do |user|

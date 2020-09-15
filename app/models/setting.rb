@@ -20,6 +20,7 @@ class Setting < RailsSettings::Base
     wiki_sidebar_html
     site_index_html
     topic_index_sidebar_html
+    topic_index_sidebar_important_ads_html
     after_topic_html
     before_topic_html
     node_ids_hide_in_topics_index
@@ -27,6 +28,7 @@ class Setting < RailsSettings::Base
     newbie_limit_time
     ban_words_on_reply
     ban_words_in_body
+    new_from_github_notices
     newbie_notices
     new_tags
     tips
@@ -119,6 +121,7 @@ class Setting < RailsSettings::Base
   field :wechat_app_id, default: (ENV["wechat_app_id"]), readonly: true
   field :wechat_app_secret, default: (ENV["wechat_app_secret"]), readonly: true
   field :github_stats_repos, default: "", type: :string
+  field :new_from_github_notices, default: "", type: :string
 
   # = Other Site Configs
   field :admin_emails, type: :array, default: (ENV["admin_emails"] || "admin@admin.com"), separator: /[\s,]+/
@@ -147,6 +150,7 @@ class Setting < RailsSettings::Base
   field :navbar_html, default: ""
   field :footer_html, default: ""
   field :index_sidebar_top_html, default: ""
+  field :topic_index_sidebar_important_ads_html, default: ""
   field :index_sidebar_bottom_html, default: ""
   field :index_roll_card_html, default: ""
   field :index_footer_card_html, default: ""
