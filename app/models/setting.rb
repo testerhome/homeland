@@ -27,7 +27,7 @@ class Setting < RailsSettings::Base
     reject_newbie_reply_in_the_evening
     newbie_limit_time
     ban_words_on_reply
-    ban_words_on_topic
+    ban_words_on_body
     new_from_github_notices
     newbie_notices
     new_tags
@@ -165,7 +165,7 @@ class Setting < RailsSettings::Base
   field :ban_reasons, default: "标题或正文描述不清楚", type: :array, separator: /[\n]+/
   field :ban_reason_html, default: "此贴因内容原因不符合要求，被管理员屏蔽，请根据管理员给出的原因进行调整"
   field :ban_words_on_reply, default: [], type: :array, separator: /[\n]+/
-  field :ban_words_on_topic, default: [], type: :array, separator: /[\n]+/
+  field :ban_words_on_body, default: [], type: :array, separator: /[\n]+/
   field :newbie_notices, default: ""
   field :new_tags, default: "", type: :string
   field :tips, default: [], type: :array, separator: /[\n]+/

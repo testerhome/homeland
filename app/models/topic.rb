@@ -124,7 +124,7 @@ class Topic < ApplicationRecord
     if User.redis.SISMEMBER("blocked_users", user_id) == 1
       errors.add(:base, "由于你经常发布无意义的内容或者敏感词，屏蔽一天！")
     else
-      ban_words = Setting.ban_words_on_topic.collect(&:strip)
+      ban_words = Setting.ban_words_on_body.collect(&:strip)
       for ban_word in ban_words
         if body && body.strip.downcase.include?(ban_word) || title.strip.downcase.include?(ban_word)
           add_to_blocked_user
