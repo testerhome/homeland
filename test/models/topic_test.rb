@@ -259,7 +259,7 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test "Ban word in topic" do
-    Setting.stubs(:ban_words_in_body).returns(["FFF", "AAAA"])
+    Setting.stubs(:ban_words_on_topic).returns(["FFF", "AAAA"])
     topic = build(:topic, body: "This is CCC")
     assert_equal true, topic.valid?
     topic = build(:topic, body: "This is FFFF")

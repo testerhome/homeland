@@ -18,7 +18,7 @@ class Topic < ApplicationRecord
 
   validates :user_id, :title, :body, :node_id, presence: true
 
-  validate :check_topic_ban_words, on: :create
+  validate :check_topic_ban_words
 
   counter :hits, default: 0
 
@@ -121,11 +121,32 @@ class Topic < ApplicationRecord
   end
 
   def check_topic_ban_words
-    ban_words = Setting.ban_words_in_body.collect(&:strip)
-    ban_words.each do |word|
-      if body.include?(word)
-        errors.add(:body, "敏感词 “#{word}” 禁止发布！")
-        return false
+    if User.redis.SISMEMBER("blocked_users", user_id) == 1
+      errors.add(:base, "由于你经常发布无意义的内容或者敏感词，屏蔽一天！")
+    else
+      ban_words = Setting.ban_words_on_topic.collect(&:strip)
+      for ban_word in ban_words
+        if body && body.strip.downcase.include?(ban_word) || title.strip.downcase.include?(ban_word)
+          add_to_blocked_user
+          errors.add(:base, "请勿发布无意义的内容或者敏感词，请勿挑战！")
+        end
+      end
+    end
+  end
+
+  def add_to_blocked_user
+    key = user_id.to_s + "-" +Time.now.strftime("%Y-%m-%d")
+    hit_blacklist = User.redis.get(key)
+    if not hit_blacklist
+      User.redis.set(key, 1)
+      User.redis.expire(key, 86400)
+    else
+      hit_blacklist_counter = hit_blacklist.to_i
+      if hit_blacklist_counter <=5
+        User.redis.incr(key)
+      else
+        User.redis.sadd("blocked_users", user_id)
+        User.redis.expire("blocked_users", 86400)
       end
     end
   end
