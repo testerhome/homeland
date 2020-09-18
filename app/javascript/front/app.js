@@ -11,6 +11,7 @@ const AppView = Backbone.View.extend({
     "click a.likeable": "likeable",
     "click .header .form-search .btn-search": "openHeaderSearchBox",
     "click .header .form-search .btn-close": "closeHeaderSearchBox",
+    "click a.button-filter-excellent-topic": "filterExcellentTopic",
     "click a.button-block-user": "blockUser",
     "click a.button-follow-user": "followUser",
     "click a.button-block-node": "blockNode",
@@ -173,6 +174,18 @@ const AppView = Backbone.View.extend({
       }
       );
     }
+  },
+
+  filterExcellentTopic: function(e) {
+    var btn, search_text;
+    btn = $(e.currentTarget);
+    search_text = btn.data("id");
+    if (btn.hasClass("active")) {
+      document.location = "/search?q=" + search_text + "&excellent=0";
+    } else {
+      document.location = "/search?q=" + search_text + "&excellent=1";
+    }
+    return false;
   },
 
   receivedNotificationCount(json) {

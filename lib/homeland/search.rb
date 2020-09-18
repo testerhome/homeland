@@ -38,7 +38,7 @@ module Homeland
 
     def ts_query
       @ts_query ||= begin
-                      all_terms = @term.split
+                      all_terms = @term.to_s.split
                       query = SearchDocument.sanitize_sql(all_terms.map { |t| "#{PG::Connection.escape_string(t)}:*" }.join(" & "))
                       "TO_TSQUERY('simple', '#{query}')"
                     end

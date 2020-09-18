@@ -8,7 +8,11 @@ class SearchController < ApplicationController
 
     @search = Homeland::Search.new(params[:q])
 
-    @result = @search.query_results.includes(:searchable).page(params[:page])
+    if params[:excellent].present? && params[:excellent] == "1"
+      @result = @search.query_results.joins("JOIN topics ON (searchable_type = 'Topic' AND topics.grade = #{Topic.grades[:excellent]} AND topics.id = searchable_id)").page(params[:page])
+    else
+      @result = @search.query_results.includes(:searchable).page(params[:page])
+    end
   end
 
   def users
