@@ -98,6 +98,7 @@ Rails.application.routes.draw do
   resources :photos
   resources :likes
   resources :bugs
+  resources :ads
   resources :opencourses
   resources :questions
   resources :tip_offs
@@ -156,6 +157,7 @@ Rails.application.routes.draw do
       get '/bug_search', to: 'bug_search#index', as: 'bug_search'
 
       resource :devices
+      resources :ads
       resource :likes
       resources :nodes
       resources :photos
