@@ -1,0 +1,39 @@
+<div class="modal" id="request-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="message">
+          <div class="user-info"><%= user_avatar_tag(@team, :lg, link: false) %></div>
+          <p><i class="fa fa-quote-left pull-left"></i><%= @team.bio %><i class="fa fa-quote-right pull-right"></i></p>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <% if @team.private? %>
+        <hr/>
+        <div id="apply-message" class="markdown">
+          <%= markdown(@team.team_profile&.apply_message) %>
+        </div>
+        <% if @team.team_profile&.show_reward %>
+          <div class="modal-body clearfix">
+            <% @team.team_admin.reward_fields.each_with_index do |(field, val), idx| %>
+              <div class="reward-image"><img src="<%= @team.team_admin.reward_field(field) %>"></div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+      <%= form_tag main_app.join_path(@team), method: :post do %>
+        <div class="modal-body clearfix">
+          <div class="form-group">
+            <%= text_area_tag "comment", nil, placeholder: "说说看，为什么想加入？可以支持 Markdown 哦~", class: "form-control" %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <%= submit_tag "确定加入", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+

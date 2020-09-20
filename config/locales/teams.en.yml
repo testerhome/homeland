@@ -14,11 +14,17 @@
     edit_team_user: 'Change team roles'
     delete_team_user: 'Remove member'
     show_team_user: 'View invitations'
+    show_user_join: 'View Apply'
     accept_team_user: 'Accept invitation'
+    accept_user_join: 'Accept apply'
     reject_team_user: 'Decline'
     delete_team_user_confirm: 'Are you sure you want to remove this user from team?'
     topics: 'Topics of members'
     users: 'Members'
     team_user_pendding: 'Awaiting response'
     settings: 'Settings'
+    member_settings: 'Personal Settings'
+    is_receive_notifications: 'Allow notification push'
     team_users_count: "%{count} team members"
+    access_denied: "Access denied. This is a private team. Please contact the admin of the team."
+    private: "Private Team."

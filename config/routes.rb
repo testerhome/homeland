@@ -11,7 +11,11 @@ Rails.application.routes.draw do
 
   resources :comments
   resources :devices
-  resources :teams
+  resources :teams do
+    member do
+      get 'requestjoin'
+    end
+  end
 
   if Setting.has_module?(:home)
     root to: "home#index"
@@ -261,6 +265,7 @@ Rails.application.routes.draw do
   get "users/city/:id", to: "users#city", as: "location_users"
   get "users", to: "users#index", as: "users"
 
+  post '/people/join/:user_id', to: 'team_users#join', as: 'join'
   constraints(id: /[#{User::LOGIN_FORMAT}]*/) do
     resources :users, path: "", as: "users" do
       member do
@@ -285,7 +290,12 @@ Rails.application.routes.draw do
       resources :team_users, path: "people" do
         member do
           post :accept
+          post :accept_join
           post :reject
+          post :reject_join
+          get :show_approve
+          get :edit_user
+          patch :update_user
         end
       end
     end

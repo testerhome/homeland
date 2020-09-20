@@ -1,0 +1,13 @@
+<%
+team = notification.target
+%>
+<% if team.blank? %>
+  <div class="media-body">相关信息已删除</div>
+<% else %>
+  <div class="media-heading">
+    这是来 TesterHome 社区管理委员会的信息：
+  </div>
+  <div class="media-content">
+    您所属的社团 <strong><%= team.name %></strong> 已经关闭，给您带来不便敬请谅解！
+  </div>
+<% end %>

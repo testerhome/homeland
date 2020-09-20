@@ -83,6 +83,10 @@
         login: "Slug"
         bio: "公司／组织介绍"
         website: "公司 / 项目网址"
+        private: 私有组织
+      team_profile:
+        show_reward: "开启打赏加入"
+        apply_message: "加入条件"
       team_user:
         login: "用户名"
         role: "权限"

@@ -1,0 +1,24 @@
+<% title_tag t("teams.edit_team_user") %>
+
+<%= render '/teams/header' %>
+
+<div class="panel team-users">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-6 col-sm-offset-3">
+        <%= simple_form_for @team_user, url: main_app.update_user_user_team_user_path(@team, @team_user) do |f| %>
+
+          <%= render "shared/error_messages", target: @team_user %>
+          <div class="form-group">
+            <%= f.check_box :is_receive_notifications %> <%= t("teams.is_receive_notifications") %>
+          </div>
+          <div class="form-group">
+            <%= f.submit t("common.save"), class: "btn btn-primary", 'data-disable-with' => t("common.saving") %>
+          </div>
+
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

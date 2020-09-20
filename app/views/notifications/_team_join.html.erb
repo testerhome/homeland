@@ -1,0 +1,16 @@
+<%
+team = notification.second_target
+team_user = notification.target
+%>
+<% if team.blank? || team_user.blank? %>
+  <div class="media-body">相关信息已删除</div>
+<% else %>
+  <div class="media-heading">
+    <%= user_name_tag(team_user.user)%>请求加入 <%= user_name_tag(team) %>
+
+  </div>
+  <div class="media-content summary markdown">
+    <p><%=markdown team_user.comment%></p>
+    <%= link_to '批准加入', main_app.show_approve_user_team_user_path(team, team_user), class: 'btn btn-default btn-sm' %>
+  </div>
+<% end %>
