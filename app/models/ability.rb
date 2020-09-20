@@ -117,5 +117,6 @@ class Ability
       can :read, Section
       can :read, Comment
       can :read, Team
+      can :requestjoin, Team
     end
 end

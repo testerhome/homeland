@@ -72,6 +72,33 @@
             <%= f.text_area :bio, class: "form-control", rows: 3 %>
           </div>
 
+          <div class="form-group">
+            <%= f.label :private %>
+
+            <%= f.label :private, "Yes" %>
+            <%= f.radio_button :private, true %>
+            <%= f.label :private, "No" %>
+            <%= f.radio_button :private, false %>
+          </div>
+
+          <div class="alert alert-info" role="alert">以下选项只有私有组织才会生效</div>
+
+          <%= f.simple_fields_for :team_profile do |team_profile| %>
+            <div class="form-group">
+              <%= team_profile.label :show_reward %>
+
+              <%= f.label :show_reward, "Yes" %>
+              <%= team_profile.radio_button :show_reward, true  %>
+              <%= f.label :show_reward, "No" %>
+              <%= team_profile.radio_button :show_reward, false  %>
+            </div>
+
+            <div class="form-group">
+              <%= team_profile.label :apply_message %>
+              <%= team_profile.text_field :apply_message, placeholder: "支持markdown"  %>
+            </div>
+          <% end %>
+
           <div class="form-actions">
             <%= f.submit t("common.save"), class: "btn btn-primary btn-block", 'data-disable-with' => t("common.saving") %>
           </div>

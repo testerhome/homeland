@@ -5,11 +5,14 @@ class TeamsController < ApplicationController
   load_resource find_by: :login
   load_and_authorize_resource
 
-  before_action :set_team, only: %i[show edit update destroy]
+  before_action :set_team, only: %i[show edit update destroy requestjoin]
 
   def index
     @total_team_count = Team.count
     @active_teams = Team.fields_for_list.hot.limit(100)
+  end
+
+  def requestjoin
   end
 
   def show
@@ -31,6 +34,7 @@ class TeamsController < ApplicationController
   end
 
   def edit
+    @team.build_team_profile if @team.team_profile.nil?
   end
 
   def update
@@ -44,7 +48,7 @@ class TeamsController < ApplicationController
   private
 
     def team_params
-      params.require(:team).permit(:login, :name, :email, :email_public, :bio, :website, :twitter, :github, :location, :avatar)
+      params.require(:team).permit(:login, :name, :email, :email_public, :bio, :website, :twitter, :github, :location, :avatar, :private, team_profile_attributes: [:apply_message, :show_reward])
     end
 
     def set_team

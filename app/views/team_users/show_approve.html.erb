@@ -1,0 +1,49 @@
+<% title_tag t("teams.show_team_user") %>
+<%= render '/teams/header' %>
+
+
+<div class="card team-users">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6 col-sm-offset-3 text-center">
+        <h3><%= t("teams.show_user_join") %></h3>
+        <p class="text-info" style="padding: 10px 0;">
+          你是否要批准 <%= user_name_tag(@team_user.user)%> 加入 <strong><%= user_name_tag(@team) %></strong>？
+        </p>
+        <div class="buttons">
+          <%= link_to t('teams.accept_user_join'), accept_join_user_team_user_path(@team, @team_user), data: { method: 'POST', remote: true }, class: 'btn btn-primary' %>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#reject-user-join-modal">
+            <%= t('teams.reject_team_user') %>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal" id="reject-user-join-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">添加拒绝理由</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+
+      <%= form_for('', url: reject_join_user_team_user_path(@team, @team_user), method: "post", remote: true) do |f| %>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <textarea id="reject-join-reason" class="form-control" name="reject_join_reason" rows="4" placeholder="请使用 Markdown 格式书写 ;)"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">确定</button>
+          <a class="btn btn-default" data-dismiss="modal">取消</a>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

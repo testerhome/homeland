@@ -1,15 +1,22 @@
-<tr class="team-user clearfix" data-id="<%= team_user.id %>">
+<tr class="team-user media clearfix" data-id="<%= team_user.id %>">
+
+  <% if not mobile? %>
   <td class="avatar"><%= user_avatar_tag(team_user.user, :sm, link: false) %></div>
+  <% end %>
   <td class="name">
     <%= user_name_tag(team_user.user) %>
     <%= team_user&.user&.name %>
   </td>
   <td class="role">
-    <%= team_user.pendding? ? team_user.status_name : team_user.role_name %>
+    <%= (team_user.pendding? or team_user.pendding_owner_approved?) ? team_user.status_name : team_user.role_name %>
   </div>
   <td class="buttons">
-    <% if can?(:update, @team) && team_user.user_id != current_user&.id %>
-      <%= link_to icon_tag('edit'), edit_user_team_user_path(@team, team_user) %>
+    <% if (can? :update, @team) && (team_user.user_id != current_user&.id)  %>
+      <% if (team_user.pendding_owner_approved?) %>
+            <%= link_to '批准加入', main_app.show_approve_user_team_user_path(@team, team_user), class: 'btn btn-default btn-sm' %>
+      <% else %>
+            <%= link_to icon_tag('edit'), edit_user_team_user_path(@team, team_user), class: 'btn btn-default' %>
+      <% end %>
     <% end %>
   </td>
 </tr>

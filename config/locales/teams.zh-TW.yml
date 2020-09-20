@@ -14,11 +14,16 @@
     edit_team_user: '修改成員权限'
     delete_team_user: '移除成員'
     show_team_user: '查看邀請'
+    show_user_join: '查看申请'
     accept_team_user: '接受邀請'
+    accept_user_join: '批准'
     reject_team_user: '拒絕'
     delete_team_user_confirm: '確定要將他從團體中移除嗎？'
     topics: '成員話題列表'
     users: '成員列表'
     team_user_pendding: '等待接受'
-    settings: '設置'
+    settings: '團體設置'
+    member_settings: '个人設置'
+    is_receive_notifications: '是否接受通知'
     team_users_count: "%{count} 個團體成員"
+    access_denied: "訪問被拒絕，該組織属于私人組織，想要閱讀該組織文章，請聯系組織管理員。"

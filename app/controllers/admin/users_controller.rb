@@ -71,6 +71,13 @@ module Admin
       if @user.user_type == :user
         @user.soft_delete
       else
+        unless @user.team_profile.blank?
+          @user.team_profile.destroy
+        end
+
+        unless @user.team_users.blank?
+          @user.team_users.each {|t| t.destroy}
+        end
         @user.destroy
       end
 

@@ -5,6 +5,17 @@
       <div class="media-left">
         <%= user_avatar_tag(@team, :md, link: false) %>
       </div>
+
+      <% if current_user && !@team.member?(current_user) && !admin?%>
+        <div class="media-left">
+          <% if @team.pendding_status?(current_user)%>
+              <%= link_to '接受邀请', main_app.user_team_user_path(@team, @team.get_team_user(current_user)), class: 'btn btn-link request-join' %>
+          <% else %>
+              <%= link_to '申请加入', main_app.requestjoin_team_path(@team), class: 'btn btn-link request-join',remote: true %>
+          <% end %>
+        </div>
+      <% end %>
+
       <div class="media-body">
         <h1 class="media-heading">
           <%= @team.name %>
