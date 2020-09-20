@@ -7,7 +7,7 @@ class TopicsController < ApplicationController
                                               favorite unfavorite follow unfollow
                                               action favorites raw_markdown]
   load_and_authorize_resource only: %i[new edit create update destroy favorite unfavorite follow unfollow raw_markdown]
-  before_action :set_topic, only: %i[edit update destroy follow unfollow action ban]
+  before_action :set_topic, only: %i[edit update destroy follow unfollow action ban append]
 
   def index
     @suggest_topics = []
@@ -161,6 +161,17 @@ class TopicsController < ApplicationController
       params[:reason_text] ||= params[:reason] || ""
       @topic.ban!(reason: params[:reason_text].strip)
       redirect_to @topic, notice: "话题已放进屏蔽栏目。"
+    when "append"
+      content = params[:append_body]
+      if content.blank?
+        redirect_to @topic, notice: "不能添加空附言。"
+      else
+        append = Append.new
+        append.content = content
+        append.topic_id = @topic.id
+        append.save
+        redirect_to @topic, notice: "成功添加附言。"
+      end
     when "close"
       @topic.close!
       redirect_to @topic, notice: "话题已关闭，将不再接受任何新的回复。"
@@ -195,6 +206,9 @@ class TopicsController < ApplicationController
       @has_followed = current_user.follow_topic?(resource)
       # 是否收藏
       @has_favorited = current_user.favorite_topic?(resource)
+    end
+
+    def append
     end
 
     def draft_and_anonymous_save

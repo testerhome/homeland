@@ -1,0 +1,9 @@
+<div class="append">
+  <span class="meta">附言 <%= append_content_counter + 1 %> &nbsp;·&nbsp;
+    <%= timeago(append_content.created_at) %>
+  </span>
+  <div class="sep5"></div>
+  <div class="markdown markdown-reply append-content">
+    <%= markdown append_content.content %>
+  </div>
+</div>
