@@ -68,6 +68,7 @@ Rails.application.routes.draw do
       post :follow
       delete :unfollow
       post :action
+      get :append
       # ban popup window
       get :ban
 
@@ -233,6 +234,7 @@ Rails.application.routes.draw do
       post :follow
       delete :unfollow
       get :ban
+      get :append
       get :append
       get :down
       post :action

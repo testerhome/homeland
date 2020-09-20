@@ -9,12 +9,12 @@
 
   <% if can? :suggest, @topic %>
     <% if !@topic.suggested_at.blank? %>
-    <%= link_to raw("<i class='fa fa-pin'></i> 取消"), unsuggest_admin_topic_path(@topic), method: :post, remote: true %>
+      <%= link_to raw("<i class='fa fa-pin'></i> 取消"), unsuggest_admin_topic_path(@topic), method: :post, remote: true %>
     <% else %>
-    <%= link_to raw("<i class='fa fa-pin'></i> 置顶"), suggest_admin_topic_path(@topic), method: :post, remote: true %>
+      <%= link_to raw("<i class='fa fa-pin'></i> 置顶"), suggest_admin_topic_path(@topic), method: :post, remote: true %>
     <% end %>
     <% if !@topic.excellent? %>
-    <%= link_to raw("<i class='fa fa-award'></i> 加精"), action_topic_path(@topic.id, type: 'excellent'), title: "设为精华帖" , method: :post, remote: true %>
+      <%= link_to raw("<i class='fa fa-award'></i> 加精"), action_topic_path(@topic.id, type: 'excellent'), title: "设为精华帖" , method: :post, remote: true %>
     <% end %>
 
     <% if !@topic.ban? %>
@@ -33,10 +33,14 @@
     <% end %>
 
     <% if can?(:edit, @topic) %>
-    <%= link_to "", edit_topic_path(@topic), class: "fa fa-edit", title: "修改本帖" %>
+      <%= link_to "", edit_topic_path(@topic), class: "fa fa-edit", title: "修改本帖" %>
     <% end %>
     <% if can?(:destroy, @topic) %>
-    <%= link_to "", topic_path(@topic.id), method: :delete, remote: true, 'data-confirm': t("common.confirm_delete"), class: "fa fa-trash", title: "删除本帖" %>
+      <%= link_to "", topic_path(@topic.id), method: :delete, remote: true, 'data-confirm': t("common.confirm_delete"), class: "fa fa-trash", title: "删除本帖" %>
+    <% end %>
+
+    <% if owner?(@topic) or admin? %>
+      <%= link_to raw("<i class='fa fa-plus'></i>"), append_topic_path(@topic), remote: true, title: "追加附言" %>
     <% end %>
   </span>
 </div>

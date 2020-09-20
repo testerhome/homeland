@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_11_144935) do
+ActiveRecord::Schema.define(version: 2020_09_20_132925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,24 @@ ActiveRecord::Schema.define(version: 2020_09_11_144935) do
     t.datetime "updated_at", null: false
     t.index ["target_type", "target_id", "action_type"], name: "index_actions_on_target_type_and_target_id_and_action_type"
     t.index ["user_type", "user_id", "action_type"], name: "index_actions_on_user_type_and_user_id_and_action_type"
+  end
+
+  create_table "ads", force: :cascade do |t|
+    t.string "topic_id", null: false
+    t.string "topic_title", null: false
+    t.string "topic_author", null: false
+    t.string "cover", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["topic_id"], name: "index_ads_on_topic_id"
+  end
+
+  create_table "appends", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "topic_id"
+    t.index ["topic_id"], name: "index_appends_on_topic_id"
   end
 
   create_table "authorizations", id: :serial, force: :cascade do |t|
@@ -147,6 +165,7 @@ ActiveRecord::Schema.define(version: 2020_09_11_144935) do
     t.datetime "read_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "message"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -339,6 +358,14 @@ ActiveRecord::Schema.define(version: 2020_09_11_144935) do
     t.index ["url"], name: "index_sites_on_url"
   end
 
+  create_table "team_profiles", force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.text "apply_message"
+    t.boolean "show_reward", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "team_users", id: :serial, force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "user_id", null: false
@@ -475,4 +502,5 @@ ActiveRecord::Schema.define(version: 2020_09_11_144935) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "appends", "topics"
 end

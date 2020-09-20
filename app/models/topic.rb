@@ -15,6 +15,7 @@ class Topic < ApplicationRecord
   belongs_to :last_reply_user, class_name: "User", required: false
   belongs_to :last_reply, class_name: "Reply", required: false
   has_many :replies, dependent: :destroy
+  has_many :appends
 
   validates :user_id, :title, :body, :node_id, presence: true
 
@@ -99,6 +100,11 @@ class Topic < ApplicationRecord
     self.last_reply_user_login = reply.try(:user_login)
 
     save
+  end
+
+  def update_when_append(append, opts = {})
+    return false if append.blank? && !opts[:force]
+    update!(last_active_mark: Time.now.to_i)
   end
 
   # 更新最后更新人，当最后个回帖删除的时候
