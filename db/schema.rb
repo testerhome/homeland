@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_160939) do
+ActiveRecord::Schema.define(version: 2020_09_23_142045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -497,6 +497,15 @@ ActiveRecord::Schema.define(version: 2020_09_20_160939) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.integer "score", default: 1000, null: false
+    t.string "wechat"
+    t.boolean "wechat_public"
+    t.string "qq"
+    t.boolean "qq_public"
+    t.string "weibo"
+    t.boolean "weibo_public"
+    t.string "co"
+    t.string "qrcode"
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
