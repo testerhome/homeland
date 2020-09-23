@@ -31,6 +31,10 @@
     confirmations:
       send_instructions: '稍后，您将收到帐号激活的电子邮件。'
       confirmed: '您的帐号已经激活，请登录。'
+      user:
+        mail_has_actived: '您的帐号已激活。'
+        mail_not_existed: '你的邮箱未注册。'
+        mail_from_github: '请前往个人资料设置界面，修改你的邮箱'
     registrations:
       user:
         signed_up: '您的帐号已注册成功，如无意外，您将收到一封确认邮件。'

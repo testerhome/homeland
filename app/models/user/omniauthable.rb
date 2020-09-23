@@ -62,6 +62,9 @@ class User
 
       def save_by_provider(user, provider, response)
         user.save
+
+        return user if provider.nil?
+
         uid  = response["uid"].to_s
         data = response["info"]
         Authorization.find_or_create_by(provider: provider, uid: uid, user_id: user.id)
