@@ -80,10 +80,10 @@
     </div>
   </div>
   <% if Setting.has_module?(:team) %>
-    <% if !@user.teams.blank? %>
+    <% if !@user.valid_teams.blank? %>
       <div class="card user-teams">
         <div class="card-body">
-          <% @user.teams.each do |team| %>
+          <% @user.valid_teams.each do |team| %>
             <%= user_avatar_tag(team, :md) %>
           <% end %>
         </div>

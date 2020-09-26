@@ -73,7 +73,7 @@
     </div>
 
     <% if @article.user&.reward_enabled? %>
-      <%= render partial: "reward" %>
+      <%= render partial: "shared/reward", object: @article %>
     <%end%>
 
   <% if @replies.blank? %>
