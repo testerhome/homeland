@@ -17,7 +17,7 @@ class User < ApplicationRecord
                         current_password password password_confirmation _rucaptcha]
 
   devise :database_authenticatable, :registerable, :recoverable, :lockable,
-         :rememberable, :trackable, :validatable, :omniauthable, :confirmable
+         :rememberable, :trackable, :validatable, :omniauthable
 
   has_one :profile, dependent: :destroy
 
