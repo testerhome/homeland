@@ -240,7 +240,6 @@ Rails.application.routes.draw do
       delete :unfollow
       get :ban
       get :append
-      get :append
       get :down
       post :action
       get :show_wechat

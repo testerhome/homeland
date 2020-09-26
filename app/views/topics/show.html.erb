@@ -59,6 +59,10 @@
       </div>
     </div>
     <%= render partial: "ban_reason" %>
+
+    <% if @topic.user&.reward_enabled? %>
+      <%= render partial: "shared/reward", object: @topic %>
+    <%end%>
     <% if @replies.blank? %>
       <div class="no-result">
         <%= t("topics.no_replies") %>

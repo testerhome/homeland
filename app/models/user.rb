@@ -72,6 +72,10 @@ class User < ApplicationRecord
     find_by_login(login_or_email) || find_by_email(login_or_email)
   end
 
+  def valid_teams
+    self.teams.reject {|t| !t.member?(self)}
+  end
+
   def self.anonymous_user_id
     12
   end

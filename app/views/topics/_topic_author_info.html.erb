@@ -1,0 +1,54 @@
+<div id="topic-author-info" class="card profile">
+  <div class="card-header">作者</div>
+  <div class="card-body">
+    <div class="media">
+      <div class="avatar media-left">
+        <div class='image'><%= user_avatar_tag(@topic.user, :md, link: true) %></div>
+        <div class="level"><%= user_level_tag(@topic.user) %></div>
+      </div>
+
+      <div class="media-body">
+        <div class="item">
+          <%= @topic.user.fullname %>
+        </div>
+        <div class="item number">
+          第 <%= @topic.user.id %> 位<%= t("menu.users")%> / <span title="注册日期"><%= @topic.user.created_at.to_date %></span>
+        </div>
+        <% if !@topic.user.company.blank? %>
+          <div class="item company">
+            <%= @topic.user.company %>
+            <% if @topic.user.location.present? %> @ <span title="所在地"><%= location_name_tag(@topic.user.location) %></span><% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <% if Setting.has_module?(:team) %>
+      <% if !@topic.user.teams.blank? %>
+        <div class="user-teams mt-2">
+          <div>
+            <% @topic.user.valid_teams.each do |team| %>
+              <div class="media">
+                <%= user_avatar_tag(team, :sm) %>
+                <div class="media-body ml-2 align-self-center">
+                  <%= link_to(team.fullname, "/#{team.login}") %>
+                </div>
+              </div>
+
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if !@topic.user.tagline.blank? %>
+      <div class="tagline row">
+        <%= truncate(@topic.user.tagline, :ommision => "... ", :length => 30) %>
+      </div>
+    <% else %>
+      <div class="tagline row">
+        “ 这家伙很懒，什么个性签名都没有留下。 ”
+      </div>
+    <% end %>
+  </div>
+</div>
