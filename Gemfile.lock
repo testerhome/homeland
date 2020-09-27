@@ -14,7 +14,7 @@ GIT
       rails (~> 6, >= 5)
 
 GEM
-  remote: https://rubygems.org/
+  remote: https://gems.ruby-china.com/
   specs:
     action-store (1.0.0)
       rails (>= 5.2, < 7)
