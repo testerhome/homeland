@@ -23,10 +23,10 @@
       </span>
        ·
       <%= timeago(topic.created_at) %>
-      <% if !topic.last_reply_user_login.blank? %>
+      <% if !topic.last_reply_user.blank? %>
       <span class="hidden-mobile">
          ·
-        <%= t("common.last_by")%> <%= user_name_tag(topic.last_reply_user_login, reply: topic.last_reply) %> <%= raw t("common.reply_at", time: timeago(topic.replied_at))%>
+        <%= t("common.last_by")%> <%= user_name_tag(topic.last_reply_user, reply: topic.last_reply) %> <%= raw t("common.reply_at", time: timeago(topic.replied_at))%>
       <% end %>
       </span>
        ·
