@@ -14,7 +14,7 @@
     </div>
     <div class="info">
       创建于 <%= timeago(article.created_at) %>
-      <% if !article.last_reply_user_login.blank? %>
+      <% if !article.last_reply_user.blank? %>
       <span class="hidden-mobile">
          ·
         <%= t("common.last_by")%> <%= user_name_tag(article.last_reply_user) %> <%= raw t("common.reply_at", time: timeago(article.replied_at))%>
