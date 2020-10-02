@@ -4,7 +4,7 @@
 
     <% Topic.where(node_id: Node.job_id).recent.without_draft.limit(5).each_with_index do |topic, i| %>
 
-        <div class="topic media topic-<%= topic.id %>">
+        <div class="topic media topic-<%= topic.id %> mb-2">
           <div class="avatar mr-2">
             <%= user_avatar_tag(topic.user, :sm) %>
           </div>

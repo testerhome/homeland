@@ -1,10 +1,10 @@
 <div class="topic-sidebar card">
   <div class="card-header">大家都在关注的专栏 <i class="fa fa-columns"></i></div>
-  <div class="card-body">
+  <div class="card-body row">
     <% Column.hot.limit(5).each_with_index do |column, index| %>
 
       <% if index == 0 %>
-        <div class="sidebar-column">
+        <div class="sidebar-column col-md-12">
           <div class="media">
             <div class="media-left media-middle mr-3">
               <img class="media-object avatar-48" src="<%= column.cover_url %>">
@@ -26,7 +26,7 @@
             <div class="media-left media-middle">
               <img class="media-object avatar-48" src="<%= column.cover_url %>">
             </div>
-            <div class="media-body">
+            <div class="media-body ml-2">
               <h4 class="media-heading">
                 <div class="sidebar-column-name">
                 <%= render_column_name(column.name, column.slug) %>
