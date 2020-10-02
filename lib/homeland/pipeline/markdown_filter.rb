@@ -10,7 +10,8 @@ module Homeland
       DEFAULT_OPTIONS = {
         no_styles: true,
         hard_wrap: true,
-        autolink: true,
+        # some dataissue from autolink  https://github.com/vmg/redcarpet/issues/388, disable it temporarily
+        autolink: false,
         fenced_code_blocks: true,
         strikethrough: true,
         underline: true,
