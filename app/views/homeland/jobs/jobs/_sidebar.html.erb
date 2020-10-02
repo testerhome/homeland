@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-body">
+    <p>你是企业主，需要寻找相关人才？</p>
+    <%= link_to "发布招聘", main_app.new_topic_path(node_id: @node.id), class: "btn btn-primary btn-block" %>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">招聘栏目版规</div>
+  <div class="card-body">
+    <%= sanitize_markdown @node.summary_html %>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">城市索引</div>
+  <ul class="list-group list-group-flush">
+    <% cache "prefixes", expires_in: 7.days do %>
+    <% Location.hot.limit(10).each do |prefix| %>
+    <li class="list-group-item"><%= link_to prefix.name, homeland_jobs.jobs_path(location: prefix.name) %></li>
+    <% end %>
+    <% end %>
+  </ul>
+</div>
+
+<%= render "topics/sidebar_columns" %>
+
+<%= render "topics/sidebar_jobs" %>
+
+<%= render "topics/sidebar_box_tips" %>
+
+<%= raw Setting.topic_index_sidebar_html %>

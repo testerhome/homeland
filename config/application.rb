@@ -36,6 +36,9 @@ module Homeland
       g.fixture_replacement :factory_bot, dir: "test/factories"
     end
 
+    overrides = "#{Rails.root}/app/overrides"
+    Rails.autoloaders.main.ignore(overrides)
+
     config.to_prepare do
       Devise::Mailer.layout "mailer"
       Doorkeeper::ApplicationController.include Homeland::UserNotificationHelper
@@ -45,6 +48,10 @@ module Homeland
       Doorkeeper::AuthorizationsController.layout "simple"
       # Only Authorized Applications
       Doorkeeper::AuthorizedApplicationsController.layout "simple"
+
+      Dir.glob("#{Rails.root}/app/overrides/**/*_override.rb").each do |override|
+        require_dependency override
+      end
     end
 
     config.action_cable.log_tags = [
