@@ -549,9 +549,10 @@ hr {
 }
 
 #topic-sidebar {
-  position: fixed;
+  position: sticky;
   display: none;
   width: 260px;
+  top: 60px;
 
   @media (min-width: 960px) {
     display: block;
