@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/faker-ruby/faker.git
-  revision: b194dd23bb4cf9f151e6f680e1ea243737d747e1
-  branch: master
-  specs:
-    faker (2.13.0)
-      i18n (>= 1.6, < 2)
-
-GIT
   remote: https://github.com/testerhome/homeland-opensource_project.git
   revision: 6bdc8d5b7a44c60a88b9fdd262df8d9414a8c414
   specs:
@@ -158,6 +150,8 @@ GEM
     factory_bot_rails (6.1.0)
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
+    faker (2.14.0)
+      i18n (>= 1.6, < 2)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.13.1)
@@ -477,7 +471,7 @@ DEPENDENCIES
   enumize
   exception-track
   factory_bot_rails
-  faker!
+  faker (~> 2.14)
   form-select
   homeland-opensource_project!
   html-pipeline

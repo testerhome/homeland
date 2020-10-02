@@ -108,7 +108,8 @@ gem "postmark"
 gem "postmark-rails"
 
 gem "puma"
-gem "faker", git: "https://github.com/faker-ruby/faker.git", branch: "master"
+# gem "faker", git: "https://github.com/faker-ruby/faker.git", branch: "master"
+gem 'faker', '~> 2.14'
 
 # Homeland Plugins
 gem "homeland-opensource_project", github: "testerhome/homeland-opensource_project"
