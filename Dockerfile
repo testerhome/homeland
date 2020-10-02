@@ -1,4 +1,4 @@
-# NAME:     homeland/homeland
+# NAME:     testerhomeland/base
 FROM homeland/base:2.7-jemalloc-slim
 
 ENV RAILS_ENV "production"
