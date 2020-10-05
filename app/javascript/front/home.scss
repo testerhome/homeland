@@ -141,7 +141,7 @@ h2 {
   }
   .sidebar_topic {
     padding: 2px;
-    border-bottom: 1px solid #F0F0F0;
+    border-bottom: 1px solid var(--topic-item-border-color);
     vertical-align: top;
     .info {
       color: #ABA8A6;
