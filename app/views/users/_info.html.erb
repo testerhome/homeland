@@ -1,7 +1,7 @@
 <div class="card userinfo">
   <div class="card-body">
     <div class="user-bio">
-      <%= auto_link(simple_format(@user.bio)) %>
+      <%= markdown(@user.bio) %>
     </div>
     <% if @user.contacts.present? %>
       <div class="user-profile-fields">
