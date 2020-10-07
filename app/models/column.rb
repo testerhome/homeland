@@ -32,6 +32,12 @@ class Column < ApplicationRecord
     end
   end
 
+  def as_indexed_json
+    {
+      name: name
+    }.as_json
+  end
+
   def self.find_by_slug(slug)
     return nil unless slug.match? ALLOW_SLUG_FORMAT_REGEXP
     fetch_by_uniq_keys(slug: slug) || where("lower(slug) = ?", slug.downcase).take
