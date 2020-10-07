@@ -6,7 +6,7 @@
         <%= user_avatar_tag(@team, :md, link: false) %>
       </div>
 
-      <% if current_user && !@team.member?(current_user) && !admin?%>
+      <% if current_user && !@team.has_member?(current_user) && !admin?%>
         <div class="media-left">
           <% if @team.pendding_status?(current_user)%>
               <%= link_to '接受邀请', main_app.user_team_user_path(@team, @team.get_team_user(current_user)), class: 'btn btn-link request-join' %>
