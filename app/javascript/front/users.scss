@@ -300,6 +300,7 @@ table.node-topics {
       a {
         display: block;
         text-decoration: none;
+        line-height: 1.2;
       }
       a.counter {
         font-size: 32px;
@@ -329,6 +330,7 @@ table.node-topics {
     }
     .tagline {
       border-top: 1px solid var(--gray);
+      line-height: 1.5;
       margin-top: 10px;
       color: var(--text-color2);
       padding: 10px;
