@@ -194,6 +194,10 @@ class Setting < RailsSettings::Base
       EDITABLE_KEYS
     end
 
+    def ban_reason_list
+      self.ban_reasons
+    end
+
     def has_admin?(email)
       return false if self.admin_emails.blank?
       self.admin_emails.split(SEPARATOR_REGEXP).include?(email)
