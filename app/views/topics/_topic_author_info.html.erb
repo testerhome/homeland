@@ -12,7 +12,7 @@
           <%= @topic.user.fullname %>
         </div>
         <div class="item number">
-          第 <%= @topic.user.id %> 位<%= t("menu.users")%> / <span title="注册日期"><%= @topic.user.created_at.to_date %></span>
+          第 <%= @topic.user.id %> 位<%= t("menu.users")%> <br> <span title="注册日期">注册于：<%= @topic.user.created_at.to_date %></span>
         </div>
         <% if !@topic.user.company.blank? %>
           <div class="item company">
