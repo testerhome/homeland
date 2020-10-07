@@ -37,7 +37,7 @@ class Team < User
     end
   end
 
-  def member?(user)
+  def has_member?(user)
     self.team_users.accepted.exists?(user_id: user.id)
   end
 
