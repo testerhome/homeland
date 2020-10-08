@@ -124,6 +124,8 @@ module UsersHelper
     end
   end
 
+  alias team_avatar_tag user_avatar_tag
+
   def user_level_tag(user)
     return "" if user.blank?
     content_tag(:span, user.level_name, class: "badge-role role-#{user.level}", style: "background: #{user.level_color};")

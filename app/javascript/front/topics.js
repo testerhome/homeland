@@ -19,6 +19,8 @@ window.TopicView = Backbone.View.extend({
     "click .notify-updated .update": "updateReplies",
     "click #node-selector .nodes .name a": "nodeSelectorNodeSelected",
     "click .editor-toolbar .reply-to a.close": "unsetReplyTo",
+    "click #team-selector .team-list a.team-name": "teamSelectorNodeSelected",
+    "click .team-clear": "teamClear",
     "tap .topics .topic": "topicRowClick"
   },
 
@@ -374,7 +376,26 @@ window.TopicView = Backbone.View.extend({
       return true;
     }
   },
-
+  teamClear: function(e) {
+    $('#team-selector-button').val('选择我的社团...');
+    $('.form input[name="topic[team_id]"]').val('');
+    return false;
+  },
+  teamSelectorNodeSelected(e) {
+    e.preventDefault()
+    var el, teamId;
+    el = $(e.currentTarget);
+    $("#team-selector").modal('hide');
+    if ($('.form input[name="topic[team_id]"]').length > 0) {
+      e.preventDefault();
+      teamId = el.data('id');
+      $('.form input[name="topic[team_id]"]').val(teamId);
+      $('#team-selector-button').val(el.text());
+      return false;
+    } else {
+      return true;
+    }
+  },
   topicRowClick(e) {
     if (!App.turbolinks) {
       return;

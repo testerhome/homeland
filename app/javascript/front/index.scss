@@ -1193,3 +1193,22 @@ textarea.div-dropzone-focus {
     }
   }
 }
+
+#team_selector_wrapper {
+  position: relative;
+
+  #team-selector-button {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .team-clear {
+    cursor: pointer;
+    pointer-events: visible;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+}
