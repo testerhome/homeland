@@ -1,6 +1,7 @@
 <%= render 'node_selector', node: @topic.node %>
+<%= render 'team_selector', node: @topic.team %>
 
-<%= form_for @topic, remote: true, class: "form", html: { tb: 'edit-topic' } do |f| %>
+<%= form_for @topic, remote: true, html: { class: "form", tb: 'edit-topic' } do |f| %>
   <%= render "shared/error_messages", target: @topic %>
   <%= f.hidden_field :node_id %>
 
@@ -24,9 +25,11 @@
 
   <% if Setting.has_module?(:team) %>
     <% if current_user.team_options.any? %>
-    <div class='form-group'>
-      <%= f.select :team_id, current_user.team_options, { include_blank: "不要关联组织" }, { class: "form-control" } %>
-    </div>
+      <%= f.hidden_field :team_id %>
+      <div class="form-group" id="team_selector_wrapper">
+        <input id="team-selector-button" data-toggle="modal" data-target="#team-selector" type="button" class="form-control" value="<%= @topic.team&.name || '选择我的社团...' %>">
+        <span class="team-clear" aria-hidden="true"><i class="fas fa-times"></i></span>
+      </div>
     <% end %>
   <% end %>
 
