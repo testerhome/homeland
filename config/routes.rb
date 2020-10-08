@@ -75,7 +75,7 @@ Rails.application.routes.draw do
       get :append
       # ban popup window
       get :ban
-
+      get :show_wechat
       get :raw_markdown
     end
 
