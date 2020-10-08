@@ -123,7 +123,7 @@ hr {
   .navbar {
     &-nav-scroll {
       position: relative;
-      width: 100%;
+      flex: 1;
     }
 
     &.fixed-title {

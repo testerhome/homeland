@@ -1,0 +1,8 @@
+<% article = notification.target %>
+<% if article.blank? %>
+  相关信息已删除
+<% else %>
+  <div class="media-heading">
+    恭喜，文章 <%= article_title_tag(article) %> 获得了管理员加精。
+  </div>
+<% end %>

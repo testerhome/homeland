@@ -5,6 +5,14 @@ GIT
     homeland-opensource_project (0.1.0)
       rails (~> 6, >= 5)
 
+GIT
+  remote: https://github.com/testerhome/notifications.git
+  revision: aba260e85688bf98331ce3afc19d33e0e19f93e2
+  specs:
+    notifications (0.6.1)
+      kaminari (>= 0.15)
+      rails (>= 5)
+
 GEM
   remote: https://gems.ruby-china.com/
   specs:
@@ -239,9 +247,6 @@ GEM
       mini_portile2 (~> 2.4.0)
     nokogumbo (2.0.2)
       nokogiri (~> 1.8, >= 1.8.4)
-    notifications (1.0.0)
-      kaminari (>= 0.15)
-      rails (>= 5.2)
     oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
@@ -486,7 +491,7 @@ DEPENDENCIES
   mini_magick
   minitest-spec-rails
   mocha
-  notifications
+  notifications!
   omniauth
   omniauth-github
   omniauth-wechat-oauth2

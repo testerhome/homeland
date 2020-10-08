@@ -64,7 +64,10 @@
         body: 內容
         locked: 鎖定開關
         change_desc: 變更描述
-
+  notification_group:
+    tsystem: '系統'
+    team: '組織'
+    personal: '個人'
   tip_off:
     reporter: '舉報人'
     reporter_email: '舉報人郵箱'

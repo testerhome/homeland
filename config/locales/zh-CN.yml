@@ -127,6 +127,10 @@
           attributes:
             reset_password_token:
               expired: 重置密码操作已过期
+  notification_group:
+    tsystem: '系统'
+    team: '组织'
+    personal: '个人'
   tip_off:
     reporter: '举报人'
     reporter_email: '举报人邮箱'
