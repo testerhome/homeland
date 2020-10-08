@@ -64,7 +64,14 @@ en:
         body: "Content"
         locked: "Lock"
         change_desc: "Change Description"
-
+  notification_group:
+    tsystem: '系统'
+    team: '组织'
+    personal: '个人'
+  notification_group:
+    tsystem: 'System'
+    team: 'Team'
+    personal: 'Personal'
   tip_off:
     reporter: 'Reporter'
     reporter_email: 'Reporter Email'

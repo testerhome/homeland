@@ -13,9 +13,9 @@ class Notification < ActiveRecord::Base
                                "article_favorite", "article_like", "article_excellent",
                                "create_tip_off", "admin_follow_tip_off", "follow_tip_off",
                                "opensource_project_published", "admin_opensource_project_published", "admin_opensource_project_created"
-                              ], "icon" => "fa-bullhorn" },
-    "team" => { "types" => ["team_invite", "team_join", "reject_user_join"], "icon" => "fa-group" },
-    "personal" => { "types" => ["append", "comment", "follow", "mention", "topic", "topic_reply"], "icon" => "fa-bell" }
+                              ], "icon" => "fas fa-globe-europe" },
+    "team" => { "types" => ["team_invite", "team_join", "reject_user_join"], "icon" => "fas fa-users" },
+    "personal" => { "types" => ["append", "comment", "follow", "mention", "topic", "topic_reply"], "icon" => "fas fa-user" }
   }
 
   def self.default_group
@@ -48,6 +48,10 @@ class Notification < ActiveRecord::Base
   def self.realtime_push_to_client(user)
     message = { count: Notification.unread_count(user) }
     ActionCable.server.broadcast("notifications_count/#{user.id}", message)
+  end
+
+  def self.unread_count_by_group(user, group)
+    Notification.where(user: user, notify_type: Notification.get_notify_types_by_group(group)).unread.count
   end
 
   def apns_note

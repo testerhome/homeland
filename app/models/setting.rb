@@ -60,6 +60,7 @@ class Setting < RailsSettings::Base
     index_sidebar_bottom_html
     index_roll_card_html
     index_footer_card_html
+    notification_sidebar_advertise
   ]
 
   # = Basic
@@ -150,6 +151,7 @@ class Setting < RailsSettings::Base
   field :navbar_html, default: ""
   field :footer_html, default: ""
   field :index_sidebar_top_html, default: ""
+  field :notification_sidebar_advertise, default: ""
   field :topic_index_sidebar_important_ads_html, default: ""
   field :index_sidebar_bottom_html, default: ""
   field :index_roll_card_html, default: ""

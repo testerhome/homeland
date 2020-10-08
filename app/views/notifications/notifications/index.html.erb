@@ -1,24 +1,60 @@
-<div class="notifications card card-lg">
-  <div class="card-body">
-    <div class="card-title hide-ios clearfix">
-      <%= t('notifications.all_notifications') %>
-      <span class="counter"><%= @notifications.total_count %></span>
-      <span class="actions">
-        <%= link_to icon_tag("trash", label: t('notifications.clean_all')), notifications.clean_notifications_path, class: "text-danger", id: 'btn-remove-all', method: 'delete', remote: true %>
-      </span>
-    </div>
-    <% if @notifications.blank? %>
-      <div class="notification-group">
-        <div class="no-records"><%= t('notifications.no_records') %></div>
+<div class="row">
+  <div class="col-md-3 notifications notification-group-menu">
+    <div class="box">
+      <div class="list-group card">
+        <% for group in Notification.available_groups %>
+          <div class="list-group-item">
+            <a href="<%=notifications.notifications_path + group %>" class="big no-pjax <% if params[:group] == group %> active <% end %>">
+              <i class="<%=Notification.get_icon_by_group(group) %>" aria-hidden="true"></i>
+              &nbsp;<%= t("notification_group." + group) %>
+
+              <% if Notification.unread_count_by_group(current_user, group) > 0 %>
+                <span class="badge badge-danger">
+                  <%=Notification.unread_count_by_group(current_user, group) %>
+                </span>
+              <% end %>
+            </a>
+          </div>
+        <% end %>
       </div>
-    <% else %>
-      <% @notification_groups.each do |group, notifications| %>
-        <div class="notification-group">
-          <div class="group-title"><i class="fa fa-clock-o"></i> <%= group %></div>
-          <%= render notifications %>
-        </div>
-      <% end %>
+    </div>
+
+    <% if Setting.notification_sidebar_advertise %>
+      <div id='notification-siderbar-advertise'>
+        <%= raw Setting.notification_sidebar_advertise %>
+      </div>
     <% end %>
-    <%= paginate @notifications %>
+  </div>
+
+  <div class="col-md-9">
+    <div class="notifications card">
+      <div class="card-header hide-ios clearfix">
+        <i class="text-md fa <%=Notification.get_icon_by_group(params[:group]) %>" aria-hidden="true"></i>
+        <%= t("notification_group." + params[:group]) %>
+
+        <span class="pull-right">
+          <%= link_to t('notifications.clean_all'), notifications.notifications_path + params[:group], class: 'btn btn-sm btn-danger', id: 'btn-remove-all', method: 'delete', remote: true %>
+        </span>
+      </div>
+
+
+      <div class="card-body list item-list">
+        <% if @notifications.blank? %>
+          <div class="notification-group">
+            <div class="no-records"><%= t('notifications.no_records') %></div>
+          </div>
+        <% else %>
+          <% @notification_groups.each do |group, notifications| %>
+            <div class="notification-group">
+              <div class="group-title"><i class="fa fa-clock-o"></i> <%= group %></div>
+              <%= render notifications %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="card-footer hide-ios">
+        <%= paginate @notifications %>
+      </div>
+    </div>
   </div>
 </div>
