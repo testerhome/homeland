@@ -18,6 +18,9 @@
     <div class="info">
       <%= user_name_tag(topic.user, topic: topic) %>
       <span class="hidden-mobile">
+      <% if topic.team %>
+        for <%= user_name_tag(topic.team, topic: topic) %>
+      <% end %>
       •
       <% if topic.last_reply_user.blank? %>
         <%= raw t("common.created_at", time: timeago(topic.created_at))%>

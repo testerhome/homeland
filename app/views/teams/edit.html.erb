@@ -81,7 +81,7 @@
             <%= f.radio_button :private, false %>
           </div>
 
-          <div class="alert alert-info" role="alert">以下选项只有私有组织才会生效</div>
+          <div class="alert alert-info" role="alert">以下选项只有私有社团才会生效</div>
 
           <%= f.simple_fields_for :team_profile do |team_profile| %>
             <div class="form-group">
@@ -112,8 +112,8 @@
     <div class="card">
       <div class="card-header"><%= t('teams.teams')%></div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">公司／组织品牌展示；</li>
-        <li class="list-group-item">独立的组织首页；</li>
+        <li class="list-group-item">公司／社团品牌展示；</li>
+        <li class="list-group-item">独立的社团首页；</li>
         <li class="list-group-item">汇集成员在社区里面的话题；</li>
         <li class="list-group-item">为团队招揽人才；</li>
       </ul>

@@ -50,13 +50,13 @@ module Mentionable
     end
 
     def send_mention_notification
-      # 草稿跟私有组织的情况下不发送提到通知
+      # 草稿跟私有社团的情况下不发送提到通知
       if self.class.name == "Topic"
         return if self.draft
         return if self.private_org
       end
 
-      # 私有组织以及仅作者可见的情况下不发送提到通知
+      # 私有社团以及仅作者可见的情况下不发送提到通知
       if self.class.name == "Reply"
         return if self&.topic.private_org
         return if self.exposed_to_author_only?

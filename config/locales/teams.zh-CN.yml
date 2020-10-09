@@ -7,10 +7,10 @@
     owner: '组管理员'
     member: '成员'
   teams:
-    teams: '组织'
+    teams: '社团'
     user_existed: '已经在组里面了'
-    new_team: '创建公司／组织'
-    edit_team: '设置公司／组织资料'
+    new_team: '创建公司／社团'
+    edit_team: '设置公司／社团资料'
     new_team_user: '邀请成员'
     search_team_user: '搜索成员'
     edit_team_user: '修改成员权限'
@@ -24,8 +24,8 @@
     topics: '成员的话题列表'
     users: '成员列表'
     team_user_pendding: '等待接受'
-    settings: '组织设置'
+    settings: '社团设置'
     member_settings: '个人设置'
     is_receive_notifications: '是否接受通知'
     team_users_count: "%{count} 个团队成员"
-    access_denied: "访问被拒绝，该组织属于私人组织，想要阅读该组织文章，请联系组织管理员。"
+    access_denied: "访问被拒绝，该社团属于私人社团，想要阅读该社团文章，请联系社团管理员。"

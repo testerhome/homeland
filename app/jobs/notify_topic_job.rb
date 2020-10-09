@@ -11,7 +11,7 @@ class NotifyTopicJob < ApplicationJob
     follower_ids = topic.user.follow_by_user_ids
     return if follower_ids.empty?
 
-    # 私密组织，组内广播
+    # 私密社团，组内广播
     if topic.private_org
       follower_ids = topic&.team.team_notify_users.pluck(:user_id) || []
     end
