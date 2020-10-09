@@ -58,6 +58,17 @@ module Api
       # { followed: '是否已关注', liked: '是否已赞', favorited: '是否已收藏' }
       # ```
       def show
+        if !@topic.team.blank?
+          if @topic.team.private?
+            if !current_user
+              raise AccessDenied.new('请登录之后查看组织下面的文章！')
+            elsif !@topic.team.member?(current_user) and !current_user.admin?
+              raise AccessDenied.new('非组织成员无法查看组织下面的文章！')
+            end
+          end
+        end
+        @topic.hits.incr(1)
+
         @meta = { followed: false, liked: false, favorited: false }
 
         if current_user

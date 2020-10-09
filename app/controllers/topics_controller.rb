@@ -233,6 +233,27 @@ class TopicsController < ApplicationController
       topic = class_scope.unscoped.includes(:user).find(params[:id])
       render_404 if topic.deleted?
 
+      # Logic just for topic
+      if class_scope == Topic
+        if !topic.team.blank?
+          if topic.team.private?
+            if !current_user
+              redirect_to(new_user_session_url, alert: t("common.access_denied"))
+            elsif !topic.team.has_member?(current_user) && !current_user.admin?
+              redirect_to(team_path(topic.team), alert: t("teams.access_denied"))
+            end
+          end
+        end
+
+        if topic.user_id != current_user&.id && topic.node_id == Node.ban_id && !current_user&.admin?
+          redirect_to(topics_path, notice: t("topics.cannot_read_ban_topics"))
+        end
+      end
+
+      if topic.draft && topic.user_id != current_user&.id
+        redirect_to(topics_path, notice: t("topics.cannot_read_others_drafts"))
+      end
+
       topic.hits.incr(1)
       @node = topic.node
       @show_raw = params[:raw] == "1"

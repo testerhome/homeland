@@ -79,11 +79,11 @@
           psn_id: PSN ID
           steam_id: Stream ID
       team:
-        name: "公司／组织名称"
+        name: "公司／社团名称"
         login: "Slug"
-        bio: "公司／组织介绍"
+        bio: "公司／社团介绍"
         website: "公司 / 项目网址"
-        private: 私有组织
+        private: 私有社团
       team_profile:
         show_reward: "开启打赏加入"
         apply_message: "加入条件"
@@ -95,7 +95,7 @@
         title: "标题"
         user_id: "用户"
         node_id: "节点"
-        team_id: "关联到组织"
+        team_id: "关联到社团"
         body: "正文"
       reply:
         body: "回复内容"
@@ -129,7 +129,7 @@
               expired: 重置密码操作已过期
   notification_group:
     tsystem: '系统'
-    team: '组织'
+    team: '社团'
     personal: '个人'
   tip_off:
     reporter: '举报人'

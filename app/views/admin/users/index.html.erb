@@ -10,7 +10,7 @@
       <input type="text" name="q" class="form-control" value="<%= params[:q] %>" placeholder="搜索" />
     </div>
     <div class="form-group mr-sm-2">
-      <%= select_tag(:type, options_for_select([['全部类别',''], ['组织','Team']], params[:type]), class: 'form-control') %>
+      <%= select_tag(:type, options_for_select([['全部类别',''], ['社团','Team']], params[:type]), class: 'form-control') %>
     </div>
     <div class="form-group mr-sm-2">
       <%= select_tag(:state, options_for_select(User.state_options, params[:state]), class: 'form-control', include_blank: "所有等级") %>

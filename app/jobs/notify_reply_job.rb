@@ -12,7 +12,7 @@ class NotifyReplyJob < ApplicationJob
 
     notification_receiver_ids = reply.notification_receiver_ids
 
-    # 私有组织仅组内消息接收者可收到消息
+    # 私有社团仅组内消息接收者可收到消息
     if topic.private_org
       notification_receiver_ids = reply.private_org_notification_receiver_ids
     end

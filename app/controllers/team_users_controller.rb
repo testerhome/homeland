@@ -93,12 +93,12 @@ class TeamUsersController < ApplicationController
 
   def accept
     @team_user.accepted!
-    redirect_to(user_team_users_path(@team), notice: "接受成功，已加入组织")
+    redirect_to(user_team_users_path(@team), notice: "接受成功，已加入社团")
   end
 
   def accept_join
     @team_user.accepted!
-    redirect_to(user_team_users_path(@team), notice: '批准申请，已加入组织')
+    redirect_to(user_team_users_path(@team), notice: '批准申请，已加入社团')
   end
 
   def reject

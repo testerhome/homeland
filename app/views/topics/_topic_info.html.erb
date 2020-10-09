@@ -15,10 +15,10 @@
       </div>
     <% end %>
     <div class="info">
-      <%= user_name_tag(topic.user, data: { author: true }, topic: @topic) %>
+      <%= user_name_tag(topic.user, data: { author: true }, topic: topic) %>
       <span class="hidden-mobile">
         <% if topic.team %>
-        for <%= user_name_tag(topic.team, topic: @topic) %>
+        for <%= user_name_tag(topic.team, topic: topic) %>
         <% end %>
       </span>
        ·
@@ -34,6 +34,6 @@
     </div>
   </div>
   <div class="avatar media-right">
-    <%= user_avatar_tag(@topic.user, :md, topic: @topic) %>
+    <%= user_avatar_tag(topic.user, :md, topic: topic) %>
   </div>
 </div>
