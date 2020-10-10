@@ -106,14 +106,16 @@ module UsersHelper
     if reply
       if reply.real_user
         Faker::Config.random = random_from_two_id(reply.real_user.id, reply.topic.id)
-        img = image_tag(Faker::Avatar.image, class: img_class)
+        set = (reply.real_user.id % 2 + 1) + (reply.topic.id % 2 + 1)
+        img = image_tag(Faker::Avatar.image(set: "set#{set}"), class: img_class)
       end
     end
 
     if topic
       if topic.real_user
         Faker::Config.random = random_from_two_id(topic.real_user.id, topic.id)
-        img = image_tag(Faker::Avatar.image, class: img_class)
+        set = (topic.real_user.id % 2 + 1) + (topic.id % 2 + 1)
+        img = image_tag(Faker::Avatar.image(set: "set#{set}"), class: img_class)
       end
     end
 
