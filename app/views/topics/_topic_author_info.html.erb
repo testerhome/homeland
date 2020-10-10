@@ -23,23 +23,7 @@
       </div>
     </div>
 
-    <% if Setting.has_module?(:team) %>
-      <% if !@topic.user.teams.blank? %>
-        <div class="user-teams mt-2">
-          <div>
-            <% @topic.user.valid_teams.each do |team| %>
-              <div class="media">
-                <%= user_avatar_tag(team, :sm) %>
-                <div class="media-body ml-2 align-self-center">
-                  <%= link_to(team.fullname, "/#{team.login}") %>
-                </div>
-              </div>
 
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
 
     <% if !@topic.user.tagline.blank? %>
       <div class="tagline row">
