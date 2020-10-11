@@ -1,11 +1,12 @@
-<% if !@topic.user.blank? %>
-  <%= render "topic_author_info" %>
-<%end%>
-
+<div class="card">
+<div class="card-body">
+  <%= render "users/profile_card", user: @topic.user %>
+</div>
+</div>
 <div id="topic-sidebar" data-spy="affix" data-offset-bottom="65">
+
   <div class="card">
     <div class="card-body">
-      <a href="#" class="btn btn-default btn-block btn-sm btn-move-page" data-type="top"><i class="fa fa-arrow-up"></i></a>
       <div class="buttons">
         <div class="group likes opts">
           <%= likeable_tag(@topic) %>
@@ -28,19 +29,19 @@
         </div>
         <%= reward_user_tag(@topic.user) %>
       </div>
+      <% if can?(:manage, @topic) || can?(:close, @topic) %>
       <hr />
       <div class="group opts">
         <% if can?(:manage, @topic) %>
           <div style="margin-bottom: 8px">
             <% if !@topic.suggested_at.blank? %>
-            <%= link_to raw("<i class='fa fa-pin'></i> 取消"), unsuggest_admin_topic_path(@topic), method: :post, remote: true %>
+              <%= link_to raw("<i class='fa fa-pin'></i> 取消"), unsuggest_admin_topic_path(@topic), method: :post, remote: true %>
             <% else %>
-            <%= link_to raw("<i class='fa fa-pin'></i> 置顶"), suggest_admin_topic_path(@topic), method: :post, remote: true %>
+              <%= link_to raw("<i class='fa fa-pin'></i> 置顶"), suggest_admin_topic_path(@topic), method: :post, remote: true %>
             <% end %>
             <% if !@topic.excellent? %>
-            <%= link_to raw("<i class='fa fa-award'></i> 加精"), action_topic_path(@topic, type: 'excellent'), method: "post", remote: true %>
+              <%= link_to raw("<i class='fa fa-award'></i> 加精"), action_topic_path(@topic, type: 'excellent'), method: "post", remote: true %>
             <% end %>
-
             <% if !@topic.ban? %>
               <%= link_to raw("<i class='fa fa-ban'></i> 屏蔽"), ban_topic_path(@topic), remote: true, title: "全站屏蔽此贴" %>
             <% else %>
@@ -48,7 +49,6 @@
             <% end %>
           </div>
         <% end %>
-
         <div>
           <% if can?(:close, @topic) %>
             <% if !@topic.closed? %>
@@ -58,17 +58,16 @@
             <% end %>
           <% end %>
           <% if can?(:edit, @topic) %>
-          <%= link_to raw('<i class="fa fa-edit"></i> 编辑'), send("edit_#{@topic.class.name.downcase}_path", @topic), title: "修改本帖" %>
+            <%= link_to raw('<i class="fa fa-edit"></i> 编辑'), edit_topic_path(@topic), title: "修改本帖", data: { prefetch: false } %>
           <% end %>
           <% if can?(:destroy, @topic) %>
-            <%= link_to raw('<i class="fa fa-trash"></i> 删除'), send("#{@topic.class.name.downcase}_path", @topic), method: :delete, 'data-confirm' => t("common.confirm_delete"), title: "删除本帖", remote: true %>
+            <%= link_to raw('<i class="fa fa-trash"></i> 删除'), topic_path(@topic.id), method: :delete, 'data-confirm' => t("common.confirm_delete"), title: "删除本帖", remote: true %>
           <% end %>
         </div>
       </div>
-      <a href="#" class="btn btn-default btn-sm btn-block btn-move-page" data-type="bottom"><i class="fa fa-arrow-down"></i></a>
+      <% end %>
     </div>
   </div>
-
   <div class="notify-updated">
     <a class="update" href="#"><i class="fa fa-bell-o"></i> <b>有新回复！</b>点击这里立即载入</a>
   </div>
