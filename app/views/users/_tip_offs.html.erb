@@ -1,0 +1,18 @@
+<table class="node-topics table">
+  <tr class="head">
+    <td class="node hide-ios"><%=t('tip_off.report_type')%></td>
+    <td class="title"><%=t('tip_off.content_url')%></td>
+    <td class="title"><%=t('tip_off.description')%></td>
+    <td class="replies"><%=t('tip_off.follow_status')%></td>
+    <td class="replies"><%=t('tip_off.follow_result')%></td>
+  </tr>
+  <% tip_offs.each do |tip_off| %>
+    <tr>
+      <td class="node"><%=tip_off[:tip_off_type]%></td>
+      <td class="title"><a href="<%=tip_off[:content_url]%>" target="_blank"><%=tip_off[:content_url]%></a></td>
+      <td class="node hide-ios" style="width: 200px"><%=tip_off[:body]%></td>
+      <td class="replies"><%= tip_off[:follower_id] ? t('tip_off.following') : t('tip_off.not_follow') %></td>
+      <td class="replies"><%=tip_off[:follow_result]%></td>
+    </tr>
+  <% end %>
+</table>

@@ -9,4 +9,10 @@
   if owner?(@user) && current_user.block_users?
     li << link_to(t("users.menu.blocked"), blocked_user_path(@user), class: "nav-link hide-ios hidden-mobile")
   end
+  if owner?(@user) && current_user.has_draft?
+    li << link_to(t("users.menu.drafts"), drafts_user_path(@user), class: 'nav-link hide-ios hidden-mobile')
+  end
+  if owner?(@user)
+    li << link_to(t("users.menu.tip_offs"), tip_offs_user_path(@user), class: 'nav-link hide-ios hidden-mobile')
+  end
 end %>
