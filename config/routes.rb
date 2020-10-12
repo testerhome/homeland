@@ -144,6 +144,7 @@ Rails.application.routes.draw do
         delete :clean
       end
     end
+    post "/users/send_message", to: 'users#send_sms', as: 'send_sms'
     resources :photos
     resources :admin_photos
     resources :comments
