@@ -54,7 +54,7 @@ server {
   }
 
   # 兼容来自photo的老数据
-  location /photo {
+  location /photo/ {
     access_log        off;
     expires           365d;
     gzip_static on;
