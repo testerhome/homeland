@@ -23,6 +23,12 @@
     <%= f.text_area :body, class: "topic-editor form-control closewarning", rows: 20 %>
   </div>
 
+  <span class="help-inline">
+    <label>
+      <%= f.check_box :cannot_be_shared %>  <%= t("topics.cannot_be_shared")%>
+    </label>
+  </span>
+
   <% if Setting.has_module?(:team) %>
     <% if current_user.team_options.any? %>
       <%= f.hidden_field :team_id %>
