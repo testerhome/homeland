@@ -145,6 +145,7 @@ Rails.application.routes.draw do
       end
     end
     resources :photos
+    resources :admin_photos
     resources :comments
     resources :locations
     resources :applications
