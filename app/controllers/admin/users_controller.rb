@@ -110,5 +110,44 @@ module Admin
       Topic.unscoped.where(user_id: @user.id).recent.limit(10).delete_all
       redirect_to edit_admin_user_path(@user.id), notice: "最近 10 条删除成功。"
     end
+
+    def send_sms
+      message  = params[:message]
+      if message.blank?
+        redirect_to(admin_users_url, notice: "空消息不处理！")
+      end
+
+      type = "#{params[:type].downcase}"
+      uids = []
+      if type == "all"
+        users = User.all
+        uids = users.ids
+      else
+        q = params[:login_name]
+        login_names = q.split(",")
+        if login_names.blank?
+          redirect_to(admin_users_url, notice: "选择个人时候，请输入用户登录名！")
+        end
+
+        login_names.each do |name|
+          u = User.find_by_login!(name)
+          uids << u.try(:id)
+        end
+      end
+
+      if uids.blank?
+        redirect_to(admin_users_url, notice: "没有用户，不发送！")
+      end
+      # 给所有用户发通知
+      default_note = { notify_type: "admin_sms", target_type: "User", actor_id: current_user.id }
+      Notification.bulk_insert(set_size: 100) do |worker|
+        uids.each do |uid|
+          note = default_note.merge({user_id: uid, target_id: uid, message: message })
+          worker.add(note)
+        end
+      end
+
+      redirect_to(admin_users_url, notice: "发送完毕！")
+    end
   end
 end
