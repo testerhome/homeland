@@ -20,6 +20,7 @@ module Homeland
       SearchDocument.select("ts_headline(search_documents.content, #{ts_query}) as hit_content")
         .select(:id, :searchable_type, :searchable_id)
         .where("tokens @@ #{ts_query}")
+        .order("searchable_type DESC")
         .order("#{ts_query} DESC")
         .order("TS_RANK_CD(tokens, #{ts_query}) DESC")
     end

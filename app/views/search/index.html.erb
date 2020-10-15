@@ -3,7 +3,7 @@
   <div class="card-body">
     <div class="card-title d-flex justify-content-between">
       <div>
-        关于 “<%= params[:q] %>” 的搜索结果 <span class="counter">共 <%= @result.size %> 条</span>
+        关于 “<%= params[:q] %>” 的搜索结果 <span class="counter">共 <%= @search.query_results.size %> 条</span>
       </div>
 
       <div>
@@ -24,7 +24,9 @@
     <% else %>
       <% @result.each do |doc| %>
         <% partial_view_name = doc.searchable_type.downcase -%>
-        <%= render partial: (partial_view_name == 'team' ? 'user' : partial_view_name), locals: { item: doc.searchable, hit: doc } %>
+        <% partial_view_name = 'user' if partial_view_name == 'team' %>
+        <% partial_view_name = 'topic' if partial_view_name == 'article' %>
+        <%= render partial: partial_view_name, locals: { item: doc.searchable, hit: doc } %>
       <% end %>
     <% end %>
     <%= paginate @result %>

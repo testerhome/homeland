@@ -15,7 +15,7 @@ class Topic
     def as_indexed_json
       {
         title: self.title,
-        body: Homeland::Html.plain(self.body_html),
+        body: full_body
       }.as_json
     end
   end
