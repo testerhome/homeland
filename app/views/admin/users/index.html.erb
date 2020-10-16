@@ -39,23 +39,37 @@
   <tr class="head">
     <td class="first">#</td>
     <td>头像</td>
-    <td>帐号</td>
+    <td colspan="2">帐号</td>
     <td>注册时间</td>
     <td>操作</td>
   </tr>
 
-<% @users.each do |user| %>
-  <tr>
-    <td class="first"><%= user.id %></td>
-    <td width="32"><%= user_avatar_tag(user, :sm) %></td>
-    <td>
-      <%= link_to user.fullname, user_path(user), target: "_blank" %> <%= user_level_tag(user) unless user.member? %>
-    </td>
-    <td width="120"><%= user.created_at&.to_date %></td>
-    <td>
-      <%= link_to '', edit_admin_user_path(user.id), class: "fa fa-edit" %>
-    </td>
-  </tr>
-<% end %>
+  <% @users.each do |user| %>
+    <tr>
+      <td class="first"><%= user.id %></td>
+      <td width="32"><%= user_avatar_tag(user, :sm) %></td>
+      <% if user.maintainer? %>
+        <td >
+          <%= link_to user.fullname, user_path(user), target: "_blank" %> <%= user_level_tag(user) unless user.member? %>
+        </td>
+        <td>
+          <%= Node.where(id: user.node_assignment_ids).pluck(:name).join(', ') %>
+        </td>
+      <% else %>
+        <td colspan="2">
+          <%= link_to user.fullname, user_path(user), target: "_blank" %> <%= user_level_tag(user) unless user.member? %>
+        </td>
+      <% end %>
+      <td width="120"><%= user.created_at&.to_date %></td>
+      <td>
+        <%= link_to '', edit_admin_user_path(user.id), class: "fa fa-edit mr-2", title: "edit user" %>
+        <% if user.maintainer? %>
+          <%= link_to edit_assign_nodes_admin_user_path(user.id), title: "assign nodes", 'data-disable-with': "loading...", remote: true do %>
+            Assign
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
 </table>
 <%= paginate @users %>

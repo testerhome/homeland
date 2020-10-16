@@ -142,6 +142,8 @@ Rails.application.routes.draw do
     resources :users, constraints: { id: /[#{User::LOGIN_FORMAT}]*/ } do
       member do
         delete :clean
+        put :assign_nodes
+        get :edit_assign_nodes
       end
     end
     post "/users/send_message", to: 'users#send_sms', as: 'send_sms'

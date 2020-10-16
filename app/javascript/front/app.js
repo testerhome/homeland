@@ -1,6 +1,7 @@
 require("./emoji-modal");
 require("./notifier");
 require("./github-statistics")
+require("./node-assign")
 
 const AppView = Backbone.View.extend({
   el: "body",
@@ -32,6 +33,7 @@ const AppView = Backbone.View.extend({
     }
 
     window._githubStatisticsView = new GitHubStatisticsView({parentView: this})
+    window._nodeAssign = new NodeAssignView({parentView: this})
 
     return window._tocView = new TOCView({ parentView: this });
   },
@@ -150,7 +152,6 @@ const AppView = Backbone.View.extend({
     $el.data("remote-loaded", 0);
     return false;
   },
-
   likeableAsLiked(el) {
     const likes_count = el.data("count");
     el.data("state", "active").attr("title", "取消赞").addClass("active");

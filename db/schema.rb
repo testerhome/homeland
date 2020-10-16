@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_23_142045) do
+ActiveRecord::Schema.define(version: 2020_10_16_064059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -506,6 +506,7 @@ ActiveRecord::Schema.define(version: 2020_09_23_142045) do
     t.boolean "weibo_public"
     t.string "co"
     t.string "qrcode"
+    t.integer "node_assignment_ids", default: [], array: true
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

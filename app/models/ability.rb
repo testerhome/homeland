@@ -11,6 +11,8 @@ class Ability
       roles_for_anonymous
     elsif @user.admin?
       can :manage, :all
+      ids = User.where(state: :maintainer).pluck(:node_assignment_ids).reduce { |x, y| x | y }
+      cannot [:destroy, :update], Node, id: ids
     elsif @user.member?
       roles_for_members
     elsif @user.hr?
@@ -20,7 +22,7 @@ class Ability
       roles_for_vip
     elsif @user.maintainer?
       roles_for_members
-      roles_for_maintainer
+      custom_roles_for_maintainers
     else
       roles_for_anonymous
     end
@@ -48,6 +50,15 @@ class Ability
     # Vip 用户权限
     def roles_for_vip
       can :create, Team
+    end
+
+    # 自定义版主权限
+    def custom_roles_for_maintainers
+      can :create, Team
+      can :manage, Node, id: user.node_assignment_ids
+      can :manage, Topic, node_id: user.node_assignment_ids
+      topic_ids = Topic.where(node_id: user.node_assignment_ids)
+      can :manage, Reply, topic_id: topic_ids
     end
 
     # 版主权限
