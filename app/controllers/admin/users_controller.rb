@@ -111,6 +111,24 @@ module Admin
       redirect_to edit_admin_user_path(@user.id), notice: "最近 10 条删除成功。"
     end
 
+    def edit_assign_nodes
+      @user = User.find(params[:id])
+    end
+
+    def assign_nodes
+      ids = params[:node_ids]
+      ids = Node.ids & ids.map(&:to_i)
+      @user = User.find(params[:id])
+
+      if @user.maintainer?
+        @user.update(node_assignment_ids: ids)
+        flash[:notice] = "分配成功"
+        render json: { msg: "分配成功" }
+      else
+        render json: { msg: '只有版主才能分配节点' }, status: 403
+      end
+    end
+
     def send_sms
       message  = params[:message]
       if message.blank?

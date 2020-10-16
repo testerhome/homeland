@@ -162,3 +162,45 @@ table tr td a.fa {
     }
   }
 }
+
+#assign_modal {
+  top: 0;
+
+  .node-list {
+    .node {
+      margin-bottom: 10px;
+      margin-top: 0px;
+      &:last-child {
+        margin-bottom: 0px;
+      }
+      .media-left {
+        min-width: 130px;
+      }
+      label {
+        font-weight: normal;
+        color: var(--secondary);
+        text-align: right;
+      }
+      .name {
+        text-align: center;
+        margin-bottom: 10px;
+        width: 100px;
+        display: block;
+        float: left;
+
+        a {
+          text-decoration: none;
+        }
+
+        a:link,
+        a:visited {
+          color: var(--primary);
+        }
+
+        a.active {
+          color: var(--red);
+        }
+      }
+    }
+  }
+}

@@ -16,6 +16,7 @@ module Admin
     end
 
     def edit
+      authorize! :update, @node
     end
 
     def create
@@ -29,6 +30,7 @@ module Admin
     end
 
     def update
+      authorize! :update, @node
       if @node.update(params[:node].permit!)
         redirect_to(admin_nodes_path, notice: "Node was successfully updated.")
       else
@@ -37,8 +39,13 @@ module Admin
     end
 
     def destroy
+      authorize! :destroy, @node
       @node.destroy
       redirect_to(admin_nodes_url)
+    end
+
+    rescue_from CanCan::AccessDenied do |exception|
+      redirect_to admin_nodes_path, alert: "无此操作权限，可能因为该节点已经分配了版主"
     end
 
     private
