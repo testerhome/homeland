@@ -92,7 +92,7 @@ module Users
       end
 
       def user_show
-        @topics = @user.topics.without_draft.fields_for_list.high_likes.limit(20)
+        @topics = @user.topics.without_draft.fields_for_list.high_likes.page(params[:page])
         @replies = @user.replies.without_system.fields_for_list.recent.includes(:topic).limit(10)
       end
   end

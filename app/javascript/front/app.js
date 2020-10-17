@@ -16,7 +16,8 @@ const AppView = Backbone.View.extend({
     "click a.button-block-user": "blockUser",
     "click a.button-follow-user": "followUser",
     "click a.button-block-node": "blockNode",
-    "click a.rucaptcha-image-box": "reLoadRucaptchaImage"
+    "click a.rucaptcha-image-box": "reLoadRucaptchaImage",
+    "click .topics .topic": "visitTopic",
   },
 
   initialize() {
@@ -154,7 +155,7 @@ const AppView = Backbone.View.extend({
   },
   likeableAsLiked(el) {
     const likes_count = el.data("count");
-    el.data("state", "active").attr("title", "取消赞").addClass("active");
+    el.data("state", "active").attr("title", "取消赞").addClass("active").addClass("animate");
     return $('span', el).text(`${likes_count} 个赞`);
   },
 
@@ -256,7 +257,7 @@ const AppView = Backbone.View.extend({
         success(res) {
           if (res.code === 0) {
             btn.addClass('active').attr("title", "");
-            span.text("取消关注");
+            span.text("已关注");
             return followerCounter.text(res.data.followers_count);
           }
         }
@@ -358,7 +359,17 @@ const AppView = Backbone.View.extend({
     } else {
       return $(".header.navbar").removeClass('fixed-title');
     }
-  }
+  },
+
+
+  visitTopic(e) {
+    const { target, currentTarget } = e
+    if (target.tagName === 'A' || target.tagName === 'IMG') {
+      return
+    }
+    currentTarget.querySelector(".title a").click()
+  },
+
 });
 
 document.addEventListener('turbolinks:load', () => {

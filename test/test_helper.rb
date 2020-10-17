@@ -3,6 +3,11 @@
 ENV["RAILS_ENV"] = "test"
 ENV["upload_provider"] = "file"
 
+# Mock to enable all Omniauth providers
+ENV["github_api_key"] = "fake-key"
+ENV["twitter_api_key"] = "fake-key"
+ENV["wechat_api_key"] = "fake-key"
+
 require "simplecov"
 if ENV["CI"] == "true"
   require "codecov"
@@ -113,5 +118,11 @@ class ActionDispatch::IntegrationTest
     yield block
     assert_equal 302, response.status
     assert_match /\/account\/sign_in/, response.headers["Location"]
+  end
+
+  def assert_signed_in
+    get setting_path
+    assert_equal 200, response.status
+    assert_select "a[href='/account/sign_out']"
   end
 end

@@ -24,12 +24,16 @@ module Notifications
 
       unread_ids = @notifications.reject(&:read?).select(&:id)
       Notification.read!(unread_ids)
-
       @notification_groups = @notifications.group_by { |note| note.created_at.to_date }
 
       Notification.realtime_push_to_client(current_user)
 
       render action: "index"
+    end
+
+    def read
+      Notification.read!(current_user, params[:ids])
+      render json: { ok: 1 }
     end
 
     def clean

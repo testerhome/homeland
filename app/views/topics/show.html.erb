@@ -15,11 +15,12 @@
       <% if @topic.closed? %>
         $("#replies .reply .hideable").remove();
       <% end %>
+      $.post("<%= read_topic_path(@topic) %>");
     })
   </script>
 <% end %>
 <div class="row">
-  <div class="col-md-9">
+  <div class="col-lg-9">
     <div class="topic-detail card">
       <%= render partial: "topics/topic_info", locals: { topic: @topic } %>
       <% if @topic.excellent? %>
@@ -113,8 +114,9 @@
       </div>
     <% end %>
   </div>
+
   <% if !mobile? %>
-    <div class="sidebar hidden-mobile col-md-3">
+    <div class="sidebar hidden-mobile col-lg-3">
       <%= render 'topic_sidebar' %>
     </div>
   <% else %>

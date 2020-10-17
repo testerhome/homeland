@@ -110,21 +110,15 @@ module ApplicationHelper
     raw "<i class='fa fa-#{name}'></i> #{label}"
   end
 
-  # Override cache helper for support multiple I18n locale
-  def cache(name = {}, options = {}, &block)
-    options ||= {}
-    super([I18n.locale, name], options, &block)
-  end
-
   def render_list(opts = {})
     list = []
-    yield(list)
+    yield list
     list_items = render_list_items(list)
     content_tag("ul", list_items, opts)
   end
 
   def render_list_items(list = [])
-    yield(list) if block_given?
+    yield list if block_given?
     items = []
     list.each do |link|
       urls = link.match(/href=(["'])(.*?)(\1)/) || []
@@ -148,5 +142,29 @@ module ApplicationHelper
 
   def social_share_button_tag(title)
     super(title, allow_sites: Setting.share_allow_sites)
+  end
+
+
+  # Render div.form-group with a block, it including validation error below input
+  #
+  # form_group(f, :email) do
+  #   f.email_field :email, class: "form-control"
+  # end
+  def form_group(form, field, opts = {}, &block)
+    has_errors = form.object.errors[field].present?
+    opts[:class] ||= "form-group"
+    opts[:class] += " has-error" if has_errors
+
+    content_tag :div, class: opts[:class] do
+      concat form.label field, class: "control-label" if opts[:label] != false
+      concat capture(&block)
+      concat errors_for(form, field)
+    end
+  end
+
+  def errors_for(form, field)
+    message = form.object.errors.full_messages_for(field)&.first
+    return nil if message.blank?
+    content_tag(:div, message, class: "form-error")
   end
 end

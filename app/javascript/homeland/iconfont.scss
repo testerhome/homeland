@@ -22,4 +22,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
   &-legal {
     @extend .fa-briefcase;
   }
+  &-wechat {
+    @extend .fa-weixin;
+  }
 }
