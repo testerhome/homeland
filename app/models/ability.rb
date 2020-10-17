@@ -55,7 +55,6 @@ class Ability
     # 自定义版主权限
     def custom_roles_for_maintainers
       can :create, Team
-      can :manage, Node, id: user.node_assignment_ids
       can :manage, Topic, node_id: user.node_assignment_ids
       topic_ids = Topic.where(node_id: user.node_assignment_ids)
       can :manage, Reply, topic_id: topic_ids
