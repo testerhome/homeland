@@ -171,12 +171,12 @@ describe TopicsController do
     describe "authenticated" do
       it "should allow access from authenticated user" do
         sign_in user
-        post topics_path, params: { format: :js, topic: { title: "new topic", body: "new body", node: node } }
+        post topics_path, params: { format: :js, topic: { title: "new topic", body: "new body", node_id: node.id } }
         assert_equal 200, response.status
       end
       it "should allow access from authenticated user with team" do
         sign_in user
-        post topics_path, params: { format: :js, topic: { title: "new topic", body: "new body", node: node, team_id: team.id } }
+        post topics_path, params: { format: :js, topic: { title: "new topic", body: "new body", node_id: node.id, team_id: team.id } }
         assert_equal 200, response.status
       end
     end
@@ -229,7 +229,6 @@ describe TopicsController do
     end
 
     it "should update with admin user" do
-      # new_node = create(:node)
       sign_in admin
       put topic_path(topic), params: { format: :js, topic: { title: "new topic 2", body: "new body 2", node_id: node.id } }
       assert_equal 200, response.status
@@ -284,15 +283,24 @@ describe TopicsController do
   end
 
   describe "GET /topics/:id" do
-    it "should clear user mention notification when show topic" do
+    it "should work" do
+      user = create :user
+      topic = create :topic, body: "@#{user.login}"
+      create :reply, body: "@#{user.login}", topic: topic, like_by_user_ids: [user.id]
+      get topic_path(topic)
+      assert_equal 200, response.status
+    end
+  end
+
+  describe "POST /topics/:id/read" do
+    it "should work" do
       user = create :user
       topic = create :topic, body: "@#{user.login}"
       create :reply, body: "@#{user.login}", topic: topic, like_by_user_ids: [user.id]
       sign_in user
-
       perform_enqueued_jobs do
         assert_changes -> { user.notifications.unread.count }, -2 do
-          get topic_path(topic)
+          post read_topic_path(topic)
         end
       end
       assert_equal 200, response.status

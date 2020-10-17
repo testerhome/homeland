@@ -324,6 +324,11 @@ body {
   }
 }
 
+.form-error {
+  margin-top: 5px;
+  color: #ee4343;
+}
+
 .form-control {
   background-color: var(--form-control-background-color);
   border-color: var(--form-control-border-color);
@@ -362,6 +367,10 @@ input[type="file"] {
   a {
     color: var(--primary);
   }
+}
+
+.sidebar.col-lg-3 {
+  padding-left: 0;
 }
 
 .nav-tabs {
@@ -454,7 +463,7 @@ input[type="file"] {
   }
 
   li > a:hover {
-    color: vra(--text-color1);
+    color: var(--text-color1);
     background: var(--gray);
   }
 
@@ -811,9 +820,13 @@ img.emoji {
 
 .opts a.active {
   .fa {
-    @extend .animated;
-    @extend .bounceIn;
     color: var(--red);
+  }
+  &.animate {
+    .fa {
+      @extend .animated;
+      @extend .bounceIn;
+    }
   }
 }
 
@@ -899,12 +912,12 @@ img.emoji {
   }
   .row {
     margin: 0;
-    .col-md-9,
-    .col-md-8,
-    .col-md-6,
-    .col-md-5,
-    .col-md-4,
-    .col-md-3 {
+    .col-lg-9,
+    .col-lg-8,
+    .col-lg-6,
+    .col-lg-5,
+    .col-lg-4,
+    .col-lg-3 {
       padding: 0;
     }
   }
@@ -917,11 +930,8 @@ img.emoji {
 
   .topics {
     .topic {
-      padding: 8px !important;
-      margin: 0 -8px !important;
-
-      .avatar {
-        margin-top: 8px;
+      .node {
+        display: none;
       }
       .count {
         font-size: 12px;

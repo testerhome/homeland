@@ -70,7 +70,7 @@
     replies_count: "回复"
     likes_count: 赞
     has_deleted: 已删除
-    auth_with_other_services: "用其他平台的帐号登录"
+    auth_with_other_services: "用其他平台的账号登录"
     captcha: "验证码"
     search_result: "搜索结果"
     tip_off: '举报'
@@ -154,6 +154,18 @@
     column_user_white_list: "专栏功能白名单列表，写入可使用专栏功能的用户名称（一行一个）。非白名单用户看不到创建专栏入口。"
     column_enabled: "专栏功能开关。若值不为空，表示开。关闭时用户可编辑已有专栏，但不能新增"
     timezone: "日期时间显示时区，默认: UTC"
+    profile_fields: "用户个性资料支持字段，默认：all 可选：[company,twitter,website,tagline,location,alipay,paypal,qq,weibo,wechat,douban,dingding,aliwangwang,facebook,instagram,dribbble,battle_tag,psn_id,steam_id]"
+    modules: "启用模块，默认 all 全部开启，可选：[topic,home,team,github,editor.code]"
+    domain: "网站域名，默认: localhost"
+    asset_host: "静态资源 CDN，比如：https://assets.your-host.com (如果没有，请留空)"
+    https: "是否启用 HTTPS"
+    rack_attack: "访问频率限制，limit - 每个周期单个 IP 请求次数限制, period - 多少时间（秒）为一个请求限制周期"
+    github_api_key: "GitHub 登录 API key (留空禁用）"
+    github_api_secret: "GitHub 登录 API secret key"
+    twitter_api_key: "Twitter 登录 API key (留空禁用）"
+    twitter_api_secret: "Twitter 登录 API secret key"
+    wechat_api_key: "微信登录 API key (留空禁用）"
+    wechat_api_secret: "微信登录 API secret key"
   pagination:
     next: "下一页"
     prev: "上一页"

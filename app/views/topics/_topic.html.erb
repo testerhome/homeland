@@ -1,4 +1,5 @@
 <% cache([topic, topic.user_avatar_raw, suggest]) do %>
+
 <div class="topic media topic-<%= topic.id %>">
   <div class="avatar">
     <%= user_avatar_tag(topic.user, :md, topic: topic) %>
@@ -27,13 +28,7 @@
       <% else %>
         <%= t("common.last_by")%> <%= user_name_tag(topic.last_reply_user, reply: topic.last_reply) %> <%= raw t("common.reply_at", time: timeago(topic.replied_at))%>
       <% end %>
-      </span>
     </div>
-  </div>
-  <div class="count media-right">
-    <% if topic.replies_count > 0 %>
-      <%= link_to(topic.replies_count,"#{main_app.topic_path(topic)}#reply-#{topic.last_reply_id}", class: "state-false") %>
-    <% end %>
   </div>
 </div>
 <% end %>

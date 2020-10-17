@@ -1,5 +1,5 @@
 <% cache([reply, reply.user_avatar_raw, "raw:#{@show_raw}"]) do %>
-<%
+  <%
   floor = reply_counter + 1
   show_deleted = reply.deleted? && !@show_raw
   class_names = ['reply']
@@ -7,6 +7,7 @@
   class_names << 'reply-system' if reply.system_event?
   class_names << 'reply-deleted' if show_deleted
 %>
+
 <div class="<%= class_names.join(' ') %>" data-id="<%= reply.id %>" id="reply<%= floor %>">
   <div id="reply-<%= reply.id %>" data-floor="<%= floor %>">
     <% if show_deleted %>

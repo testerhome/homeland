@@ -18,7 +18,6 @@
     <% if !@topic.excellent? %>
       <%= link_to raw("<i class='fa fa-award'></i> 加精"), action_topic_path(@topic.id, type: 'excellent'), title: "设为精华帖" , method: :post, remote: true %>
     <% end %>
-
     <% if !@topic.ban? %>
       <%= link_to raw("<i class='fa fa-ban'></i> 屏蔽"), ban_topic_path(@topic), remote: true, title: "全站屏蔽此贴" %>
     <% else %>
@@ -33,7 +32,6 @@
         <%= link_to raw("<i class='fa fa-undo'></i>"), action_topic_path(@topic, type: 'open'), method: 'post', title: "重新开启话题", remote: true, data: { toggle: 'tooltip' } %>
       <% end %>
     <% end %>
-
     <% if can?(:edit, @topic) %>
       <%= link_to "", edit_topic_path(@topic), class: "fa fa-edit", title: "修改本帖" %>
     <% end %>

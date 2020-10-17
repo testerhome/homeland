@@ -67,6 +67,12 @@ class TopicsController < ApplicationController
     render template: "topics/raw_markdown"
   end
 
+  def read
+    @topic.hits.incr(1)
+    # 通知处理
+    current_user&.read_topic(@topic)
+    render plain: "1"
+  end
 
   def new
     @topic = Topic.new(user_id: current_user.id)
@@ -202,7 +208,7 @@ class TopicsController < ApplicationController
     def check_current_user_status_for_topic(resource)
       return false unless current_user
       # 通知处理
-      current_user.read_topic(resource, replies_ids: @replies.collect(&:id))
+      current_user.read_topic(resource)
       # 是否关注过
       @has_followed = current_user.follow_topic?(resource)
       # 是否收藏
@@ -276,4 +282,5 @@ class TopicsController < ApplicationController
       check_current_user_status_for_topic(topic)
       instance_variable_set("@#{class_scope.name.downcase}", topic)
     end
+
 end
