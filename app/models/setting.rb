@@ -277,14 +277,14 @@ class Setting < RailsSettings::Base
     def rails_initialized?
       true
     end
+  end
 
-    def require_restart?
-      !HOT_UPDATE_KEYS.include?(self.var)
-    end
+  def require_restart?
+    !HOT_UPDATE_KEYS.include?(self.var)
+  end
 
-    def type
-      @option ||= self.class.get_field(self.var)
-      @option[:type]
-    end
+  def type
+    @option ||= self.class.get_field(self.var)
+    @option[:type]
   end
 end
