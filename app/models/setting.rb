@@ -2,15 +2,14 @@
 
 # RailsSettings Model
 class Setting < RailsSettings::Base
+  include Setting::Legecy
+
   # List setting value separator chars
   SEPARATOR_REGEXP = /[\s,]/
 
-  # keys that allow update in admin
-  include Setting::Legecy
-
   SYSTEM_KEYS = %w[require_restart doman https asset_host]
 
-  # keys that allow update without restart
+  # keys that allow update in admin
   HOT_UPDATE_KEYS = %w[
     default_locale
     auto_locale

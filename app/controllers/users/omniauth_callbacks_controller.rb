@@ -7,6 +7,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  def handle_unverified_request
+  end
+
   def failure
     set_flash_message! :alert, :failure, kind: Homeland::Utils.omniauth_name(failed_strategy.name), reason: failure_message
 
