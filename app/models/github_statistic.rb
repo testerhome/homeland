@@ -130,7 +130,7 @@ class GitHubStatistic < ApplicationRecord
       path = url.gsub("https://api.github.com", "")
 
       conn = Faraday.new("https://api.github.com")
-      conn.basic_auth(Setting.github_token, Setting.github_secret)
+      conn.basic_auth(Setting.github_api_key, Setting.github_api_secret)
       resp = conn.get(path)
 
       if resp.status == 200
