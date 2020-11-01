@@ -264,17 +264,17 @@ class TopicTest < ActiveSupport::TestCase
     assert_equal true, topic.valid?
     topic = build(:topic, body: "This is FFFF")
     assert_equal false, topic.valid?
-    assert_equal ["敏感词 “FFF” 禁止发布！"],  topic.errors&.messages.dig(:body)
+    assert_equal ["请勿发布无意义的内容或者敏感词，请勿挑战！"],  topic.errors&.messages.dig(:base)
     topic = build(:topic, body: "This is AAAA")
     assert_equal false, topic.valid?
-    assert_equal ["敏感词 “AAAA” 禁止发布！"],  topic.errors&.messages.dig(:body)
+    assert_equal ["请勿发布无意义的内容或者敏感词，请勿挑战！"],  topic.errors&.messages.dig(:base)
   end
 
   test "as_indexed_json" do
     topic = build(:topic, title: "hello world", body: "This **is** body New line")
     json = topic.as_indexed_json
     assert_equal "hello world", json["title"]
-    assert_equal "This is body New line", json["body"]
+    assert_equal "This is body New line", json["body"].strip
   end
 
   test "belongs to nickname node" do
