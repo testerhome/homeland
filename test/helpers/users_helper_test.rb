@@ -15,7 +15,7 @@ class UsersHelperTest < ActionView::TestCase
 
   test "user_name_tag should result right html in normal" do
     user = build(:user)
-    assert_equal link_to(user.login, user_path(user.login), class: "user-name", "data-name" => user.name), user_name_tag(user)
+    assert_equal link_to(user.name, user_path(user.login), class: "user-name", "data-name" => user.name), user_name_tag(user)
   end
 
   test "user_name_tag should result right html with string param and downcase url" do
