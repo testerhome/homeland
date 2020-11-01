@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'redcarpet/render_strip'
 
 class Topic < ApplicationRecord
   include SoftDelete, MarkdownBody, Mentionable, MentionTopic, Closeable, Searchable, UserAvatarDelegate
@@ -66,7 +67,8 @@ class Topic < ApplicationRecord
   end
 
   def full_body
-    ([self.body] + self.replies.pluck(:body)).join('\n\n')
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::StripDown)
+    ([markdown.render(self.body)] + self.replies.pluck(:body)).join('\n\n')
   end
 
   def self.topic_index_hide_node_ids
@@ -137,7 +139,7 @@ class Topic < ApplicationRecord
     else
       ban_words = Setting.ban_words_on_body.collect(&:strip)
       for ban_word in ban_words
-        if body && body.strip.downcase.include?(ban_word) || title.strip.downcase.include?(ban_word)
+        if body && body.strip.downcase.include?(ban_word.downcase) || title.strip.downcase.include?(ban_word.downcase)
           add_to_blocked_user
           errors.add(:base, "请勿发布无意义的内容或者敏感词，请勿挑战！")
         end

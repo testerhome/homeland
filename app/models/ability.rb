@@ -56,7 +56,7 @@ class Ability
     def custom_roles_for_maintainers
       can :create, Team
       can :manage, Topic, node_id: user.node_assignment_ids
-      topic_ids = Topic.where(node_id: user.node_assignment_ids)
+      topic_ids = Topic.where(node_id: user.node_assignment_ids).pluck(:id)
       can :manage, Reply, topic_id: topic_ids
     end
 

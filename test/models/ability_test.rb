@@ -17,15 +17,23 @@ class AbilityTest < ActiveSupport::TestCase
     assert ability.can?(:manage, TeamUser)
   end
 
-  test "Maintainer manage Topic, Node" do
+  test "Maintainer manage Topic, Node, Reply" do
+    node1 = create(:node, name: 'node1')
+    node2 = create(:node, name: 'node2')
     user = create :user, state: :maintainer
+    topic1 = create(:topic, node: node1)
+    topic2 = create(:topic, node: node2)
+    reply_to_topic1_list = create_list(:reply, 10, topic: topic1)
+    reply_to_topic2_list = create_list(:reply, 10, topic: topic2)
+
+    user.update(node_assignment_ids: [node1.id])
+
     ability = Ability.new(user)
-    assert ability.can?(:manage, Topic)
-    assert ability.can?(:lock_node, Topic)
-    assert ability.can?(:manage, Reply)
-    assert ability.can?(:manage, Section)
-    assert ability.can?(:manage, Node)
+    assert ability.can?(:manage, topic1)
+    assert_not ability.can?(:manage, topic2)
     assert ability.can?(:create, Team)
+    reply_to_topic1_list.each { |reply| assert ability.can?(:manage, reply) }
+    reply_to_topic2_list.each { |reply| assert_not ability.can?(:manage, reply) }
   end
 
   test "Vip manage wiki" do
@@ -62,6 +70,11 @@ class AbilityTest < ActiveSupport::TestCase
     assert ability.can?(:destroy, reply)
   end
 
+  test "Member certified? => false can not create Topic" do
+    user = create :uncertified_user
+    ability = Ability.new(user)
+    assert_not ability.can?(:create, Topic)
+  end
 
   test "Member" do
     user = create :avatar_user

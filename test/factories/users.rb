@@ -9,6 +9,7 @@ FactoryBot.define do
     password_confirmation { "password" }
     location { "China" }
     created_at { 100.days.ago }
+    certified_at { 1.hours.ago }
   end
 
   factory :avatar_user, parent: :user do
@@ -31,6 +32,10 @@ FactoryBot.define do
     created_at { 1.hours.ago }
   end
 
+  factory :uncertified_user, parent: :user do
+    certified_at { nil }
+  end
+
   factory :blocked_user, parent: :user do
     created_at { 30.days.ago }
     state { "blocked" }
@@ -40,4 +45,6 @@ FactoryBot.define do
     created_at { 100.days.ago }
     state { "deleted" }
   end
+
+
 end
