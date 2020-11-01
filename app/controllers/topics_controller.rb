@@ -225,13 +225,7 @@ class TopicsController < ApplicationController
         @topic.draft = false
       end
 
-      # 加入匿名功能
-      if @topic.belongs_to_nickname_node? && @topic.draft == false
-        @topic.user_id = User.anonymous_user_id
-        @topic.real_user_id = current_user.id
-      end
-
-      @topic.save
+      @topic.save_with_checking_node
     end
 
   protected

@@ -121,6 +121,11 @@ class Topic < ApplicationRecord
     reply_index + 1
   end
 
+  def save_with_checking_node
+    save
+    update_user_if_related_to_anonymous
+  end
+
   def belongs_to_nickname_node?
     return false if node.nil?
     node.nickname_node?
@@ -153,6 +158,28 @@ class Topic < ApplicationRecord
       else
         User.redis.sadd("blocked_users", user_id)
         User.redis.expire("blocked_users", 86400)
+      end
+    end
+  end
+
+  def update_user_if_related_to_anonymous
+    # 如果更细后的节点
+    return unless self.node_id_previously_changed?
+    current = self.node_id_previous_change.second
+    previous = self.node_id_previous_change.first
+    return if current.nil? || previous.nil?
+
+    if Node.find(current).nickname_node?
+      replies = self.replies
+      replies.each { |r| r.update(user_id: User.anonymous_user_id, real_user: r.user) }
+      user_id = user.id
+      self.update(user_id: User.anonymous_user_id, real_user_id: user_id)
+    else
+      if Node.find(previous).nickname_node?
+        replies = self.replies
+        replies.each { |r| r.update(user: r.real_user, real_user: nil) }
+        real_user_id = real_user.id
+        self.update(user_id: real_user_id, real_user: nil)
       end
     end
   end

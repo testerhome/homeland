@@ -126,14 +126,12 @@ gem "exception-track"
 gem "bootsnap"
 gem "lograge"
 
-group :development do
+group :development, :test do
   gem "pry"
   gem "pry-byebug"
   gem "spring"
   gem "byebug"
-end
 
-group :development, :test do
   gem "sdoc"
   gem "letter_opener"
   gem "listen", github: "guard/listen"
