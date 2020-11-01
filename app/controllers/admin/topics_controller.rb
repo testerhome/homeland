@@ -40,7 +40,7 @@ module Admin
     end
 
     def update
-      if @topic.update(params[:topic].permit!)
+      if @topic.update(params[:topic].permit!) && @topic.update_user_if_related_to_anonymous
         redirect_to(admin_topics_path, notice: "话题更新成功")
       else
         render action: "edit"

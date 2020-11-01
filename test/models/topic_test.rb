@@ -287,4 +287,28 @@ class TopicTest < ActiveSupport::TestCase
     topic2 = create(:topic, node: node2)
     assert_equal true, topic2.belongs_to_nickname_node?
   end
+
+  test "callback after change the node" do
+    node1 = create(:node, name: "你好")
+    node2 = create(:node, name: "匿名")
+
+    topic = create(:topic, node: node1)
+    replies = create_list(:reply, 10, topic: topic)
+
+    real_user = topic.user
+    topic.node = node2
+    topic.save_with_checking_node
+    assert_equal node2, topic.node
+    assert_equal 1, topic.replies.pluck(:user_id).uniq.size
+    assert_equal User.anonymous_user_id, topic.user_id
+    assert_equal real_user, topic.real_user
+    assert_equal User.anonymous_user_id, topic.replies.pluck(:user_id).uniq.first
+
+    topic.node = node1
+    topic.save_with_checking_node
+    assert_equal node1, topic.node
+    assert_equal 10, topic.replies.pluck(:user_id).uniq.size
+    assert_equal real_user, topic.user
+    assert_equal nil, topic.real_user
+  end
 end

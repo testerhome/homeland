@@ -1,41 +1,44 @@
 {
-  "admin.css": "/packs-test/css/admin-a7d9218a.css",
-  "admin.js": "/packs-test/js/admin-ffcf61e7b3c79ae446a5.js",
-  "application.js": "/packs-test/js/application-d96f5ccfccb3c67c4afd.js",
+  "admin.css": "/packs-test/css/admin-dc22e6f0.css",
+  "admin.js": "/packs-test/js/admin-301c4c4d5e83508df0ec.js",
+  "application.js": "/packs-test/js/application-ebed06a08cbac14dd675.js",
   "entrypoints": {
     "admin": {
       "css": [
-        "/packs-test/css/admin-a7d9218a.css"
+        "/packs-test/css/admin-dc22e6f0.css"
       ],
       "js": [
-        "/packs-test/js/admin-ffcf61e7b3c79ae446a5.js"
+        "/packs-test/js/admin-301c4c4d5e83508df0ec.js"
       ]
     },
     "application": {
       "js": [
         "/packs-test/js/vendors-dd704c14f1b8ae1a565f.chunk.js",
-        "/packs-test/js/application-d96f5ccfccb3c67c4afd.js"
+        "/packs-test/js/application-ebed06a08cbac14dd675.js"
       ]
     },
     "front": {
       "css": [
-        "/packs-test/css/front-a8192aad.css"
+        "/packs-test/css/front-b690238f.css"
       ],
       "js": [
-        "/packs-test/js/front-c53a5cbd9c08e94d7f27.js"
+        "/packs-test/js/front-dfcd5d89d83d104bd104.js"
       ]
     },
     "turbolinks-app": {
       "css": [
-        "/packs-test/css/turbolinks-app-162711dd.css"
+        "/packs-test/css/turbolinks-app-8aa59acb.css"
       ],
       "js": [
-        "/packs-test/js/turbolinks-app-1e26708b9ea93cb5371f.js"
+        "/packs-test/js/turbolinks-app-882a12c3d7fa65b11445.js"
       ]
     }
   },
-  "front.css": "/packs-test/css/front-a8192aad.css",
-  "front.js": "/packs-test/js/front-c53a5cbd9c08e94d7f27.js",
+  "front.css": "/packs-test/css/front-b690238f.css",
+  "front.js": "/packs-test/js/front-dfcd5d89d83d104bd104.js",
+  "media/images/big_logo.png": "/packs-test/media/images/big_logo-5241a08a7744da23e7304f566f95cf11.png",
+  "media/images/favicon.png": "/packs-test/media/images/favicon-5241a08a7744da23e7304f566f95cf11.png",
+  "media/images/ios-icon.png": "/packs-test/media/images/ios-icon-5241a08a7744da23e7304f566f95cf11.png",
   "media/webfonts/fa-brands-400.eot": "/packs-test/media/webfonts/fa-brands-400-0fea2496.eot",
   "media/webfonts/fa-brands-400.svg": "/packs-test/media/webfonts/fa-brands-400-e33e2cf6.svg",
   "media/webfonts/fa-brands-400.ttf": "/packs-test/media/webfonts/fa-brands-400-ec82f282.ttf",
@@ -46,7 +49,7 @@
   "media/webfonts/fa-solid-900.ttf": "/packs-test/media/webfonts/fa-solid-900-10ecefc2.ttf",
   "media/webfonts/fa-solid-900.woff": "/packs-test/media/webfonts/fa-solid-900-46fdbd2d.woff",
   "media/webfonts/fa-solid-900.woff2": "/packs-test/media/webfonts/fa-solid-900-3ceb50e7.woff2",
-  "turbolinks-app.css": "/packs-test/css/turbolinks-app-162711dd.css",
-  "turbolinks-app.js": "/packs-test/js/turbolinks-app-1e26708b9ea93cb5371f.js",
+  "turbolinks-app.css": "/packs-test/css/turbolinks-app-8aa59acb.css",
+  "turbolinks-app.js": "/packs-test/js/turbolinks-app-882a12c3d7fa65b11445.js",
   "vendors.js": "/packs-test/js/vendors-dd704c14f1b8ae1a565f.chunk.js"
 }
