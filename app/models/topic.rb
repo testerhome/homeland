@@ -165,17 +165,19 @@ class Topic < ApplicationRecord
   end
 
   def update_user_if_related_to_anonymous
-    # 如果更细后的节点
+    # 如果是更新节点，那么节点话题可能已经包含有回复数据了
     return unless self.node_id_previously_changed?
     current = self.node_id_previous_change.second
     previous = self.node_id_previous_change.first
-    return if current.nil? || previous.nil?
 
     if Node.find(current).nickname_node?
       replies = self.replies
       replies.each { |r| r.update(user_id: User.anonymous_user_id, real_user: r.user) }
-      user_id = user.id
-      self.update(user_id: User.anonymous_user_id, real_user_id: user_id)
+
+      if user.id != User.anonymous_user_id
+        user_id = user.id
+        self.update(user_id: User.anonymous_user_id, real_user_id: user_id)
+      end
     else
       if Node.find(previous).nickname_node?
         replies = self.replies
