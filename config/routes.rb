@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :devices
   resources :teams do
     member do
-      get 'requestjoin'
+      get "requestjoin"
     end
   end
 
@@ -147,7 +147,7 @@ Rails.application.routes.draw do
         get :edit_assign_nodes
       end
     end
-    post "/users/send_message", to: 'users#send_sms', as: 'send_sms'
+    post "/users/send_message", to: "users#send_sms", as: "send_sms"
     resources :photos
     resources :admin_photos
     resources :comments
@@ -164,7 +164,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v3 do
       get "hello", to: "root#hello"
-      get '/bug_search', to: 'bug_search#index', as: 'bug_search'
+      get "/bug_search", to: "bug_search#index", as: "bug_search"
 
       resource :devices
       resources :ads
@@ -269,7 +269,7 @@ Rails.application.routes.draw do
   get "users/city/:id", to: "users#city", as: "location_users"
   get "users", to: "users#index", as: "users"
 
-  post '/people/join/:user_id', to: 'team_users#join', as: 'join'
+  post "/people/join/:user_id", to: "team_users#join", as: "join"
   constraints(id: /[#{User::LOGIN_FORMAT}]*/) do
     resources :users, path: "", as: "users" do
       member do

@@ -76,7 +76,7 @@ module Admin
         end
 
         unless @user.team_users.blank?
-          @user.team_users.each {|t| t.destroy}
+          @user.team_users.each { |t| t.destroy }
         end
         @user.destroy
       end
@@ -125,12 +125,12 @@ module Admin
         flash[:notice] = "分配成功"
         render json: { msg: "分配成功" }
       else
-        render json: { msg: '只有版主才能分配节点' }, status: 403
+        render json: { msg: "只有版主才能分配节点" }, status: 403
       end
     end
 
     def send_sms
-      message  = params[:message]
+      message = params[:message]
       if message.blank?
         redirect_to(admin_users_url, notice: "空消息不处理！")
       end
@@ -160,7 +160,7 @@ module Admin
       default_note = { notify_type: "admin_sms", target_type: "User", actor_id: current_user.id }
       Notification.bulk_insert(set_size: 100) do |worker|
         uids.each do |uid|
-          note = default_note.merge({user_id: uid, target_id: uid, message: message })
+          note = default_note.merge({ user_id: uid, target_id: uid, message: message })
           worker.add(note)
         end
       end

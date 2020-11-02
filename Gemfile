@@ -53,7 +53,7 @@ gem "devise"
 gem "devise-encryptable"
 
 # 通知系统
-gem "notifications", github: 'testerhome/notifications'
+gem "notifications", github: "testerhome/notifications"
 gem "ruby-push-notifications"
 
 # 赞、关注、收藏、屏蔽等功能的数据结构
@@ -112,7 +112,7 @@ gem "postmark-rails"
 
 gem "puma"
 # gem "faker", git: "https://github.com/faker-ruby/faker.git", branch: "master"
-gem 'faker', '~> 2.14'
+gem "faker", "~> 2.14"
 
 # Homeland Plugins
 gem "homeland-opensource_project", github: "testerhome/homeland-opensource_project"

@@ -1,5 +1,6 @@
-class Append < ApplicationRecord
+# frozen_string_literal: true
 
+class Append < ApplicationRecord
   belongs_to :topic, touch: true
 
 

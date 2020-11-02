@@ -61,9 +61,9 @@ module Api
         if !@topic.team.blank?
           if @topic.team.private?
             if !current_user
-              raise AccessDenied.new('请登录之后查看组织下面的文章！')
-            elsif !@topic.team.member?(current_user) and !current_user.admin?
-              raise AccessDenied.new('非组织成员无法查看组织下面的文章！')
+              raise AccessDenied.new("请登录之后查看组织下面的文章！")
+            elsif !@topic.team.member?(current_user) && !current_user.admin?
+              raise AccessDenied.new("非组织成员无法查看组织下面的文章！")
             end
           end
         end

@@ -77,7 +77,7 @@ class User < ApplicationRecord
   end
 
   def valid_teams
-    self.teams.reject {|t| !t.has_member?(self)}
+    self.teams.reject { |t| !t.has_member?(self) }
   end
 
   def self.anonymous_user_id

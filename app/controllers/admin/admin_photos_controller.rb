@@ -15,9 +15,9 @@ module Admin
       @photo = AdminPhoto.new(params[:admin_photo].permit!)
       @photo.user_id = current_user.id
       if @photo.save
-        redirect_to(admin_admin_photo_path(@photo), notice: 'Photo was successfully created.')
+        redirect_to(admin_admin_photo_path(@photo), notice: "Photo was successfully created.")
       else
-        render action: 'new'
+        render action: "new"
       end
     end
 

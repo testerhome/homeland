@@ -74,7 +74,7 @@ class TeamUsersController < ApplicationController
 
   def join
     if @team.ready_to_be_member? current_user
-      redirect_to(user_team_users_path(@team), notice: '请耐心等待，勿重复申请！')
+      redirect_to(user_team_users_path(@team), notice: "请耐心等待，勿重复申请！")
     else
       @team_user = TeamUser.new
       @team_user.role = :member
@@ -84,9 +84,9 @@ class TeamUsersController < ApplicationController
       @team_user.status = :pendding_owner_approved
       @team_user.comment = params[:comment]
       if @team_user.save(context: :invite)
-        redirect_to(user_team_users_path(@team), notice: '申请成功，等待审批。')
+        redirect_to(user_team_users_path(@team), notice: "申请成功，等待审批。")
       else
-        redirect_to(user_team_users_path(@team), notice: '申请失败，请重新申请。')
+        redirect_to(user_team_users_path(@team), notice: "申请失败，请重新申请。")
       end
     end
   end
@@ -98,7 +98,7 @@ class TeamUsersController < ApplicationController
 
   def accept_join
     @team_user.accepted!
-    redirect_to(user_team_users_path(@team), notice: '批准申请，已加入社团')
+    redirect_to(user_team_users_path(@team), notice: "批准申请，已加入社团")
   end
 
   def reject
@@ -111,7 +111,7 @@ class TeamUsersController < ApplicationController
     @team_user.actor_ids = [current_user.id]
     reject_join_reason = params[:reject_join_reason]
     @team_user.reject_user_join(reject_join_reason)
-    redirect_to(user_team_users_path(@team), notice: '已拒绝申请成功')
+    redirect_to(user_team_users_path(@team), notice: "已拒绝申请成功")
   end
 
   private
