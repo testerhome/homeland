@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class QuestionsController < ApplicationController
   helper_method :feed_node_topics_url
 
@@ -14,6 +16,6 @@ class QuestionsController < ApplicationController
     @topics = @topics.where.not(id: suggest_topic_ids) if suggest_topic_ids.count > 0
     @topics = @topics.includes(:user).page(params[:page])
     @page_title = "#{t('menu.questions')} - #{t('menu.topics')}"
-    render '/topics/index'
+    render "/topics/index"
   end
 end

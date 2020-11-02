@@ -10,7 +10,6 @@ class AdminPhotoUploader < BaseUploader
   end
 
   def store_dir
-     "uploads/photo"
+    "uploads/photo"
   end
-
 end

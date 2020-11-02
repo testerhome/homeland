@@ -47,15 +47,15 @@ class HomeController < ApplicationController
 
   private
 
-  def topics_scope(base_scope = Topic)
-    scope = base_scope.fields_for_list.without_hide_nodes.without_draft.with_public_articles
-    if current_user
-      scope = scope.without_nodes(current_user.block_node_ids)
-      scope = scope.without_users(current_user.block_user_ids)
-      scope = scope.without_columns(current_user.block_column_ids)
-    end
+    def topics_scope(base_scope = Topic)
+      scope = base_scope.fields_for_list.without_hide_nodes.without_draft.with_public_articles
+      if current_user
+        scope = scope.without_nodes(current_user.block_node_ids)
+        scope = scope.without_users(current_user.block_user_ids)
+        scope = scope.without_columns(current_user.block_column_ids)
+      end
 
-    # must include :user, because it's uses for _topic.html.erb fragment cache_key
-    scope.includes(:user)
-  end
+      # must include :user, because it's uses for _topic.html.erb fragment cache_key
+      scope.includes(:user)
+    end
 end

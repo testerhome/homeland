@@ -18,8 +18,8 @@ class AbilityTest < ActiveSupport::TestCase
   end
 
   test "Maintainer manage Topic, Node, Reply" do
-    node1 = create(:node, name: 'node1')
-    node2 = create(:node, name: 'node2')
+    node1 = create(:node, name: "node1")
+    node2 = create(:node, name: "node2")
     user = create :user, state: :maintainer
     topic1 = create(:topic, node: node1)
     topic2 = create(:topic, node: node2)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AdsController < ApplicationController
   load_and_authorize_resource
   before_action :require_admin
@@ -29,7 +31,7 @@ class AdsController < ApplicationController
   def create
     @ad = Ad.new(ad_params)
     if @ad.save
-      redirect_to(ads_path, notice: 'Ad was successfully created.')
+      redirect_to(ads_path, notice: "Ad was successfully created.")
     else
       render action: "new"
     end
@@ -39,7 +41,7 @@ class AdsController < ApplicationController
     @ad = Ad.find(params[:id])
 
     if @ad.update_attributes(ad_params)
-      redirect_to(ads_path, notice: 'Ad was successfully updated.')
+      redirect_to(ads_path, notice: "Ad was successfully updated.")
     else
       render action: "edit"
     end
@@ -54,7 +56,7 @@ class AdsController < ApplicationController
 
   protected
 
-  def ad_params
-    params.require(:ad).permit(:cover, :topic_id, :topic_title,:topic_author)
-  end
+    def ad_params
+      params.require(:ad).permit(:cover, :topic_id, :topic_title, :topic_author)
+    end
 end

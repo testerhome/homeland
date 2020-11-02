@@ -38,7 +38,7 @@ class TeamUser < ApplicationRecord
     return unless self.pendding? || self.pendding_owner_approved?
     if self.pendding?
       self.actor_ids.each do |actor_id|
-        Notification.create notify_type: 'team_invite',
+        Notification.create notify_type: "team_invite",
                             actor_id: actor_id,
                             user_id: self.user_id,
                             target: self,
@@ -47,7 +47,7 @@ class TeamUser < ApplicationRecord
     end
     if self.pendding_owner_approved?
       self.actor_ids.each do |actor_id|
-        Notification.create notify_type: 'team_join',
+        Notification.create notify_type: "team_join",
                             actor_id: actor_id,
                             user_id: actor_id,
                             target: self,
@@ -58,7 +58,7 @@ class TeamUser < ApplicationRecord
 
   def reject_user_join(message)
     self.actor_ids.each do |actor_id|
-      Notification.create notify_type: 'reject_user_join',
+      Notification.create notify_type: "reject_user_join",
                           actor_id: actor_id,
                           user_id: self.user_id,
                           target: self,

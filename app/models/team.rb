@@ -27,7 +27,7 @@ class Team < User
 
   def team_admin
     if self.team_users.owner.exists?
-      (User.find_by! id:self.team_users.owner.first.user_id)
+      (User.find_by! id: self.team_users.owner.first.user_id)
     end
   end
 
@@ -60,7 +60,7 @@ class Team < User
   end
 
   def get_team_user_obj(user)
-      self.team_users.find_by_user_id user
+    self.team_users.find_by_user_id user
   end
 
   def team_notify_users

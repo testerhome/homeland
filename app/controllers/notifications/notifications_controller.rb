@@ -38,7 +38,7 @@ module Notifications
 
     def clean
       group = params[:group]
-      if group.nil? or !Notification.available_group?(group)
+      if group.nil? || !Notification.available_group?(group)
         render_404
         return
       end
