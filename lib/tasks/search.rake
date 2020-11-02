@@ -3,12 +3,8 @@
 task reindex: :environment do
   print "Reindexing topics"
   Topic.find_each do |t|
-    begin
-      t.reindex!
-      print "."
-    rescue Exception => e
-      binding.pry
-    end
+    t.reindex!
+    print "."
   end
   puts "done"
 
