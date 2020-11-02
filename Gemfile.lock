@@ -32,11 +32,11 @@ GIT
 
 GIT
   remote: https://github.com/testerhome/notifications.git
-  revision: aba260e85688bf98331ce3afc19d33e0e19f93e2
+  revision: 5284e99b02a5efb310e287f60b9905f1513a3b6a
   specs:
-    notifications (0.6.1)
+    notifications (1.1.0)
       kaminari (>= 0.15)
-      rails (>= 5)
+      rails (>= 5.2)
 
 GEM
   remote: https://gems.ruby-china.com/
@@ -471,7 +471,7 @@ GEM
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.4.0)
+    zeitwerk (2.4.1)
 
 PLATFORMS
   ruby

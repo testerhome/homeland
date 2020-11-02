@@ -24,7 +24,7 @@ class TeamUsersController < ApplicationController
   def create
     @team_user = TeamUser.new(team_user_params)
     @team_user.team_id = @team.id
-    @team_user.actor_id = current_user.id
+    @team_user.actor_ids = [current_user.id]
     @team_user.status = :pendding
     if @team_user.save(context: :invite)
       redirect_to(user_team_users_path(@team), notice: "邀请成功。")

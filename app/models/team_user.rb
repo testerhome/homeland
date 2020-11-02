@@ -10,7 +10,8 @@ class TeamUser < ApplicationRecord
   validates :login, :team_id, :role, presence: true, on: :invite
   validates :user_id, uniqueness: { scope: :team_id, message: I18n.t("teams.user_existed") }
 
-  attr_accessor :login, :actor_ids
+  attr_accessor :login
+  attr_accessor :actor_ids
 
   before_validation do
     if login.present?
@@ -21,6 +22,10 @@ class TeamUser < ApplicationRecord
   end
   after_create_commit :notify_user_to_accept
 
+  def actor_ids
+    @actor_ids || []
+  end
+
   def status_name
     I18n.t("team_user_status.#{self.status}")
   end
@@ -30,7 +35,7 @@ class TeamUser < ApplicationRecord
   end
 
   def notify_user_to_accept
-    return unless self.pendding? or self.pendding_owner_approved?
+    return unless self.pendding? || self.pendding_owner_approved?
     if self.pendding?
       self.actor_ids.each do |actor_id|
         Notification.create notify_type: 'team_invite',

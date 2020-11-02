@@ -7,7 +7,7 @@ class TopicsController < ApplicationController
                                               favorite unfavorite follow unfollow
                                               action favorites raw_markdown]
   load_and_authorize_resource only: %i[new edit create update destroy favorite unfavorite follow unfollow raw_markdown]
-  before_action :set_topic, only: %i[edit update destroy follow unfollow action ban append]
+  before_action :set_topic, only: %i[edit update read destroy follow unfollow action ban append]
 
   def index
     @suggest_topics = []
@@ -225,6 +225,11 @@ class TopicsController < ApplicationController
         @topic.draft = false
       end
 
+      if @topic.belongs_to_nickname_node? && @topic.draft == false
+        @topic.user_id = User.anonymous_user_id
+        @topic.real_user_id = current_user.id
+      end
+
       @topic.save_with_checking_node
     end
 
@@ -276,5 +281,4 @@ class TopicsController < ApplicationController
       check_current_user_status_for_topic(topic)
       instance_variable_set("@#{class_scope.name.downcase}", topic)
     end
-
 end
