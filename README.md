@@ -3,11 +3,11 @@
   <p align="center">Open source discussion website.</p>
   <p align="center">开源的论坛／社区网站系统，基于 <a href="https://ruby-china.org">Ruby China</a> 发展而来。</p>
   <p align="center">
-    <a href="https://travis-ci.org/ruby-china/homeland">
-      <img src="https://travis-ci.org/ruby-china/homeland.svg?branch=master" />
+    <a href="https://travis-ci.org/testerhome/homeland">
+      <img src="https://travis-ci.org/testerhome/homeland.svg?branch=master" />
     </a>
-    <a href="https://codecov.io/github/ruby-china/homeland?branch=master">
-      <img src="https://codecov.io/github/ruby-china/homeland/coverage.svg?branch=master" />
+    <a href="https://codecov.io/github/testerhome/homeland?branch=master">
+      <img src="https://codecov.io/github/testerhome/homeland/coverage.svg?branch=master" />
     </a>
   </p>
 </p>
