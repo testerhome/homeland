@@ -23,7 +23,8 @@ before_install:
   - sed -i "s/SETUP_REDIS_PORT/6379/g" config/redis.yml
 
 before_script:
-  - RAILS_ENV=test bundle exec rake db:migrate
+  - RAILS_ENV=test bundle exec rails db:reset
+  - RAILS_ENV=test bundle exec rails db:migrate
 
 script:
   - bundle exec rubocop .
