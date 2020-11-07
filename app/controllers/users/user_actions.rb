@@ -49,7 +49,7 @@ module Users
     end
 
     def drafts
-      @drafts = @user.my_drafts
+      @drafts = @user.my_drafts.page(params[:page])
     end
 
     def follow
