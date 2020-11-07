@@ -1,3 +1,4 @@
+<% if item %>
 <%
 title = item.title
 %>
@@ -12,4 +13,6 @@ title = item.title
     <span class="url"><%= link_to polymorphic_url(item), item %></span>
     <span class="date" title="Last Updated At"><%= item.created_at.to_date %></span>
   </div>
+  <div class="desc"><%= highlight(hit.hit_content, terms: @search.terms) %></div>
 </div>
+<% end %>

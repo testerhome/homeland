@@ -5,10 +5,6 @@
 @import "./iconfont.scss";
 @import "./markdown.scss";
 
-a {
-  color: #333;
-}
-
 .flex {
   display: flex;
 }
@@ -35,6 +31,10 @@ a {
 
 .pull-right {
   float: right;
+}
+
+.divider {
+  color: var(--divider-color) !important;
 }
 
 /* 去掉 Bootstrap 的蓝色 outline */
@@ -109,11 +109,12 @@ textarea,
 body {
   background: var(--body-background-color);
   color: var(--primary);
+  font-family: PingFang SC, Noto Sans, Roboto, Microsoft Yahei, sans-serif;
   font-size: 14px;
   letter-spacing: 0.03em;
 }
 
-.bd-navbar {
+.header {
   height: 50px;
   padding: 0;
   background: var(--navbar-background-color);
@@ -123,11 +124,38 @@ body {
   z-index: 1030;
   line-height: 100%;
 
-  .ml-auto {
+  .container {
+    justify-content: unset;
+    position: relative;
+  }
+
+  .navbar-toggler {
+    outline: none !important;
+    padding: 5px 5px;
+    height: 50px;
+
+    &:active {
+      background: var(--navbar-background-color);
+    }
+
+    .navbar-toggler-icon {
+      color: var(--navbar-text-color);
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+    }
+  }
+
+  .navbar-right {
+    position: absolute;
+    top: 0;
+    right: 0;
     height: 50px;
   }
 
   .navbar-nav {
+    background: var(--navbar-background-color);
     padding: 0px;
     .nav-link {
       padding: 15px 15px;
@@ -135,8 +163,15 @@ body {
     }
   }
 
+  .collapse.show {
+    .navbar-nav {
+      box-shadow: 0 2px 5px var(--navbar-fixed-shadow-color);
+    }
+  }
+
   .navbar-topic-title {
     display: none;
+    z-index: 99;
   }
 
   &.navbar-fixed-active {
@@ -146,28 +181,12 @@ body {
   .navbar-brand {
     line-height: 100%;
     color: var(--navbar-brand-text-color) !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: bold;
     margin-left: 1em;
+    margin-right: 1em;
     border-bottom: 0px;
     b {
       color: var(--navbar-brand-text-strong-color);
-    }
-  }
-
-  @include media-breakpoint-down(md) {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-
-    .navbar-nav-scroll {
-      max-width: 100%;
-      overflow: hidden;
-
-      .navbar-nav {
-        overflow-x: auto;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
     }
   }
 
@@ -205,7 +224,14 @@ body {
   .form-search {
     font-size: 14px;
     position: relative;
+    margin: 10px 0 9px 0;
     padding: 15px 0;
+    height: 18px;
+    border-radius: 20px;
+    border: 1px solid var(--input-group-border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 
     .fa {
       color: #333;
@@ -214,25 +240,30 @@ body {
       }
     }
     .fa-search {
+      margin-left: 10px;
       cursor: pointer;
-      position: absolute;
-      top: 19px;
-      left: 3px;
+      color: var(--text-color2);
       transition: all 0.3s;
     }
     .form-control {
       font-size: 14px;
       border: none;
       cursor: text;
-      width: 150px;
-      height: 100%;
-      line-height: 100%;
-      padding: 6px 1px 4px 20px;
-      margin-left: 4px;
+      width: 140px;
+      height: 18px;
+      line-height: 18px;
       background: transparent;
       transition: all 0.3s;
       box-sizing: border-box;
       color: #333;
+      &:focus {
+        outline: none;
+        border: none;
+        box-shadow: none;
+        &::-webkit-input-placeholder {
+          color: var(--text-color1);
+        }
+      }
       &::-webkit-input-placeholder {
         color: #aaa;
       }
@@ -263,9 +294,6 @@ body {
   .dropdown-avatar {
     line-height: 100%;
     display: inline-block;
-    .nav-link {
-      padding: 10px 5px;
-    }
     img.avatar-32 {
       width: 20px;
       height: 20px;
@@ -275,14 +303,23 @@ body {
   .user-bar {
     min-width: 150px;
     padding-right: 15px;
-  }
+    display: flex;
+    align-items: center;
 
-  @include media-breakpoint-down(md) {
-    .user-bar {
-      .nav-link {
-        padding-left: 5px;
-        padding-right: 5px;
-      }
+    .nav-item {
+      display: block;
+    }
+
+    .nav-link {
+      height: 50px;
+      line-height: 50px;
+      padding: 15px 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .dropdown-menu {
+      position: absolute;
     }
   }
 }
@@ -311,7 +348,7 @@ body {
 .btn-default {
   border-color: var(--btn-default-border-color);
   background: var(--btn-default-background-color);
-  color: var(--btn-default-text-color);
+  color: var(--btn-default-text-color) !important;
 
   &:hover {
     border-color: var(--btn-default-hover-border-color);
@@ -381,14 +418,25 @@ input[type="file"] {
   .nav-item {
     .nav-link {
       &:hover {
-        background: var(--gray);
-        border-color: var(--gray);
+        background: transparent;
+        border-color: transparent;
+        color: var(--text-color);
       }
 
       &.active {
-        background: var(--btn-default-background-color);
-        border-color: var(--btn-default-background-color);
+        color: var(--text-color1);
+        background: var(--card-background-color);
+        border: 1px solid var(--card-border-color);
       }
+    }
+  }
+}
+
+.nav-pills {
+  .nav-link {
+    &.active {
+      background: var(--nav-pills-active-background-color);
+      color: var(--nav-pills-active-text-color);
     }
   }
 }
@@ -454,12 +502,6 @@ input[type="file"] {
   .disabled > .page-link {
     background-color: #f0f0f0;
     color: #aaa !important;
-
-    @media (prefers-color-scheme: dark) {
-      color: #555 !important;
-      border-color: #222;
-      background-color: #222;
-    }
   }
 
   li > a:hover {
@@ -668,10 +710,6 @@ kbd {
     font-size: 16px;
     border: 0;
     justify-content: flex-start;
-  }
-
-  .modal-body {
-    padding: 15px 25px;
   }
 
   @media (min-width: 768px) {
