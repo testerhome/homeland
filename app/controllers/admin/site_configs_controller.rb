@@ -11,21 +11,24 @@ module Admin
     end
 
     def update
-      if @site_config.value != setting_param[:value]
-        @site_config.value = setting_param[:value]
-        @site_config.save
+      if @site_config.value == setting_param[:value]
+        return redirect_to admin_site_configs_path
+      end
 
+      @site_config.value = setting_param[:value].strip
+      if @site_config.save
         if @site_config.require_restart?
           Setting.require_restart = true
         end
 
         redirect_to admin_site_configs_path, notice: "保存成功."
       else
-        redirect_to admin_site_configs_path
+        render "edit"
       end
     end
 
     def set_setting
+      Rails.logger.error params[:id]
       @site_config = Setting.find_by(var: params[:id]) || Setting.new(var: params[:id])
     end
 

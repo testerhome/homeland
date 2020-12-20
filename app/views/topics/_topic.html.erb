@@ -1,34 +1,37 @@
 <% cache([topic, topic.user_avatar_raw, suggest]) do %>
 
 <div class="topic media topic-<%= topic.id %>">
-  <div class="avatar">
-    <%= user_avatar_tag(topic.user, :md, topic: topic) %>
-  </div>
-  <div class="infos media-body">
-    <div class="title media-heading">
-      <%= link_to(main_app.topic_path(topic), title: topic.title) do %>
-        <%= raw content_tag(:span, topic.node_name, class: 'node') %>
-        <%= topic.title %>
-      <% end %>
-      <% if suggest %>
-        <i class="fa fa-pin" title="置顶"></i>
-      <% end %>
-      <%= topic_excellent_tag(topic) %>
-      <%= topic_close_tag(topic) %>
+    <div class="avatar">
+        <%= user_avatar_tag(topic.user, :md, topic: topic) %>
     </div>
-    <div class="info">
-      <%= user_name_tag(topic.user, topic: topic) %>
-      <span class="hidden-mobile">
-      <% if topic.team %>
-        for <%= user_name_tag(topic.team, topic: topic) %>
-      <% end %>
-      •
-      <% if topic.last_reply_user.blank? %>
-        <%= raw t("common.created_at", time: timeago(topic.created_at))%>
-      <% else %>
-        <%= t("common.last_by")%> <%= user_name_tag(topic.last_reply_user, reply: topic.last_reply) %> <%= raw t("common.reply_at", time: timeago(topic.replied_at))%>
-      <% end %>
+    <div class="infos media-body">
+        <div class="title media-heading">
+            <%= link_to(main_app.topic_path(topic), title: topic.title) do %>
+            <%= raw content_tag(:span, topic.node_name, class: 'node') %>
+            <%= topic.title %>
+            <% end %>
+            <% if suggest %>
+            <i class="fa fa-pin" title="置顶"></i>
+            <% end %>
+            <%= topic_excellent_tag(topic) %>
+            <%= topic_close_tag(topic) %>
+        </div>
+        <div class="info">
+            <%= user_name_tag(topic.user, topic: topic) %>
+            <span class="hidden-mobile">
+                <% if topic.team %>
+                for <%= user_name_tag(topic.team, topic: topic) %>
+                <% end %>
+                •
+                <% if topic.last_reply_user.blank? %>
+                <%= raw t("common.created_at", time: timeago(topic.created_at))%>
+                <% else %>
+                <%= t("common.last_by")%> <%= user_name_tag(topic.last_reply_user, reply: topic.last_reply) %> <%= raw t("common.reply_at", time: timeago(topic.replied_at))%>
+                <% end %>
+        </div>
     </div>
-  </div>
+    <div class="count media-right">
+        <%= link_to(topic.replies_count,"#{main_app.topic_path(topic)}#reply-#{topic.last_reply_id}", class: "state-false") %>
+    </div>
 </div>
 <% end %>
