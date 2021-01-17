@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_16_064059) do
+ActiveRecord::Schema.define(version: 2021_01_07_151300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2020_10_16_064059) do
 
   create_table "columns", force: :cascade do |t|
     t.string "name"
-    t.text "description"
+    t.text "column_description"
     t.string "cover"
     t.integer "user_id", null: false
     t.string "who_deleted"
@@ -131,12 +131,10 @@ ActiveRecord::Schema.define(version: 2020_10_16_064059) do
   create_table "nodes", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.string "summary"
-    t.integer "section_id", null: false
     t.integer "sort", default: 0, null: false
     t.integer "topics_count", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["section_id"], name: "index_nodes_on_section_id"
     t.index ["sort"], name: "index_nodes_on_sort"
   end
 
@@ -281,6 +279,7 @@ ActiveRecord::Schema.define(version: 2020_10_16_064059) do
     t.integer "user_id", null: false
     t.jsonb "contacts", default: {}, null: false
     t.jsonb "rewards", default: {}, null: false
+    t.jsonb "preferences", default: {}, null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 
@@ -316,14 +315,6 @@ ActiveRecord::Schema.define(version: 2020_10_16_064059) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["searchable_type", "searchable_id"], name: "index_search_documents_on_searchable_type_and_searchable_id", unique: true
     t.index ["tokens"], name: "index_search_documents_on_tokens", using: :gin
-  end
-
-  create_table "sections", id: :serial, force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "sort", default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["sort"], name: "index_sections_on_sort"
   end
 
   create_table "settings", id: :serial, force: :cascade do |t|
@@ -402,7 +393,6 @@ ActiveRecord::Schema.define(version: 2020_10_16_064059) do
     t.integer "last_reply_id"
     t.integer "last_reply_user_id"
     t.string "last_reply_user_login"
-    t.string "node_name"
     t.string "who_deleted"
     t.integer "last_active_mark"
     t.boolean "lock_node", default: false
@@ -482,7 +472,6 @@ ActiveRecord::Schema.define(version: 2020_10_16_064059) do
     t.string "perishable_token", default: "", null: false
     t.integer "topics_count", default: 0, null: false
     t.integer "replies_count", default: 0, null: false
-    t.integer "follower_ids", default: [], array: true
     t.string "type", limit: 20
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
@@ -510,10 +499,8 @@ ActiveRecord::Schema.define(version: 2020_10_16_064059) do
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github"], name: "index_users_on_github"
     t.index ["location"], name: "index_users_on_location"
-    t.index ["login"], name: "index_users_on_login", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
