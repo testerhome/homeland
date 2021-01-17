@@ -26,10 +26,14 @@
             <div class="heading">绑定其他账号用于登录</div>
 
             <ul class="list-group col-sm-6">
-              <% @user.authorizations.each do |authorizaion| %>
+              <% ["wechat", "github"].each do |provider| %>
               <li class="list-group-item">
-                <%= Homeland::Utils.omniauth_name(authorizaion.provider) %>
-                <%= link_to(raw('<i class="fas fa-minus-circle"></i>'), auth_unbind_setting_path(authorizaion.provider), rel: "twitsy", title: "点击解除绑定", method: 'delete' )%>
+                <% if @user.bind?(provider) %>
+                <%= Homeland::Utils.omniauth_name(provider) %>
+                <%= link_to(raw('<i class="fas fa-minus-circle"></i>'), auth_unbind_setting_path(provider), rel: "twitsy", title: "点击解除绑定", method: 'delete' )%>
+                <% else %>
+                <%= link_to(t("omniauth.#{provider}"), omniauth_authorize_path(:user, provider), rel: "twitsy", title: "点击绑定" )%>
+                <% end %>
               </li>
               <% end %>
             </ul>
