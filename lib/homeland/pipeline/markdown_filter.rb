@@ -14,7 +14,7 @@ module Homeland
         fenced_code_blocks: true,
         strikethrough: true,
         underline: true,
-        superscript: false,
+        superscript: true,
         footnotes: false,
         highlight: false,
         tables: true,
