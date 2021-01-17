@@ -35,6 +35,14 @@ module Homeland
 
         attr_accessor :domain
 
+        def initialize(extensions = {})
+          super(extensions.merge(xhtml: true,
+                                 no_styles: true,
+                                 # escape_html: true,
+                                 hard_wrap: true,
+                                 link_attributes: { target: '_blank' }))
+        end
+
         class << self
           def to_html(raw)
             renderer = self.new
