@@ -2,6 +2,7 @@ require("./emoji-modal");
 require("./notifier");
 require("./github-statistics")
 require("./node-assign")
+require("./columns")
 
 const AppView = Backbone.View.extend({
   el: "body",
@@ -31,6 +32,10 @@ const AppView = Backbone.View.extend({
 
     if ((needle = $('body').data('controller-name'), ['topics', 'replies', 'articles'].includes(needle))) {
       window._topicView = new TopicView({ parentView: this });
+    }
+
+    if ((needle = $('body').data('controller-name'), ['columns', 'articles'].includes(needle))) {
+      window._columnView = new ColumnView({ parentView: this });
     }
 
     window._githubStatisticsView = new GitHubStatisticsView({parentView: this})
