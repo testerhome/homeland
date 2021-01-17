@@ -2,7 +2,9 @@
 <span class='topic'>
 <% if reply.target_type == "Topic" %>
   <%= topic_title_tag(reply&.target) %>
-<% else %>
+<% elsif  reply.target_type == "Article"%>
+  专栏文章：<%= article_title_tag(reply&.target) %>
+  <% else %>
   <%= topic_title_tag(reply&.target&.topic) %>
 <% end %>
 </span> 中提及了此贴
