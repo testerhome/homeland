@@ -5,11 +5,12 @@
   </div>
   <div class="infos media-body">
     <div class="title media-heading">
-      <%= link_to(topic.title, send("#{topic.class.name.downcase}_path", topic), title: topic.title) %>
+    <%= topic_excellent_tag(topic) %>
+      <%= link_to(topic.title, send("#{topic.class.name.downcase}_path", topic), title: topic.title, "data-original-title": topic.title, "data-toggle": "tooltip") %>
       <% if suggest %>
         <i class="fa fa-thumb-tack" title="置顶"></i>
       <% end %>
-      <%= topic_excellent_tag(topic) %>
+      
       <%= topic_close_tag(topic) %>
     </div>
     <div class="info">
