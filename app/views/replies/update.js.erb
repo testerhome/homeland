@@ -1,6 +1,10 @@
 <% if @reply.errors.empty? %>
   <% flash[:notice] = '回帖更新成功。' %>
-  Turbolinks.visit('<%= topic_path(@reply.topic_id) %>');
+  <% if !@reply.topic.isArticle? %>
+    Turbolinks.visit('<%= topic_path(@reply.topic_id) %>');
+  <% else %>
+    Turbolinks.visit('<%= article_path(@reply.topic_id) %>');
+  <% end %>
 <% else %>
   $('form[tb="edit-reply"] .alert').remove();
   $('form[tb="edit-reply"]').prepend('<%= j render("shared/error_messages", target: @reply) %>');

@@ -87,6 +87,9 @@ class Ability
       can :create, Reply unless current_lock_reply?
       can %i[update destroy], Reply, user_id: user.id
       cannot %i[create update destroy], Reply, topic: { closed?: true }
+      can %i[reply_suggest reply_unsuggest], Reply do |reply|
+        reply.topic.user_id == user.id
+      end
     end
 
     def current_lock_reply?

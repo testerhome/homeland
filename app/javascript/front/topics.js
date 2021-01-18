@@ -58,6 +58,9 @@ window.TopicView = Backbone.View.extend({
   },
 
   setReplyTo(id) {
+    if (!App.current_user_id) {
+      document.location = '/account/sign_in'
+    }
     $('input[name="reply[reply_to_id]"]').val(id);
     const replyEl = $(`#replies .reply[data-id=${id}]`);
     const targetAnchor = replyEl.attr('id');
