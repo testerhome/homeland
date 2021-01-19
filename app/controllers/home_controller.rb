@@ -48,7 +48,7 @@ class HomeController < ApplicationController
   private
 
     def topics_scope(base_scope = Topic)
-      scope = base_scope.fields_for_list.without_hide_nodes.without_draft.with_public_articles
+      scope = base_scope.fields_for_list.without_hide_nodes.without_draft.without_ban.with_public_articles
       if current_user
         scope = scope.without_nodes(current_user.block_node_ids)
         scope = scope.without_users(current_user.block_user_ids)
