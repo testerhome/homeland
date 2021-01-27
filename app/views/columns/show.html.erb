@@ -25,7 +25,7 @@
       </div>
 
       <div class="card-footer clearfix">
-        <%= paginate @articles, total_pages: Article.total_pages %>
+        <%= paginate @articles, total_pages: @articles.total_pages %>
       </div>
     </div>
 
