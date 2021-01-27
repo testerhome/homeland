@@ -1,4 +1,4 @@
-<% cache([reply, reply.user_avatar_raw, "raw:#{@show_raw}"]) do %>
+<% cache([reply, reply.user_avatar_raw, current_user, "raw:#{@show_raw}"]) do %>
   <%
   floor = reply_counter + 1
   show_deleted = reply.deleted? && !@show_raw
@@ -14,7 +14,7 @@
       <div class="deleted text-center"><%= floor %><%= t("common.floor")%> <%= t("common.has_deleted")%></div>
     <% elsif reply.system_event? %>
       <%= render '/replies/system_event', reply: reply %>
-    <% elsif !reply.exposed_to_author_only? || (current_user && (reply.topic && reply.topic.user == current_user || reply.user == current_user)) %>
+    <% elsif !reply.exposed_to_author_only? || (current_user && (reply.topic.user == current_user || reply.user == current_user)) %>
       <div class="avatar"><%= user_avatar_tag(reply.user, :md, reply: reply) %></div>
       <div class="infos">
         <div class="info">
