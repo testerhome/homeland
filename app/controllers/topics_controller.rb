@@ -260,7 +260,7 @@ class TopicsController < ApplicationController
         redirect_to(topics_path, notice: t("topics.cannot_read_others_drafts"))
       end
 
-      topic.hits.incr(1)
+      # topic.hits.incr(1)
       @node = topic.node
       @show_raw = params[:raw] == "1"
       @can_reply = can?(:create, Reply)
