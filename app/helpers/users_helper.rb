@@ -85,6 +85,10 @@ module UsersHelper
     end
   end
 
+  def random_image(set)
+    "https://testerhome.com/photo/anonymous_avatar/cat#{set}.png"   
+   end
+
   def user_avatar_tag(user, version = :md, link: true, timestamp: nil, reply: nil, topic: nil)
     width     = user_avatar_width_for_size(version)
     img_class = "media-object avatar-#{width}"
@@ -106,16 +110,16 @@ module UsersHelper
     if reply
       if reply.real_user
         Faker::Config.random = random_from_two_id(reply.real_user.id, reply.topic.id)
-        set = (reply.real_user.id % 2 + 1) + (reply.topic.id % 2 + 1)
-        img = image_tag(Faker::Avatar.image(set: "set#{set}"), class: img_class)
+        set = ((reply.real_user.id % 2 + 1) + (reply.topic.id % 2 + 1)) % 5 + 1
+        img = image_tag(random_image(set), class: img_class)
       end
     end
 
     if topic
       if topic.real_user
         Faker::Config.random = random_from_two_id(topic.real_user.id, topic.id)
-        set = (topic.real_user.id % 2 + 1) + (topic.id % 2 + 1)
-        img = image_tag(Faker::Avatar.image(set: "set#{set}"), class: img_class)
+        set = ((topic.real_user.id % 2 + 1) + (topic.id % 2 + 1)) % 5 + 1
+        img = image_tag(random_image(set), class: img_class)
       end
     end
 
