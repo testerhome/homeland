@@ -1,62 +1,66 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  <meta name="theme" content="<%= user_theme %>">
+
+<head>
+    <meta name="theme" content="<%= user_theme %>">
     <title><%= Setting.app_name %> - 控制台</title>
     <%= stylesheet_pack_tag "admin" %>
     <%= javascript_packs_with_chunks_tag "application" %>
     <%= csrf_meta_tag %>
-  </head>
-  <body>
-    <div class="header">
-      <div class="header navbar navbar-expand flex-md-row bd-navbar">
-        <div class="container d-sm-flex">
-          <div class="navbar-header d-none d-md-flex" id="navbar-header" data-turbolinks-permanent>
-            <%= link_to("控制台", main_app.admin_root_path, class: "navbar-brand") %>
-          </div>
-          <div class="navbar-nav">
-            <%= render_list class: "nav navbar-nav" do |li|
-            li << link_to(t("admin.menu.root_path"), main_app.admin_root_path, class: "nav-link")
-            li << link_to(t("admin.menu.users"), main_app.admin_users_path, class: "nav-link")
-            li << link_to(t("admin.menu.sections"), main_app.admin_sections_path, class: "nav-link")
-            li << link_to(t("admin.menu.nodes"), main_app.admin_nodes_path, class: "nav-link")
-            li << link_to(t("admin.menu.columns"), main_app.admin_columns_path, class: "nav-link" )
-            li << link_to(t("admin.menu.topics"), main_app.admin_topics_path, class: "nav-link")
-            li << link_to(t("admin.menu.replies"), main_app.admin_replies_path, class: "nav-link")
-            li << link_to(t("admin.menu.comments"), main_app.admin_comments_path, class: "nav-link")
-            li << link_to(t("admin.menu.photos"), main_app.admin_photos_path, class: "nav-link")
-            li << link_to(t("admin.menu.locations"), main_app.admin_locations_path, class: "nav-link")
-            li << link_to(t("admin.menu.tip_offs"), main_app.admin_tip_offs_path, class: "nav-link")
-            Homeland.admin_navbar_plugins.each do |plugin|
-              li << link_to(plugin.display_name, plugin.admin_path, class: "nav-link")
-            end
-          end  %>
-          </div>
-          <div class="ml-auto d-md-flex">
-            <%= render "shared/usernav" %>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="main-container container">
-      <div id="main" class="card">
-        <div class="card-body">
-          <% if Setting.require_restart == true %>
-            <div class="alert alert-warning">
-              已修改了系统设置，需要重启应用方可生效 <%= link_to icon_tag("power-off", label: "立即重启"), reboot_admin_dashboards_path, data: { method: :post, confirm: "你确定要重启 Homeland 吗？", disable_with: "请求中..." }, class: "text-danger pull-right" %>
-            </div>
-          <% end %>
+</head>
 
-          <%= notice_message %>
-          <%= yield %>
+<body>
+
+
+    <div class="header navbar navbar-expand-md">
+        <div class="container">
+            <div class="navbar-header" data-turbolinks-permanent>
+                <%= link_to("控制台", main_app.admin_root_path, class: "navbar-brand") %>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar">
+                <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
+            </button>
+            <div id="main-navbar" class="collapse navbar-collapse">
+              <%= render_list class: "nav navbar-nav" do |li|
+                li << link_to(t("admin.menu.root_path"), main_app.admin_root_path, class: "nav-link")
+                li << link_to(t("admin.menu.users"), main_app.admin_users_path, class: "nav-link")
+                li << link_to(t("admin.menu.sections"), main_app.admin_sections_path, class: "nav-link")
+                li << link_to(t("admin.menu.nodes"), main_app.admin_nodes_path, class: "nav-link")
+                li << link_to(t("admin.menu.topics"), main_app.admin_topics_path, class: "nav-link")
+                li << link_to(t("admin.menu.replies"), main_app.admin_replies_path, class: "nav-link")
+                li << link_to(t("admin.menu.comments"), main_app.admin_comments_path, class: "nav-link")
+                li << link_to(t("admin.menu.photos"), main_app.admin_photos_path, class: "nav-link")
+                li << link_to(t("admin.menu.locations"), main_app.admin_locations_path, class: "nav-link")
+                Homeland.admin_navbar_plugins.each do |plugin|
+                  li << link_to(plugin.display_name, plugin.admin_path, class: "nav-link")
+                end
+              end  %>
+            </div>
+            <div class="ml-auto d-flex navbar-right">
+                <%= render "shared/usernav" %>
+            </div>
         </div>
-      </div>
+    </div>
+
+    <div class="main-container container">
+        <div id="main" class="card">
+            <div class="card-body">
+                <% if Setting.require_restart == true %>
+                <div class="alert alert-warning">
+                    已修改了系统设置，需要重启应用方可生效 <%= link_to icon_tag("power-off", label: "立即重启"), reboot_admin_dashboards_path, data: { method: :post, confirm: "你确定要重启 Homeland 吗？", disable_with: "请求中..." }, class: "text-danger pull-right" %>
+                </div>
+                <% end %>
+                <%= notice_message %>
+                <%= yield %>
+            </div>
+        </div>
     </div>
     <footer class="footer">
-      <div class="container">
-        <p>Powered by <a href="https://github.com/ruby-china/homeland/blob/master/CHANGELOG.md">Homeland <%= Homeland.version %></a></p>
-        <p class="suggest">使用 <a href="http://www.mozillaonline.com/" target="_blank" rel="nofollow">Firefox</a> 或 <a href="http://www.google.com/chrome" target="_blank" rel="nofollow">Chrome</a> 浏览访问本站将会获得更佳的视觉体验.</p>
-      </div>
+        <div class="container">
+            <p>Powered by <a href="https://github.com/ruby-china/homeland/blob/master/CHANGELOG.md">Homeland <%= Homeland.version %></a></p>
+            <p class="suggest">使用 <a href="http://www.mozillaonline.com/" target="_blank" rel="nofollow">Firefox</a> 或 <a href="http://www.google.com/chrome" target="_blank" rel="nofollow">Chrome</a> 浏览访问本站将会获得更佳的视觉体验.</p>
+        </div>
     </footer>
-  </body>
+</body>
+
 </html>
