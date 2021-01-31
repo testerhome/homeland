@@ -589,6 +589,14 @@ hr {
   }
 
   .buttons {
+    .follow {
+      margin-right: 4px;
+    }
+    a.active {
+      i.fa {
+        color: var(--red);
+      }
+    }
     .likes {
       a {
         display: block;

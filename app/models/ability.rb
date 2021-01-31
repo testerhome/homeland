@@ -38,6 +38,8 @@ class Ability
       roles_for_photos
       roles_for_teams
       roles_for_team_users
+      roles_for_columns
+      roles_for_articles
       basic_read_only
     end
 
@@ -112,6 +114,9 @@ class Ability
     end
 
     def roles_for_teams
+      if not user.newbie?
+        can :create, Team
+      end
       can [:update, :destroy], Team do |team|
         team.owner?(user)
       end
@@ -121,6 +126,34 @@ class Ability
       can :read, TeamUser, user_id: user.id
       can :accept, TeamUser, user_id: user.id
       can :reject, TeamUser, user_id: user.id
+      can :update_user, TeamUser, user_id: user.id
+      can [:accept_join, :reject_join, :show_approve], TeamUser do |team_user|
+        team_user.team.owner?(user)
+      end
+    end
+
+    def roles_for_columns
+      if user.column_editor? && !user.newbie?
+        can :create, Column
+      end
+      can %i[update], Column, user_id: user.id
+      can :destroy, Column do |column|
+        column.user_id == user.id
+      end
+    end
+  
+    def roles_for_articles
+      if user.column_editor? && !user.newbie?
+        can :create, Article
+      else
+        cannot :create, Article
+      end
+      can %i[favorite unfavorite follow unfollow], Article
+      can %i[update open close append], Article, user_id: user.id
+      can :change_node, Article, user_id: user.id, lock_node: false
+      can :destroy, Article do |article|
+        article.user_id == user.id && article.replies_count == 0
+      end
     end
 
     def basic_read_only
