@@ -48,7 +48,17 @@ const AppView = Backbone.View.extend({
     $("abbr.timeago").timeago();
     $(".alert").alert();
     $('.dropdown-toggle').dropdown();
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]')
+      .tooltip({
+        trigger: "hover",
+      })
+      .on("click", function () {
+        $(this).tooltip("hide");
+      });
+
+    // document.addEventListener("turbolinks:before-cache", function () {
+    //   $('[data-toggle="tooltip"]').tooltip('hide');
+    // });
 
     // 绑定评论框 Ctrl+Enter 提交事件
     $(".cell_comments_new textarea").unbind("keydown");
