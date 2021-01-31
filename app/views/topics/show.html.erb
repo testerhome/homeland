@@ -9,10 +9,10 @@
       <% if admin? %>
         $("#replies .reply a.edit").css('display','inline-block');
         $("#replies .reply a.suggest").css('display','inline-block');
-        $("#replies .reply a.suggest").css('display','inline-block');
       <% elsif current_user && current_user.id == @topic.user_id%>
-        $("#replies .reply a.edit[data-uid='<%= current_user.id %>']").css('display','inline-block');
         $("#replies .reply a.suggest[data-uid='<%= current_user.id %>']").css('display','inline-block');
+      <% elsif current_user %>
+        $("#replies .reply a.edit[data-uid='<%= current_user.id %>']").css('display','inline-block');
       <% end %>
 
       <% if @topic.closed? %>
