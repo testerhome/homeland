@@ -670,9 +670,6 @@ kbd {
 /* Modal */
 .modal {
   top: 120px;
-  .modal-dialog {
-    max-width: 640px;
-  }
 
   .modal-content {
     border: 0px;
@@ -717,10 +714,11 @@ kbd {
       width: 768px;
     }
   }
-}
-
-.modal-backdrop {
-  opacity: 0 !important;
+  @media (min-width: 1140px) {
+    .modal-dialog {
+      width: 1140px;
+    }
+  }
 }
 
 .list-group {

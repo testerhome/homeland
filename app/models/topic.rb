@@ -126,6 +126,10 @@ class Topic < ApplicationRecord
 
   def save_with_checking_node
     save
+    if previous_changes["draft"]==[true, false]
+      update!(created_at: Time.now)
+      update!(last_active_mark: Time.now.to_i)
+    end
     update_user_if_related_to_anonymous
   end
 
