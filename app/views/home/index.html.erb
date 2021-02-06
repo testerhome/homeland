@@ -1,18 +1,27 @@
+<% if mobile? %>
+<div class="row">
+    <div class="col-md-9 home-main">
+        <form id="mobile-search-form" class="mobile-search-form" action="/search" method="GET">
+            <input type="text" name="q" class="form-control" value="<%= params[:q] %>" placeholder="搜索"></input>
+        </form>
+    </div>
+</div>
+<% end %>
 <% if !mobile? %>
-  <div class="hide-ios">
+<div class="hide-ios">
     <%= raw Setting.index_html %>
-  </div>
+</div>
 <% end %>
 
 <div class="row">
-  <div class="col-md-9 home-main">
-    <%= raw Setting.index_roll_card_html %>
-    <%= render "home/topics" %>
-    <%= render "home/hot_nodes" %>
-    <%= render "/shared/hot_locations" %>
-    <%= raw Setting.index_footer_card_html %>
-  </div>
-  <div class="col-md-3 home-side-bar">
-    <%= render "home/sidebar_for_home_index" %>
-  </div>
+    <div class="col-md-9 home-main">
+        <%= raw Setting.index_roll_card_html %>
+        <%= render "home/topics" %>
+        <%= render "home/hot_nodes" %>
+        <%= render "/shared/hot_locations" %>
+        <%= raw Setting.index_footer_card_html %>
+    </div>
+    <div class="col-md-3 home-side-bar">
+        <%= render "home/sidebar_for_home_index" %>
+    </div>
 </div>
