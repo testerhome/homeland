@@ -14,8 +14,7 @@
 -->
 <!DOCTYPE html>
 <html>
-
-<head>
+ <head>
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="theme" content="<%= user_theme %>">
@@ -31,84 +30,79 @@
     <%= csrf_meta_tag %>
     <%= raw Setting.custom_head_html %>
     <% if current_user %>
-    <meta name="current-user" data-user-id="<%= current_user.id %>" data-user-login="<%= current_user.login %>" data-user-name="<%= current_user.name %>" data-user-email="<%= current_user.email %>" data-user-avatar-url="<%= current_user.avatar? ? current_user.avatar.url(:md) : current_user.letter_avatar_url(96) %>">
+      <meta name="current-user" data-user-id="<%= current_user.id %>" data-user-login="<%= current_user.login %>" data-user-name="<%= current_user.name %>" data-user-email="<%= current_user.email %>" data-user-avatar-url="<%= current_user.avatar? ? current_user.avatar.url(:md) : current_user.letter_avatar_url(96) %>">
     <% end %>
     <%= javascript_packs_with_chunks_tag "application", 'data-turbolinks-track': "reload" %>
     <%= yield :javascripts %>
-</head>
-
+  </head>
+  <body class="page-<%= controller_name %><%= ' infinite-scroll' if turbolinks_app? %>" data-controller-name="<%= controller_name %>">
 <body class="page-<%= controller_name %><%= ' infinite-scroll' if turbolinks_app? %>" data-controller-name="<%= controller_name %>">
-        <div class="header navbar navbar-expand-md">
-            <div class="container">
-                <div class="navbar-header" data-turbolinks-permanent>
-                    <%= raw Setting.navbar_brand_html %>
-                </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar">
-                    <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
-                </button>
-                <div id="main-navbar" class="collapse navbar-collapse">
-                    <%= yield :header %>
-                    <%= render "shared/navbar" %>
-                </div>
-                <div class="ml-auto d-flex navbar-right">
-                    <form class="navbar-form d-none d-lg-flex mr-2 form-search active" action="/search" method="GET">
-                        <i class="fa btn-search fa-search"></i>
-                        <input type="text" name="q" class="form-control" value="<%= params[:q] %>" placeholder="搜索"></input>
-                    </form>
-                    <%= render "shared/usernav" %>
-                </div>
-            </div>
+    <div class="header navbar navbar-expand-md">
+      <div class="container">
+        <div class="navbar-header" data-turbolinks-permanent>
+          <%= raw Setting.navbar_brand_html %>
         </div>
-
-        <%= yield :sub_navbar %>
-
-        <div id="main" class="main-container container">
-            <% if current_user and !current_user.certified? %>
-            <div class="alert alert-danger" role="alert">
-                <link>
-                <%= link_to '为防止广告刷屏，请点击完成答题认证，再完成认证前，你将无法发帖！', main_app.certify_path %>
-            </div>
-            <% end %>
-            <%= birthday_tag %>
-            <%= notice_message %>
-            <%= content_for?(:main) ? yield(:main) : yield %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar">
+          <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
+        </button>
+        <div id="main-navbar"  class="collapse navbar-collapse">
+          <%= yield :header %>
+          <%= render "shared/navbar" %>
         </div>
+        <div class="ml-auto d-flex navbar-right">
+          <form class="navbar-form d-none d-lg-flex mr-2 form-search active" action="/search" method="GET">
+            <i class="fa btn-search fa-search"></i>
+            <input type="text" name="q" class="form-control" value="<%= params[:q] %>" placeholder="搜索"></input>
+        </form>
+        <%= render "shared/usernav" %>
+      </div>
+    </div>
+  </div>
 
-        <% if !mobile? %>
-        <footer class="footer" id="footer" data-turbolinks-permanent>
-            <div class="container">
-                <%= raw Setting.footer_html %>
-            </div>
-        </footer>
-        <% end %>
+  <%= yield :sub_navbar %>
 
-        <% if mobile? %>
-        <script type="text/javascript">
-            App.mobile = true;
-        </script>
-        <% end %>
-        <script type="text/javascript" data-turbolinks-eval="false">
-            App.root_url = "<%= main_app.root_url %>";
-            App.asset_url = "<%= Setting.upload_url -%>";
-            App.twemoji_url = "<%= Twemoji.configuration.asset_root %>";
-            App.locale = "<%= I18n.locale %>"; <
-            %
-            if current_user % >
-                App.current_user_id = < %= current_user.id % > ; <
-            % end % >
-                <
-                %
-                if turbolinks_app ? % >
-                App.turbolinks = true; <
-            % end % >
-        </script>
-        <%= yield :scripts %>
-        <script>
-            ga('create', '<%= Setting.google_analytics_key %>', 'auto');
-            ga('require', 'displayfeatures');
-            ga('send', 'pageview');
-        </script>
-        <div class="zoom-overlay"></div>
-    </body>
+  <div id="main" class="main-container container">
+    <% if current_user and !current_user.certified? %>
+      <div class="alert alert-danger" role="alert"><link>
+        <%= link_to '为防止广告刷屏，请点击完成答题认证，再完成认证前，你将无法发帖！', main_app.certify_path %>
+      </div>
+    <% end %>
+    <%= birthday_tag %>
+    <%= notice_message %>
+    <%= content_for?(:main) ? yield(:main) : yield %>
+  </div>
 
+  <% if !mobile? %>
+  <footer class="footer" id="footer" data-turbolinks-permanent>
+    <div class="container">
+      <%= raw Setting.footer_html %>
+    </div>
+  </footer>
+  <% end %>
+
+  <% if mobile? %>
+    <script type="text/javascript">
+    App.mobile = true;
+    </script>
+  <% end %>
+  <script type="text/javascript" data-turbolinks-eval="false">
+    App.root_url = "<%= main_app.root_url %>";
+    App.asset_url = "<%= Setting.upload_url -%>";
+    App.twemoji_url = "<%= Twemoji.configuration.asset_root %>";
+    App.locale = "<%= I18n.locale %>";
+    <% if current_user %>
+      App.current_user_id = <%= current_user.id %>;
+    <% end %>
+    <% if turbolinks_app? %>
+      App.turbolinks = true;
+    <% end %>
+  </script>
+  <%= yield :scripts %>
+  <script>
+    ga('create', '<%= Setting.google_analytics_key %>', 'auto');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+  </script>
+  <div class="zoom-overlay"></div>
+</body>
 </html>
