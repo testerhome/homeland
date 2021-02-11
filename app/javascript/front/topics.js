@@ -189,6 +189,7 @@ window.TopicView = Backbone.View.extend({
         $(textarea).hide();
         $box.css("height", "auto");
         $box.css("min-height", $(textarea).height());
+        $box.css("overflow", "scroll");
         self.preview($(textarea).val());
       }
       return false;
