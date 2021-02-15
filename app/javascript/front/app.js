@@ -367,15 +367,12 @@ const AppView = Backbone.View.extend({
       $(document).on('input', 'textarea[name*=body]', function() {
         var textarea;
         textarea = $(this);
-        console.log("input:" + location.pathname + " " + ($(textarea).prop('id')))
         return localStorage.setItem(location.pathname + " " + ($(textarea).prop('id')), textarea.val());
       });
       $('form').on('submit', function() {
         var form;
         form = $(this);
-        console.log("submit1:" + location.pathname + " " + ($(this).prop('id')))
         return form.find('textarea[name*=body]').each(function() {
-          console.log("submit2:" + location.pathname + " " + ($(this).prop('id')))
           return localStorage.removeItem(location.pathname + " " + ($(this).prop('id')));
         });
       });
@@ -394,7 +391,6 @@ const AppView = Backbone.View.extend({
       return $('textarea[name*=body]').each(function() {
         var textarea, value;
         textarea = $(this);
-        console.log("restore:" + location.pathname + " " + ($(textarea).prop('id')))
         if (value = localStorage.getItem(location.pathname + " " + ($(textarea).prop('id')))) {
           return textarea.val(value);
         }

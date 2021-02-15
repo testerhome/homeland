@@ -41,3 +41,4 @@
     cannot_be_shared: "原创声明：保留所有权利，禁止转载"
     from_column: "来自 %{user} 的专栏"
     article_public: "是否允许推送到社区？"
+    edit_article: "编辑文章"
