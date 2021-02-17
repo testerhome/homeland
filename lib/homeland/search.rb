@@ -4,7 +4,7 @@ module Homeland
   class Search
     attr_accessor :term, :terms
 
-    INVALID_CHARS = /[:()&!'"]/
+    INVALID_CHARS = /[:()&!'"*|]/
 
     def initialize(term)
       term = term.to_s.squish.gsub(INVALID_CHARS, "")
