@@ -365,6 +365,7 @@ hr {
     }
   }
   .topic {
+    .column-node {color: $blue}
     min-height: 68px;
     border-bottom: 1px solid var(--topic-item-border-color);
     padding: 15px 25px;

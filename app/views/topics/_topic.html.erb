@@ -5,8 +5,8 @@
     </div>
     <div class="infos media-body">
       <div class="title media-heading">
-        <%= link_to(main_app.topic_path(topic), title: topic.title) do %>
-          <%= raw content_tag(:span, topic.node&.name, class: 'node') %>
+        <%= link_to((topic.is_article? ? main_app.article_path(topic) : main_app.topic_path(topic)), title: topic.title) do %>
+          <%= raw content_tag(:span, topic.is_article? ? topic.column.name :    topic.node_name, class: topic.is_article? ? 'column-node' :   'node') %>
           <%= topic.title %>
         <% end %>
         <% if suggest %>
