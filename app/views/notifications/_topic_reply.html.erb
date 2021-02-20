@@ -6,10 +6,19 @@
     topic = notification.second_target || reply.topic
   %>
 
+  <% if topic.blank? %>
+    <div class="media-body">相关帖子已删除</div>
+  <% else %>
   <div class="media-heading">
-    在帖子
-    <%= topic_title_tag(topic, reply: reply) %> 回复了：
+    <% if topic.is_article? %>
+      在文章
+      <%= article_title_tag(topic, reply: reply) %> 留言了：
+    <% else %>
+      在帖子
+      <%= topic_title_tag(topic, reply: reply) %> 留言了：
+    <% end %>
   </div>
+  <% end %>
   <%- if reply.present? -%>
     <div class="media-content summary markdown">
       <%= reply.body_html %>

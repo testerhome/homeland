@@ -18,7 +18,7 @@
       <%= user_name_tag(topic.user, data: { author: true }, topic: topic) %>
       <span class="hidden-mobile">
         <% if topic.team %>
-        for <%= user_name_tag(topic.team, topic: topic) %>
+        for <%= team_name_tag(topic.team, topic: topic) %>
         <% end %>
       </span>
        ·

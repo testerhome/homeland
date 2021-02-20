@@ -40,6 +40,9 @@ module UsersHelper
         label = Faker::Name.name
       end
     end
+    if user.is_a? Team
+      label     = user.name.blank? ? user.login : user.name
+    end
 
     link_to(label, "/#{login}", options)
   end

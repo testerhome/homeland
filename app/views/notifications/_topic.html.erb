@@ -3,6 +3,10 @@
   相关信息已删除
 <% else %>
   <div class="media-heading">
-    创建了帖子 <%= topic_title_tag(topic) %>
+    <% if topic.is_article? %>
+      您关注的专栏：<%= render_column_name(topic.column.name,topic.column.slug) %> 有了新文章： <%= article_title_tag(topic) %>
+    <% else %>
+      创建了帖子 <%= topic_title_tag(topic) %>
+    <% end %>
   </div>
 <% end %>
