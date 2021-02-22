@@ -3,9 +3,11 @@
   topic = notification.second_target || reply.topic
 %>
 <div class="media-heading">
-  <span class="info">在 <%= topic_title_tag(topic) %> 提及你：</span>
+  <span class="info">在
+      <%= topic&.is_article? ? article_title_tag(topic) : topic_title_tag(topic) %>
+    提及你：</span>
 </div>
-<% if reply.present? %>
+<% if reply&.present? %>
   <div class="media-content summary markdown">
     <%= reply.body_html %>
   </div>
