@@ -15,6 +15,13 @@ class TipOffsController < ApplicationController
     @tipOff = TipOff.new(tip_off_params)
     @tipOff.reporter_id = current_user.id
     @tipOff.create_time = Time.now
+
+    # 移动客户端上举报，内容 url 会带上 access_token 参数导致可以切换用户。要把它去掉
+    if '?access_token'.in? @tipOff.content_url
+      end_position = @tipOff.content_url =~ /\?access_token/
+      @tipOff.content_url = @tipOff.content_url[0..end_position-1]
+    end
+
     if @tipOff.save
       # 给管理员群发通知
       admin_users = User.admin_users
