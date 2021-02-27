@@ -46,7 +46,8 @@ class ArticlesController < TopicsController
     if !column.active
       redirect_to(columns_user_path(current_user), notice: "专栏被屏蔽！")
     end
-    @article = Article.new(user_id: current_user.id, column_id: params[:column_id])
+    # 默认不推送到社区，减少刷屏和骚扰
+    @article = Article.new(user_id: current_user.id, column_id: params[:column_id], article_public:false)
   end
 
   def create
