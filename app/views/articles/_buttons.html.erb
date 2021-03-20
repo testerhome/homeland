@@ -13,7 +13,7 @@
   <% end %>
 
   <% if current_user %>
-    <%= link_to raw("<i class='fa fa-flag'></i> " + t('common.tip_off')), new_tip_off_path(content_url: request.original_url, content_author_id: @article.user.id), remote: true, title: t('common.tip_off') %>
+    <%= link_to raw("<i class='fa fa-flag'></i> " + t('common.tip_off')), new_tip_off_path(content_url: request.original_url, content_author_id: user_id_wrapper(@article.user)), remote: true, title: t('common.tip_off') %>
   <% end %>
   <span class="pull-right opts">
     <% if owner?(@article) or admin? %>
