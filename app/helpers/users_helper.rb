@@ -196,6 +196,11 @@ module UsersHelper
     link_to icon_tag("qrcode", label: "打赏支持"), main_app.reward_user_path(user), remote: true, class: opts[:class]
   end
 
+  def user_id_wrapper(user)
+    return "" if user.blank?
+    user.id
+  end
+
   private
     def random_from_two_id(user_id, topic_id)
       Random.new(user_id + topic_id)
