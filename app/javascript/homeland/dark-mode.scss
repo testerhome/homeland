@@ -181,4 +181,11 @@
   .topic-reward {
     background-color: #33333330;
   }
+
+  #hall-of-fames {
+    a.users-label-item {
+      border: 1px solid #e5e5e5;
+      color: var(--link-color);
+    }
+  }
 }
