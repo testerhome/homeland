@@ -4,7 +4,8 @@ module Homeland
   class Search
     attr_accessor :term, :terms
 
-    INVALID_CHARS = /[:()&!'"*|]/
+    INVALID_CHARS = /[:()&!'"]/
+    JIEBA = JiebaRb::Segment.new
 
     def initialize(term)
       term = term.to_s.squish.gsub(INVALID_CHARS, "")
@@ -18,16 +19,13 @@ module Homeland
       SearchDocument.select("ts_headline(search_documents.content, #{ts_query}) as hit_content")
         .select(:id, :searchable_type, :searchable_id)
         .where("tokens @@ #{ts_query}")
-        .order("searchable_type DESC")
-        .order("#{ts_query} DESC")
-        .order("TS_RANK_CD(tokens, #{ts_query}) DESC")
+        .order(Arel.sql("#{ts_query} DESC"))
+        .order(Arel.sql("TS_RANK_CD(tokens, #{ts_query}) DESC"))
     end
 
     class << self
       def jieba
-        return @jieba if defined? @jieba
-
-        @jieba = JiebaRb::Segment.new
+        JIEBA
       end
     end
 
@@ -37,7 +35,7 @@ module Homeland
 
     def ts_query
       @ts_query ||= begin
-                      all_terms = @term.to_s.split
+                      all_terms = @term.split
                       query = SearchDocument.sanitize_sql(all_terms.map { |t| "#{PG::Connection.escape_string(t)}:*" }.join(" & "))
                       "TO_TSQUERY('simple', '#{query}')"
                     end

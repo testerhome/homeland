@@ -1,4 +1,4 @@
-<% if item %>
+<% if item && !item&.team&.private?  %>
 <%
 title = item.title
 %>

@@ -20,6 +20,11 @@ module Searchable
   end
 
   def reindex!
+    if self.is_a? Topic
+      if self&.team&.private? 
+        return
+      end
+    end
     SearchDocument.index(self)
   end
 end
