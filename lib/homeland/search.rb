@@ -4,14 +4,14 @@ module Homeland
   class Search
     attr_accessor :term, :terms
 
-    INVALID_CHARS = /[:()&!'"]/
+    INVALID_CHARS = /[:()&!'"|]/
     JIEBA = JiebaRb::Segment.new
 
     def initialize(term)
-      term = term.to_s.squish.gsub(INVALID_CHARS, "")
+      term = term.to_s.squish.gsub(%r{\u0000}, "")
+      term = term.gsub(INVALID_CHARS, "")
       @terms = Search.jieba.cut(term)
       @term = @terms.join(" ")
-
       @results = []
     end
 

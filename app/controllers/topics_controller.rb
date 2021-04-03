@@ -11,6 +11,9 @@ class TopicsController < ApplicationController
 
   def index
     @suggest_topics = []
+    if params[:page].to_i > Topic.total_pages
+      params[:page] = Topic.total_pages
+    end
     if params[:page].to_i <= 1
       @suggest_topics = topics_scope.suggest.limit(3)
     end
@@ -29,6 +32,9 @@ class TopicsController < ApplicationController
 
   def node
     @node = Node.find(params[:id])
+    if params[:page].to_i > Topic.total_pages
+      params[:page] = Topic.total_pages
+    end
     @topics = topics_scope(@node.topics, without_nodes: false).last_actived.page(params[:page])
     @page_title = "#{@node.name} &raquo; #{t('menu.topics')}"
     @page_title = [@node.name, t("menu.topics")].join(" · ")

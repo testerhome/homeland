@@ -57,7 +57,7 @@
           <a class="btn btn-default btn-block <%= 'disabled' if !@column.active%>" href="<%= edit_column_path @column %>">
             <i class="fa fa-edit"></i> 编辑专栏
           </a>
-          <% if current_user.column_editor? %>
+          <% if current_user&.column_editor? %>
             <a class="btn btn-primary btn-block <%= 'disabled' if !@column.active%>" href="<%= new_column_article_path @column.id %>">
               <i class="fa fa-new"></i> 新增文章
             </a>
