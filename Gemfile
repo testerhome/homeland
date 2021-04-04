@@ -49,7 +49,7 @@ gem "rucaptcha"
 gem "recaptcha"
 
 # 用户系统
-gem 'devise', github: 'heartcombo/devise'
+gem 'devise'
 gem "devise-encryptable"
 
 # 通知系统
@@ -72,7 +72,7 @@ gem "simple_form"
 gem "form-select"
 
 # 三方平台 OAuth 验证登录
-gem "omniauth"
+gem "omniauth", "~> 1.x"
 gem "omniauth-github"
 
 gem "omniauth-twitter"
