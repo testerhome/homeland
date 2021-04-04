@@ -2,7 +2,30 @@
 
 # RailsSettings Model
 class Setting < RailsSettings::Base
-  include Setting::Legecy
+
+  LEGECY_ENVS = {
+    github_token: "github_api_key",
+    github_secret: "github_api_secret"
+  }
+
+  concerning :Legacy do
+    included do
+    end
+
+    class_methods do
+      def legecy_env_instead(key)
+        LEGECY_ENVS[key]
+      end
+
+      def legecy_envs
+        keys = []
+        LEGECY_ENVS.each_key do |key|
+          keys << key if ENV[key.to_s].present?
+        end
+        keys
+      end
+    end
+  end
 
   # List setting value separator chars
   SEPARATOR_REGEXP = /[\s,]/
@@ -276,6 +299,12 @@ class Setting < RailsSettings::Base
     def rails_initialized?
       true
     end
+
+    # https://regex101.com/r/m1UOqT/1
+    def cable_allowed_request_origin
+      /http(s)?:\/\/#{Setting.domain}(:\d+)?/
+    end
+
   end
 
   def require_restart?
