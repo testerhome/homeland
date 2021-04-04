@@ -49,7 +49,7 @@ gem "rucaptcha"
 gem "recaptcha"
 
 # 用户系统
-gem "devise"
+gem 'devise', github: 'heartcombo/devise'
 gem "devise-encryptable"
 
 # 通知系统
