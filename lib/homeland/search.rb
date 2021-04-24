@@ -10,8 +10,9 @@ module Homeland
     def initialize(term)
       term = term.to_s.squish.gsub(%r{\u0000}, "")
       term = term.gsub(INVALID_CHARS, "")
-      @terms = Search.jieba.cut(term)
+      @terms = Search.jieba.cut(term).uniq
       @term = @terms.join(" ")
+
       @results = []
     end
 
