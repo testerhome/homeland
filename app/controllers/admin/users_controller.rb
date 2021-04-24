@@ -38,10 +38,10 @@ module Admin
         @users = scope.where(created_at: Time.zone.parse(params[:start_date]).beginning_of_day..Time.zone.parse(params[:end_date]).end_of_day)
         @user_ip_count = scope.where(created_at: Time.zone.parse(params[:start_date]).beginning_of_day..Time.zone.parse(params[:end_date]).end_of_day).group('last_sign_in_ip').order('count_last_sign_in_ip desc').count('last_sign_in_ip')
       else
-        # @users = scope.where(created_at: Time.zone.yesterday.beginning_of_day..Time.zone.yesterday.end_of_day)
-        # @user_ip_count = scope.where(created_at: Time.zone.yesterday.beginning_of_day..Time.zone.yesterday.end_of_day).group('last_sign_in_ip').order('count_last_sign_in_ip desc').count('last_sign_in_ip')
-        @users = scope.where(created_at: Time.zone.parse('2021-01-15').beginning_of_day..Time.zone.parse('2021-03-18').end_of_day)
-        @user_ip_count = scope.where(created_at: Time.zone.parse('2021-01-15').beginning_of_day..Time.zone.parse('2021-03-18').end_of_day).group('last_sign_in_ip').order('count_last_sign_in_ip desc').count('last_sign_in_ip')
+        @users = scope.where(created_at: Time.zone.yesterday.beginning_of_day..Time.zone.yesterday.end_of_day)
+        @user_ip_count = scope.where(created_at: Time.zone.yesterday.beginning_of_day..Time.zone.yesterday.end_of_day).group('last_sign_in_ip').order('count_last_sign_in_ip desc').count('last_sign_in_ip')
+        # @users = scope.where(created_at: Time.zone.parse('2021-01-15').beginning_of_day..Time.zone.parse('2021-03-18').end_of_day)
+        # @user_ip_count = scope.where(created_at: Time.zone.parse('2021-01-15').beginning_of_day..Time.zone.parse('2021-03-18').end_of_day).group('last_sign_in_ip').order('count_last_sign_in_ip desc').count('last_sign_in_ip')
       end
     end
 
