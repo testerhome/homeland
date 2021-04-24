@@ -1,0 +1,41 @@
+<%= form_tag ip_status_admin_users_path, method: :get do %>
+<div class="form-group">
+    <input value='<%= params[:start_date] %>' type="text" name="start_date" class="form-control" placeholder="开始日期，比如：2021-02-08" />
+    <input value='<%= params[:end_date] %>' type="text" name="end_date" class="form-control" placeholder="结束日期，比如：2021-02-08" />
+</div>
+<button class="btn btn-primary">查询</button>
+<% end %>
+
+<table class="table table-bordered table-striped table-condensed">
+    <tr class="head">
+        <td>ip</td>
+        <td>个数</td>
+        <td>具体用户id</td>
+        <td>操作</td>
+    </tr>
+
+    <% @user_ip_count.each do |ip, count| %>
+    <tr>
+        <td width="32"><%= ip %></td>
+        <td width="32"><%= count %></td>
+        <td>
+            <% @users.select { |m| m.last_sign_in_ip == ip }.each do |user| %>
+            <div> <%= link_to user.fullname, user_path(user), target: "_blank" %> </div>
+            <% end %>
+        </td>
+        <td>
+            <% if ip %>
+
+            <%= form_tag admin_delete_users_from_ip_path, method: :post do %>
+
+            <div class="form-group">
+                <input type="hidden" name="ip" class="form-control" value='<%= ip %>' />
+            </div>
+            <button class="btn btn-danger">删除该ip下的所有用户</button>
+            <% end %>
+
+            <% end %>
+        </td>
+    </tr>
+    <% end %>
+</table>

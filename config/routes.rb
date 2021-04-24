@@ -146,7 +146,11 @@ Rails.application.routes.draw do
         put :assign_nodes
         get :edit_assign_nodes
       end
+      collection do
+        get :ip_status
+      end
     end
+    post "/users/delete_users_from_ip", to: "users#delete_users_from_ip", as: "delete_users_from_ip"
     post "/users/send_message", to: "users#send_sms", as: "send_sms"
     resources :photos
     resources :admin_photos

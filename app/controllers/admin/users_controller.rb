@@ -6,6 +6,7 @@ module Admin
       scope = User.all
       scope = scope.where(type: params[:type]) if params[:type].present?
       scope = scope.where(state: params[:state]) if params[:state].present?
+      scope = scope.where(last_sign_in_ip: params[:last_sign_in_ip]) if params[:last_sign_in_ip].present?
       field = params[:field] || "login"
 
       if params[:q].present?
@@ -27,6 +28,30 @@ module Admin
 
     def show
       @user = User.find(params[:id])
+    end
+
+    def ip_status
+
+      scope = User.all
+      scope = scope.where.not(state: "deleted")
+      if params[:start_date].present? and params[:end_date].present?
+        @users = scope.where(created_at: Time.zone.parse(params[:start_date]).beginning_of_day..Time.zone.parse(params[:end_date]).end_of_day)
+        @user_ip_count = scope.where(created_at: Time.zone.parse(params[:start_date]).beginning_of_day..Time.zone.parse(params[:end_date]).end_of_day).group('last_sign_in_ip').order('count_last_sign_in_ip desc').count('last_sign_in_ip')
+      else
+        # @users = scope.where(created_at: Time.zone.yesterday.beginning_of_day..Time.zone.yesterday.end_of_day)
+        # @user_ip_count = scope.where(created_at: Time.zone.yesterday.beginning_of_day..Time.zone.yesterday.end_of_day).group('last_sign_in_ip').order('count_last_sign_in_ip desc').count('last_sign_in_ip')
+        @users = scope.where(created_at: Time.zone.parse('2021-01-15').beginning_of_day..Time.zone.parse('2021-03-18').end_of_day)
+        @user_ip_count = scope.where(created_at: Time.zone.parse('2021-01-15').beginning_of_day..Time.zone.parse('2021-03-18').end_of_day).group('last_sign_in_ip').order('count_last_sign_in_ip desc').count('last_sign_in_ip')
+      end
+    end
+
+
+    def delete_users_from_ip
+      ip = params[:ip];
+      User.select { |m| m.last_sign_in_ip == ip }.each do |user| 
+        user.soft_delete
+      end
+      redirect_to ip_status_admin_users_url, notice: "软删除成功。"
     end
 
     def new

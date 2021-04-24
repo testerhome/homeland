@@ -22,9 +22,15 @@
     <div class="form-group mr-sm-2">
       <%= select_tag(:field, options_for_select([['用户名','login'], ['Email','email'], ['姓名','name']], params[:field]), class: 'form-control') %>
     </div>
+
     <div class="form-group mr-sm-2">
       <input type="text" name="q" class="form-control" value="<%= params[:q] %>" placeholder="搜索" />
     </div>
+
+    <div class="form-group mr-sm-2">
+      <input type="text" name="last_sign_in_ip" class="form-control" value="<%= params[:last_sign_in_ip] %>" placeholder="last_sign_in_ip" />
+    </div>
+
     <div class="form-group mr-sm-2">
       <%= select_tag(:type, options_for_select([['全部类别',''], ['社团','Team']], params[:type]), class: 'form-control') %>
     </div>
@@ -33,6 +39,12 @@
     </div>
     <button class="btn btn-default">搜索</button>
   </form>
+  
+  
+</div>
+
+<div class="card-body item-list">
+<%= link_to "ip 注册情况", ip_status_admin_users_path(), target: "_blank" %>
 </div>
 
 <table class="table table-bordered table-striped table-condensed">
@@ -41,6 +53,8 @@
     <td>头像</td>
     <td colspan="2">帐号</td>
     <td>注册时间</td>
+    <td>上次登录ip</td>
+    <td>当前登录ip</td>
     <td>操作</td>
   </tr>
 
@@ -61,6 +75,8 @@
         </td>
       <% end %>
       <td width="120"><%= user.created_at&.to_date %></td>
+      <td width="120"><%= user.last_sign_in_ip %></td>
+      <td width="120"><%= user.current_sign_in_ip %></td>
       <td>
         <%= link_to '', edit_admin_user_path(user.id), class: "fa fa-edit mr-2", title: "edit user" %>
         <% if user.maintainer? %>
