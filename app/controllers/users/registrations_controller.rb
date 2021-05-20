@@ -5,6 +5,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
+
+    if Setting.shutdown_register?
+      message = "社区关闭注册，如需注册请联系社区公众号！"
+      logger.warn message
+      return render status: 403, plain: message
+    end
+
     cache_key = ["user-sign-up", request.remote_ip, Date.today]
     # IP limit
     sign_up_count = Rails.cache.read(cache_key) || 0

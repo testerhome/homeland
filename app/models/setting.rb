@@ -52,6 +52,8 @@ class Setting < RailsSettings::Base
     before_topic_html
     node_ids_hide_in_topics_index
     reject_newbie_reply_in_the_evening
+    night_curfew
+    shutdown_register
     newbie_limit_time
     ban_words_on_reply
     ban_words_on_body
@@ -170,6 +172,8 @@ class Setting < RailsSettings::Base
   field :sign_up_daily_limit, type: :integer, default: 0
 
   field :reject_newbie_reply_in_the_evening, default: "false", type: :boolean
+  field :night_curfew, default: "false", type: :boolean
+  field :shutdown_register, default: "false", type: :boolean
   field :allow_change_login, type: :boolean, default: (ENV["allow_change_login"] || false)
   field :topic_create_rate_limit, default: "false", type: :boolean
   field :node_ids_hide_in_topics_index, type: :array, default: []
@@ -303,6 +307,14 @@ class Setting < RailsSettings::Base
     # https://regex101.com/r/m1UOqT/1
     def cable_allowed_request_origin
       /http(s)?:\/\/#{Setting.domain}(:\d+)?/
+    end
+
+    def is_night_curfew?
+      if self.night_curfew?
+        return Time.zone.now.hour > 23 || Time.zone.now.hour < 9
+      else
+        return false
+      end
     end
 
   end

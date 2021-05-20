@@ -74,7 +74,7 @@ class Ability
 
     def roles_for_topics
       unless user.newbie?
-        can :create, Topic
+        can :create, Topic unless Setting.is_night_curfew?
       end
       can %i[favorite unfavorite follow unfollow], Topic
       can %i[update open close], Topic, user_id: user.id
@@ -86,7 +86,9 @@ class Ability
 
     def roles_for_replies
       # 新手用户晚上禁止回帖，防 spam，可在面板设置是否打开
-      can :create, Reply unless current_lock_reply?
+      unless Setting.is_night_curfew?
+        can :create, Reply unless Setting.is_night_curfew?
+      end
       can %i[update destroy], Reply, user_id: user.id
       cannot %i[create update destroy], Reply, topic: { closed?: true }
       can %i[reply_suggest reply_unsuggest], Reply do |reply|
@@ -97,7 +99,7 @@ class Ability
     def current_lock_reply?
       return false unless user.newbie?
       return false unless Setting.reject_newbie_reply_in_the_evening?
-      Time.zone.now.hour > 22 || Time.zone.now.hour < 9
+      Time.zone.now.hour > 23 || Time.zone.now.hour < 9
     end
 
     def roles_for_photos
