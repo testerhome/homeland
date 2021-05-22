@@ -104,9 +104,9 @@
             <% else %>
               <div class="alert alert-info">
               <% if current_user.newbie? %>
-                当前设置新手用户不能在 23:00 ~ 9:00 发帖。
+                当前设置新手用户不能在 <%= Setting.night_curfew_start.to_i %>:00 ~ <%= Setting.night_curfew_end.to_i %>:00 发帖。
                 <% else %>
-                当前宵禁，不能在 23:00 ~ 9:00 发帖。
+                当前宵禁，不能在 <%= Setting.night_curfew_start.to_i %>:00 ~ <%= Setting.night_curfew_end.to_i %>:00 发帖。
                 <% end %>
               </div>
             <% end %>

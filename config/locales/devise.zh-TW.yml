@@ -23,6 +23,8 @@
     sessions:
       signed_in: "登錄成功。"
       signed_out: "退出成功。"
+      already_signed_out: "退出成功。"
+      signed_in_bind_oauth: "登录成功，并成功绑定"
     passwords:
       send_instructions: "稍後，您將收到重置密碼的電子郵件。"
       updated: "您的密碼已修改成功，請重新登錄。"

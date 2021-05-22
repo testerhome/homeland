@@ -99,7 +99,7 @@ class Ability
     def current_lock_reply?
       return false unless user.newbie?
       return false unless Setting.reject_newbie_reply_in_the_evening?
-      Time.zone.now.hour > 23 || Time.zone.now.hour < 9
+      Time.zone.now.hour >= Setting.night_curfew_start.to_i || Time.zone.now.hour <= Setting.night_curfew_end.to_i
     end
 
     def roles_for_photos

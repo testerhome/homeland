@@ -129,7 +129,7 @@
             <%= render 'reply_form' %>
           <% else %>
             <div class="alert alert-info">
-              当前设置新手用户不能在 22:00 ~ 9:00 发帖。
+              当前设置新手用户不能在 <%= Setting.night_curfew_start.to_i %>:00 ~ <%= Setting.night_curfew_end.to_i %>:00 发帖。
             </div>
           <% end %>
         </div>

@@ -25,6 +25,7 @@
       signed_in: "登录成功。"
       signed_out: "退出成功。"
       already_signed_out: "退出成功。"
+      signed_in_bind_oauth: "登录成功，并成功绑定"
     passwords:
       send_instructions: "稍后，您将收到重置密码的电子邮件。"
       updated: "您的密码已修改成功，请重新登录。"

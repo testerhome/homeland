@@ -53,6 +53,8 @@ class Setting < RailsSettings::Base
     node_ids_hide_in_topics_index
     reject_newbie_reply_in_the_evening
     night_curfew
+    night_curfew_start
+    night_curfew_end
     shutdown_register
     newbie_limit_time
     ban_words_on_reply
@@ -83,7 +85,6 @@ class Setting < RailsSettings::Base
     share_allow_sites
     editor_languages
     sorted_plugins
-
     github_stats_repos
     certify_questions
     index_sidebar_top_html
@@ -173,6 +174,8 @@ class Setting < RailsSettings::Base
 
   field :reject_newbie_reply_in_the_evening, default: "false", type: :boolean
   field :night_curfew, default: "false", type: :boolean
+  field :night_curfew_start, default: 23, type: :integer
+  field :night_curfew_end, default: 8, type: :integer
   field :shutdown_register, default: "false", type: :boolean
   field :allow_change_login, type: :boolean, default: (ENV["allow_change_login"] || false)
   field :topic_create_rate_limit, default: "false", type: :boolean
@@ -311,7 +314,9 @@ class Setting < RailsSettings::Base
 
     def is_night_curfew?
       if self.night_curfew?
-        return Time.zone.now.hour > 23 || Time.zone.now.hour < 9
+        Rails.logger.error "xxxx #{Time.zone}"
+        Rails.logger.error "xxxx #{Time.zone.now.hour}"
+        return Time.zone.now.hour >= Setting.night_curfew_start.to_i || Time.zone.now.hour <= Setting.night_curfew_end.to_i
       else
         return false
       end
