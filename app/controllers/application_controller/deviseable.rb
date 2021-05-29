@@ -51,7 +51,7 @@ class ApplicationController
     private
 
       def configure_permitted_parameters
-        devise_parameter_sanitizer.permit(:sign_up, keys: %i[login name email email_public omniauth_provider omniauth_uid])
+        devise_parameter_sanitizer.permit(:sign_up, keys: %i[login name email email_public omniauth_provider omniauth_uid invite_code])
         devise_parameter_sanitizer.permit(:sign_in, keys: %i[login password remember_me])
       end
   end

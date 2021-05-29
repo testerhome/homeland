@@ -54,6 +54,7 @@
         bio: "个人介绍"
         password: "密码"
         password_confirmation: "确认密码"
+        invite_code: "邀请码"
         website: "个人主页"
         last_logined_at: "上次登录时间"
         tagline: "签名"
@@ -154,3 +155,8 @@
     contribution: '贡献指数：%{value}'
     TTF_repos: 'TTF 统计项目列表'
     contribution_calculate_rule: '贡献指数计算规则'
+  invite_code:
+    empty: '邀请码为空'
+    expired: '邀请码已经过期'
+    consumed: '邀请码已经使用过'
+    not_exist: '邀请码不存在，请使用正确的邀请码'

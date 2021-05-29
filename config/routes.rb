@@ -160,6 +160,7 @@ Rails.application.routes.draw do
     resources :stats
     resources :tip_offs
     resources :plugins
+    resources :invite_codes
   end
 
   get "api", to: "home#api", as: "api"

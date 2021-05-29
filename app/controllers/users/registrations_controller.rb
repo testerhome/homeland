@@ -24,6 +24,31 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     build_resource(sign_up_params)
 
+    invite_flag = false
+    if sign_up_params["invite_code"].blank?
+      resource.errors.add(:base, t("invite_code.empty"))
+      invite_flag = true
+    else
+      invite_code = InviteCode.find_by_code sign_up_params["invite_code"]
+      if invite_code.blank?
+        resource.errors.add(:base, t("invite_code.not_exist"))
+        invite_flag = true
+      elsif invite_code.expired?
+        resource.errors.add(:base, t("invite_code.expired"))
+        invite_flag = true
+      elsif invite_code.consumed?
+        resource.errors.add(:base, t("invite_code.consumed"))
+        invite_flag = true
+      end
+    end
+
+    if invite_flag
+      Rails.cache.write(cache_key, sign_up_count + 1)
+      clean_up_passwords resource
+      respond_with resource
+      return
+    end
+
     unless verify_complex_captcha?(resource)
       Rails.cache.write(cache_key, sign_up_count + 1)
       clean_up_passwords resource
@@ -34,6 +59,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource.save
     yield resource if block_given?
     if resource.persisted?
+      if resource_class == User
+        invite_code = InviteCode.find_by_code sign_up_params["invite_code"]
+        r_user = User.find_by_login sign_up_params["login"]
+        invite_code.consumer_id = r_user.id
+        invite_code.save!
+      end
+
       session[:omniauth] = nil
       if resource.active_for_authentication?
         set_flash_message! :notice, :signed_up

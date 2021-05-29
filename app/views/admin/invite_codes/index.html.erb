@@ -1,0 +1,36 @@
+<% content_for :sitemap do %>
+  <span class="current">邀请码</span>
+<% end %>
+
+<%= form_tag admin_invite_codes_path, method: :post do %>
+  <button class="btn btn-primary">创建邀请码</button>
+<% end %>
+
+<hr>
+
+<table class='table table-bordered table-striped table-condensed'>
+  <tr>
+    <td style="width:100px">id</th>
+    <th>邀请码</th>
+    <th>创建者</th>
+    <th>消费者</th>
+    <td style="width:120px;">是否过期</td>
+    <td style="width:120px;">创建时间</td>
+    <td style="width:120px;">操作</td>
+  </tr>
+
+<% @codes.each do |code| %>
+  <tr id="code<%= code.id %>">
+    <td><%= code.id %></td>
+    <td><%= code.code %></td>
+    <td><%= code.creater_id%></td>
+    <td><%= code.consumer_id%></td>
+    <td><%= code.expired?%></td>
+    <td><%= l code.created_at, format: :short %></td>
+    <td>
+        <%= link_to '', admin_invite_code_path(code), 'data-confirm' => 'Are you sure?', method: :delete, remote: true, class: "fa fa-trash" %>
+    </td>
+  </tr>
+<% end %>
+</table>
+<%= paginate @codes %>

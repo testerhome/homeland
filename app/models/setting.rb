@@ -92,7 +92,7 @@ class Setting < RailsSettings::Base
     index_roll_card_html
     index_footer_card_html
     notification_sidebar_advertise
-
+    invite_code_expired_in_seconds
     profile_fields
   ]
 
@@ -171,6 +171,7 @@ class Setting < RailsSettings::Base
   field :topic_create_limit_interval, type: :integer, default: 0
   field :topic_create_hour_limit_count, type: :integer, default: 0
   field :sign_up_daily_limit, type: :integer, default: 0
+  field :invite_code_expired_in_seconds, type: :integer, default: 300
 
   field :reject_newbie_reply_in_the_evening, default: "false", type: :boolean
   field :night_curfew, default: "false", type: :boolean

@@ -71,6 +71,10 @@ end
             <%= f.password_field :password_confirmation, class: "form-control form-control-lg", placeholder: t("activerecord.attributes.user.password_confirmation") %>
           <% end %>
 
+          <%= form_group(f, :invite_code) do %>
+            <%= f.text_field :invite_code, class: "form-control form-control-lg", placeholder: t("activerecord.attributes.user.invite_code") %>
+          <% end %>
+
           <%= form_group(f, :base, label: false) do %>
             <div class="input-group input-group-lg">
               <%= render "/shared/captcha_input" %>
