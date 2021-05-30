@@ -44,7 +44,10 @@
 </div>
 
 <div class="card-body item-list">
-<%= link_to "ip 注册情况", ip_status_admin_users_path(), target: "_blank" %>
+  <div class="form-group">
+<%= link_to "ip 注册情况", ip_status_admin_users_path(), target: "_blank", class: "btn btn-primary"%>
+<%= link_to "注册邀请码", admin_invite_codes_path(), target: "_blank", class: "btn btn-primary" %>
+  </div>
 </div>
 
 <table class="table table-bordered table-striped table-condensed">
