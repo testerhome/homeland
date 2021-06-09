@@ -52,11 +52,13 @@ class Ability
     # Vip 用户权限
     def roles_for_vip
       can :create, Team
+      can :manage, InviteCode
     end
 
     # 自定义版主权限
     def custom_roles_for_maintainers
       can :create, Team
+      can :manage, InviteCode
       can :manage, Topic, node_id: user.node_assignment_ids
       topic_ids = Topic.where(node_id: user.node_assignment_ids).pluck(:id)
       can :manage, Reply, topic_id: topic_ids
@@ -70,6 +72,7 @@ class Ability
       can :manage, Topic
       can :lock_node, Topic
       can :manage, Reply
+      can :manage, InviteCode
     end
 
     def roles_for_topics

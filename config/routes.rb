@@ -108,6 +108,7 @@ Rails.application.routes.draw do
   resources :opencourses
   resources :questions
   resources :tip_offs
+  resources :invite_codes
 
   get "/search", to: "search#index", as: "search"
   get "/search/users", to: "search#users", as: "search_users"

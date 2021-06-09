@@ -315,8 +315,6 @@ class Setting < RailsSettings::Base
 
     def is_night_curfew?
       if self.night_curfew?
-        Rails.logger.error "xxxx #{Time.zone}"
-        Rails.logger.error "xxxx #{Time.zone.now.hour}"
         return Time.zone.now.hour >= Setting.night_curfew_start.to_i || Time.zone.now.hour <= Setting.night_curfew_end.to_i
       else
         return false
