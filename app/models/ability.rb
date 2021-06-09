@@ -19,9 +19,11 @@ class Ability
       roles_for_members
     elsif @user.vip?
       roles_for_members
+      role_for_invitecode
       roles_for_vip
     elsif @user.maintainer?
       roles_for_members
+      role_for_invitecode
       custom_roles_for_maintainers
     else
       roles_for_anonymous
@@ -49,16 +51,19 @@ class Ability
       basic_read_only
     end
 
+  def role_for_invitecode
+    can :create, InviteCode
+    can %i[read], InviteCode, creater_id: user.id
+  end
+
     # Vip 用户权限
     def roles_for_vip
       can :create, Team
-      can :manage, InviteCode
     end
 
     # 自定义版主权限
     def custom_roles_for_maintainers
       can :create, Team
-      can :manage, InviteCode
       can :manage, Topic, node_id: user.node_assignment_ids
       topic_ids = Topic.where(node_id: user.node_assignment_ids).pluck(:id)
       can :manage, Reply, topic_id: topic_ids
@@ -72,7 +77,6 @@ class Ability
       can :manage, Topic
       can :lock_node, Topic
       can :manage, Reply
-      can :manage, InviteCode
     end
 
     def roles_for_topics
