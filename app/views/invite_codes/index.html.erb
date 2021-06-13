@@ -19,7 +19,6 @@
     <th>消费者</th>
     <td style="width:120px;">是否过期</td>
     <td style="width:120px;">创建时间</td>
-    <td style="width:120px;">操作</td>
   </tr>
 
 <% @codes.each do |code| %>
@@ -30,9 +29,6 @@
     <td><%= name_tag(code.consumer_id)%></td>
     <td><%= expired_tag(code.expired?)%></td>
     <td><%= l code.created_at, format: :short %></td>
-    <td>
-        <%= link_to '', invite_code_path(code), 'data-confirm' => 'Are you sure?', method: :delete, remote: true, class: "fa fa-trash" %>
-    </td>
   </tr>
 <% end %>
 </table>
