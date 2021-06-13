@@ -14,7 +14,7 @@ class InviteCodesController <  ApplicationController
         if @code.save
             redirect_to(invite_codes_path, notice: "创建成功")
         else
-            redirect_to(invite_codes_path, notice: "创建失败")
+            redirect_to(invite_codes_path, alert: @code.errors.to_a.join)
         end
     end
 

@@ -30,6 +30,7 @@ class User < ApplicationRecord
   has_many :teams, through: :team_users
   has_one :sso, class_name: "UserSSO", dependent: :destroy
 
+  has_many :invite_codes, dependent: :destroy, foreign_key: "creater_id"
   attr_accessor :password_confirmation, :invite_code
 
   validates :login, format: { with: ALLOW_LOGIN_FORMAT_REGEXP, message: "只允许数字、大小写字母、中横线、下划线" },
