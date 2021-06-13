@@ -15,6 +15,7 @@ class Ability
       cannot [:destroy, :update], Node, id: ids
     elsif @user.member?
       roles_for_members
+      role_for_invitecode
     elsif @user.hr?
       roles_for_members
     elsif @user.vip?
@@ -93,9 +94,7 @@ class Ability
 
     def roles_for_replies
       # 新手用户晚上禁止回帖，防 spam，可在面板设置是否打开
-      unless Setting.is_night_curfew?
-        can :create, Reply unless Setting.is_night_curfew?
-      end
+      can :create, Reply unless Setting.is_night_curfew?
       can %i[update destroy], Reply, user_id: user.id
       cannot %i[create update destroy], Reply, topic: { closed?: true }
       can %i[reply_suggest reply_unsuggest], Reply do |reply|
