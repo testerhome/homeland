@@ -94,6 +94,7 @@ class Setting < RailsSettings::Base
     notification_sidebar_advertise
     invite_code_expired_in_seconds
     profile_fields
+    google_analytics_key
   ]
 
   # = System
