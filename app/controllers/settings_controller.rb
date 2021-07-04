@@ -74,7 +74,6 @@ class SettingsController < ApplicationController
       if !current_user.email_locked?
         attrs << :email
       end
-      attrs << :theme
       params.require(:user).permit(*attrs)
     end
 
@@ -84,7 +83,7 @@ class SettingsController < ApplicationController
       if @user.update(user_params)
         theme = params[:user][:theme]
         @user.update_theme(theme)
-        if email_ori != email_change
+        if email_ori != email_change and not email_change.blank?
           redirect_to setting_path, notice: "邮箱变更成功，请检查邮件进行激活！激活之后，会发送设置密码指令到该邮箱！"
         else
           redirect_to setting_path, notice: "更新成功"

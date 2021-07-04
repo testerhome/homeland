@@ -188,4 +188,11 @@
       color: var(--link-color);
     }
   }
+
+  .jumbotron {
+    background: #33333330;
+    a {
+      color: var(--blue);
+    }
+  }
 }
