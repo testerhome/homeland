@@ -3,7 +3,7 @@
 <% @suggest_topics = @suggest_topics.to_a %>
 <%= render "topics/node_info", node: @node %>
 <% if Setting.is_night_curfew? %>
-    <div class="alert alert-danger">当前宵禁，不能在 <%= Setting.night_curfew_start.to_i %>:00 ~ <%= Setting.night_curfew_end.to_i %>:00 发帖</div>
+    <div class="alert alert-danger">全站只读，不能在 <%= Setting.night_curfew_start.to_i %>:00 ~ <%= Setting.night_curfew_end.to_i %>:00 发帖</div>
 <% end %>
 <div class="row">
 

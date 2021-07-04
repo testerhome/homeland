@@ -62,13 +62,11 @@
   <%= yield :sub_navbar %>
 
   <div id="main" class="main-container container">
-    <% if current_user and !current_user.certified? %>
-      <div class="alert alert-danger" role="alert"><link>
-        <%= link_to '为防止广告刷屏，请点击完成答题认证，再完成认证前，你将无法发帖！', main_app.certify_path %>
-      </div>
-    <% end %>
     <%= birthday_tag %>
     <%= notice_message %>
+    <% if current_user && current_user.newbie?%>
+      <%= render "shared/guide" %>
+    <% end %>
     <%= content_for?(:main) ? yield(:main) : yield %>
   </div>
 

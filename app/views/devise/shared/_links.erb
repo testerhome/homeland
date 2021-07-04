@@ -12,7 +12,7 @@
   <% end -%>
 
   <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-    <li class="list-group-item"><%= link_to t("users.not_recieve_confirm_mail"), new_confirmation_path(resource_name) %></li>
+    <li class="list-group-item"><%= link_to t("users.not_recieve_confirm_mail"), new_user_confirmation_path(resource_name) %></li>
   <% end -%>
 
   <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>

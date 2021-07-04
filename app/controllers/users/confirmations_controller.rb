@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class ConfirmationsController < Devise::ConfirmationsController
+class Users::ConfirmationsController < Devise::ConfirmationsController
+
   # GET /resource/confirmation/new
   # def new
   #   super
@@ -22,14 +23,20 @@ class ConfirmationsController < Devise::ConfirmationsController
     else
       set_flash_message :warning, :"mail_has_actived", email: resource_instance.email
     end
-
-    super
   end
 
   # GET /resource/confirmation?confirmation_token=abcdef
-  # def show
-  #   super
-  # end
+  def show
+    self.resource = resource_class.confirm_by_token(params[:confirmation_token])
+    yield resource if block_given?
+
+    if resource.errors.empty?
+      set_flash_message!(:notice, :confirmed)
+      redirect_to(after_confirmation_path_for(resource_name, resource), notice:  "您的账号已经激活，请继续新人流程！")
+    else
+      render :new
+    end
+  end
 
   # protected
 

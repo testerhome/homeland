@@ -3,7 +3,7 @@
     hints:
       user:
         location: "請用中文填寫所在城市"
-        email: "保存以后就不可以改了哦！使用 github 登录的同学在修改邮箱之后，请前往该邮箱进行激活认证，否则修改不会生效，后续可以通过该邮箱找回密码，实现邮箱地址+密码登录"
+        email: "使用该邮箱进行激活认证"
       doorkeeper_application:
         level: "應用程序等級，影響 OAuth 2 accessToken 的有效期, 可選 [0 - 1 天 | 1 - 7 天 | 2 - 14 天 | 3 - 30 天]"
     labels:

@@ -31,7 +31,7 @@ class User < ApplicationRecord
   has_one :sso, class_name: "UserSSO", dependent: :destroy
 
   has_many :invite_codes, dependent: :destroy, foreign_key: "creater_id"
-  attr_accessor :password_confirmation, :invite_code
+  attr_accessor :password_confirmation, :invite_code, :theme
 
   validates :login, format: { with: ALLOW_LOGIN_FORMAT_REGEXP, message: "只允许数字、大小写字母、中横线、下划线" },
                     length: { in: 2..20 },
@@ -40,6 +40,12 @@ class User < ApplicationRecord
   validates :name, length: { maximum: 20 }
 
   after_commit :send_welcome_mail, on: :create
+
+  after_commit :send_new_password_mail,
+               if: proc { |record|
+                 record.previous_changes.key?(:email) &&
+                   record.previous_changes[:email].first != record.previous_changes[:email].last
+               }
 
   scope :hot, -> { order(replies_count: :desc).order(topics_count: :desc) }
   scope :without_team, -> { where(type: nil) }
@@ -137,6 +143,11 @@ class User < ApplicationRecord
 
   def send_welcome_mail
     UserMailer.welcome(id).deliver_later
+  end
+
+  def send_new_password_mail
+    Rails.logger.error "send to new password email to #{email}!"
+    send_reset_password_instructions
   end
 
   def user_column_count_left

@@ -1,12 +1,4 @@
-<% if current_user && current_user.newbie? %>
-<div class="card">
-  <div class="card-header">新手必读</div>
-  <div class="card-body">
-    <%= raw Setting.newbie_notices %>
-  </div>
-</div>
-<% else %>
-
+<% if current_user && !current_user.newbie? %>
 <div class="card">
   <div class="card-body">
     <%= link_to t('topics.new_topic'), main_app.new_topic_path(node: @node&.id), class: 'btn btn-primary btn-block' %>
@@ -22,14 +14,6 @@
 </div>
 <% end %>
 
-<% if current_user && current_user.just_new_from_github? %>
-  <div class="card alert-warning">
-    <div class="card-header">Github 登录必读</div>
-    <div class="card-body">
-      <%= raw Setting.new_from_github_notices  %>
-    </div>
-  </div>
-<% end %>
 
 <%= raw Setting.topic_index_sidebar_important_ads_html %>
 

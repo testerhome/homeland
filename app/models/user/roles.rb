@@ -35,13 +35,20 @@ class User
       self.admin? || self.maintainer? || replies_count >= 100
     end
 
-    # 是否能发帖
-    def newbie?
-      return false if self.vip? || self.hr?
-      return true unless self.bind?('wechat')
+    def time_limit?
       t = Setting.newbie_limit_time.to_i
       return false if t == 0
       created_at > t.seconds.ago
+    end
+
+    def have_not_bind_wechat?
+      !self.bind?('wechat')
+    end
+
+    # 是否能发帖
+    def newbie?
+      return false if self.vip? || self.hr?
+      time_limit? || have_not_bind_wechat? || legacy_omniauth_logined?
     end
 
     # used in Plugin

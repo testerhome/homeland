@@ -28,6 +28,9 @@
 
                   <div class="form-group">
                     <label class="control-label">Email</label>
+                    <% if !@user.email_locked? %>
+                      <label class="alert-danger text-muted">目前邮箱无效，请设置邮箱！仅能修改一次！</label>
+                    <% end %>
                     <%= f.text_field :email, disabled: @user.email_locked?, class: "form-control", placeholder: "Email" %>
                   </div>
 

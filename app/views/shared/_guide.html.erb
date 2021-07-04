@@ -1,0 +1,40 @@
+<section class="jumbotron">
+  <div class="container">
+    <p class="lead">
+      你好，<strong><%= user_name_tag(current_user) %></strong>，你还没有度过<em>新人期</em>，目前还<strong>无法发帖</strong>！请按照<strong>指引</strong>完成新人任务:
+      <ul>
+        <% if current_user.legacy_omniauth_logined? %>
+        <li>
+          <p class="lead"><%= link_to('如果还未设置Email，请设置 Email 和密码', setting_path) %></p>
+        </li>
+        <% end %>
+        <% if !current_user.bind?('wechat') %>
+        <li>
+          <p class="lead"><a href="https://testerhome.com/topics/30203">因实名要求，请根据指引完成微信绑定！</a></p>
+        </li>
+        <% end %>
+        <% if !current_user.avatar? %>
+        <li>
+          <p class="lead"><%= link_to('提高自己的知名度，请添加个有个性的头像吧！', setting_path) %></p>
+        </li>
+        <% end %>
+        <% if !current_user.certified? %>
+          <li>
+            <p class="lead"><%= link_to '为防止广告刷屏，请点击完成答题认证，再完成认证前，你将无法发帖！', main_app.certify_path %></p>
+          </li>
+        <% end %>
+        <% if current_user.time_limit? %>
+        <li>
+          <p class="lead">注册完成，新人有一天的静默期，期间不能发帖！</p>
+        </li>
+        <% end %>
+        <li>
+          <p class="lead"><a href="http://testerhome.com/topics/982">发帖前请阅读论坛须知</a> </p>
+        </li>
+      </ul>
+
+    </p>
+    <hr class="my-4">
+    <p class="lead">为避免与技术无关的违法违规行为，请认真完成新人指引，社区不易，且行且珍惜！</p>
+  </div>
+</section>

@@ -8,7 +8,7 @@ class User
     included do
       attr_accessor :omniauth_provider, :omniauth_uid
 
-      devise :database_authenticatable, :registerable, :recoverable, :lockable,
+      devise :database_authenticatable, :registerable, :recoverable, :lockable, :confirmable,
          :rememberable, :trackable, :validatable, :omniauthable
 
       after_create :bind_omniauth_on_create
@@ -32,10 +32,6 @@ class User
       uid      = response["uid"].to_s
 
       authorizations.create(provider: provider, uid: uid)
-    end
-
-    def just_new_from_github?
-      email.include? "@example.com"
     end
 
     def bind_omniauth_on_create
