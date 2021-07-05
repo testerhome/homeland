@@ -1,11 +1,12 @@
 <% title_tag '重发激活邮件' %>
 
-
 <div class="row">
-  <div class="col-md-6 col-sm-offset-3">
-    <div class="card">
-      <div class="card-header">重发激活邮件</div>
+  <div class="col"></div>
+  <div class="col-md-6">
+    <div class="card card-lg">
       <div class="card-body">
+        <div class="card-title">重发激活邮件</div>
+
         <%= simple_form_for(resource, as: resource_name, url: user_confirmation_path, html: { method: :post }) do |f| %>
           <div class="form-inputs">
             <%= f.input :email, required: true, autofocus: true %>
@@ -18,4 +19,5 @@
       </div>
     </div>
   </div>
+  <div class="col"></div>
 </div>

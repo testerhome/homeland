@@ -22,7 +22,7 @@
     suggest_using_twitter_id: "谨慎填写，以后不可修改，建议用 Twitter ID。"
     already_have_account: "已经有账号了？"
     forget_password: "忘记了密码?"
-    not_recieve_confirm_mail: "未收到确认邮件?"
+    not_recieve_confirm_mail: "未收到激活邮件?"
     not_recieve_unlock_mail: "未收到解锁邮件?"
     current_have: "目前已经有"
     users_joined: "位会员加入了"

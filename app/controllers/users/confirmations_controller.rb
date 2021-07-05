@@ -12,17 +12,18 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     email = params[resource_name][:email]
     if email.include?("@example.com")
       set_flash_message :warning, :"mail_from_github"
+      redirect_to(new_user_confirmation_path)
       return
     end
 
     resource_instance = resource_class.find_by_email email
-    if resource_instance && ! resource_instance.active_for_authentication?
-      resource_instance.send_confirmation_instructions
+    if resource_instance && resource_instance.active_for_authentication?
+      set_flash_message :warning, :"mail_has_actived", email: resource_instance.email
     elsif not resource_instance
       set_flash_message :warning, :"mail_not_existed"
-    else
-      set_flash_message :warning, :"mail_has_actived", email: resource_instance.email
     end
+
+    super
   end
 
   # GET /resource/confirmation?confirmation_token=abcdef
