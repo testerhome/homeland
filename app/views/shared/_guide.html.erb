@@ -5,7 +5,7 @@
       <ul>
         <% if current_user.legacy_omniauth_logined? %>
         <li>
-          <p class="lead"><%= link_to('如果还未设置Email，请设置 Email 和密码', setting_path) %></p>
+          <p class="lead"><%= link_to('如果还未设置Email，请设置 Email 和密码', main_app.setting_path) %></p>
         </li>
         <% end %>
         <% if !current_user.bind?('wechat') %>
@@ -15,7 +15,7 @@
         <% end %>
         <% if !current_user.avatar? %>
         <li>
-          <p class="lead"><%= link_to('提高自己的知名度，请添加个有个性的头像吧！', setting_path) %></p>
+          <p class="lead"><%= link_to('提高自己的知名度，请添加个有个性的头像吧！', main_app.setting_path) %></p>
         </li>
         <% end %>
         <% if !current_user.certified? %>
