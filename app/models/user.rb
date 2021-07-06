@@ -41,11 +41,14 @@ class User < ApplicationRecord
 
   after_commit :send_welcome_mail, on: :create
 
-  after_commit :send_new_password_mail,
-               if: proc { |record|
-                 record.previous_changes.key?(:email) &&
-                   record.previous_changes[:email].first != record.previous_changes[:email].last
-               }
+  # after_commit :send_new_password_mail,
+  #              if: proc { |record|
+  #                Rails.logger.error "record.previous_changes[:email]-------------- #{record.previous_changes[:email]}"
+  #                Rails.logger.error " record.previous_changes[:email].last-------------- #{ record.previous_changes[:email].last}"
+  #                Rails.logger.error "record.previous_changes.key?(:email)-------------- #{record.previous_changes.key?(:email)}"
+  #                record.previous_changes.key?(:email) &&
+  #                  record.previous_changes[:email].first != record.previous_changes[:email].last
+  #              }
 
   scope :hot, -> { order(replies_count: :desc).order(topics_count: :desc) }
   scope :without_team, -> { where(type: nil) }
@@ -146,7 +149,6 @@ class User < ApplicationRecord
   end
 
   def send_new_password_mail
-    Rails.logger.error "send to new password email to #{email}!"
     send_reset_password_instructions
   end
 
