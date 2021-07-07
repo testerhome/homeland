@@ -14,7 +14,7 @@ auth_info = auth_session["info"]
 
         <% if auth_info.present? %>
         <div class="alert">
-          登录 <%= Setting.app_name %> 账号，以绑定 <strong><%= Homeland::Utils.omniauth_name(auth_session["provider"]) %></strong> 三方登录。
+          登录 <%= Setting.app_name %> 邮箱账号，以绑定 <strong><%= Homeland::Utils.omniauth_name(auth_session["provider"]) %></strong> 三方登录。
         </div>
         <% end %>
 
