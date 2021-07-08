@@ -48,7 +48,7 @@ class User
     # 是否能发帖
     def newbie?
       return false if self.vip? || self.hr?
-      time_limit? || have_not_bind_wechat? || legacy_omniauth_logined?
+      time_limit? || have_not_bind_wechat? || legacy_omniauth_logined? || !certified?
     end
 
     # used in Plugin
