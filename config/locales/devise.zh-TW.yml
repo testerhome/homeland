@@ -31,6 +31,7 @@
     confirmations:
       send_instructions: "稍後，您將收到帳號激活的電子郵件。"
       confirmed: "您的帳號已經激活，請登錄。"
+      confirmation_error: '激活出错： %{msg}'
     registrations:
       user:
         signed_up: "您的帳號已註冊成功，如無意外，您將收到一封確認郵件。"

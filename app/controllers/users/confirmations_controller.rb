@@ -35,6 +35,8 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
       set_flash_message!(:notice, :confirmed)
       redirect_to(after_confirmation_path_for(resource_name, resource), notice:  "您的账号已经激活，请继续新人流程！")
     else
+      confirmation_error = resource.errors.full_messages.join("<br />")
+      set_flash_message :alert, :"confirmation_error", msg: confirmation_error
       render :new
     end
   end
