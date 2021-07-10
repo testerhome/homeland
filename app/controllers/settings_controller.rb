@@ -80,8 +80,9 @@ class SettingsController < ApplicationController
     def update_basic
       email_ori = @user.email
       email_change = params[:user][:email]
-      if email_change.include?("@example.com")
-        redirect_to setting_path, notice: "不能使用 example.com 后缀的邮箱"
+      if not email_change.blank? and email_ori != email_change and email_change.include?("@example.com")
+        @user.errors.add(:email, "不能使用 example.com 后缀的邮箱")
+        render "show"
         return
       end
       if @user.update(user_params)
