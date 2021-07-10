@@ -56,6 +56,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
       return
     end
 
+    if not User.find_by_unconfirmed_email(sign_up_params["email"]).blank?
+      resource.errors.add(:base, "Email 激活中，请不要重复注册，查看邮箱，进行激活！")
+      Rails.cache.write(cache_key, sign_up_count + 1)
+      clean_up_passwords resource
+      respond_with resource
+      return
+    end
+
     resource.save
     yield resource if block_given?
     if resource.persisted?

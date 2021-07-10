@@ -12,6 +12,8 @@ class User < ApplicationRecord
 
   LOGIN_FORMAT              = 'A-Za-z0-9\-\_\.'
   ALLOW_LOGIN_FORMAT_REGEXP = /\A[#{LOGIN_FORMAT}]+\z/
+  NEW_ALLOW_LOGIN_FORMAT    = 'A-Za-z0-9'
+  NEW_ALLOW_LOGIN_FORMAT_REGEXP = /\A[#{NEW_ALLOW_LOGIN_FORMAT}]+\z/
 
   ACCESSABLE_ATTRS = %i[name email_public location company bio website github twitter tagline avatar by
                         current_password password password_confirmation _rucaptcha]
@@ -33,7 +35,7 @@ class User < ApplicationRecord
   has_many :invite_codes, dependent: :destroy, foreign_key: "creater_id"
   attr_accessor :password_confirmation, :invite_code
 
-  validates :login, format: { with: ALLOW_LOGIN_FORMAT_REGEXP, message: "只允许数字、大小写字母、中横线、下划线" },
+  validates :login, format: { with: NEW_ALLOW_LOGIN_FORMAT_REGEXP, message: "只允许数字、大小写字母" },
                     length: { in: 2..20 },
                     presence: true,
                     uniqueness: { case_sensitive: false }

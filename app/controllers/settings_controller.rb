@@ -80,6 +80,10 @@ class SettingsController < ApplicationController
     def update_basic
       email_ori = @user.email
       email_change = params[:user][:email]
+      if email_change.include?("@example.com")
+        redirect_to setting_path, notice: "不能使用 example.com 后缀的邮箱"
+        return
+      end
       if @user.update(user_params)
         theme = params[:user][:theme]
         @user.update_theme(theme)
