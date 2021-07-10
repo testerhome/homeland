@@ -62,6 +62,7 @@ class User < ApplicationRecord
   scope :new_guy, -> { where(created_at: Time.current.all_week).where("avatar IS NOT NULL").order(created_at: :desc) }
   scope :normal, -> { where(state: 1) }
   scope :with_github, -> { where("github IS NOT NULL and github != ''") }
+  scope :banzhu, -> { where(state: 90) }
 
   # Override Devise database authentication
   def self.find_for_database_authentication(warden_conditions)

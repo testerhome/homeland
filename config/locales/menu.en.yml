@@ -67,6 +67,7 @@
     hot_topics: "Hot topics"
     hot_locations: "Hot cities"
     hot_nodes: "Hot nodes"
+    banzhu: "Maintainer"
     has_deleted: "has deleted"
     auth_with_other_services: "Sign in with other services"
     captcha: 'Captcha'
