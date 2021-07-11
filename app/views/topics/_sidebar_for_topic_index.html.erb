@@ -17,14 +17,14 @@
 
 <%= raw Setting.topic_index_sidebar_important_ads_html %>
 
-<% cache(["banzhu-card",Time.now.strftime("%Y-%m-%d")]) do %>
+<% cache(["banzhu-new-card",Time.now.strftime("%Y-%m-%d")]) do %>
   <div class="index-locations card">
     <div class="card-header"><%=t("common.banzhu")%> <i class="fas fa-dot-circle" aria-hidden="true"></i></div>
     <div class="card-body location-list" style="text-align:center;">
       <% User.banzhu.limit(10).each do |user| %>
         <span class="name">
           <%
-            node_names = user.node_assignment_ids.map {|id| Node.find(id)&.name }.join(",")
+            node_names = Node.where(id: user.node_assignment_ids).pluck(:name).join(', ')
           %>
           <%= link_to(user.fullname, "#{user.login}" ,title: node_names, "data-original-title": node_names, "data-toggle": "tooltip", class: "name") %>
         </span>
