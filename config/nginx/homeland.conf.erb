@@ -118,6 +118,11 @@ server {
       set $img_w    32;
       set $img_h    32;
     }
+    if ($img_version = 'wx') {
+      set $img_type crop;
+      set $img_w    192;
+      set $img_h    192;
+    }
     rewrite ^ /_$img_type;
   }
 
