@@ -83,7 +83,7 @@ server {
     error_page   404 = /404.png;
   }
 
-  location ~* /_img/uploads/(.+)!(large|lg|md|sm|xs)$ {
+  location ~* /_img/uploads/(.+)!(large|lg|md|sm|xs|wx)$ {
     set $filename /uploads/$1;
 
     if (-f $filename) {
