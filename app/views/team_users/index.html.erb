@@ -7,6 +7,7 @@
     <% if can? :update, @team %>
       <div class="heading clearfix">
         <%= link_to t('teams.new_team_user'), new_user_team_user_path(@team), class: 'btn btn-success' %>
+        <%= link_to t('teams.accept_all_req'), accept_all_path(@team), class: 'btn btn-primary' %>
       </div>
       <form action="<%= user_team_users_path(@team) %>" method="GET">
         <div class="row">

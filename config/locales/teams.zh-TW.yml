@@ -11,6 +11,7 @@
     new_team: '創建公司／團體'
     edit_team: '設置公司／團體资料'
     new_team_user: '邀請成員'
+    accept_all_req: '一键批准'
     edit_team_user: '修改成員权限'
     delete_team_user: '移除成員'
     show_team_user: '查看邀請'

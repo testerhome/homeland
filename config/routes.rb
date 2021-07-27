@@ -277,6 +277,7 @@ Rails.application.routes.draw do
   get "users", to: "users#index", as: "users"
 
   post "/people/join/:user_id", to: "team_users#join", as: "join"
+  get "/:user_id/people/accept_all", to: "team_users#accept_all_join", as: "accept_all"
   constraints(id: /[#{User::LOGIN_FORMAT}]*/) do
     resources :users, path: "", as: "users" do
       member do
