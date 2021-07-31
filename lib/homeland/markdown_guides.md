@@ -145,7 +145,7 @@ zh-CN:
 
 **Youtube**
 
-https://www.youtube.com/watch?v=CvVvwh3BRq8
+https://www.youtube.com/watch?v=52AMJwF7P0w
 
 **Vimeo**
 
@@ -153,6 +153,9 @@ https://vimeo.com/199770305
 
 **Youku**
 
-http://v.youku.com/v_show/id_XMjQzMTY1MDk3Ng==.html
+https://v.youku.com/v_show/id_XNDU4Mzg4Mjc2OA==.html
 
+**BiliBili**
+
+https://www.bilibili.com/video/BV1uv411B7MK
 ···

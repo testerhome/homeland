@@ -43,11 +43,12 @@
     line-height: 1.8em;
   }
   hr {
-    border: 3px dashed var(--divider-color);
-    border-bottom: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+    height: 0;
+    overflow: hidden;
+    background: transparent;
+    border: 1px dotted #ddd;
+    border-bottom: 0;
+    margin: 18px auto;
   }
   blockquote {
     margin-left: 15px 25px 15px 25px;
@@ -170,6 +171,8 @@
     font-size: 26px !important;
     text-align: center;
     margin-bottom: 30px !important;
+    padding-bottom: .3em;
+    border-bottom: 1px solid #eee;
   }
   h2,
   h3,
@@ -185,6 +188,8 @@
   h2 {
     font-size: 20px !important;
     color: var(--primary);
+    padding-bottom: .3em;
+    border-bottom: 1px solid #eee;
   }
   h3 {
     font-size: 18px !important;
