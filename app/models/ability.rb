@@ -7,8 +7,9 @@ class Ability
 
   def initialize(u)
     @user = u
-    if @user.blank? || !@user.certified?
+    if @user.blank? || (!@user.certified? &&  !@user.admin?)
       roles_for_anonymous
+
     elsif @user.admin?
       can :manage, :all
       ids = User.where(state: :maintainer).pluck(:node_assignment_ids).reduce { |x, y| x | y }
@@ -149,7 +150,7 @@ class Ability
         column.user_id == user.id
       end
     end
-  
+
     def roles_for_articles
       if user.column_editor? && !user.newbie?
         can :create, Article

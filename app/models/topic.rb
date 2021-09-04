@@ -202,6 +202,6 @@ class Topic < ApplicationRecord
     if total_count >= 1500
       @total_pages = 60
     end
-    @total_pages
+    @total_pages.to_i
   end
 end

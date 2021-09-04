@@ -996,6 +996,30 @@
     webpack-cli "^3.3.12"
     webpack-sources "^1.4.3"
 
+"@stimulus/core@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.nlark.com/@stimulus/core/download/@stimulus/core-2.0.0.tgz#140c85318d6a8a8210c0faf182223b8459348877"
+  integrity sha1-FAyFMY1qioIQwPrxgiI7hFk0iHc=
+  dependencies:
+    "@stimulus/mutation-observers" "^2.0.0"
+
+"@stimulus/multimap@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.nlark.com/@stimulus/multimap/download/@stimulus/multimap-2.0.0.tgz#420cfa096ed6538df4a91dbd2b2842c1779952b2"
+  integrity sha1-Qgz6CW7WU430qR29KyhCwXeZUrI=
+
+"@stimulus/mutation-observers@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.nlark.com/@stimulus/mutation-observers/download/@stimulus/mutation-observers-2.0.0.tgz#3dbe37453bda47a6c795a90204ee8d77a799fb87"
+  integrity sha1-Pb43RTvaR6bHlakCBO6Nd6eZ+4c=
+  dependencies:
+    "@stimulus/multimap" "^2.0.0"
+
+"@stimulus/webpack-helpers@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.nlark.com/@stimulus/webpack-helpers/download/@stimulus/webpack-helpers-2.0.0.tgz#54296d2a2dffd4f962d2e802d99a3fdd84b8845f"
+  integrity sha1-VCltKi3/1Pli0ugC2Zo/3YS4hF8=
+
 "@types/glob@^7.1.1":
   version "7.1.3"
   resolved "https://registry.npm.taobao.org/@types/glob/download/@types/glob-7.1.3.tgz#e6ba80f36b7daad2c685acd9266382e68985c183"
@@ -1600,6 +1624,11 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/boolbase/download/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
+
+bootstrap@^4.0.0-beta.2:
+  version "4.6.0"
+  resolved "https://registry.nlark.com/bootstrap/download/bootstrap-4.6.0.tgz#97b9f29ac98f98dfa43bf7468262d84392552fd7"
+  integrity sha1-l7nymsmPmN+kO/dGgmLYQ5JVL9c=
 
 bootstrap@~4.5:
   version "4.5.2"
@@ -4113,6 +4142,11 @@ jquery.caret@~0.3.1:
   resolved "https://registry.npm.taobao.org/jquery.caret/download/jquery.caret-0.3.1.tgz#9c093318faf327eff322e826ca9f3241368bc7b8"
   integrity sha1-nAkzGPrzJ+/zIugmyp8yQTaLx7g=
 
+"jquery@^1.8.3 || ^2.0 || ^3.0":
+  version "3.6.0"
+  resolved "https://registry.nlark.com/jquery/download/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
+  integrity sha1-xyoJ8Vwb3OFC9J2/EXC9+K2sJHA=
+
 jquery@~1.12:
   version "1.12.4"
   resolved "https://registry.npm.taobao.org/jquery/download/jquery-1.12.4.tgz#01e1dfba290fe73deba77ceeacb0f9ba2fec9e0c"
@@ -4650,6 +4684,18 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npm.taobao.org/mkdirp/download/mkdirp-1.0.4.tgz?cache=0&sync_timestamp=1587535418745&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmkdirp%2Fdownload%2Fmkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha1-PrXtYmInVteaXw4qIh3+utdcL34=
+
+moment-timezone@^0.4.0:
+  version "0.4.1"
+  resolved "https://registry.nlark.com/moment-timezone/download/moment-timezone-0.4.1.tgz#81f598c3ad5e22cdad796b67ecd8d88d0f5baa06"
+  integrity sha1-gfWYw61eIs2teWtn7NjYjQ9bqgY=
+  dependencies:
+    moment ">= 2.6.0"
+
+"moment@>= 2.6.0", moment@^2.10, moment@^2.29.1:
+  version "2.29.1"
+  resolved "https://registry.nlark.com/moment/download/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+  integrity sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M=
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -5249,6 +5295,16 @@ pbkdf2@^3.0.3:
     ripemd160 "^2.0.1"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+pc-bootstrap4-datetimepicker@^4.17.51:
+  version "4.17.51"
+  resolved "https://registry.nlark.com/pc-bootstrap4-datetimepicker/download/pc-bootstrap4-datetimepicker-4.17.51.tgz#874614b1f3038d439e6106ef8bba8f015913e72d"
+  integrity sha1-h0YUsfMDjUOeYQbvi7qPAVkT5y0=
+  dependencies:
+    bootstrap "^4.0.0-beta.2"
+    jquery "^1.8.3 || ^2.0 || ^3.0"
+    moment "^2.10"
+    moment-timezone "^0.4.0"
 
 performance-now@^2.1.0:
   version "2.1.0"
@@ -6542,6 +6598,11 @@ select-hose@^2.0.0:
   resolved "https://registry.npm.taobao.org/select-hose/download/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
   integrity sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo=
 
+select2@^4.1.0-rc.0:
+  version "4.1.0-rc.0"
+  resolved "https://registry.nlark.com/select2/download/select2-4.1.0-rc.0.tgz#ba3cd3901dda0155e1c0219ab41b74ba51ea22d8"
+  integrity sha1-ujzTkB3aAVXhwCGatBt0ulHqItg=
+
 selfsigned@^1.10.7:
   version "1.10.7"
   resolved "https://registry.npm.taobao.org/selfsigned/download/selfsigned-1.10.7.tgz#da5819fd049d5574f28e88a9bcc6dbc6e6f3906b"
@@ -6917,6 +6978,14 @@ stdout-stream@^1.4.0:
   integrity sha1-WsF0zdXNcmEEqgwLK9g4FdjVNd4=
   dependencies:
     readable-stream "^2.0.1"
+
+stimulus@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.nlark.com/stimulus/download/stimulus-2.0.0.tgz#713c8b91a72ef90914b90955f0e705f004403047"
+  integrity sha1-cTyLkacu+QkUuQlV8OcF8ARAMEc=
+  dependencies:
+    "@stimulus/core" "^2.0.0"
+    "@stimulus/webpack-helpers" "^2.0.0"
 
 stream-browserify@^2.0.1:
   version "2.0.2"

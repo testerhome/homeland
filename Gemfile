@@ -125,6 +125,8 @@ gem "exception-track"
 
 gem "bootsnap"
 gem "lograge"
+gem 'groupdate'
+# gem 'homeland-activities', path: 'plugins/homeland-activities'
 
 group :development, :test do
   gem "pry"

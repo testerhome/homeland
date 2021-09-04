@@ -34,5 +34,14 @@ second_target = notification.second_target
         <%= comment.body_html %>
       </div>
     <% end %>
+    <% when "Homeland::Activities::Event" %>
+      <div class="media-heading">
+        在你发布的活动 <a href="<%= "/events/#{second_target.id}" %>"><%= second_target.title %></a> 评论了：
+      </div>
+      <div class="media-content summary markdown">
+        <%= comment.body_html %>
+      </div>
+
+
   <% end %>
 <% end %>
