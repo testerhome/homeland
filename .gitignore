@@ -41,6 +41,7 @@ spec/examples.txt
 /storage/*
 /plugins/*
 !/plugins/test/
+!/plugins/homeland-activities/
 app.local.env
 *.tmp
 /node_modules

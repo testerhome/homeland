@@ -1,0 +1,91 @@
+<%= content_for :stylesheets do %>
+  <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+<% end %>
+
+<h1 class='event-details-title'><span style=''>事</span> <%=@event.title%></h1>
+
+<div class="row" style='background: #f1f1f1'>
+  <div class="col-md-6" style="aspect-ratio: 16 / 9;padding:0">
+    <img src="<%= @event.photo_url%>" alt=""  style=" width: 100%;height:100%;"  />
+  </div>
+  <div class="col-md-6 p-5" style=''>
+    <div class='mb-2'>
+      <span class='mr-2 '>开始时间:</span>
+      <span><%= event_date_str @event.start_at, "%Y-%m-%d %H:%M:%S"%></span>
+    </div>
+    <div class='mb-2'>
+      <span class='mr-2 '>结束时间:</span>
+      <span><%= event_date_str @event.start_at , "%Y-%m-%d %H:%M:%S"%></span>
+    </div>
+
+    <div class='mb-2'>
+      <span class='mr-2 '>举办地点:</span>
+      <span><%= @event.event_city %></span>
+    </div>
+
+    <%if @event.user_id == current_user&.id && @event.status != 'success'%>
+    <div class='mt-4 alert alert-warning'>
+      <p>只对自己可见， 等待管理员审核。。。</p>
+    </div>
+    <%end %>
+
+
+
+
+    <div class='mt-5'>
+      <% if Time.now < @event.registration_open_at %>
+        <a href="#" class="btn btn-secondary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">报名将在 <%= @event.registration_open_at.strftime("%Y-%m-%d %H:%M") %> 开始</a>
+
+      <%end%>
+
+      <% if Time.now > @event.registration_open_at && Time.now < @event.registration_end_at %>
+        <%= link_to  "立即报名", @event.register_category_info, "target" => "_blank",class: 'btn btn-success btn-lg' %>
+      <%end %>
+
+      <% if Time.now > @event.registration_end_at%>
+        <div class='d-flex align-items-center'>
+          <a href="#" class="btn btn-secondary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">报名已截止</a>
+          <%if Time.now > @event.end_at %>
+          <span class='ml-3 text-black-50' >活动已结束</span>
+          <%end %>
+        </div>
+      <%end %>
+
+    </div>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-md-8">
+    <%= markdown @event.description%>
+    <%= render "shared/comments", commentable: @event%>
+  </div>
+  <div class="col-md-4">
+    <h5 class='mb-4'>活动组织者</h5>
+    <div class='mb-1'>
+      <span style='width: 60px;display: inline-block'>主办方</span>
+      <span><%= link_to @event.host_name, @event.host_url%></span>
+    </div>
+
+    <% if !@event.cooperators.blank? && !@event.cooperators.map{|x| x["name"]}.join.blank? %>
+    <div class='mb-1 d-flex'>
+      <span style='width: 60px;display: inline-block'>协办方</span>
+      <ul class='' style='list-style: none;padding: 0'>
+      <% (@event.cooperators || []).each do |cooperator| %>
+      <%next if cooperator.dig("name").blank?%>
+      <li><%= link_to cooperator["name"], cooperator["url"]%></li>
+      <%end%>
+      </ul>
+
+    </div>
+    <%end %>
+
+
+
+    <div class="group mt-5">
+      <p style='width: 60px;display: inline-block'>分享扩散</p>
+      <%= social_share_button_tag h("#{@event.title}") %>
+    </div>
+  </div>
+
+</div>

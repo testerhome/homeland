@@ -1,0 +1,67 @@
+<table class='w-100 h-100 bg-white text-center mt-4 mt-md-auto' style='border-collapse: collapse; border: 1px solid #e6e6e6;'>
+      <thead>
+      <tr>
+      <% %w[周日 周一 周二 周三 周四 周五 周六].each do |day_of_week| %>
+        <th class='text-center'><%= day_of_week %></th>
+      <%end %>
+      </tr>
+      </thead>
+      <tbody>
+        <% Date.beginning_of_week = :sunday %>
+        <% during_count = Time.now.beginning_of_month.beginning_of_week.to_date.upto(Time.now.end_of_month.end_of_week.to_date).count %>
+        <% index = 0; Time.now.beginning_of_month.beginning_of_week.to_date.upto(Time.now.end_of_month.end_of_week.to_date) do |day| %>
+          <% if index % 7 == 0%>
+            <tr>
+          <% end %>
+
+          <%
+            style = "border: 1px solid #e6e6e6"
+            if params[:filter_date] == day.to_s
+              style = "box-sizing: content-box;border: 3px solid #111111;"
+            else
+              # 周六周日颜色
+              if [0,6].include?(day.wday)
+              style = "#{style};background-color: #f5f5f5"
+              end
+              # 下月或者上月的颜色
+              if Time.now.beginning_of_month.to_date > day || Time.now.end_of_month.to_date < day
+                style = "#{style};opacity: 0.33"
+              end
+              # 当天颜色
+              if Time.current.to_date == day
+                style = "#{style};background-color: #e2fde5 !important; color: #17d02c !important"
+              end
+
+              if @events_count_in_curerent_month[day].to_i > 0
+                style = "#{style};cursor: pointer"
+              end
+            end
+
+            style = style + ";position: relative;min-height: 25px;"
+
+          %>
+
+          <td data-action='click->calendar-filter#click'
+              data-controller='calendar-filter'
+              data-calendar-filter-day-value='<%= day%>'
+              data-calendar-filter-count-value='<%= @events_count_in_curerent_month[day].to_i %>'
+              data-calendar-filter-status-value='<%= params["filter_date"] == day.to_s %>'
+              style='<%= style %>'
+              class=''>
+            <%= day.day %>
+            <%if @events_count_in_curerent_month[day].to_i > 0 %>
+            <div class='events-dots' style='position: absolute;text-align: center;width: 100%;bottom: 1px;'>
+              <% count = @events_count_in_curerent_month[day] >=5 ? 5 : @events_count_in_curerent_month[day] %>
+              <% count.times do %>
+                <span class='event-calendar-dot'></span>
+              <% end %>
+            </div>
+            <%end %>
+          </td>
+
+          <% if index % 7 == 6%>
+          </tr>
+          <% end %>
+        <%index = index + 1;end %>
+      </tbody>
+    </table>

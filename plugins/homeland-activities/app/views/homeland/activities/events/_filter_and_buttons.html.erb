@@ -1,0 +1,30 @@
+<div class='d-flex align-items-center mb-4'>
+  <h2 class='' style='font-size: 1.125rem;line-height: 1.75rem;'>最新活动</h2>
+  <div class="btn-group">
+    <a type="button" class="ml-2 ml-md-5 pb-2" data-toggle="dropdown" style='color: #00721a !important;text-decoration: none;' aria-haspopup="true" aria-expanded="false">
+      <%= @city_filter.blank? ? "所有城市" : @city_filter %> <span> <i class="fas fa-angle-down"></i> </span>
+    </a>
+    <div class="dropdown-menu" data-controller='events-filter' data-events-filter-name-id-value='city-filter'>
+        <a class="dropdown-item" data-action='events-filter#click'>所有城市</a>
+        <% ["线上举办", "北京", "上海", "广州", "深圳", "成都", "杭州", "重庆", "武汉", "天津", "南京", "西安", "长沙" ].each do |city| %>
+          <a class="dropdown-item" data-action='events-filter#click' href="#"><%= city%></a>
+
+        <% end %>
+    </div>
+  </div>
+  <div class="btn-group">
+    <a type="button"  class="ml-4 pb-2" style='color: #00721a !important;text-decoration: none;'  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%= @category_filter.blank? ? "不限类型" : @category_filter %> <span> <i class="fas fa-angle-down"></i> </span>
+    </a>
+    <div class="dropdown-menu" data-controller='events-filter' data-events-filter-name-id-value='category-filter'>
+      <a class="dropdown-item" data-action='events-filter#click' href="#">不限类型</a>
+      <a class="dropdown-item" data-action='events-filter#click' href="#">线上活动</a>
+      <a class="dropdown-item" data-action='events-filter#click' href="#">线下活动</a>
+    </div>
+  </div>
+  <%if @edit_event.nil?%>
+    <%= link_to '提交活动', new_event_path, class: 'ml-auto btn btn-success d-none d-md-inline' %>
+  <% else %>
+    <%= link_to '编辑活动', edit_event_path(@edit_event), class: 'ml-auto btn btn-success d-none d-md-inline' %>
+  <% end %>
+</div>

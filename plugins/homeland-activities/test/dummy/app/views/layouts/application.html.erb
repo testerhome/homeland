@@ -1,0 +1,9 @@
+<% content_for :main do %>
+  <script type="text/javascript">
+    $('.navbar-nav .nav-plugin-events').addClass("active");
+  </script>
+  <div id="homeland-events">
+    <%= yield %>
+  </div>
+<% end %>
+<%= render template: "/layouts/application" %>

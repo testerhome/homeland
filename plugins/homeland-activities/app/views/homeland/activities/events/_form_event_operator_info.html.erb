@@ -1,0 +1,62 @@
+<div class="card">
+  <h5 class="card-header">主办方， 嘉宾信息</h5>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-4">
+        <div class="form-group">
+          <%= form.label :host_name, "主办方名称" %> <span class="master">*</span>
+          <%= form.text_field :host_name, class: 'form-control'%>
+          <%= event_error_msg(:host_name, event)%>
+        </div>
+      </div>
+      <div class="col-8">
+        <%= form.label :host_url, "网址" %>
+        <%= form.text_field :host_url, class: 'form-control'%>
+      </div>
+    </div>
+    <%= render 'operator_panel',event: event, form: form %>
+
+
+
+
+    <div class="row mt-5">
+      <div class="col">
+        <div class="form-group">
+          <%= form.label :realname, "你的名字" %> <span class="master">*</span>
+          <%= form.text_field :realname, placeholder: "真实姓名", class: 'form-control'%>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <%= form.label :email, "Email" %> <span class="master">*</span>
+          <%= form.text_field :email, placeholder: "用于接受重要邮件", class: 'form-control'%>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <%= form.label :phone, "手机号" %> <span class="master">*</span>
+          <%= form.text_field :phone, placeholder: "方便我们及时与您联系", class: 'form-control'%>
+          <%= event_error_msg(:phone, event)%>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <%= form.label :wechat_or_qq, "QQ / 微信号" %> <span class="master">*</span>
+          <%= form.text_field :wechat_or_qq, placeholder: "qq号， 微信号", class: 'form-control'%>
+          <%= event_error_msg(:wechat_or_qq, event)%>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class='d-flex justify-content-between'>
+          <%= link_to "上一步", edit_event_path(event, step: 0), class: 'btn '%>
+          <%= form.submit "提交"%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

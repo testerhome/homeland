@@ -1,0 +1,14 @@
+"zh-CN":
+  activerecord:
+    models:
+      homeland:
+        activities:
+          event: "活动"
+      homeland_activities_event: "活的动"
+  attributes:
+    homeland:
+      activities:
+        event:
+          title: "活动名称"
+    homeland_activities_event:
+      title: "活动名称"

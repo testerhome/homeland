@@ -1,0 +1,9 @@
+<div class='row bg-white py-2'>
+  <div class='col'>
+  <span>活动</span> / <span>提交活动</span>
+  </div>
+</div>
+<div class='row bg-white'>
+  <%= render 'form', event: @event %>
+</div>
+<%= link_to 'Back', events_path %>

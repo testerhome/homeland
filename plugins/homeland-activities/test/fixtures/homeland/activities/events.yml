@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  city: MyString
+  category: MyString
+  title: MyString
+  start_at: 2021-08-22 17:32:22
+  end_at: 
+  registration_open_at: 2021-08-22 17:32:22
+  registration_end_at: 2021-08-22 17:32:22
+  description: MyString
+  operator_info: 
+  realname: MyString
+  email: MyString
+  phone: MyString
+  wechat_or_qq: MyString
+  status: MyString
+
+two:
+  city: MyString
+  category: MyString
+  title: MyString
+  start_at: 2021-08-22 17:32:22
+  end_at: 
+  registration_open_at: 2021-08-22 17:32:22
+  registration_end_at: 2021-08-22 17:32:22
+  description: MyString
+  operator_info: 
+  realname: MyString
+  email: MyString
+  phone: MyString
+  wechat_or_qq: MyString
+  status: MyString

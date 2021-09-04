@@ -1,0 +1,48 @@
+<%= content_for :stylesheets do %>
+  <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+<% end %>
+<div class='bg-white p-4'>
+  <div data-controller='slide'>
+    <%= render 'filter_and_buttons' %>
+  </div>
+  <div>
+    <%= form_with path: events_url, html: {id: "filter", method: "GET"} do |f| %>
+      <%= f.hidden_field :city, id: 'city-filter', value: @city_filter %>
+      <%= f.hidden_field :category, id: 'category-filter', value: @category_filter %>
+    <% end %>
+  </div>
+  <!--hero-->
+  <div class="row" class='bg-white'>
+    <div class="col-md-6">
+      <!--滚动-->
+      <%= render "slide" %>
+    </div>
+    <div class="col-md-6">
+      <!--calendar-->
+      <%= render 'calendar' %>
+    </div>
+  </div>
+  <% if params[:page].blank? %>
+  <div class='row mt-5'>
+    <% @incoming_events.each do |event| %>
+      <div class='col-md-3'>
+        <%= render 'event_card', event: event %>
+      </div>
+    <%end %>
+  </div>
+  <% end %>
+
+  <%if @old_events.first%>
+  <h3 class='mt-5'>过往活动</h3>
+  <div class='row mt-5'>
+    <% @old_events.each do |event| %>
+      <div class='col-md-3'>
+        <%= render 'event_card', event: event %>
+      </div>
+    <%end %>
+  </div>
+
+  <%= paginate @old_events %>
+  <%end %>
+
+</div>

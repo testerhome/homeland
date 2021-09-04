@@ -1,0 +1,28 @@
+<%= content_for :stylesheets do %>
+  <%= stylesheet_pack_tag "application", "data-turbolinks-track": "reload" %>
+<% end %>
+<div class="col-md-9">
+  <%= form_with(model: event, id: 'eventForm', local: true) do |form| %>
+    <input type='hidden' name="step" value='<%= params[:step].to_i %>'>
+    <% if params[:step].to_i == 0 %>
+      <%= render 'form_event_info', form: form, event: event%>
+    <% end %>
+    <% if params[:step].to_i == 1 %>
+      <%= render 'form_event_operator_info', form: form, event: event%>
+    <%end %>
+  <% end %>
+</div>
+<div class="col-md-3">
+  <ul class="event-list-group">
+    <% step = params[:step].to_i %>
+
+    <%["1. 活动信息", "2. 主办方、嘉宾信息", "提交完成"].each_with_index do |str, index|%>
+      <li class="list-group-item <%= index == step ? "item-success" : ""%>"><%= str%></li>
+    <%end%>
+
+  </ul>
+  <div class="alert alert-warning marketing">
+    <p>市场合作</p>
+    <p>xu@testerhome.com</p>
+  </div>
+</div>
