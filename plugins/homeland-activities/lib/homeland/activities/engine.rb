@@ -27,6 +27,7 @@ module Homeland
         begin
           ActiveRecord::Tasks::DatabaseTasks.migrate
         rescue ActiveRecord::NoDatabaseError
+        rescue ActiveRecord::ConnectionNotEstablished
         end
       end
 
