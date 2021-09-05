@@ -1,6 +1,6 @@
 App.loading(false);
-comments_box = $("#<%= @comment.commentable_type %>_<%= @comment.commentable_id %>_cell_comments .card-body");
-comments_form = $("#<%= @comment.commentable_type %>_<%= @comment.commentable_id %>_cell_new_comment");
+comments_box = $("#<%= j @comment.commentable_type.gsub(":", "\\\\:") %>_<%= @comment.commentable_id %>_cell_comments .card-body");
+comments_form = $("#<%= j @comment.commentable_type.gsub(":", "\\\\:") %>_<%= @comment.commentable_id %>_cell_new_comment");
 <% if @success %>
 comment_line = '<%= j(render("comment", item: @comment)) %>';
 comments_box.append(comment_line);

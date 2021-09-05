@@ -125,6 +125,7 @@ gem "exception-track"
 
 gem "bootsnap"
 gem "lograge"
+gem 'groupdate'
 
 group :development, :test do
   gem "pry"

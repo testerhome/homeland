@@ -1,0 +1,30 @@
+
+<div class="card events-card" style="">
+  <%= link_to event do%>
+  <div class="card-img-top" style='aspect-ratio: 16 / 9;'>
+    <img src="<%= event.photo_url%>"  width="100%" height="100%"  alt="..." >
+  </div>
+  <% end %>
+  <div class="card-body bg-light" style='padding: 1.25rem;'>
+    <h5 class="card-title" style='font-size: 16px;'>
+      <%= link_to  event do%>
+        <%= event.title %>
+      <% end %>
+    </h5>
+    <p class='' style='margin-bottom: 4px; color: #bdbdbd'><span>时间：</span> <span><%= event_date_str event.start_at%></span></p>
+    <p class='' style='margin-bottom: 4px; color: #bdbdbd'><span>城市：</span> <span><%= event.event_city%></span></p>
+    <div class="d-flex flex-row-reverse ">
+      <%if Time.now < event.registration_open_at %>
+        <%if Time.now.to_date == event.registration_open_at.to_date %>
+          <a href="#" class="btn btn-secondary  disabled" tabindex="-1" role="button" aria-disabled="true">报名将在 <%= event.registration_open_at.strftime(" %H:%M") %> 开始</a>
+        <% else %>
+          <a href="#" class="btn btn-secondary  disabled" tabindex="-1" role="button" aria-disabled="true"><%= event.registration_open_at.strftime("%Y-%m-%d") %> 开始报名</a>
+        <% end %>
+      <%elsif Time.now <= event.registration_end_at %>
+      <a href='<%= event_path(event)%>' class='btn btn-success'>报名参加</a>
+      <%else%>
+                <a href="#" class="btn btn-secondary  disabled" tabindex="-1" role="button" aria-disabled="true">报名已截止</a>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div data-controller='operator-panel' data-operator-panel-data-value='<%=event.cooperators.to_json%>' data-opertator-panel-show-value = "<%= !event.cooperators.blank?%>">
+  <div  data-operator-panel-target='panel'>
+
+  </div>
+  <div class="row">
+    <a href="#" data-action='operator-panel#addButtonClick' data-operator-panel-target='addButton' class=' col operatorAddButton'>添加协办方</a>
+  </div>
+
+
+
+  <template data-operator-panel-target='template'>
+    <div class="row cooperator_panel" >
+      <div class="col-4">
+        <div class="form-group">
+          <label for="">协办方名称</label>
+          <input  name='event[cooperators][][name]' class='form-control cooperator_name'>
+        </div>
+      </div>
+      <div class="col-8">
+        <label for="">网址</label>
+        <div class="d-flex">
+          <input name='event[cooperators][][url]' class='form-control'>
+
+          <a href="#" data-action='operator-panel#remove' class='btn btn-info ml-2'>
+            <i class="fas fa-trash"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </template>
+</div>

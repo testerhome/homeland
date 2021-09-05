@@ -1,0 +1,115 @@
+  <div class="card" data-controller='event-timepicker'>
+    <h5 class="card-header">活动信息</h5>
+    <div class="card-body">
+      <div class='form-group'>
+        <%= form.label :title, "活动名称" %> <span class="master">*</span>
+        <%= form.text_field :title, class: 'form-control',   placeholder: '不超过64个字' %>
+        <%= event_error_msg(:title, event)%>
+      </div>
+      <div class='form-group'>
+        <%= form.label :category, "活动类型" %> <span class="master">*</span>
+        <div>
+          <% %w[线上活动 线下活动].each do |item| %>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="<%= item%>" name="event[category]"  value="<%= item%>" <%= event.category == item ? "checked" : "" %>>
+              <label class="form-check-label" for="<%= item%>"><%= item%></label>
+            </div>
+        <% end %>
+          <%= event_error_msg(:category, event)%>  <br>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <%=form.label :photo_url, "活动海报" %> <span class="master">*</span>
+        <div class='row' data-controller='event-image-upload'>
+          <div class='col-3'>
+            <div class='image-panel'>
+              <img data-event-image-upload-target='preview' style='width: 100%;height: 100%' <%= event.photo_url.blank? ? "" : "src=#{event.photo_url} width=160 height=90" %> />
+            </div>
+            <%= form.hidden_field :photo_url, 'data-event-image-upload-target' => 'urlInput' %>
+            <input data-event-image-upload-target='file' data-action='event-image-upload#changed' type='file' accept="image/png, image/jpg, image/jpeg"  style='width: 0;height:0'>
+          </div>
+          <div class='col-4'>
+            <button class='btn btn-light' data-event-image-upload-target='button' data-action='click->event-image-upload#click'>上传图片</button>
+            <div class='upload-info'>
+              <p>支持  jpg/jpeg/png 格式， 大小不要超过 2MB</p>
+              <p>建议上传 1600 x 900 分辨率的图片</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <%= form.label :start_at, "活动开始时间" %> <span class="master">*</span>
+            <%= form.text_field :start_at, class: 'form-control event-date'%>
+            <%= event_error_msg(:start_at, event)%>
+
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <%= form.label :end_at, "活动结束时间" %> <span class="master">*</span>
+            <%= form.text_field :end_at, class: 'form-control event-date'%>
+            <%= event_error_msg(:end_at, event)%>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <%= form.label :registration_open_at, "报名开始时间" %> <span class="master">*</span>
+            <%= form.text_field :registration_open_at, class: 'form-control event-date'%>
+            <%= event_error_msg(:registration_open_at, event)%>
+
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <%= form.label :registration_end_at, "报名结束时间" %> <span class="master">*</span>
+            <%= form.text_field :registration_end_at, class: 'form-control event-date'%>
+            <%= event_error_msg(:registration_end_at, event)%>
+
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :register_category_info, "报名方式" %> <span class="master">*</span>
+        <div class="row">
+          <div class="col-4">
+            <%= form.select(:register_category, ["站外报名"],{}, class: "form-control") %>
+          </div>
+          <div class="col-8">
+            <%= form.text_field :register_category_info, class: 'form-control', placeholder: '报名链接'%>
+          </div>
+          <%= event_error_msg(:register_category_info, event)%>
+        </div>
+      </div>
+
+      <div class="form-group" data-controller="city-tag">
+        <%= form.label :event_city, "活动城市" %> <span class="master">*</span>
+        <div class="row">
+          <div class="col-4">
+            <%= form.select :event_city, ["线上举办", "北京", "上海", "广州", "深圳", "成都", "杭州", "重庆", "武汉", "天津", "南京", "西安", "长沙" ], {} , {class: 'form-control',data: {"city-tag-target" =>  "cityInput"}} %>
+          </div>
+          <div class="col-8">
+            <%= form.text_field :event_city_info, class: 'form-control', placeholder: '不超过64个字'%>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" data-controller='description-editor'>
+        <%= form.label :description, "活动描述" %> <span class="master">*</span>
+        <%= render "/shared/editor_toolbar" %>
+        <%= form.text_area :description,  placeholder: '请添加活动描述， 支持markdown', row: 20, class: "topic-editor form-control closewarning", style: "height: 120px" %>
+
+      </div>
+      <%= event_error_msg(:description, event)%>
+
+      <div class="form-group text-right">
+        <%= form.submit "下一步" %>
+      </div>
+    </div>
+  </div>
