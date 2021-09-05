@@ -4,6 +4,7 @@ tmp/
 public/uploads/
 spec/
 plugins/*
+!/plugins/homeland-activities/
 test/
 doc/
 coverage/
