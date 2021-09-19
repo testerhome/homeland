@@ -43,7 +43,7 @@ class Topic < ApplicationRecord
   scope :without_ban,        -> { where.not(grade: :ban) }
   scope :without_hide_nodes, -> { exclude_column_ids("node_id", Topic.topic_index_hide_node_ids) }
 
-  scope :in_seven_days,         -> { where("created_at >= ?", 1.week.ago) }
+  scope :in_seven_days,         -> { where("topics.created_at >= ?", 1.week.ago) }
   scope :open, -> { where("closed_at IS NULL").order(created_at: :desc) }
 
   scope :without_node_ids,   ->(ids) { exclude_column_ids("node_id", ids) }
@@ -59,9 +59,9 @@ class Topic < ApplicationRecord
   scope :without_draft, -> { where(draft: false) }
   scope :with_public_articles, -> { where(article_public: true) }
 
-  scope :public_and_enterprise_topics, -> {join(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_PUBLIC_MEMBER, User::MAX_STATE_FOR_ENTERPRISE)}
-  scope :public_members_topic, -> {join(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_PUBLIC_MEMBER, User::MAX_STATE_FOR_PUBLIC_MEMBER)}
-  scope :enterprise_members_topic, -> {join(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_ENTERPRISE, User::MAX_STATE_FOR_ENTERPRISE)}
+  scope :public_and_enterprise_topics, -> {joins(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_PUBLIC_MEMBER, User::MAX_STATE_FOR_ENTERPRISE)}
+  scope :public_members_topic, -> {joins(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_PUBLIC_MEMBER, User::MAX_STATE_FOR_PUBLIC_MEMBER)}
+  scope :enterprise_members_topic, -> {joins(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_ENTERPRISE, User::MAX_STATE_FOR_ENTERPRISE)}
 
   # 首页， 节点使用的正常帖子， + 公众合作号+ 企业签约号+任意角色加精
   scope :with_filter_public_end_enterprise, -> {

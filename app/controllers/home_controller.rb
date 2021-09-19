@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     @excellent_topics = topics_scope.no_suggest.excellent.recent.fields_for_list.limit(20).to_a
     @suggest_topics = topics_scope.suggest.fields_for_list.limit(4).to_a
     @latest_topics = topics_scope.no_suggest.recent.without_hide_nodes.with_replies_or_likes.with_filter_public_end_enterprise.fields_for_list.limit(6).to_a
-    @hot_topics = topics_scope.in_seven_days.high_replies.no_suggest.with_replies_or_likes.fields_for_list.limit(10).to_a
+    @hot_topics = topics_scope.in_seven_days.high_replies.no_suggest.with_replies_or_likes.with_filter_public_end_enterprise.fields_for_list.limit(10).to_a
     @users = User.normal.without_team.new_guy.limit(100).select { |user| !user.admin? }[0..9]
 
     bugs_node = Node.find_by_id Node.bugs_id
