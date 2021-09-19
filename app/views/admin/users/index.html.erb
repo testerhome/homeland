@@ -34,13 +34,29 @@
     <div class="form-group mr-sm-2">
       <%= select_tag(:type, options_for_select([['全部类别',''], ['社团','Team']], params[:type]), class: 'form-control') %>
     </div>
-    <div class="form-group mr-sm-2">
-      <%= select_tag(:state, options_for_select(User.state_options, params[:state]), class: 'form-control', include_blank: "所有等级") %>
+    <div class='d-flex'
+          data-controller='roles-filter'
+          data-roles-filter-selected-state-value='<%= params[:state] || ""%>'
+          data-roles-filter-states-info-value='<%= user_states_info.to_json%>'
+          data-roles-filter-state-blank-value='true'>
+      <div class="form-group mr-sm-2">
+        <%= select_tag(:category, options_for_select([['全部类别',''], ['个人账号','-1--99'], ['公众号','120--129'], ['企业号','130--139']], params[:category]), data: {"roles-filter-target" => "main", "action" => 'change->roles-filter#select'},  class: 'form-control') %>
+      </div>
+
+      <div class="form-group mr-sm-2" >
+        <%= select_tag(:state,
+        "",
+        data: {"roles-filter-target" => "sub"},
+        class: 'form-control',
+        include_blank: "所有等级") %>
+      </div>
+
+
     </div>
     <button class="btn btn-default">搜索</button>
   </form>
-  
-  
+
+
 </div>
 
 <div class="card-body item-list">
@@ -55,6 +71,7 @@
     <td class="first">#</td>
     <td>头像</td>
     <td colspan="2">帐号</td>
+    <td>权限</td>
     <td>注册时间</td>
     <td>上次登录ip</td>
     <td>当前登录ip</td>
@@ -77,6 +94,10 @@
           <%= link_to user.fullname, user_path(user), target: "_blank" %> <%= user_level_tag(user) unless user.member? %>
         </td>
       <% end %>
+      <td>
+        <%= I18n.t("activerecord.enums.user.state.#{user.state}") %>
+      </td>
+
       <td width="120"><%= user.created_at&.to_date %></td>
       <td width="120"><%= user.last_sign_in_ip %></td>
       <td width="120"><%= user.current_sign_in_ip %></td>

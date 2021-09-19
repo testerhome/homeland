@@ -5,8 +5,44 @@ class User
   module Roles
     extend ActiveSupport::Concern
 
+    MIN_STATE_FOR_PUBLIC_MEMBER = 120
+    MAX_STATE_FOR_PUBLIC_MEMBER = 129
+    MIN_STATE_FOR_ENTERPRISE = 130
+    MAX_STATE_FOR_ENTERPRISE = 140
+
     included do
-      enum state: { deleted: -1, member: 1, blocked: 2, vip: 3, hr: 4, maintainer: 90, admin: 99 }
+      attr_accessor :category # 用来存储权限的大类, 临时存储
+      enum state: {
+        deleted: -1,
+        member: 1,  # 对应个人普通用户
+        blocked: 2,
+        vip: 3, # 对应个人高级用户
+        hr: 4,
+        person_year_fee: 14, # 个人年费会员
+        maintainer: 90, # 对应版主
+        admin: 99, # 对应管理员
+
+        # 注意， 公众号等权限为 120 到 140 之间
+        public_simple: 120, # 公众普通账号
+        public_flow: 121, # 公众倒流账号
+        public_cooperation: 122, # 公众合作账号
+
+        enterprise_non_subscriber: 130, # 企业非签约号
+        enterprise_subscriber: 131 # 企业签约号, 注意， 企业号权限编号最大不能超过MAX_STATE_FOR_ENTERPRISE
+      }
+
+      def fetch_role_category
+        case state_before_type_cast
+        when -1..99
+          return '-1--99'
+        when 120..129
+          return '120--129'
+        when 130..139
+          return '130--139'
+        else
+          raise "新的权限没有包含进来"
+        end
+      end
 
       # user.admin?
       define_method :admin? do
@@ -70,6 +106,8 @@ class User
         false
       end
     end
+
+
 
     # 用户的账号类型
     def level

@@ -1,16 +1,22 @@
 
-<div class="card events-card" style="">
+<div class="card events-card" >
   <%= link_to event do%>
   <div class="card-img-top" style='aspect-ratio: 16 / 9;'>
     <img src="<%= event.photo_url%>"  width="100%" height="100%"  alt="..." >
   </div>
   <% end %>
   <div class="card-body bg-light" style='padding: 1.25rem;'>
-    <h5 class="card-title" style='font-size: 16px;'>
-      <%= link_to  event do%>
+    <div style='height: 3rem;'>
+    <h5 class="card-title" style='font-size: 16px;overflow:hidden;
+text-overflow:ellipsis;
+display:-webkit-box;
+-webkit-box-orient:vertical;
+-webkit-line-clamp:2; '>
+      <%= link_to  event, style: 'text-decoration:none' do%>
         <%= event.title %>
       <% end %>
     </h5>
+    </div>
     <p class='' style='margin-bottom: 4px; color: #bdbdbd'><span>时间：</span> <span><%= event_date_str event.start_at%></span></p>
     <p class='' style='margin-bottom: 4px; color: #bdbdbd'><span>城市：</span> <span><%= event.event_city%></span></p>
     <div class="d-flex flex-row-reverse ">

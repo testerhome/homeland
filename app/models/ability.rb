@@ -27,6 +27,21 @@ class Ability
       roles_for_members
       role_for_invitecode
       custom_roles_for_maintainers
+    elsif @user.public_simple?
+      roles_for_members
+      role_for_invitecode
+    elsif @user.public_flow?
+      roles_for_members
+      role_for_invitecode
+    elsif @user.public_cooperation?
+      roles_for_members
+      role_for_invitecode
+    elsif @user.enterprise_non_subscriber?
+      roles_for_members
+      role_for_invitecode
+    elsif @user.enterprise_subscriber?
+      roles_for_members
+      role_for_invitecode
     else
       roles_for_anonymous
     end

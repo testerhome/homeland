@@ -26,8 +26,14 @@
           blocked: 禁言用户
           vip: 高级会员
           hr: HR
+          person_year_fee: "年费会员"
           maintainer: 版主
           admin: 管理员
+          public_simple: 公众号-普通账号
+          public_flow: 公众号-倒流账号
+          public_cooperation: 公众号-合作账号
+          enterprise_non_subscriber: 企业号-非签约
+          enterprise_subscriber: 企业号-非签约账号
         state_color:
           deleted: 已注销
           newbie: "#564cf5"

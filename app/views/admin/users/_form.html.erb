@@ -78,10 +78,23 @@
   </div>
 
   <% if @user.user_type == :user %>
-    <div class="form-group">
-      <%= f.label :state %>
-      <%= f.select :state, User.state_options, {}, class: "form-control" %>
+  <div class='d-flex'
+      data-controller='roles-filter'
+      data-roles-filter-selected-state-value='<%= @user.state_before_type_cast || ""%>'
+      data-roles-filter-state-blank-value='false'
+      data-roles-filter-states-info-value='<%= user_states_info.to_json%>' >
+    <div class="form-group w-100 pr-4">
+      <%= f.label "category", '类别'%>
+      <%= select_tag(:category,
+                      options_for_select([['全部类别',''], ['个人账号','-1--99'], ['公众号','120--129'], ['企业号','130--139']], @user.fetch_role_category),
+                      data: {"roles-filter-target" => "main", "action" => 'change->roles-filter#select'},  class: 'form-control') %>
     </div>
+
+    <div class="form-group w-100">
+      <%= f.label :state %>
+      <%= f.select :state, "", {}, data: {"roles-filter-target" => "sub"}, class: "form-control" %>
+    </div>
+  </div>
 
     <div class="form-group">
       <%= f.label :sign_in_count %>

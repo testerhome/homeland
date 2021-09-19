@@ -5,7 +5,15 @@ module Admin
     def index
       scope = User.all
       scope = scope.where(type: params[:type]) if params[:type].present?
+
+      if params[:category].present?
+        states = params[:category].split("--").map(&:to_i)
+        scope = scope.where("state between ? and ?", *states)
+      end
+
       scope = scope.where(state: params[:state]) if params[:state].present?
+
+
       scope = scope.where(last_sign_in_ip: params[:last_sign_in_ip]) if params[:last_sign_in_ip].present?
       field = params[:field] || "login"
 
@@ -48,7 +56,7 @@ module Admin
 
     def delete_users_from_ip
       ip = params[:ip];
-      User.select { |m| m.last_sign_in_ip == ip }.each do |user| 
+      User.select { |m| m.last_sign_in_ip == ip }.each do |user|
         user.soft_delete
       end
       redirect_to ip_status_admin_users_url, notice: "软删除成功。"
@@ -82,6 +90,11 @@ module Admin
 
       @user.email = params[type][:email]
       @user.login = params[type][:login]
+
+      # 修正此处是直接值引用
+      if params[type][:state].present?
+        params[type][:state] = params[type][:state].to_i
+      end
       @user.state = params[type][:state] if params[type][:state] # Avoid `ActiveRecord::NotNullViolation` exception for Team entity.
 
       if @user.update(params[type].permit!)

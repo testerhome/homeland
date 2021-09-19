@@ -37,7 +37,7 @@ class Topic < ApplicationRecord
   scope :high_likes,         -> { order(likes_count: :desc).order(id: :desc) }
   scope :high_replies,       -> { order(replies_count: :desc).order(id: :desc) }
   scope :last_reply,         -> { where("last_reply_id IS NOT NULL").order(last_reply_id: :desc) }
-  scope :with_replies_or_likes,       -> { where("replies_count >= 1 or likes_count >= 1") }
+  scope :with_replies_or_likes,       -> { where("topics.replies_count >= 1 or topics.likes_count >= 1") }
   scope :no_reply,           -> { where(replies_count: 0) }
   scope :popular,            -> { where("likes_count > 5") }
   scope :without_ban,        -> { where.not(grade: :ban) }
@@ -58,6 +58,19 @@ class Topic < ApplicationRecord
   }
   scope :without_draft, -> { where(draft: false) }
   scope :with_public_articles, -> { where(article_public: true) }
+
+  scope :public_and_enterprise_topics -> {join(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_PUBLIC_MEMBER, User::MAX_STATE_FOR_ENTERPRISE)}
+  scope :public_members_topic -> {join(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_PUBLIC_MEMBER, User::MAX_STATE_FOR_PUBLIC_MEMBER)}
+  scope :enterprise_members_topic -> {join(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_ENTERPRISE, User::MAX_STATE_FOR_ENTERPRISE)}
+
+  # 首页， 节点使用的正常帖子， + 公众合作号+ 企业签约号+任意角色加精
+  scope :with_filter_public_end_enterprise, -> {
+    joins(:user).where("users.state between ? and ?", 1, 99)
+    # 其中 public_cooperation  是 工种合作账号， enterprise——subscriber 为企业签约账号， 这两个是需要显示的
+    .or(where("users.state" => [User.states[:public_cooperation], User.states[:enterprise_subscriber]]))
+    .or(where("topics.grade" => :excellent))
+    }
+
 
   before_save { self.node_name = node.try(:name) || "" }
   before_create { self.last_active_mark = Time.now.to_i }
@@ -126,7 +139,7 @@ class Topic < ApplicationRecord
 
   def save_with_checking_node
     save
-    if previous_changes["draft"]==[true, false]
+    if previous_changes["draft"] == [true, false]
       update!(created_at: Time.now)
       update!(last_active_mark: Time.now.to_i)
     end

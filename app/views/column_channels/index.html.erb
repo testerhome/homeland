@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-lg-2">
+  <%= render 'left' %>
+  </div>
+
+  <div class="col-lg-7">
+    <%= render partial: 'topic', collection: @topics, locals: { suggest: false } %>
+  </div>
+
+
+  <div class="col-lg-3">
+    <%= render 'right' %>
+  </div>
+
+
+</div>

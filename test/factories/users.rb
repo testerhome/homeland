@@ -28,6 +28,22 @@ FactoryBot.define do
     state { "hr" }
   end
 
+  factory :public_simple, parent: :user do
+    state { "public_simple" }
+  end
+  factory :public_flow, parent: :user do
+    state { "public_flow" }
+  end
+  factory :public_cooperation, parent: :user do
+    state { "public_cooperation" }
+  end
+  factory :enterprise_non_subscriber, parent: :user do
+    state { "enterprise_non_subscriber" }
+  end
+  factory :enterprise_subscriber, parent: :user do
+    state { "enterprise_subscriber" }
+  end
+
   factory :newbie, parent: :user do
     created_at { 1.hours.ago }
   end

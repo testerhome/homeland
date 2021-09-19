@@ -89,7 +89,7 @@ module UsersHelper
   end
 
   def random_image(set)
-    "https://testerhome.com/photo/anonymous_avatar/cat#{set}.png"   
+    "https://testerhome.com/photo/anonymous_avatar/cat#{set}.png"
    end
 
   def user_avatar_tag(user, version = :md, link: true, timestamp: nil, reply: nil, topic: nil)
@@ -187,6 +187,20 @@ module UsersHelper
     else
       link_to raw("#{icon} <span>关注</span>"), "#", title: "", "data-id" => login, class: class_names
     end
+  end
+
+  # 根据父权限节点，获取子权限节点， 注意 master_state_category 是用 - 连接起来的权限
+
+  def user_states_info()
+    User.states.map {|k, v| [k,v,I18n.t("activerecord.enums.user.state.#{k}") ]}
+  end
+
+  def user_sub_state_options(master_state_category)
+    return User.state_options if master_state_category.blank?
+    tmp = master_state_category.split("-").map(&:to_i)
+    states = User.states.filter { |k, v| v >= tmp[0] && v <= tmp[1] }.keys
+
+    User.state_options.filter { |item| states.include? item.last }
   end
 
   def reward_user_tag(user, opts = {})

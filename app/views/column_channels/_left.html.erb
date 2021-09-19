@@ -1,0 +1,13 @@
+<div>
+  <ul>
+  <li>专栏</li>
+  <li>测试服务</li>
+  </ul>
+  <hr />
+
+  <ul>
+    <%Section.all.each  do |section|%>
+    <li><%= section.name%></li>
+    <%end%>
+  </ul>
+</div>

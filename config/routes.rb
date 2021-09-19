@@ -104,6 +104,7 @@ Rails.application.routes.draw do
 
   resources :photos
   resources :likes
+  resources :column_channels
   resources :bugs
   resources :ads
   resources :opencourses
