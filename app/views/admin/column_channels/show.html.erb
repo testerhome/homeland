@@ -1,0 +1,87 @@
+<div class="card">
+  <div class="card-body">
+    <h3>顶部广告</h3>
+    <%= form_with path: admin_column_channels_path, method: "put" do |form| %>
+    <%= form.hidden_field :top_ad_update, value: "true" %>
+    <div class='row' data-controller='event-image-upload'>
+      <div class='col-12'>
+        <div class='image-panel'>
+          <img data-event-image-upload-target='preview' style='width: 100%;' <%= Setting.column_channel_top_image_url.nil? ? "" : "src=#{Setting.column_channel_top_image_url} " %> />
+        </div>
+        <%= form.hidden_field :column_channel_top_image_url, 'data-event-image-upload-target' => 'urlInput', value: Setting.column_channel_top_image_url %>
+        <input data-event-image-upload-target='file' data-action='event-image-upload#changed' type='file' accept="image/png, image/jpg, image/jpeg"  style='width: 0;height:0'>
+      </div>
+      <div class='col-12'>
+        <button class='btn btn-light' data-event-image-upload-target='button' data-action='click->event-image-upload#click'>上传图片</button>
+        <div class='upload-info'>
+          <p>支持  jpg/jpeg/png 格式， 大小不要超过 2MB</p>
+          <p>建议上传 1920*200 分辨率的图片</p>
+        </div>
+      </div>
+      <div class="col-12">
+        <%= form.text_field :column_channel_top_url, placeholder: "广告链接地址", class: 'form-control', value: Setting.column_channel_top_url %>
+      </div>
+
+      <div class='col-12'>
+        <%= form.submit class: "btn btn-primary mt-2"%>
+      </div>
+    </div>
+    <%end %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h3>右侧广告</h3>
+
+   <%= form_with path: admin_column_channels_path, method: "put" do |form| %>
+    <%= form.hidden_field :right_ad_update, value: "true" %>
+    <div class='row' data-controller='event-image-upload'>
+      <div class='col-3'>
+        <div class='image-panel'>
+          <img data-event-image-upload-target='preview' style='width: 100%; object-fit: contain;' <%= Setting.column_channel_right_image_url.nil? ? "" : "src=#{Setting.column_channel_right_image_url} " %> />
+        </div>
+        <%= form.hidden_field :column_channel_right_image_url, 'data-event-image-upload-target' => 'urlInput' %>
+        <input data-event-image-upload-target='file' data-action='event-image-upload#changed' type='file' accept="image/png, image/jpg, image/jpeg"  style='width: 0;height:0'>
+      </div>
+      <div class='col-12'>
+        <button class='btn btn-light' data-event-image-upload-target='button' data-action='click->event-image-upload#click'>上传图片</button>
+        <div class='upload-info'>
+          <p>支持  jpg/jpeg/png 格式， 大小不要超过 2MB</p>
+        </div>
+      </div>
+      <div class="col-12">
+        <%= form.text_field :column_channel_right_url, value: Setting.column_channel_right_url, placeholder: "广告链接地址", class: 'form-control' %>
+      </div>
+
+      <div class='col-12'>
+        <%= form.submit class: "btn btn-primary mt-2"%>
+      </div>
+    </div>
+    <%end %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h3 class='mb-5'>测试服务专栏</h3>
+    <p>专栏编号， 最多5个  <%= link_to  "(查看编号)", admin_columns_path, target: "_blank" %></p>
+    <%= form_with path: admin_column_channels_path, method: "put" do |form| %>
+      <input type="hidden" name="update_column_channel_public_enterprise_column_ids" value="true">
+      <%= form.text_field :column_channel_public_enterprise_column_ids, placeholder: "专栏编号， 以,分隔， 如： 1,2", value: Setting.column_channel_public_enterprise_column_ids.join(","), class: 'form-control' %>
+      <%= form.submit class:"btn btn-primary mt-3"%>
+    <% end %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h3>个人专栏</h3>
+    <p>专栏编号， 最多5个  <%= link_to  "(查看编号)", admin_columns_path, target: "_blank" %></p>
+    <%= form_with path: admin_column_channels_path, method: "put" do |form| %>
+      <input type="hidden" name="update_column_channel_simple_column_ids" value="true">
+      <%= form.text_field :column_channel_simple_column_ids, placeholder: "专栏编号， 以,分隔， 如： 1,2", value: Setting.column_channel_simple_column_ids.join(","), class: 'form-control' %>
+      <%= form.submit class:"btn btn-primary mt-3"%>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="d-flex">
+  <div class="media-middle">
+    <img class="media-object avatar-48" src="<%= column.cover_url %>">
+  </div>
+  <div class="ml-4">
+    <div class=''>
+      <%= render_column_name(column.name, column.slug) %>
+    </div>
+    <p><%= user_name_tag(column.user, {class: "sidebar-column-user-name"} )%></p>
+  </div>
+  <div class="mr-0 ml-auto"><%= column.articles_count %> 篇</div>
+</div>

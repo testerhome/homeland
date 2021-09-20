@@ -228,6 +228,17 @@ class Setting < RailsSettings::Base
   field :before_wechat_html, type: :string
   field :after_wechat_html, type: :string
 
+  # = Column Channels
+  field :column_channel_top_url, type: :string
+  field :column_channel_top_image_url, type: :string
+
+  field :column_channel_right_url, type: :string
+  field :column_channel_right_image_url, type: :string
+
+  field :column_channel_public_enterprise_column_ids, type: :array, default: []
+  field :column_channel_simple_column_ids, type: :array, default: []
+
+
 
   # = ReCaptcha
   field :use_recaptcha, default: false, type: :boolean

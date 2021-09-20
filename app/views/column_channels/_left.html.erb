@@ -10,7 +10,7 @@
   <ul class='column-channels-list'>
     <%Section.all.each  do |section|%>
       <li>
-        <%= link_to  section.name, [:column_channels, section_id: section.id], class: params[:section_id] == section.id ? "actived" : '' %>
+        <%= link_to  section.name, [:column_channels, section_id: section.id], class: params[:section_id] == section.id.to_s ? "actived" : '' %>
       </li>
     <%end%>
   </ul>

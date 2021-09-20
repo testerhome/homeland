@@ -1,6 +1,9 @@
 # 注意， 此处的专栏和 基于用户开出来的专栏不一样
 class ColumnChannelsController < TopicsController
   def index
+    @simple_columns = Setting.column_channel_simple_column_ids.map {|id| Column.find_by_id(id) }.reject(&:nil?)
+    @public_enterprise_columns = Setting.column_channel_public_enterprise_column_ids.map {|id| Column.find_by_id(id) }.reject(&:nil?)
+
     if params[:section_id].blank?
       @topics = fetch_public_or_enterprise_topics
     else

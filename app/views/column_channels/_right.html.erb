@@ -1,1 +1,19 @@
-<%= render "topics/sidebar_columns" %>
+<div class='w-100' >
+  <a href="<%= Setting.column_channel_right_url%>">
+    <img src="<%= Setting.column_channel_right_image_url%>"  style='width: 100%; object-fit: contain;' alt="">
+  </a>
+</div>
+
+<div class="card mt-4">
+  <div class="card-header">测试服务专栏</div>
+  <div class="card-body">
+    <%= render partial:"column", collection: @public_enterprise_columns, as: :column %>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-header">个人专栏</div>
+  <div class="card-body">
+    <%= render partial:"column", collection: @simple_columns, as: :column %>
+  </div>
+</div>
