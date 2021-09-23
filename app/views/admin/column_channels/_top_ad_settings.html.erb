@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-body">
+    <h3>顶部广告</h3>
+    <p>建议图片1920 * 200, 图片请保证宽高一致</p>
+    <%= form_with path: admin_column_channels_path, method: "put", html: {data: {controller: "column-channels-ad"}} do |form| %>
+      <%= form.hidden_field :top_ad_update, value: "true" %>
+      <div data-column-channels-ad-target='panel'>
+        <%@column_channel_top_ads.each do |ad_info|%>
+          <%= render 'ad_item', ad_info: ad_info, form: form %>
+        <%end%>
+      </div>
+
+      <template data-column-channels-ad-target='template'>
+        <%= render 'ad_item', ad_info: {}, form: form %>
+      </template>
+
+
+      <div class='col-12'>
+        <button type="button" class="btn btn-secondary mt-2 mr-2" data-action='column-channels-ad#addItem'>添加广告项</button>
+        <%= form.submit class: "btn btn-primary mt-2"%>
+      </div>
+    <%end %>
+  </div>
+</div>

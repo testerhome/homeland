@@ -1,8 +1,29 @@
-<div class='w-100' >
-  <a href="<%= Setting.column_channel_right_url%>">
-    <img src="<%= Setting.column_channel_right_image_url%>"  style='width: 100%; object-fit: contain;' alt="">
-  </a>
+<% if current_user && !current_user.newbie? %>
+<div class="card">
+  <div class="card-body">
+    <%= link_to t('topics.new_topic'), main_app.new_topic_path(node: @node&.id), class: 'btn btn-primary btn-block' %>
+  </div>
+
+  <% if current_user && current_user.has_draft? %>
+    <div class="text-center alert alert-warning draft-box">
+      <%= link_to  main_app.drafts_user_path(current_user) do %>
+        <i class="fa fa-edit"></i> 草稿 <%=	 current_user.draft_size %> 篇
+      <% end %>
+    </div>
+  <% end %>
 </div>
+<% end %>
+
+<%unless @column_channel_right_ads.blank?%>
+<div class='w-100' >
+  <%= render "right_ad_slide"%>
+</div>
+<%end %>
+
+<%= raw Setting.column_channel_right_raw_html%>
+
+
+
 
 <div class="card mt-4">
   <div class="card-header">测试服务专栏</div>

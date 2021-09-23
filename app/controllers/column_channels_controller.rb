@@ -1,6 +1,7 @@
 # 注意， 此处的专栏和 基于用户开出来的专栏不一样
 class ColumnChannelsController < TopicsController
   def index
+    load_ads
     @simple_columns = Setting.column_channel_simple_column_ids.map {|id| Column.find_by_id(id) }.reject(&:nil?)
     @public_enterprise_columns = Setting.column_channel_public_enterprise_column_ids.map {|id| Column.find_by_id(id) }.reject(&:nil?)
 
@@ -16,6 +17,19 @@ class ColumnChannelsController < TopicsController
   end
 
   private
+
+  def load_ads
+    @column_channel_right_ads = Setting.column_channel_right_ads.map do |item|
+      key, value = item.split("$$$")
+      {img_url: key, link: value}
+    end
+
+    @column_channel_top_ads = Setting.column_channel_top_ads.map do |item|
+      key, value = item.split("$$$")
+      {img_url: key, link: value}
+    end
+
+  end
 
   def fetch_public_or_enterprise_topics
     if ["120-129", "130-139"].include? params[:user_states_category]

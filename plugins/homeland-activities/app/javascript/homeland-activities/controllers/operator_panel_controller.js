@@ -13,7 +13,6 @@ export default class extends Controller {
       clone.querySelector('input[name="event[cooperators][][url]"]').value = element.url;
       this.panelTarget.appendChild(clone);
     })
-
   }
   addButtonClick(e){
     e.preventDefault();
