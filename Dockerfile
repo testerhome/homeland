@@ -17,7 +17,6 @@ ADD Gemfile Gemfile.lock package.json yarn.lock /home/app/homeland/
 RUN gem install puma
 RUN bundle config set deployment 'true' && bundle install && yarn &&\
   find /home/app/homeland/vendor/bundle -name tmp -type d -exec rm -rf {} +
-
 ADD . /home/app/homeland
 ADD ./config/nginx/ /etc/nginx
 
