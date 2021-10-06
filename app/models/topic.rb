@@ -3,6 +3,7 @@
 require "redcarpet/render_strip"
 
 class Topic < ApplicationRecord
+  include Wisper::Publisher # 加入监听器
   include SoftDelete, MarkdownBody, Mentionable, MentionTopic, Closeable, Searchable, UserAvatarDelegate
   include Topic::Actions, Topic::AutoCorrect, Topic::Search, Topic::Notify, Topic::RateLimit
 
@@ -74,6 +75,7 @@ class Topic < ApplicationRecord
 
   before_save { self.node_name = node.try(:name) || "" }
   before_create { self.last_active_mark = Time.now.to_i }
+  after_create_commit :broadcast_topic_created
 
   def self.fields_for_list
     columns = %w[body who_deleted]
@@ -216,5 +218,16 @@ class Topic < ApplicationRecord
       @total_pages = 60
     end
     @total_pages.to_i
+  end
+
+  private
+
+  def broadcast_topic_created
+    if self.node.id != Node.questions_id
+      broadcast(:topic_created, self)
+      # 将创建的 topic 创建广播， 可以监听此广播用来处理复杂的逻辑
+    else
+      broadcast(:question_created, self)
+    end
   end
 end

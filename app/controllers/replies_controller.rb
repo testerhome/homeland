@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class RepliesController < ApplicationController
+  include Wisper::Publisher # 加入监听器
   load_and_authorize_resource :reply
 
   before_action :set_topic

@@ -126,6 +126,7 @@ gem "exception-track"
 gem "bootsnap"
 gem "lograge"
 gem 'groupdate'
+gem 'wisper'
 
 group :development, :test do
   gem "pry"

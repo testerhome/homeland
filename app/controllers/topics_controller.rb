@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class TopicsController < ApplicationController
+  include Wisper::Publisher # 加入监听器
   include Topics::ListActions
 
   before_action :authenticate_user!, only: %i[new edit create update destroy
@@ -166,13 +167,17 @@ class TopicsController < ApplicationController
     case params[:type]
     when "excellent"
       @topic.excellent!
+      broadcast(:excellent_topic, @topic, operator: current_user)
       redirect_to @topic, notice: "加精成功。"
     when "normal"
       @topic.normal!
+      broadcast(:normal_topic, @topic, operator: current_user)
       redirect_to @topic, notice: "话题已恢复到普通评级。"
     when "ban"
       params[:reason_text] ||= params[:reason] || ""
       @topic.ban!(reason: params[:reason_text].strip)
+      broadcast(:ban_topic, @topic, operator: current_user, reason: params[:reason_text].strip)
+
       redirect_to @topic, notice: "话题已放进屏蔽栏目。"
     when "append"
       content = params[:append_body]

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  include Wisper::Publisher # 加入监听器
   before_action :require_no_sso!, only: %i[new create]
 
   def create
@@ -15,6 +16,7 @@ class Users::SessionsController < Devise::SessionsController
       end
 
       set_flash_message(:notice, :signed_in_bind_oauth)
+      broadcast(:user_login, resource)
       session[:omniauth] = nil
     end
 
