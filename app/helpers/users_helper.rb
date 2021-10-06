@@ -135,9 +135,12 @@ module UsersHelper
 
   alias team_avatar_tag user_avatar_tag
 
-  def user_level_tag(user)
+  def user_level_tag(user, show_whole: true)
     return "" if user.blank?
-    content_tag(:span, user.level_name, class: "badge-role role-#{user.level}", style: "background: #{user.level_color};")
+    level_name = user.level_name
+    level_name = user.level_name.to_s.split('-').first unless show_whole
+
+    content_tag(:span, level_name, class: "badge-role role-#{user.level}", style: "background: #{user.level_color};")
   end
 
   def block_node_tag(node)
