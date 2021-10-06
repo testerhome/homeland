@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-body">
+    <h3>自定义代码区</h3>
+    <%= form_with path: admin_column_channels_path, method: "put" do |form| %>
+    <%f = form%>
+      <%= form.hidden_field :raw_html_settings_update, value: "true" %>
+
+      <div class="row">
+        <%= f.label :top_raw_html, "顶部自定义代码, 显示在顶部广告下边", class: 'col-md-2' %>
+        <div class="col-md-10">
+          <%= f.text_area :top_raw_html, value: Setting.column_channel_top_raw_html, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <%= f.label :right_raw_html, "右部自定义代码, 显示在右部广告下面", class: 'col-md-2' %>
+        <div class="col-md-10">
+          <%= f.text_area :right_raw_html, value: Setting.column_channel_right_raw_html, class: 'form-control' %>
+        </div>
+      </div>
+    <%= form.submit class: "btn btn-primary mt-2"%>
+    <%end %>
+
+  </div>
+</div>

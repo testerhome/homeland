@@ -23,5 +23,3 @@ ADD ./config/nginx/ /etc/nginx
 RUN rm -Rf /home/app/homeland/vendor/cache
 
 RUN bundle exec rails assets:precompile RAILS_PRECOMPILE=1 RAILS_ENV=production SECRET_KEY_BASE=fake_secure_for_compile
-
-

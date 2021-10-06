@@ -311,4 +311,37 @@ class TopicTest < ActiveSupport::TestCase
     assert_equal real_user, topic.user
     assert_equal nil, topic.real_user
   end
+
+  test "could load latest topics when user is default user" do
+    latest_topics = Topic.without_hide_nodes.without_draft.without_ban.with_public_articles.with_filter_public_end_enterprise
+    assert_equal 1, latest_topics.size
+  end
+
+  test 'latest topics skip the topics which posted by default public or enterprise user' do
+    user = create(:enterprise_non_subscriber)
+    @topic.user = user
+    @topic.save
+
+    latest_topics = Topic.without_hide_nodes.without_draft.without_ban.with_public_articles.with_filter_public_end_enterprise
+    assert_equal 0, latest_topics.size
+  end
+
+  it 'latest topics will be include excellent topics even that posted by enterprise non_subscriber' do
+    user = create(:enterprise_non_subscriber)
+    @topic.user = user
+    @topic.save
+    @topic.excellent!
+
+    latest_topics = Topic.without_hide_nodes.without_draft.without_ban.with_public_articles.with_filter_public_end_enterprise
+    assert_equal 1, latest_topics.size
+  end
+
+  test 'latest topics will be include topics posted by enterprise subscriber' do
+    user = create(:enterprise_subscriber)
+    @topic.user = user
+    @topic.save
+
+    latest_topics = Topic.without_hide_nodes.without_draft.without_ban.with_public_articles.with_filter_public_end_enterprise
+    assert_equal 1, latest_topics.size
+  end
 end

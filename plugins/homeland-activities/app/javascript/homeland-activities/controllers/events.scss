@@ -7,6 +7,11 @@
 
 
 }
+.event-description{
+  img {
+    max-width: 100%;
+  }
+}
 .events-card {
   .card-title a{
     @media (prefers-color-scheme: dark) {

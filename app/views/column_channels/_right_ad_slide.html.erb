@@ -1,0 +1,30 @@
+<div id="columnChannelsRightAdControls" class="carousel slide" data-ride="carousel">
+
+   <ol class="carousel-indicators">
+   <% @column_channel_right_ads.each_with_index do |info,index|%>
+    <li data-target="#columnChannelsRightAdControls" data-slide-to="<%= index%>" class="<%= index == 0 ? "active" : ""%>"></li>
+   <% end %>
+  </ol>
+
+  <div class="carousel-inner">
+    <% @column_channel_right_ads.each_with_index do |info,index|%>
+      <div class="carousel-item <%= index == 0 ? "active" : ""%>">
+        <%= link_to info[:link] do %>
+        <div class=''>
+          <img src="<%= info[:img_url]%>" style="width: 100%;" class="d-block " alt="...">
+        </div>
+        <%end %>
+      </div>
+    <%end %>
+
+
+  </div>
+  <a class="carousel-control-prev" href="#columnChannelsRightAdControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#columnChannelsRightAdControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>

@@ -137,6 +137,7 @@ module Homeland::Activities
           :markup,
           :markup_url,
           :event_city,
+          :event_city_info,
           cooperators: [:name, :url]
         )
       end

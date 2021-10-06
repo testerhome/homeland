@@ -22,8 +22,8 @@ module Homeland
       initializer "homeland.site.migrate" do |app|
         migrate_paths = [File.expand_path("../../../db/migrate", __dir__)]
 
-        # Execute Migrations on engine load.
-        ActiveRecord::Migrator.migrations_paths += migrate_paths
+        #Execute Migrations on engine load.
+        #ActiveRecord::Migrator.migrations_paths += migrate_paths
         begin
           ActiveRecord::Tasks::DatabaseTasks.migrate
         rescue ActiveRecord::NoDatabaseError

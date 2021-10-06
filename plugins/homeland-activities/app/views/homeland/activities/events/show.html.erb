@@ -20,7 +20,7 @@
 
     <div class='mb-2'>
       <span class='mr-2 '>举办地点:</span>
-      <span><%= @event.event_city %></span>
+      <span><%= @event.event_city %></span> <span> <%= @event.event_city_info%> </span>
     </div>
 
     <%if @event.user_id == current_user&.id && @event.status != 'success'%>
@@ -56,7 +56,7 @@
 </div>
 
 <div class="row mt-5">
-  <div class="col-md-8">
+  <div class="col-md-8 pl-0 event-description">
     <%= markdown @event.description%>
     <%= render "shared/comments", commentable: @event%>
   </div>

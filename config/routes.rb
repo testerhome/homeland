@@ -104,6 +104,7 @@ Rails.application.routes.draw do
 
   resources :photos
   resources :likes
+  resources :column_channels
   resources :bugs
   resources :ads
   resources :opencourses
@@ -125,6 +126,7 @@ Rails.application.routes.draw do
     end
     resources :site_configs
     resources :replies
+    resource :column_channels
     resources :topics do
       member do
         post :suggest

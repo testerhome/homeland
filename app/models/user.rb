@@ -64,6 +64,9 @@ class User < ApplicationRecord
   scope :with_github, -> { where("github IS NOT NULL and github != ''") }
   scope :banzhu, -> { where(state: 90) }
 
+  # 包含了所有公众号和企业号信息
+  scope :public_and_enterprise_members, -> { where("state >=  ? and state <= ?", User::Roles::MIN_STATE_FOR_PUBLIC_MEMBER, User::Roles::MAX_STATE_FOR_ENTERPRISE)}
+
   # Override Devise database authentication
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

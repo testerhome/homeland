@@ -1,0 +1,29 @@
+<%= render 'top_ad_settings' %>
+
+<%= render 'right_ad_settings' %>
+
+<%= render 'raw_html_settings'%>
+
+<div class="card">
+  <div class="card-body">
+    <h3 class='mb-5'>测试服务专栏</h3>
+    <p>专栏编号， 最多5个  <%= link_to  "(查看编号)", admin_columns_path, target: "_blank" %></p>
+    <%= form_with path: admin_column_channels_path, method: "put" do |form| %>
+      <input type="hidden" name="update_column_channel_public_enterprise_column_ids" value="true">
+      <%= form.text_field :column_channel_public_enterprise_column_ids, placeholder: "专栏编号， 以,分隔， 如： 1,2", value: Setting.column_channel_public_enterprise_column_ids.join(","), class: 'form-control' %>
+      <%= form.submit class:"btn btn-primary mt-3"%>
+    <% end %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h3>个人专栏</h3>
+    <p>专栏编号， 最多5个  <%= link_to  "(查看编号)", admin_columns_path, target: "_blank" %></p>
+    <%= form_with path: admin_column_channels_path, method: "put" do |form| %>
+      <input type="hidden" name="update_column_channel_simple_column_ids" value="true">
+      <%= form.text_field :column_channel_simple_column_ids, placeholder: "专栏编号， 以,分隔， 如： 1,2", value: Setting.column_channel_simple_column_ids.join(","), class: 'form-control' %>
+      <%= form.submit class:"btn btn-primary mt-3"%>
+    <% end %>
+  </div>
+</div>

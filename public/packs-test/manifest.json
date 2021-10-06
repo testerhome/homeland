@@ -1,41 +1,56 @@
 {
-  "admin.css": "/packs-test/css/admin-dc22e6f0.css",
-  "admin.js": "/packs-test/js/admin-301c4c4d5e83508df0ec.js",
-  "application.js": "/packs-test/js/application-ebed06a08cbac14dd675.js",
+  "admin.css": "/packs-test/css/admin-eca736dc.css",
+  "admin.js": "/packs-test/js/admin-d216528afd3b42e2ff7a.js",
+  "application.css": "/packs-test/css/application-de41334c.css",
+  "application.js": "/packs-test/js/application-3f53ea41e3dc9d982f7b.js",
+  "controllers/roles_filter_controller.js": "/packs-test/js/controllers/roles_filter_controller-1fee95a64644f900ad72.js",
   "entrypoints": {
     "admin": {
       "css": [
-        "/packs-test/css/admin-dc22e6f0.css"
+        "/packs-test/css/admin-eca736dc.css"
       ],
       "js": [
-        "/packs-test/js/admin-301c4c4d5e83508df0ec.js"
+        "/packs-test/js/admin-d216528afd3b42e2ff7a.js"
       ]
     },
     "application": {
+      "css": [
+        "/packs-test/css/vendors-afabfe5f.chunk.css",
+        "/packs-test/css/application-de41334c.css"
+      ],
       "js": [
-        "/packs-test/js/vendors-dd704c14f1b8ae1a565f.chunk.js",
-        "/packs-test/js/application-ebed06a08cbac14dd675.js"
+        "/packs-test/js/vendors-5ca315d12786bae9b4eb.chunk.js",
+        "/packs-test/js/application-3f53ea41e3dc9d982f7b.js"
+      ]
+    },
+    "controllers/roles_filter_controller": {
+      "css": [
+        "/packs-test/css/vendors-afabfe5f.chunk.css"
+      ],
+      "js": [
+        "/packs-test/js/vendors-5ca315d12786bae9b4eb.chunk.js",
+        "/packs-test/js/controllers/roles_filter_controller-1fee95a64644f900ad72.js"
       ]
     },
     "front": {
       "css": [
-        "/packs-test/css/front-b690238f.css"
+        "/packs-test/css/front-cbc9d260.css"
       ],
       "js": [
-        "/packs-test/js/front-dfcd5d89d83d104bd104.js"
+        "/packs-test/js/front-93d08d8fa74100289545.js"
       ]
     },
     "turbolinks-app": {
       "css": [
-        "/packs-test/css/turbolinks-app-8aa59acb.css"
+        "/packs-test/css/turbolinks-app-7b3c11a1.css"
       ],
       "js": [
-        "/packs-test/js/turbolinks-app-882a12c3d7fa65b11445.js"
+        "/packs-test/js/turbolinks-app-45b999e3869f3d2a15ac.js"
       ]
     }
   },
-  "front.css": "/packs-test/css/front-b690238f.css",
-  "front.js": "/packs-test/js/front-dfcd5d89d83d104bd104.js",
+  "front.css": "/packs-test/css/front-cbc9d260.css",
+  "front.js": "/packs-test/js/front-93d08d8fa74100289545.js",
   "media/images/big_logo.png": "/packs-test/media/images/big_logo-5241a08a7744da23e7304f566f95cf11.png",
   "media/images/favicon.png": "/packs-test/media/images/favicon-5241a08a7744da23e7304f566f95cf11.png",
   "media/images/ios-icon.png": "/packs-test/media/images/ios-icon-5241a08a7744da23e7304f566f95cf11.png",
@@ -49,7 +64,8 @@
   "media/webfonts/fa-solid-900.ttf": "/packs-test/media/webfonts/fa-solid-900-10ecefc2.ttf",
   "media/webfonts/fa-solid-900.woff": "/packs-test/media/webfonts/fa-solid-900-46fdbd2d.woff",
   "media/webfonts/fa-solid-900.woff2": "/packs-test/media/webfonts/fa-solid-900-3ceb50e7.woff2",
-  "turbolinks-app.css": "/packs-test/css/turbolinks-app-8aa59acb.css",
-  "turbolinks-app.js": "/packs-test/js/turbolinks-app-882a12c3d7fa65b11445.js",
-  "vendors.js": "/packs-test/js/vendors-dd704c14f1b8ae1a565f.chunk.js"
+  "turbolinks-app.css": "/packs-test/css/turbolinks-app-7b3c11a1.css",
+  "turbolinks-app.js": "/packs-test/js/turbolinks-app-45b999e3869f3d2a15ac.js",
+  "vendors.css": "/packs-test/css/vendors-afabfe5f.chunk.css",
+  "vendors.js": "/packs-test/js/vendors-5ca315d12786bae9b4eb.chunk.js"
 }

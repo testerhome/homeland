@@ -1,0 +1,45 @@
+
+<div class="row mb-3">
+<%unless @column_channel_top_ads.blank?%>
+  <div class="col-12 ">
+    <%= render "top_ad_slide"%>
+  </div>
+<%end %>
+</div>
+
+<%= raw Setting.column_channel_top_raw_html%>
+
+
+<div class="row">
+  <div class="col-lg-2">
+  <div class="card d-none d-md-block">
+    <div class="card-body">
+      <%= render 'left' %>
+    </div>
+  </div>
+  </div>
+
+
+  <div class="col-lg-7">
+    <div class="topics card">
+      <div class="card-body item-list">
+        <%= render partial: 'topic', collection: @topics, locals: { suggest: false } %>
+      </div>
+
+      <% if  @topics.total_pages > 1 %>
+      <div class="card-footer clearfix">
+        <%= paginate @topics %>
+      </div>
+      <% end %>
+
+
+    </div>
+  </div>
+
+
+  <div class="col-lg-3">
+    <%= render 'right' %>
+  </div>
+
+
+</div>
