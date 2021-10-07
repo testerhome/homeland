@@ -183,6 +183,20 @@ class Setting < RailsSettings::Base
   field :topic_create_rate_limit, default: "false", type: :boolean
   field :node_ids_hide_in_topics_index, type: :array, default: []
 
+  # 积分相关权限
+  field :tech_node_ids, type: :array, default: []
+  field :tech_topic_created_credit, type: :integer, default: 100
+  field :question_created_credit, type: :integer, default: 10
+  field :excellent_topic_credit, type: :integer, default: 500
+  field :like_topic_credit, type: :integer, default: 2
+  field :topic_user_reply_reward_credit, type: :integer, default: 5
+  field :topic_reply_credit, type: :integer, default: 2
+  field :topic_reply_credit_limit, type: :integer, default: 20
+  field :topic_like_credit, type: :integer, default: 2
+  field :reply_like_credit, type: :integer, default: 2
+  field :question_best_answer_credit, type: :integer, default: 100
+
+
   field :apns_pem, default: ""
   field :blacklist_ips, default: [], type: :array
 
@@ -237,7 +251,6 @@ class Setting < RailsSettings::Base
 
   field :column_channel_public_enterprise_column_ids, type: :array, default: []
   field :column_channel_simple_column_ids, type: :array, default: []
-
 
 
   # = ReCaptcha

@@ -6,6 +6,7 @@ class CreateCreditRecords < ActiveRecord::Migration[6.1]
       t.string :reason
       t.integer :num
       t.string :operator
+      t.jsonb :meta
       t.string :markup
 
       t.timestamps

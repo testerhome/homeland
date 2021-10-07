@@ -5,7 +5,7 @@ require "redcarpet/render_strip"
 class Topic < ApplicationRecord
   include Wisper::Publisher # 加入监听器
   include SoftDelete, MarkdownBody, Mentionable, MentionTopic, Closeable, Searchable, UserAvatarDelegate
-  include Topic::Actions, Topic::AutoCorrect, Topic::Search, Topic::Notify, Topic::RateLimit
+  include Topic::Actions, Topic::AutoCorrect, Topic::Search, Topic::Notify, Topic::RateLimit, Topic::CreditOperations
 
   # 临时存储检测用户是否读过的结果
   attr_accessor :read_state

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_23_163510) do
+ActiveRecord::Schema.define(version: 2021_10_07_023059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,23 @@ ActiveRecord::Schema.define(version: 2021_08_23_163510) do
     t.index ["commentable_id"], name: "index_comments_on_commentable_id"
     t.index ["commentable_type"], name: "index_comments_on_commentable_type"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "credit_records", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "category"
+    t.string "reason"
+    t.integer "num"
+    t.string "operator"
+    t.jsonb "meta"
+    t.string "markup"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "model_id"
+    t.string "model_type"
+    t.index ["model_id"], name: "index_credit_records_on_model_id"
+    t.index ["model_type"], name: "index_credit_records_on_model_type"
+    t.index ["user_id"], name: "index_credit_records_on_user_id"
   end
 
   create_table "devices", id: :serial, force: :cascade do |t|
@@ -507,6 +524,7 @@ ActiveRecord::Schema.define(version: 2021_08_23_163510) do
     t.string "co"
     t.string "qrcode"
     t.integer "node_assignment_ids", default: [], array: true
+    t.integer "credit_sum"
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
@@ -518,4 +536,5 @@ ActiveRecord::Schema.define(version: 2021_08_23_163510) do
   end
 
   add_foreign_key "appends", "topics"
+  add_foreign_key "credit_records", "users"
 end

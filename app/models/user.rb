@@ -3,10 +3,11 @@
 require "digest/md5"
 
 class User < ApplicationRecord
+  include Wisper::Publisher # 加入监听器
   include Searchable
   include User::Roles, User::Blockable, User::Likeable, User::Followable, User::TopicActions,
           User::GitHubRepository, User::ProfileFields, User::RewardFields, User::Deviseable,
-          User::Avatar
+          User::Avatar, User::CreditOperations
 
   second_level_cache version: 4, expires_in: 2.weeks
 
@@ -42,6 +43,7 @@ class User < ApplicationRecord
   validates :name, length: { maximum: 20 }
 
   after_commit :send_welcome_mail, on: :create
+  after_create_commit :broadcast_user_created
 
   # after_commit :send_new_password_mail,
   #              if: proc { |record|
@@ -245,4 +247,6 @@ class User < ApplicationRecord
     end
     false
   end
+
+
 end
