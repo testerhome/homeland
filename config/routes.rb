@@ -124,6 +124,7 @@ Rails.application.routes.draw do
         post :reboot
       end
     end
+    resources :credit_settings
     resources :site_configs
     resources :replies
     resource :column_channels

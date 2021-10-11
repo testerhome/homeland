@@ -195,7 +195,7 @@ class Setting < RailsSettings::Base
   field :topic_like_credit, type: :integer, default: 2
   field :reply_like_credit, type: :integer, default: 2
   field :question_best_answer_credit, type: :integer, default: 100
-
+  field :login_credit, type: :integer, default: 1
 
   field :apns_pem, default: ""
   field :blacklist_ips, default: [], type: :array

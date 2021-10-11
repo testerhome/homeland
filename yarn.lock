@@ -6979,6 +6979,11 @@ stdout-stream@^1.4.0:
   dependencies:
     readable-stream "^2.0.1"
 
+stimulus-checkbox-select-all@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmmirror.com/stimulus-checkbox-select-all/download/stimulus-checkbox-select-all-5.0.0.tgz#df987483fa49a87a495d44b4aba1c76fffbe5ee2"
+  integrity sha1-35h0g/pJqHpJXUS0q6HHb/++XuI=
+
 stimulus@^2.0.0:
   version "2.0.0"
   resolved "https://registry.nlark.com/stimulus/download/stimulus-2.0.0.tgz#713c8b91a72ef90914b90955f0e705f004403047"

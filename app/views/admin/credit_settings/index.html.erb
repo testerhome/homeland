@@ -1,0 +1,27 @@
+<h1>积分设置</h1>
+
+<div>
+  <h2>技术节点设置</h2>
+
+  <div>
+    <%@sections.each do |section|%>
+    <div data-controller='checkbox-select-all'>
+    <label>
+      <input type="checkbox" data-checkbox-select-all-target="checkboxAll" />
+      <span><%= section.name%></span>
+    </label>
+
+      <ul>
+        <% section.nodes.each do |node|%>
+          <li>
+            <label>
+              <input type="checkbox" data-checkbox-select-all-target="checkbox" value="1" />
+              <span><%= node.name%></span>
+            </label>
+          </li>
+        <%end %>
+      </ul>
+    </div>
+    <%end %>
+  </div>
+</div>

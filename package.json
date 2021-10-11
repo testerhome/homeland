@@ -24,6 +24,7 @@
     "react-dom": "~16.13",
     "select2": "^4.1.0-rc.0",
     "stimulus": "^2.0.0",
+    "stimulus-checkbox-select-all": "^5.0.0",
     "turbolinks": "~5.2",
     "turbolinks-prefetch": "~1.0",
     "underscore": "~1.11"
