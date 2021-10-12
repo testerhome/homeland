@@ -16,11 +16,15 @@ class User
       num = attributes[:num].to_i
       credit_record = nil
 
+      user = self
       ActiveRecord::Base.transaction do
         current_sum = user.reload.credit_sum
 
-        user.update_attribute!(:credit_sum, current_sum + num)
-        credit_record = CreditRecord.new(user: user).create!(attributes)
+        user.credit_sum =  current_sum.to_i + num
+        user.save!
+        credit_record = CreditRecord.new(attributes)
+        credit_record.user = user
+        credit_record.save!
       end
 
       credit_record

@@ -37,7 +37,6 @@ class CreditListener
     )
   end
 
-
   # 加精
   def excellent_topic(topic, operator:)
     user = topic.user
@@ -232,6 +231,22 @@ class CreditListener
   end
 
 
+
+  def user_created(user)
+    # 一个是默认奖励
+    user.credit_operate(
+      category: "user_create",
+      reason: "用户注册奖励",
+      num: Setting.registered_credit,
+      operator: user.id,
+      model_id: user.id,
+      model_type: "User",
+      meta: {
+      }
+    )
+
+    # 一个是邀请码
+  end
 
   # 用户登录
   def user_login(user)

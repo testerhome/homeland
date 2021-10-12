@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       get :password
       get :profile
       get :reward
+      get :credits
     end
   end
 
@@ -111,6 +112,7 @@ Rails.application.routes.draw do
   resources :questions
   resources :tip_offs
   resources :invite_codes
+  resources :credits
 
   get "/search", to: "search#index", as: "search"
   get "/search/users", to: "search#users", as: "search_users"
@@ -124,7 +126,11 @@ Rails.application.routes.draw do
         post :reboot
       end
     end
-    resources :credit_settings
+    resources :credit_settings do
+      collection do
+        post :sync_tech_node_ids
+      end
+    end
     resources :site_configs
     resources :replies
     resource :column_channels

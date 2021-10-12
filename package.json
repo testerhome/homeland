@@ -2,7 +2,8 @@
   "name": "homeland",
   "private": true,
   "scripts": {
-    "start": "./bin/webpack-dev-server"
+    "start": "./bin/webpack-dev-server",
+    "tailwinddev": "npx tailwindcss --output app/javascript/admin/tailwind.css --watch"
   },
   "dependencies": {
     "@babel/preset-react": "~7.10",
@@ -30,6 +31,8 @@
     "underscore": "~1.11"
   },
   "devDependencies": {
+    "postcss": "^8.3.9",
+    "tailwindcss": "^2.2.16",
     "webpack-dev-server": "~3.11"
   }
 }

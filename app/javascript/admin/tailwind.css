@@ -1,0 +1,114 @@
+.tw-container {
+  width: 100%
+}
+
+@media (min-width: 640px) {
+  .tw-container {
+    max-width: 640px
+  }
+}
+
+@media (min-width: 768px) {
+  .tw-container {
+    max-width: 768px
+  }
+}
+
+@media (min-width: 1024px) {
+  .tw-container {
+    max-width: 1024px
+  }
+}
+
+@media (min-width: 1280px) {
+  .tw-container {
+    max-width: 1280px
+  }
+}
+
+@media (min-width: 1536px) {
+  .tw-container {
+    max-width: 1536px
+  }
+}
+
+.tw-mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important
+}
+
+.tw-mt-4 {
+  margin-top: 1rem !important
+}
+
+.tw-mb-5 {
+  margin-bottom: 1.25rem !important
+}
+
+.tw-mr-2 {
+  margin-right: 0.5rem !important
+}
+
+.tw-flex {
+  display: flex !important
+}
+
+.tw-grid {
+  display: grid !important
+}
+
+.tw-w-36 {
+  width: 9rem !important
+}
+
+.tw-w-56 {
+  width: 14rem !important
+}
+
+.tw-grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important
+}
+
+.tw-items-center {
+  align-items: center !important
+}
+
+.tw-border-solid {
+  border-style: solid !important
+}
+
+.tw-border-red-50 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgba(254, 242, 242, var(--tw-border-opacity)) !important
+}
+
+.tw-p-4 {
+  padding: 1rem !important
+}
+
+.tw-text-right {
+  text-align: right !important
+}
+
+.tw-text-lg {
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important
+}
+
+.tw-text-xl {
+  font-size: 1.25rem !important;
+  line-height: 1.75rem !important
+}
+
+.tw-font-medium {
+  font-weight: 500 !important
+}
+
+.tw-font-bold {
+  font-weight: 700 !important
+}
+
+.hover\:tw-border-red-300:hover {
+  --tw-border-opacity: 1 !important;
+  border-color: rgba(252, 165, 165, var(--tw-border-opacity)) !important
+}

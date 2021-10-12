@@ -111,6 +111,10 @@ class User < ApplicationRecord
     save(validate: false)
   end
 
+  def broadcast_user_created
+    broadcast(:user_created, self)
+  end
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     login = conditions.delete(:login).downcase
