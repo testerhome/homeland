@@ -83,7 +83,8 @@ class User
 
     # 是否能发帖
     def newbie?
-      return false if self.vip? || self.hr? || self.admin?
+
+      return false if %w[vip hr admin public_simple public_cooperation enterprise_subscriber].include?(self.state)
       time_limit? || have_not_bind_wechat? || legacy_omniauth_logined? || !certified?
     end
 
