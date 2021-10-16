@@ -1,0 +1,2 @@
+class CreditVariant < ApplicationRecord
+end

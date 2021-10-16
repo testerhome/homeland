@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_12_171631) do
+ActiveRecord::Schema.define(version: 2021_10_16_122711) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "actions", id: :serial, force: :cascade do |t|
@@ -76,14 +77,6 @@ ActiveRecord::Schema.define(version: 2021_10_12_171631) do
     t.index ["suggested_at"], name: "index_columns_on_suggested_at"
   end
 
-  create_table "commentable_pages", force: :cascade do |t|
-    t.string "name"
-    t.integer "user_id"
-    t.integer "comments_count", default: 0, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "comments", id: :serial, force: :cascade do |t|
     t.text "body", null: false
     t.integer "user_id", null: false
@@ -95,6 +88,16 @@ ActiveRecord::Schema.define(version: 2021_10_12_171631) do
     t.index ["commentable_id"], name: "index_comments_on_commentable_id"
     t.index ["commentable_type"], name: "index_comments_on_commentable_type"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "credit_products", force: :cascade do |t|
+    t.string "title"
+    t.string "main_image_url"
+    t.string "category"
+    t.string "description"
+    t.string "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "credit_records", force: :cascade do |t|
@@ -113,6 +116,18 @@ ActiveRecord::Schema.define(version: 2021_10_12_171631) do
     t.index ["model_id"], name: "index_credit_records_on_model_id"
     t.index ["model_type"], name: "index_credit_records_on_model_type"
     t.index ["user_id"], name: "index_credit_records_on_user_id"
+  end
+
+  create_table "credit_variants", force: :cascade do |t|
+    t.string "sku"
+    t.string "image_url"
+    t.string "title"
+    t.string "description"
+    t.bigint "credit_product_id"
+    t.decimal "credit_price", precision: 8, scale: 2, default: "0.0", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["credit_product_id"], name: "index_credit_variants_on_credit_product_id"
   end
 
   create_table "devices", id: :serial, force: :cascade do |t|
@@ -189,14 +204,6 @@ ActiveRecord::Schema.define(version: 2021_10_12_171631) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["name"], name: "index_locations_on_name"
-  end
-
-  create_table "monkeys", force: :cascade do |t|
-    t.string "name"
-    t.integer "user_id"
-    t.integer "comments_count"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "nodes", id: :serial, force: :cascade do |t|
@@ -324,6 +331,22 @@ ActiveRecord::Schema.define(version: 2021_10_12_171631) do
     t.index ["page_id"], name: "index_page_versions_on_page_id"
   end
 
+  create_table "pages", id: :serial, force: :cascade do |t|
+    t.string "slug", null: false
+    t.string "title", null: false
+    t.text "body", null: false
+    t.boolean "locked", default: false
+    t.integer "version", default: 0, null: false
+    t.integer "editor_ids", default: [], null: false, array: true
+    t.integer "word_count", default: 0, null: false
+    t.integer "changes_cout", default: 1, null: false
+    t.integer "comments_count", default: 0, null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_pages_on_slug", unique: true
+  end
+
   create_table "photos", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "image", null: false
@@ -392,6 +415,28 @@ ActiveRecord::Schema.define(version: 2021_10_12_171631) do
     t.index ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true
   end
 
+  create_table "site_nodes", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "sort", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["sort"], name: "index_site_nodes_on_sort"
+  end
+
+  create_table "sites", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "site_node_id"
+    t.string "name", null: false
+    t.string "url", null: false
+    t.string "desc"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["site_node_id", "deleted_at"], name: "index_sites_on_site_node_id_and_deleted_at"
+    t.index ["site_node_id"], name: "index_sites_on_site_node_id"
+    t.index ["url"], name: "index_sites_on_url"
+  end
+
   create_table "team_profiles", force: :cascade do |t|
     t.integer "team_id", null: false
     t.text "apply_message"
@@ -411,15 +456,6 @@ ActiveRecord::Schema.define(version: 2021_10_12_171631) do
     t.boolean "is_receive_notifications", default: true, null: false
     t.index ["team_id"], name: "index_team_users_on_team_id"
     t.index ["user_id"], name: "index_team_users_on_user_id"
-  end
-
-  create_table "test_documents", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "reply_to_id"
-    t.integer "mentioned_user_ids", default: [], array: true
-    t.text "body"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "tip_offs", force: :cascade do |t|
@@ -554,19 +590,9 @@ ActiveRecord::Schema.define(version: 2021_10_12_171631) do
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github"], name: "index_users_on_github"
     t.index ["location"], name: "index_users_on_location"
-    t.index ["login"], name: "index_users_on_login", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
-  end
-
-  create_table "walking_deads", force: :cascade do |t|
-    t.string "name"
-    t.string "tag"
-    t.datetime "deleted_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "appends", "topics"

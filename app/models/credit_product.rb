@@ -1,0 +1,2 @@
+class CreditProduct < ApplicationRecord
+end
