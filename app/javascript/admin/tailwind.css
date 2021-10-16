@@ -1,3 +1,8 @@
+*, ::before, ::after {
+  --tw-border-opacity: 1;
+  border-color: rgba(229, 231, 235, var(--tw-border-opacity))
+}
+
 .tw-container {
   width: 100%
 }
@@ -33,82 +38,135 @@
 }
 
 .tw-mx-auto {
-  margin-left: auto !important;
-  margin-right: auto !important
+  margin-left: auto;
+  margin-right: auto
 }
 
 .tw-mt-4 {
-  margin-top: 1rem !important
+  margin-top: 1rem
+}
+
+.tw-mt-10 {
+  margin-top: 2.5rem
+}
+
+.tw-mb-4 {
+  margin-bottom: 1rem
 }
 
 .tw-mb-5 {
-  margin-bottom: 1.25rem !important
+  margin-bottom: 1.25rem
 }
 
 .tw-mr-2 {
-  margin-right: 0.5rem !important
+  margin-right: 0.5rem
 }
 
 .tw-flex {
-  display: flex !important
+  display: flex
 }
 
 .tw-grid {
-  display: grid !important
+  display: grid
 }
 
 .tw-w-36 {
-  width: 9rem !important
+  width: 9rem
 }
 
 .tw-w-56 {
-  width: 14rem !important
+  width: 14rem
 }
 
 .tw-grid-cols-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important
+  grid-template-columns: repeat(4, minmax(0, 1fr))
+}
+
+.tw-grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr))
 }
 
 .tw-items-center {
-  align-items: center !important
+  align-items: center
+}
+
+.tw-justify-center {
+  justify-content: center
+}
+
+.tw-justify-between {
+  justify-content: space-between
+}
+
+.tw-border-0 {
+  border-width: 0px
+}
+
+.tw-border-b-2 {
+  border-bottom-width: 2px
 }
 
 .tw-border-solid {
-  border-style: solid !important
+  border-style: solid
 }
 
 .tw-border-red-50 {
-  --tw-border-opacity: 1 !important;
-  border-color: rgba(254, 242, 242, var(--tw-border-opacity)) !important
+  --tw-border-opacity: 1;
+  border-color: rgba(254, 242, 242, var(--tw-border-opacity))
+}
+
+.tw-border-b-blue-400 {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgba(96, 165, 250, var(--tw-border-opacity))
+}
+
+.tw-bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgba(255, 255, 255, var(--tw-bg-opacity))
+}
+
+.tw-bg-green-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(52, 211, 153, var(--tw-bg-opacity))
 }
 
 .tw-p-4 {
-  padding: 1rem !important
+  padding: 1rem
 }
 
 .tw-text-right {
-  text-align: right !important
+  text-align: right
 }
 
 .tw-text-lg {
-  font-size: 1.125rem !important;
-  line-height: 1.75rem !important
+  font-size: 1.125rem;
+  line-height: 1.75rem
 }
 
 .tw-text-xl {
-  font-size: 1.25rem !important;
-  line-height: 1.75rem !important
+  font-size: 1.25rem;
+  line-height: 1.75rem
 }
 
 .tw-font-medium {
-  font-weight: 500 !important
+  font-weight: 500
 }
 
 .tw-font-bold {
-  font-weight: 700 !important
+  font-weight: 700
+}
+
+.tw-text-green-500 {
+  --tw-text-opacity: 1;
+  color: rgba(16, 185, 129, var(--tw-text-opacity))
+}
+
+.tw-text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgba(239, 68, 68, var(--tw-text-opacity))
 }
 
 .hover\:tw-border-red-300:hover {
-  --tw-border-opacity: 1 !important;
-  border-color: rgba(252, 165, 165, var(--tw-border-opacity)) !important
+  --tw-border-opacity: 1;
+  border-color: rgba(252, 165, 165, var(--tw-border-opacity))
 }

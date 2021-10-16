@@ -18,15 +18,17 @@ class User
 
       user = self
       ActiveRecord::Base.transaction do
-        current_sum = user.reload.credit_sum
-
-        user.credit_sum =  current_sum.to_i + num
-        user.save!
-        credit_record = CreditRecord.new(attributes)
-        credit_record.user = user
-        credit_record.save!
+        # 注意， 此处要加锁
+        $lock_manager.lock("user-#{self.id}-credit-operations", 2000) do |locked|
+          current_sum = user.reload.credit_sum
+          user.credit_sum = current_sum.to_i + num
+          user.save!
+          credit_record = CreditRecord.new(attributes)
+          credit_record.user = user
+          credit_record.balance = credit_sum
+          credit_record.save!
+        end
       end
-
       credit_record
     end
   end

@@ -1,3 +1,35 @@
-<div class="tw-container tw-mx-auto">
+<div class="tw-container tw-mx-auto tw-bg-white tw-p-4">
+<div class='tw-flex tw-justify-between tw-items-center'>
   <h1 class='tw-text-lg tw-font-medium'>我的积分</h1>
+  <p>您现在拥有积分: <span class="tw-font-bold"><%= current_user.credit_sum.to_i %></span></p>
+</div>
+  <div class='tw-mt-4'>
+    <h2 class='tw-text-lg'>积分积攒历史</h2>
+    <table class='table'>
+      <thead>
+        <tr>
+          <th>时间</th>
+          <th>原因</th>
+          <th>积分变化</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @credit_records.each do |record|%>
+          <tr id='credit_record_<%= record.id%>'>
+            <td><%= record.created_at%></td>
+            <td><%= record.reason %></td>
+            <td>
+            <%if record.num >= 0%>
+            <span class='tw-text-green-500'>+<%= record.num%></span>
+            <%else%>
+              <span class='tw-text-red-500'> <%= record.num%></span>
+            <%end%>
+            </td>
+          </tr>
+        <%end %>
+      </tbody>
+    </table>
+
+    <%= paginate @credit_records%>
+  </div>
 </div>

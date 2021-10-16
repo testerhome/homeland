@@ -28,6 +28,7 @@ class User
     # 取消赞
     def unlike(likeable)
       return false if likeable.blank?
+      return false if likeable.user_id == self.id
       broadcast(:action_unlike, likeable)
       self.destroy_action(:like, target: likeable)
     end

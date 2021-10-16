@@ -1,13 +1,14 @@
 {
-  "admin.css": "/packs-test/css/admin-eca736dc.css",
+  "admin.css": "/packs-test/css/admin-cd81724d.css",
   "admin.js": "/packs-test/js/admin-d216528afd3b42e2ff7a.js",
   "application.css": "/packs-test/css/application-de41334c.css",
-  "application.js": "/packs-test/js/application-3f53ea41e3dc9d982f7b.js",
+  "application.js": "/packs-test/js/application-4f2402771273fa6608f4.js",
+  "controllers/column_channels_ad_controller.js": "/packs-test/js/controllers/column_channels_ad_controller-f4563474c4bee4a3a9c2.js",
   "controllers/roles_filter_controller.js": "/packs-test/js/controllers/roles_filter_controller-1fee95a64644f900ad72.js",
   "entrypoints": {
     "admin": {
       "css": [
-        "/packs-test/css/admin-eca736dc.css"
+        "/packs-test/css/admin-cd81724d.css"
       ],
       "js": [
         "/packs-test/js/admin-d216528afd3b42e2ff7a.js"
@@ -19,8 +20,17 @@
         "/packs-test/css/application-de41334c.css"
       ],
       "js": [
-        "/packs-test/js/vendors-5ca315d12786bae9b4eb.chunk.js",
-        "/packs-test/js/application-3f53ea41e3dc9d982f7b.js"
+        "/packs-test/js/vendors-bb5191803ea2401e2cd0.chunk.js",
+        "/packs-test/js/application-4f2402771273fa6608f4.js"
+      ]
+    },
+    "controllers/column_channels_ad_controller": {
+      "css": [
+        "/packs-test/css/vendors-afabfe5f.chunk.css"
+      ],
+      "js": [
+        "/packs-test/js/vendors-bb5191803ea2401e2cd0.chunk.js",
+        "/packs-test/js/controllers/column_channels_ad_controller-f4563474c4bee4a3a9c2.js"
       ]
     },
     "controllers/roles_filter_controller": {
@@ -28,13 +38,13 @@
         "/packs-test/css/vendors-afabfe5f.chunk.css"
       ],
       "js": [
-        "/packs-test/js/vendors-5ca315d12786bae9b4eb.chunk.js",
+        "/packs-test/js/vendors-bb5191803ea2401e2cd0.chunk.js",
         "/packs-test/js/controllers/roles_filter_controller-1fee95a64644f900ad72.js"
       ]
     },
     "front": {
       "css": [
-        "/packs-test/css/front-cbc9d260.css"
+        "/packs-test/css/front-2e9a575f.css"
       ],
       "js": [
         "/packs-test/js/front-93d08d8fa74100289545.js"
@@ -49,7 +59,7 @@
       ]
     }
   },
-  "front.css": "/packs-test/css/front-cbc9d260.css",
+  "front.css": "/packs-test/css/front-2e9a575f.css",
   "front.js": "/packs-test/js/front-93d08d8fa74100289545.js",
   "media/images/big_logo.png": "/packs-test/media/images/big_logo-5241a08a7744da23e7304f566f95cf11.png",
   "media/images/favicon.png": "/packs-test/media/images/favicon-5241a08a7744da23e7304f566f95cf11.png",
@@ -67,5 +77,5 @@
   "turbolinks-app.css": "/packs-test/css/turbolinks-app-7b3c11a1.css",
   "turbolinks-app.js": "/packs-test/js/turbolinks-app-45b999e3869f3d2a15ac.js",
   "vendors.css": "/packs-test/css/vendors-afabfe5f.chunk.css",
-  "vendors.js": "/packs-test/js/vendors-5ca315d12786bae9b4eb.chunk.js"
+  "vendors.js": "/packs-test/js/vendors-bb5191803ea2401e2cd0.chunk.js"
 }

@@ -1,95 +1,80 @@
 <h1>积分设置</h1>
 <%= render 'tech_nodes_settings' %>
-
-
 <%= form_with url: admin_credit_settings_path, html: {class: "tw-mt-4"} do |f|%>
-  <h2 class='tw-text-xl tw-font-bold'>积分增加规则</h2>
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :tech_topic_created_credit, '技术节点发帖得分' %>
+  <h2 class='tw-mt-10 tw-mb-4 tw-text-xl tw-font-bold tw-border-0 tw-border-b-2 tw-border-b-blue-400 tw-border-solid'>积分增加规则</h2>
+  <div class='tw-grid tw-grid-cols-2'>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :tech_topic_created_credit, '技术节点发帖得分' %>
+      </div>
+      <%= f.number_field :tech_topic_created_credit,  value: Setting.tech_topic_created_credit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :tech_topic_created_credit,  value: Setting.tech_topic_created_credit, class: 'tw-w-56 form-control' %>
-  </div>
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :question_created_credit, '提问得分' %>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :question_created_credit, '提问得分' %>
+      </div>
+      <%= f.number_field :tech_topic_created_credit, value: Setting.tech_topic_created_credit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :tech_topic_created_credit, value: Setting.tech_topic_created_credit, class: 'tw-w-56 form-control' %>
-  </div>
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :excellent_topic_credit, '加精得分' %>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :question_best_answer_credit, '最佳回答奖励' %>
+      </div>
+      <%= f.number_field :question_best_answer_credit, value: Setting.question_best_answer_credit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :excellent_topic_credit, value: Setting.excellent_topic_credit, class: 'tw-w-56 form-control' %>
-  </div>
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :topic_like_credit, '帖子被喜欢得分' %>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :excellent_topic_credit, '加精得分' %>
+      </div>
+      <%= f.number_field :excellent_topic_credit, value: Setting.excellent_topic_credit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :topic_like_credit, value: Setting.topic_like_credit, class: 'tw-w-56 form-control' %>
-  </div>
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :topic_user_reply_reward_credit, '其他用户加入评论奖励' %>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :topic_like_credit, '帖子被喜欢得分' %>
+      </div>
+      <%= f.number_field :topic_like_credit, value: Setting.topic_like_credit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :topic_user_reply_reward_credit, value: Setting.topic_user_reply_reward_credit, class: 'tw-w-56 form-control' %>
-  </div>
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :topic_reply_credit, '参与帖子评论奖励' %>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :topic_user_reply_reward_credit, '其他用户加入评论奖励' %>
+      </div>
+      <%= f.number_field :topic_user_reply_reward_credit, value: Setting.topic_user_reply_reward_credit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :topic_reply_credit, value: Setting.topic_reply_credit, class: 'tw-w-56 form-control' %>
-  </div>
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :topic_reply_credit_limit, '同一帖子评论奖励最多分数' %>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :topic_reply_credit, '参与帖子评论奖励' %>
+      </div>
+      <%= f.number_field :topic_reply_credit, value: Setting.topic_reply_credit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :topic_reply_credit_limit, value: Setting.topic_reply_credit_limit, class: 'tw-w-56 form-control' %>
-  </div>
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :reply_like_credit, '回复被赞赏奖励' %>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :topic_reply_credit_limit, '同一帖子评论奖励最多分数' %>
+      </div>
+      <%= f.number_field :topic_reply_credit_limit, value: Setting.topic_reply_credit_limit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :reply_like_credit, value: Setting.reply_like_credit, class: 'tw-w-56 form-control' %>
-  </div>
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :question_best_answer_credit, '最佳回答奖励' %>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :reply_like_credit, '回复被赞赏奖励' %>
+      </div>
+      <%= f.number_field :reply_like_credit, value: Setting.reply_like_credit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :question_best_answer_credit, value: Setting.question_best_answer_credit, class: 'tw-w-56 form-control' %>
-  </div>
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :invite_code_registered_credit, '邀请码被使用奖励' %>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :invite_code_registered_credit, '邀请码被使用奖励' %>
+      </div>
+      <%= f.number_field :invite_code_registered_credit, value: Setting.invite_code_registered_credit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :invite_code_registered_credit, value: Setting.invite_code_registered_credit, class: 'tw-w-56 form-control' %>
-  </div>
-
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :login_credit, '每日登录奖励' %>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :login_credit, '每日登录奖励' %>
+      </div>
+      <%= f.number_field :login_credit, value: Setting.login_credit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :login_credit, value: Setting.login_credit, class: 'tw-w-56 form-control' %>
-  </div>
-
-  <div class='tw-flex tw-items-center tw-mb-5'>
-    <div class='tw-w-36 tw-text-right tw-mr-2'>
-      <%= f.label :registered_credit, '注册赠送分数' %>
+    <div class='tw-flex tw-items-center tw-mb-5'>
+      <div class='tw-w-36 tw-text-right tw-mr-2'>
+        <%= f.label :registered_credit, '注册赠送分数' %>
+      </div>
+      <%= f.number_field :registered_credit, value: Setting.registered_credit, class: 'tw-w-56 form-control' %>
     </div>
-    <%= f.number_field :registered_credit, value: Setting.registered_credit, class: 'tw-w-56 form-control' %>
   </div>
-
-
   <%= f.submit%>
 <%end %>

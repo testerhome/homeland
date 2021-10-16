@@ -14,6 +14,7 @@ module SoftDelete
       if persisted?
         t = Time.now.utc
         update_columns(deleted_at: t, updated_at: t)
+        send_broadcast
       end
 
       @destroyed = true
@@ -23,5 +24,15 @@ module SoftDelete
 
   def deleted?
     deleted_at.present?
+  end
+
+  def send_broadcast
+    if self.is_a? Topic
+      broadcast(:topic_deleted, self)
+    end
+
+    if self.is_a? Reply
+      broadcast(:reply_deleted, self)
+    end
   end
 end

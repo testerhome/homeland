@@ -16,11 +16,11 @@ class Users::SessionsController < Devise::SessionsController
       end
 
       set_flash_message(:notice, :signed_in_bind_oauth)
-      broadcast(:user_login, resource)
       session[:omniauth] = nil
     end
 
     sign_in(resource_name, resource)
+    broadcast(:user_login, resource)
     yield resource if block_given?
     respond_to do |format|
       format.html { redirect_back_or_default(root_url) }

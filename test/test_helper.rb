@@ -20,6 +20,8 @@ require "minitest/autorun"
 require "mocha/minitest"
 require "rails/test_help"
 require "sidekiq/testing"
+require 'database_cleaner/active_record'
+
 
 FileUtils.mkdir_p(Rails.root.join("tmp/cache"))
 
@@ -42,6 +44,20 @@ ActiveRecord::Base.connection.create_table(:commentable_pages, force: true) do |
   t.integer :comments_count, default: 0, null: false
   t.timestamps null: false
 end
+
+DatabaseCleaner.strategy = :transaction
+
+class Minitest::Spec
+  before :each do
+    DatabaseCleaner.start
+  end
+
+  after :each do
+    DatabaseCleaner.clean
+  end
+end
+
+
 
 class CommentablePage < ApplicationRecord
 end

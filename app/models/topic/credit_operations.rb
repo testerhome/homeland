@@ -7,7 +7,6 @@ class Topic
     # 判断是否是技术节点
     def tech_node?
       # TODO 从配置文件中读出是否包含节点
-      return true
       Setting.tech_node_ids.include? self.node_id
     end
 

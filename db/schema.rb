@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_07_023059) do
+ActiveRecord::Schema.define(version: 2021_10_12_171631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,14 @@ ActiveRecord::Schema.define(version: 2021_10_07_023059) do
     t.index ["suggested_at"], name: "index_columns_on_suggested_at"
   end
 
+  create_table "commentable_pages", force: :cascade do |t|
+    t.string "name"
+    t.integer "user_id"
+    t.integer "comments_count", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "comments", id: :serial, force: :cascade do |t|
     t.text "body", null: false
     t.integer "user_id", null: false
@@ -101,6 +109,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_023059) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "model_id"
     t.string "model_type"
+    t.integer "balance"
     t.index ["model_id"], name: "index_credit_records_on_model_id"
     t.index ["model_type"], name: "index_credit_records_on_model_type"
     t.index ["user_id"], name: "index_credit_records_on_user_id"
@@ -180,6 +189,14 @@ ActiveRecord::Schema.define(version: 2021_10_07_023059) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["name"], name: "index_locations_on_name"
+  end
+
+  create_table "monkeys", force: :cascade do |t|
+    t.string "name"
+    t.integer "user_id"
+    t.integer "comments_count"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "nodes", id: :serial, force: :cascade do |t|
@@ -396,6 +413,15 @@ ActiveRecord::Schema.define(version: 2021_10_07_023059) do
     t.index ["user_id"], name: "index_team_users_on_user_id"
   end
 
+  create_table "test_documents", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "reply_to_id"
+    t.integer "mentioned_user_ids", default: [], array: true
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tip_offs", force: :cascade do |t|
     t.integer "reporter_id"
     t.string "reporter_email"
@@ -533,6 +559,14 @@ ActiveRecord::Schema.define(version: 2021_10_07_023059) do
     t.index ["location"], name: "index_users_on_location"
     t.index ["login"], name: "index_users_on_login", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+  end
+
+  create_table "walking_deads", force: :cascade do |t|
+    t.string "name"
+    t.string "tag"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "appends", "topics"

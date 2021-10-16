@@ -86,6 +86,9 @@ gem "redis", "~>4.1.0"
 gem "redis-namespace", github: "resque/redis-namespace"
 gem "redis-objects"
 
+# 基于 redis 的锁
+gem 'redlock'
+
 # Cache
 gem "second_level_cache"
 
@@ -133,6 +136,10 @@ group :development, :test do
   gem "pry-byebug"
   gem "spring"
   gem "byebug"
+  gem 'ruby-debug-ide'
+  gem 'debase'
+  gem 'database_cleaner-active_record'
+
 
   gem "sdoc"
   gem "letter_opener"
