@@ -87,12 +87,12 @@
   width: 14rem
 }
 
-.tw-grid-cols-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr))
-}
-
 .tw-grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr))
+}
+
+.tw-grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr))
 }
 
 .tw-items-center {
@@ -130,24 +130,14 @@
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity))
 }
 
-.tw-bg-gray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgba(209, 213, 219, var(--tw-bg-opacity))
-}
-
-.tw-bg-gray-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgba(243, 244, 246, var(--tw-bg-opacity))
-}
-
 .tw-bg-blue-100 {
   --tw-bg-opacity: 1;
   background-color: rgba(219, 234, 254, var(--tw-bg-opacity))
 }
 
-.tw-bg-red-100 {
+.tw-bg-gray-100 {
   --tw-bg-opacity: 1;
-  background-color: rgba(254, 226, 226, var(--tw-bg-opacity))
+  background-color: rgba(243, 244, 246, var(--tw-bg-opacity))
 }
 
 .tw-p-4 {
@@ -167,14 +157,14 @@
   line-height: 1.75rem
 }
 
-.tw-text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem
-}
-
 .tw-text-2xl {
   font-size: 1.5rem;
   line-height: 2rem
+}
+
+.tw-text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem
 }
 
 .tw-font-medium {

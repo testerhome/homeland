@@ -152,6 +152,8 @@ group :development, :test do
   gem "minitest-spec-rails"
   gem "factory_bot_rails"
 
+  gem 'annotate'
+
   gem "rubocop", require: false
   gem "codecov", require: false
 end
