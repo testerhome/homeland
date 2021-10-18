@@ -31,7 +31,7 @@
           <% if current_user && current_user == @user %>
           <div class="item credits">
             <%= link_to  credits_path do %>
-            <span class='tw-text-green-500'><%= current_user.credit_sum%></span> 积分
+            <span class='tw-text-green-500'><%= current_user.credit_sum.to_i%></span> 积分
             <%end %>
           </div>
           <%end%>

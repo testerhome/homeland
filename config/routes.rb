@@ -126,6 +126,12 @@ Rails.application.routes.draw do
         post :reboot
       end
     end
+    resources :credit_products do
+      collection do
+        get :add_variant
+      end
+    end
+
     resources :credit_settings do
       collection do
         post :sync_tech_node_ids

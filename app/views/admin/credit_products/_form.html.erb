@@ -1,0 +1,32 @@
+<%= form_with model: [:admin,@credit_product], local: true do |f|%>
+  <div>
+    <%= render "shared/error_messages", target: @credit_product %>
+  </div>
+  <div class='tw-my-4'>
+    <%= f.label :title, "商品名称", class: "tw-font-bold" %>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+  <div class='tw-my-4'>
+    <%= f.label :category, "商品类型", class: "tw-font-bold" %>
+    <%= f.select :category, %w[实物 虚拟物品], {}, class: 'form-control' %>
+  </div>
+  <div class='tw-my-4'>
+    <%= f.label :main_image_url, "商品主图", class: "tw-font-bold" %>
+    <div  data-controller='event-image-upload'>
+      <div class='image-panel'>
+        <img data-event-image-upload-target='preview' style='width: 100px; object-fit: contain;' <%= @credit_product.main_image_url.blank? ? "" : "src=#{@credit_product.main_image_url} " %> />
+      </div>
+      <input data-event-image-upload-target='file' data-action='event-image-upload#changed' type='file' accept="image/png, image/jpg, image/jpeg"  style='width: 0;height:0'>
+      <%= f.text_field :main_image_url, class: 'form-control', 'data-event-image-upload-target' => 'urlInput', class: 'form-control w-50', placeholder: "直接填写图片地址或点击图片上传" %>
+      <button class='btn btn-light' data-event-image-upload-target='button' data-action='click->event-image-upload#click'>上传图片</button>
+    </div>
+  </div>
+  <div class='tw-my-4' data-controller='description-editor'>
+    <%= f.label :description, "描述", class: "tw-font-bold" %>
+    <%= render "/shared/editor_toolbar" %>
+    <%= f.text_area :description,  placeholder: '商品描述， 支持markdown', row: 20, class: "topic-editor form-control closewarning", style: "height: 120px" %>
+  </div>
+  <div class='tw-bg-blue-100'></div><!--必须保留， 给jit-->
+<%= render 'variants', f: f %>
+  <%= f.submit %>
+<%end%>

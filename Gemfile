@@ -102,6 +102,8 @@ gem "html-pipeline-auto-correct"
 gem "redcarpet"
 gem "rouge"
 
+gem 'acts_as_list'
+
 # 队列
 gem "sidekiq", "6.0.7"
 gem "sidekiq-cron"
@@ -130,6 +132,7 @@ gem "bootsnap"
 gem "lograge"
 gem 'groupdate'
 gem 'wisper'
+gem 'cocoon'
 
 group :development, :test do
   gem "pry"

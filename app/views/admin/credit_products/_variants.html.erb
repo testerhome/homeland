@@ -1,0 +1,10 @@
+  <div data-controller='copy-template'>
+    <div class='variantsPanel tw-grid tw-grid-cols-2' data-copy-template-target='panel' id='panel' >
+      <%= f.fields_for :credit_variants do |sub_form| %>
+        <%= render 'variant', f: sub_form %>
+      <%end %>
+    </div>
+    <p>
+    <%= link_to_add_association 'add SKU', f, :credit_variants, partial: "variant", class: 'mt-2 mr-2 btn btn-secondary' %>
+    </p>
+  </div>

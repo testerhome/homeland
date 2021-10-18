@@ -102,6 +102,8 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    acts_as_list (1.0.4)
+      activerecord (>= 4.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     aliyun-sdk (0.8.0)
@@ -135,6 +137,7 @@ GEM
     carrierwave-upyun (1.0.5)
       carrierwave (>= 1.0.0)
       faraday (>= 0.8.0)
+    cocoon (1.2.15)
     codecov (0.5.1)
       simplecov (>= 0.15, < 0.22)
     coderay (1.1.3)
@@ -501,6 +504,7 @@ PLATFORMS
 
 DEPENDENCIES
   action-store
+  acts_as_list
   auto-correct
   bootsnap
   bulk_insert
@@ -510,6 +514,7 @@ DEPENDENCIES
   carrierwave-aliyun
   carrierwave-qiniu
   carrierwave-upyun
+  cocoon
   codecov
   database_cleaner-active_record
   debase

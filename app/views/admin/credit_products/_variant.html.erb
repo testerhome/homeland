@@ -1,0 +1,45 @@
+<%variant = f.object%>
+<div <%= variant.id.blank? ? "data-copy-template-target=template" : "" %> class='variant-<%= variant.id.blank? ? "new" : variant.id%>'>
+
+  <div class='tw-m-10 tw-p-5  <%= variant.id.blank? ? "tw-bg-blue-100" : "tw-bg-gray-100" %> '>
+  <% if variant.id.blank?%>
+    <h3>新的SKU</h3>
+  <% else %>
+  <%= f.hidden_field :id %>
+  <%end %>
+    <div class='tw-my-4'>
+      <%= f.label :sku, "SKU", class: "tw-font-bold" %>
+      <%= f.text_field :sku, class: 'form-control' %>
+    </div>
+    <div class='tw-my-4'>
+      <%= f.label :title, "标题", class: "tw-font-bold" %>
+      <%= f.text_field :title, class: 'form-control' %>
+    </div>
+
+    <div class='tw-my-4'>
+      <%= f.label :credit_price, "价格", class: "tw-font-bold" %>
+      <%= f.number_field :credit_price, class: 'form-control' %>
+    </div>
+    <div class='tw-my-4'>
+      <%= f.label :stock, "库存", class: "tw-font-bold" %>
+      <%= f.number_field :stock, class: 'form-control' %>
+    </div>
+
+
+    <%= f.label :image_url, "商品图", class: "tw-font-bold" %>
+    <div  data-controller='event-image-upload'>
+      <div class='image-panel'>
+        <img data-event-image-upload-target='preview' style='width: 100px; object-fit: contain;' <%= variant.image_url.blank? ? "" : "src=#{variant.image_url} " %> />
+      </div>
+      <input data-event-image-upload-target='file' data-action='event-image-upload#changed' type='file' accept="image/png, image/jpg, image/jpeg"  style='width: 0;height:0'>
+      <%= f.text_field :image_url, class: 'form-control', 'data-event-image-upload-target' => 'urlInput', class: 'form-control', placeholder: "直接填写图片地址或点击图片上传" %>
+      <button class='btn btn-light' data-event-image-upload-target='button' data-action='click->event-image-upload#click'>上传图片</button>
+    </div>
+
+    <% if variant.id %>
+    <div class='tw-my-4'>
+      Delete: <%= f.check_box :_destroy %>
+    </div>
+    <%end %>
+  </div>
+</div>

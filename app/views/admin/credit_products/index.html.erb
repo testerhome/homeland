@@ -1,0 +1,30 @@
+<div class="tw-container">
+  <h1 class='tw-font-semibold tw-text-2xl'>积分商品设置</h1>
+  <div class="tw-text-right">
+    <%= link_to '新建商品', [:new, :admin,  :credit_product] %>
+  </div>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>编号</th>
+        <th>类型</th>
+        <th>名称</th>
+        <th>SKU</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody class="tbody">
+      <%@credit_products.each do |product|%>
+        <tr id='product-<%= product.id%>'>
+          <td><%= product.id%></td>
+          <td><%= product.category%></td>
+          <td><%= product.title %></td>
+          <td><%= product.credit_variants.pluck("sku","title").map {|x| x.join("-")}.join(" , ") %></td>
+      <td>
+        <%= link_to "edit", [:edit, :admin, product]%>
+          </td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+</div>
