@@ -36,9 +36,13 @@ class ColumnChannelsController < TopicsController
   def fetch_public_or_enterprise_topics
     if ["120-129", "130-139"].include? params[:user_states_category]
       keys = params[:user_states_category].split("-").map(&:to_i)
-      topics_scope.joins(:user).where("users.state between ? and ?", *keys).order("date(topics.created_at) desc, users.state desc, topics.created_at desc")
+      add_or_condition = params[:user_states_category] == '120-129' ? "or topics.node_id = #{Setting.article_node}" : ""
+      topics_scope.joins(:user).where("users.state between ? and ? #{add_or_condition}", *keys).order("date(topics.created_at) desc, users.state desc, topics.created_at desc")
     else
-      topics_scope.public_and_enterprise_topics.order(Arel.sql("date(topics.created_at) desc, array_position(array[131,122,130,120,121], users.state)"))
+      # topics_scope.public_and_enterprise_topics.order(Arel.sql("date(topics.created_at) desc, array_position(array[131,122,130,120,121], users.state)"))
+      keys = [120, 139]
+      add_or_condition = true ? "or topics.node_id = #{Setting.article_node}" : ""
+      topics_scope.joins(:user).where("users.state between ? and ? #{add_or_condition}", *keys).order("date(topics.created_at) desc, users.state desc, topics.created_at desc")
     end
   end
 
