@@ -67,6 +67,9 @@ Rails.application.routes.draw do
   get "topics/node:id", to: "topics#node", as: "node_topics"
   get "topics/node:id/feed", to: "topics#node_feed", as: "feed_node_topics", defaults: { format: "xml" }
 
+  resources :credit_products do
+  end
+
   resources :topics do
     member do
       post :favorite

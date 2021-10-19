@@ -52,7 +52,7 @@ module Admin
     end
 
     def credit_product_params
-      params.require(:credit_product).permit(:title, :description, :category, :main_image_url, :credit_variants_attributes => [:id, :sku, :title, :description, :credit_price, :stock, :_destroy])
+      params.require(:credit_product).permit(:title, :description, :category, :main_image_url, :credit_variants_attributes => [:id, :image_url, :sku, :title, :description, :credit_price, :stock, :_destroy])
     end
   end
 end

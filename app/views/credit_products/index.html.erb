@@ -1,0 +1,19 @@
+<div class="tw-container tw-mx-auto tw-bg-white tw-p-4">
+  <h2 class='tw-text-2xl tw-font-medium tw-text-left tw-mb-6'>积分商品</h2>
+
+  <div class='tw-grid tw-grid-cols-4 tw-gap-4'>
+    <% @credit_products.each do |credit_product| %>
+      <div>
+        <%= link_to [credit_product] do %>
+          <div class="card">
+            <img src="<%= credit_product.main_image_url%>" alt="" class="tw-h-52 tw-w-full tw-object-cover">
+            <div class="card-body">
+              <p class='tw-font-medium'><%= credit_product.title%></p>
+              <p class='tw-text-gray-500'>兑换积分：<span><%= credit_product.credit_variants.first&.credit_price.to_i%></span></p>
+            </div>
+          </div>
+        <%end%>
+      </div>
+    <%end %>
+  </div>
+</div>
