@@ -1,22 +1,38 @@
 <div class='tw-bg-white'>
-<div class="mx-auto tw-container tw-p-4">
-  <div class='tw-flex'>
-    <div class='tw-flex-1 tw-mr-6'>
-      <!--images-->
-      <div class='tw-h-96 tw-rounded-md tw-bg-gray-200'>
-        123
+  <div class="mx-auto tw-container tw-p-4" data-controller='credit-product-buying' data-credit-product-buying-variants-value="<%= @credit_product.credit_variants.select(:id, :image_url, :title, :credit_price).to_json%>" >
+    <div class='tw-flex'>
+      <div class='tw-flex-1 tw-mr-6'>
+        <!--images-->
+          <div data-controller="carousel" class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">Slide 1</div>
+              <div class="swiper-slide">Slide 2</div>
+              <div class="swiper-slide">Slide 3</div>
+            </div>
+          </div>
       </div>
-
-    </div>
-    <div class='tw-flex-1'>
-      <!--details-->
-      <h2 class='tw-font-bold tw-text-left tw-text-2xl tw-text-gray-900'><%= @credit_product.title%></h2>
-
-      <div>
-        <%= markdown @credit_product.description%>
+      <div class='tw-flex-1'>
+        <!--details-->
+        <h2 class='tw-font-bold tw-text-left tw-text-2xl tw-text-gray-900'><%= @credit_product.title%></h2>
+        <div>
+          <%= markdown @credit_product.description%>
+        </div>
+        <hr>
+        <div>
+          <ul class='tw-flex tw-list-none'>
+            <%@credit_product.credit_variants.each do |variant|%>
+              <li class='mr-3'>
+                <img src="<%= variant.image_url%>" class='tw-w-5 tw-h-5 tw-object-cover' alt="<%= variant.title%>">
+                <%= variant.title %>
+              </li>
+            <%end %>
+          </ul>
+        </div>
+        <div class='tw-flex tw-items-center tw-justify-between'>
+          <p class='tw-py-auto'>积分: <span><%= @credit_product.credit_variants.first.credit_price%></span></p>
+          <%= link_to  "购买", "", class: "btn btn-primary" %>
+        </div>
       </div>
-
     </div>
   </div>
-</div>
 </div>

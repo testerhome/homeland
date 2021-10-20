@@ -2852,6 +2852,13 @@ dom-serializer@0:
     domelementtype "^2.0.1"
     entities "^2.0.0"
 
+dom7@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.nlark.com/dom7/download/dom7-4.0.0.tgz?cache=0&sync_timestamp=1629879453685&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdom7%2Fdownload%2Fdom7-4.0.0.tgz#69c8fb9b170c92d64f385fdc37f81456e82b80a1"
+  integrity sha1-acj7mxcMktZPOF/cN/gUVugrgKE=
+  dependencies:
+    ssr-window "^4.0.0"
+
 domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/domain-browser/download/domain-browser-1.2.0.tgz"
@@ -7360,6 +7367,11 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
+ssr-window@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.nlark.com/ssr-window/download/ssr-window-4.0.0.tgz?cache=0&sync_timestamp=1629879256060&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fssr-window%2Fdownload%2Fssr-window-4.0.0.tgz#4ee82fc360c5f88a022f321740bcfec59ada1a61"
+  integrity sha1-Tugvw2DF+IoCLzIXQLz+xZraGmE=
+
 ssri@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npm.taobao.org/ssri/download/ssri-6.0.1.tgz"
@@ -7611,6 +7623,14 @@ svgo@^1.0.0:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
+
+swiper@^7.0.9:
+  version "7.0.9"
+  resolved "https://registry.npmmirror.com/swiper/download/swiper-7.0.9.tgz#61d2cb64c759f1cc3bf85dd924dd46614a8d4795"
+  integrity sha1-YdLLZMdZ8cw7+F3ZJN1GYUqNR5U=
+  dependencies:
+    dom7 "^4.0.0"
+    ssr-window "^4.0.0"
 
 tailwindcss@^2.2.16:
   version "2.2.16"

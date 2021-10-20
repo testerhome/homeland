@@ -13,6 +13,7 @@ const application = Application.start()
 const context = require.context("./controllers", true, /\.js$/)
 application.register("checkbox-select-all", CheckboxSelectAll)
 application.register("sortable", Sortable)
+// application.register("carousel", Carousel)
 
 
 application.load(definitionsFromContext(context))
