@@ -1,15 +1,8 @@
 <div class='tw-bg-white'>
-  <div class="mx-auto tw-container tw-p-4" data-controller='credit-product-buying' data-credit-product-buying-variants-value="<%= @credit_product.credit_variants.select(:id, :image_url, :title, :credit_price).to_json%>" >
+  <div class="mx-auto tw-container tw-p-4" data-credit-product-buying-current-user-credit-value="<%= current_user ? current_user.credit_sum : -1 %>" data-controller='credit-product-buying' data-credit-product-buying-current-variant-id-value="<%= @variant_id || @credit_product.credit_variants.first&.id%>" >
     <div class='tw-flex'>
       <div class='tw-flex-1 tw-mr-6'>
-        <!--images-->
-          <div data-controller="carousel" class="swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">Slide 1</div>
-              <div class="swiper-slide">Slide 2</div>
-              <div class="swiper-slide">Slide 3</div>
-            </div>
-          </div>
+        <img class='tw-w-48 tw-h-48 tw-object-cover' data-credit-product-buying-target="variantImage">
       </div>
       <div class='tw-flex-1'>
         <!--details-->
@@ -19,9 +12,9 @@
         </div>
         <hr>
         <div>
-          <ul class='tw-flex tw-list-none'>
+          <ul class='tw-p-0 tw-flex tw-list-none tw-items-center' data-credit-product-buying-target='variants'>
             <%@credit_product.credit_variants.each do |variant|%>
-              <li class='mr-3'>
+              <li class='mr-3 variant tw-cursor-pointer' data-price='<%=variant.credit_price%>' data-image='<%= variant.image_url%>' data-id='<%=variant.id%>' data-action='click->credit-product-buying#selectVariant'>
                 <img src="<%= variant.image_url%>" class='tw-w-5 tw-h-5 tw-object-cover' alt="<%= variant.title%>">
                 <%= variant.title %>
               </li>
@@ -29,8 +22,8 @@
           </ul>
         </div>
         <div class='tw-flex tw-items-center tw-justify-between'>
-          <p class='tw-py-auto'>积分: <span><%= @credit_product.credit_variants.first.credit_price%></span></p>
-          <%= link_to  "购买", "", class: "btn btn-primary" %>
+          <p class='tw-py-auto'>积分: <span data-credit-product-buying-target="creditPrice"><%= @credit_product.credit_variants.first.credit_price%></span></p>
+          <%= link_to  "购买", "", class: "btn btn-primary", "data-credit-product-buying-target" => "buyButton" %>
         </div>
       </div>
     </div>
