@@ -1,0 +1,49 @@
+<h2>订单: <%= @credit_variant_order.uuid%></h2>
+<div>
+  <%= button_to  "审核通过", authen_admin_credit_variant_order_path(@credit_variant_order), class: "btn btn-primary" if @credit_variant_order.may_authen? %>
+  <%= button_to  "审核驳回", "", class: "btn btn-danger" if @credit_variant_order.may_revoke? %>
+  <%= button_to  "完成订单", complete_admin_credit_variant_order_path(@credit_variant_order),method: "post", class: "btn btn-secondary" if @credit_variant_order.may_complete? %>
+  <% if @credit_variant_order.may_ship? %>
+    <%= form_with model: @credit_variant_order, url: ship_admin_credit_variant_order_path(@credit_variant_order), local: true, method: "post"  do |f|%>
+      <div class="form-groups">
+        <%= f.hidden_field :id %>
+        <%= f.label :deliver_no, "快递编号"%>
+        <%= f.text_field :deliver_no %>
+      </div>
+      <div class="form-groups">
+        <%= f.label :deliver_category, "快递公司"%>
+        <%= f.text_field :deliver_category %>
+      </div>
+      <div class="form-groups">
+        <%= f.submit "准备快递" , class: "btn btn-secondary"%>
+      </div>
+    <%end %>
+  <%end %>
+  <p>
+    <%= link_to admin_credit_variant_orders_url(user_login_eq: @credit_variant_order.user.login) do %>
+    用户 <%= @credit_variant_order.user.login %>
+    <%end %>
+  </p>
+  <p>
+    <%= @credit_variant_order.titles.join(" ")%> <span> x <%= @credit_variant_order.num%></span>
+  </p>
+  <p>
+    <%= @credit_variant_order.total_price %>
+  </p>
+  <p>
+    <%= @credit_variant_order.status %>
+  </p>
+  <p>
+    <span>收件地址</span><%= @credit_variant_order.deliver_address %>
+  </p>
+  <p>
+    <span>收件人</span><%= @credit_variant_order.deliver_receiver_name %>
+  </p>
+  <p>
+    <span>快递单号</span><%= @credit_variant_order.deliver_no %>
+  </p>
+</div>
+<div>
+  <p>
+  </p>
+</div>

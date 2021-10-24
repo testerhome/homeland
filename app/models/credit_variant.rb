@@ -16,8 +16,16 @@
 #  online            :boolean          default(TRUE)
 #
 class CreditVariant < ApplicationRecord
+
   belongs_to :credit_product
   validates_uniqueness_of :sku
+  validates_numericality_of :stock, greater_than_or_equal_to: 0
+  validates_numericality_of :credit_price, greater_than_or_equal_to: 0
 
   acts_as_list scope: :credit_product
+
+  has_many :credit_variant_orders
+
+  delegate_missing_to :credit_product
+
 end

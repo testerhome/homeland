@@ -1,8 +1,21 @@
 <div class="tw-container">
-  <h1 class='tw-font-semibold tw-text-2xl'>积分商品设置</h1>
+  <h1 class='tw-font-semibold tw-text-2xl'>积分商品</h1>
   <div class="tw-text-right">
     <%= link_to '新建商品', [:new, :admin,  :credit_product] %>
   </div>
+  <%= form_with url: admin_credit_products_path, method: "get", local: true do |f|%>
+    <div class='tw-gap-4 tw-grid tw-grid-cols-4'>
+      <div class="form-groups">
+        <%=f.label :title_cont, "商品名称"%>
+        <%=f.text_field :title_cont, value: params[:title_cont],  class: "form-control"%>
+      </div>
+      <div class="form-groups">
+        <%=f.label :credit_variants_sku_eq, "sku"%>
+        <%=f.text_field :credit_variants_sku_eq, value: params[:credit_variants_sku_eq],  class: "form-control"%>
+      </div>
+    </div>
+    <%= f.submit "搜索"%>
+  <%end%>
   <table class='table'>
     <thead>
       <tr>
@@ -16,12 +29,19 @@
     <tbody class="tbody">
       <%@credit_products.each do |product|%>
         <tr id='product-<%= product.id%>'>
-          <td><%= product.id%></td>
+          <td><%= product.uuid%></td>
           <td><%= product.category%></td>
           <td><%= product.title %></td>
-          <td><%= product.credit_variants.pluck("sku","title").map {|x| x.join("-")}.join(" , ") %></td>
-      <td>
-        <%= link_to "edit", [:edit, :admin, product]%>
+          <td>
+            <% product.credit_variants.each do |variant| %>
+              <%= link_to  admin_credit_variant_orders_path(credit_variant_sku_eq: variant.sku) do%>
+                <p><%= variant.sku%>(<%= variant.title%>)</p>
+              <% end %>
+            <%end%>
+          </td>
+          <td>
+            <%= link_to "编辑", [:edit, :admin, product]%>
+            <%= link_to "预览", [ product]%>
           </td>
         </tr>
       <%end%>

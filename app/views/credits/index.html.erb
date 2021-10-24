@@ -1,8 +1,42 @@
 <div class="tw-container tw-mx-auto tw-bg-white tw-p-4">
-<div class='tw-flex tw-justify-between tw-items-center'>
-  <h1 class='tw-text-lg tw-font-medium'>我的积分</h1>
-  <p>您现在拥有积分: <span class="tw-font-bold"><%= current_user.credit_sum.to_i %></span></p>
-</div>
+  <div class='tw-flex tw-justify-between tw-items-center'>
+    <h1 class='tw-text-lg tw-font-medium'>我的积分</h1>
+    <p>您现在拥有积分: <span class="tw-font-bold"><%= current_user.credit_sum.to_i %></span></p>
+  </div>
+  <div class="tw-mt-4">
+    <h2 class='tw-text-lg'>积分兑换历史</h2>
+    <table class="table">
+      <thead class="thead">
+        <tr>
+          <th>订单编号</th>
+          <th>时间</th>
+          <th>兑换商品</th>
+          <th>消耗积分</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody class="tbody">
+        <%@credit_variant_orders.each do |order| %>
+          <tr>
+            <td><%= order.uuid%></td>
+            <td><%= order.created_at%></td>
+            <td><%= order.titles.join("-")%></td>
+            <td><%= order.current_credit_price * order.num %></td>
+            <td>
+              <%= I18n.t("activerecord.enums.credit_variant_order.status.#{order.status}")  %>
+            </td>
+            <td>
+              <%= link_to "详情", [order]%>
+            </td>
+
+          </tr>
+        <%end %>
+      </tbody>
+    </table>
+
+    <%= paginate @credit_variant_orders %>
+  </div>
   <div class='tw-mt-4'>
     <h2 class='tw-text-lg'>积分积攒历史</h2>
     <table class='table'>
@@ -19,17 +53,16 @@
             <td><%= record.created_at%></td>
             <td><%= record.reason %></td>
             <td>
-            <%if record.num >= 0%>
-            <span class='tw-text-green-500'>+<%= record.num%></span>
-            <%else%>
-              <span class='tw-text-red-500'> <%= record.num%></span>
-            <%end%>
+              <%if record.num >= 0%>
+                <span class='tw-text-green-500'>+<%= record.num%></span>
+              <%else%>
+                <span class='tw-text-red-500'> <%= record.num%></span>
+              <%end%>
             </td>
           </tr>
         <%end %>
       </tbody>
     </table>
-
     <%= paginate @credit_records%>
   </div>
 </div>

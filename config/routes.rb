@@ -70,6 +70,12 @@ Rails.application.routes.draw do
   resources :credit_products do
   end
 
+  resources :credit_variant_orders do
+    member do
+      post :pay
+    end
+  end
+
   resources :topics do
     member do
       post :favorite
@@ -132,6 +138,19 @@ Rails.application.routes.draw do
     resources :credit_products do
       collection do
         get :add_variant
+      end
+    end
+
+    resources :credit_variant_orders do
+      collection do
+        post :authen
+      end
+      member do
+        post :authen
+        post :ship
+        post :complete
+        post :revoke
+        post :drop
       end
     end
 

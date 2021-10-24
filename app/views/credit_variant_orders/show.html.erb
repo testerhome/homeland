@@ -1,0 +1,25 @@
+<h2>订单</h2>
+<div>
+  <p>
+    <%= @credit_variant_order.titles.join(" ")%> <span> x <%= @credit_variant_order.num%></span>
+  </p>
+  <p>
+    <%= @credit_variant_order.total_price %>
+  </p>
+  <p>
+    <%= @credit_variant_order.status %>
+  </p>
+  <p>
+    <span>收件地址</span><%= @credit_variant_order.deliver_address %>
+  </p>
+  <p>
+    <span>收件人</span><%= @credit_variant_order.deliver_receiver_name %>
+  </p>
+  <p>
+    <span>快递单号</span><%= @credit_variant_order.deliver_no %>
+  </p>
+</div>
+<div>
+  <p>
+  </p>
+</div>

@@ -96,7 +96,6 @@ module Admin
         params[type][:state] = params[type][:state].to_i
       end
       @user.state = params[type][:state] if params[type][:state] # Avoid `ActiveRecord::NotNullViolation` exception for Team entity.
-
       if @user.update(params[type].permit!)
         redirect_to(edit_admin_user_path(@user.id), notice: "User was successfully updated.")
       else

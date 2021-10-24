@@ -5,12 +5,14 @@ module Admin
     before_action :set_credit_product, only: [:show, :edit, :update, :destroy, :add_sku]
 
     def index
-      @credit_products = CreditProduct.all
+      @credit_products = CreditProduct.ransack(
+        title_cont: params[:title_cont],
+        credit_variants_sku_eq: params[:credit_variants_sku_eq],
+      ).result
     end
 
     def new
       @credit_product = CreditProduct.new
-
     end
 
     def edit

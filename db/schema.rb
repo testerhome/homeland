@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_17_173413) do
+ActiveRecord::Schema.define(version: 2021_10_23_080756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 2021_10_17_173413) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "position"
     t.boolean "online", default: true
+    t.string "uuid"
   end
 
   create_table "credit_records", force: :cascade do |t|
@@ -118,6 +119,27 @@ ActiveRecord::Schema.define(version: 2021_10_17_173413) do
     t.index ["model_id"], name: "index_credit_records_on_model_id"
     t.index ["model_type"], name: "index_credit_records_on_model_type"
     t.index ["user_id"], name: "index_credit_records_on_user_id"
+  end
+
+  create_table "credit_variant_orders", force: :cascade do |t|
+    t.bigint "credit_variant_id", null: false
+    t.integer "num"
+    t.boolean "online", default: false
+    t.string "status"
+    t.bigint "user_id", null: false
+    t.string "deliver_address"
+    t.string "deliver_category"
+    t.string "deliver_markup"
+    t.string "deliver_no"
+    t.string "deliver_receiver_name"
+    t.string "deliver_receiver_phone"
+    t.decimal "current_credit_price"
+    t.integer "authen_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "uuid"
+    t.index ["credit_variant_id"], name: "index_credit_variant_orders_on_credit_variant_id"
+    t.index ["user_id"], name: "index_credit_variant_orders_on_user_id"
   end
 
   create_table "credit_variants", force: :cascade do |t|
@@ -602,4 +624,6 @@ ActiveRecord::Schema.define(version: 2021_10_17_173413) do
 
   add_foreign_key "appends", "topics"
   add_foreign_key "credit_records", "users"
+  add_foreign_key "credit_variant_orders", "credit_variants"
+  add_foreign_key "credit_variant_orders", "users"
 end

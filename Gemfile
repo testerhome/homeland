@@ -130,9 +130,11 @@ gem "exception-track"
 
 gem "bootsnap"
 gem "lograge"
-gem 'groupdate'
-gem 'wisper'
-gem 'cocoon'
+gem "groupdate"
+gem "ransack"
+gem "wisper"
+gem "cocoon"
+gem "aasm"
 
 group :development, :test do
   gem "pry"

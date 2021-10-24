@@ -2,6 +2,7 @@
   <div>
     <%= render "shared/error_messages", target: @credit_product %>
   </div>
+
   <div class='tw-my-4'>
     <%= f.label :title, "商品名称", class: "tw-font-bold" %>
     <%= f.text_field :title, class: 'form-control' %>
@@ -10,6 +11,12 @@
     <%= f.label :category, "商品类型", class: "tw-font-bold" %>
     <%= f.select :category, %w[实物 虚拟物品], {}, class: 'form-control' %>
   </div>
+
+    <div class='tw-my-4'>
+    <%= f.label :online, "上线", class: "tw-font-bold" %>
+    <%= f.check_box :online %>
+  </div>
+
   <div class='tw-my-4'>
     <%= f.label :main_image_url, "商品主图", class: "tw-font-bold" %>
     <div  data-controller='event-image-upload'>
@@ -26,7 +33,8 @@
     <%= render "/shared/editor_toolbar" %>
     <%= f.text_area :description,  placeholder: '商品描述， 支持markdown', row: 20, class: "topic-editor form-control closewarning", style: "height: 120px" %>
   </div>
-  <div class='tw-bg-blue-100'></div><!--必须保留， 给jit-->
-<%= render 'variants', f: f %>
+  <div class='tw-bg-blue-100'></div>
+  <!--必须保留， 给jit-->
+  <%= render 'variants', f: f %>
   <%= f.submit %>
 <%end%>

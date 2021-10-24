@@ -43,12 +43,25 @@
           hr: "#12ce0f"
           maintainer: "#c800cc"
           admin: "#f54821"
+      credit_variant_order:
+        status:
+          waiting_authen: "等待审核"
+          waiting_ship: "等待发货"
+          shipping: "已发货"
+          completed: '已完成'
+          canceled: '用户取消'
+          revoked: '审核不合格取消'
+          dropped: '丢弃'
+
     models:
       user: "用户"
       topic: "话题"
       post: 文章
       page: Wiki
       device: "设备"
+      credit_variant_order: '积分订单'
+      credit_variant: '积分商品详细'
+      credit_product: '积分商品'
     attributes:
       user:
         name: "名字"

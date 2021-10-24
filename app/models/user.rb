@@ -32,6 +32,7 @@ class User < ApplicationRecord
   has_many :team_users
   has_many :teams, through: :team_users
   has_many :credit_records
+  has_many :credit_variant_orders
 
   has_one :sso, class_name: "UserSSO", dependent: :destroy
 
@@ -43,6 +44,7 @@ class User < ApplicationRecord
                     presence: true,
                     uniqueness: { case_sensitive: false }
   validates :name, length: { maximum: 20 }
+  validates_numericality_of :credit_sum, greater_than_or_equal_to: 0, message: "不能小于0"
 
   after_commit :send_welcome_mail, on: :create
   after_create_commit :broadcast_user_created

@@ -16,10 +16,12 @@ class User
       num = attributes[:num].to_i
       credit_record = nil
 
+
+
       user = self
+      $lock_manager.lock!("user-#{self.id}-credit-operations", 2000) do |locked|
       ActiveRecord::Base.transaction do
         # 注意， 此处要加锁
-        $lock_manager.lock("user-#{self.id}-credit-operations", 2000) do |locked|
           current_sum = user.reload.credit_sum
           user.credit_sum = current_sum.to_i + num
           user.save!

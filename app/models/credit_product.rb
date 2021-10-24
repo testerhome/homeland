@@ -16,10 +16,18 @@
 class CreditProduct < ApplicationRecord
   has_many :credit_variants, -> {order(position: :asc)}
   acts_as_list
+  before_create :set_uuid
+
 
   scope :online, -> { where(online: true) }
 
   accepts_nested_attributes_for :credit_variants, allow_destroy: true, reject_if: proc { |attributes|
     attributes['sku'].blank?
   }
+
+  protected
+
+  def set_uuid
+    self.uuid = SecureRandom.uuid
+  end
 end
