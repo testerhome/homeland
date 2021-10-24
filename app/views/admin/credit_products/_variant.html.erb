@@ -17,6 +17,11 @@
     </div>
 
     <div class='tw-my-4'>
+      <%= f.label :online, "用户可见", class: "tw-font-bold" %>
+      <%= f.check_box :online, class: '' %>
+    </div>
+
+    <div class='tw-my-4'>
       <%= f.label :credit_price, "价格", class: "tw-font-bold" %>
       <%= f.number_field :credit_price, class: 'form-control' %>
     </div>

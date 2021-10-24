@@ -12,6 +12,7 @@
 #  updated_at     :datetime         not null
 #  position       :integer
 #  online         :boolean          default(TRUE)
+#  uuid           :string
 #
 class CreditProduct < ApplicationRecord
   has_many :credit_variants, -> {order(position: :asc)}

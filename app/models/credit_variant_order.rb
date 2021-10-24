@@ -18,6 +18,7 @@
 #  authen_user_id         :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  uuid                   :string
 #
 class CreditVariantOrder < ApplicationRecord
   include AASM
@@ -46,7 +47,7 @@ class CreditVariantOrder < ApplicationRecord
     end
 
     event :ship do
-      transitions from: [:waiting_ship], to: :shipping
+      transitions from: [:shipping, :waiting_ship], to: :shipping
     end
 
     event :complete do
@@ -119,7 +120,7 @@ class CreditVariantOrder < ApplicationRecord
   end
 
   class << self
-    def buy(variant, num, user, deliver_address, deliver_markup: "", deliver_receiver_name: "", deliver_receiver_phone: "")
+    def buy(variant, num, user, deliver_address:, deliver_markup: "", deliver_receiver_name: "", deliver_receiver_phone: "")
       $lock_manager.lock!("credit_variant_#{variant.id}", 2000) do |locked|
         order = nil
         self.transaction do

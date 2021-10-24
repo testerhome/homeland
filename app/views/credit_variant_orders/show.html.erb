@@ -1,25 +1,40 @@
-<h2>订单</h2>
-<div>
-  <p>
-    <%= @credit_variant_order.titles.join(" ")%> <span> x <%= @credit_variant_order.num%></span>
-  </p>
-  <p>
-    <%= @credit_variant_order.total_price %>
-  </p>
-  <p>
-    <%= @credit_variant_order.status %>
-  </p>
-  <p>
-    <span>收件地址</span><%= @credit_variant_order.deliver_address %>
-  </p>
-  <p>
-    <span>收件人</span><%= @credit_variant_order.deliver_receiver_name %>
-  </p>
-  <p>
-    <span>快递单号</span><%= @credit_variant_order.deliver_no %>
-  </p>
-</div>
-<div>
-  <p>
-  </p>
-</div>
+<%= content_for :stylesheets do %>
+  <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+<% end %>
+<%=content_for :title do %>
+  订单：<%= @credit_variant_order.titles.join("-")%>
+<%end %>
+
+
+<div class='tw-bg-white'>
+  <div class="mx-auto tw-container tw-p-4">
+    <div class="tw-flex">
+      <div class='tw-w-56'>
+        <%= image_tag @credit_variant_order.image_url, class: 'tw-h-56 tw-w-full' %>
+      </div>
+      <div class='tw-ml-16'>
+        <h2 class='tw-text-left tw-font-bold tw-text-2xl tw-text-gray-800'>
+          订单：<%= @credit_variant_order.titles.join(" ")%>
+        </h2>
+        <hr>
+        <div>
+          <p><span class="tw-w-36 tw-inline-block tw-font-bold ">订单编号：</span> <span> <%= @credit_variant_order.uuid %></span></p>
+          <p><span class="tw-w-36 tw-inline-block tw-font-bold ">下单时间：</span> <span> <%= @credit_variant_order.created_at %></span></p>
+          <p><span class="tw-w-36 tw-inline-block tw-font-bold ">订单状态：</span> <span> <%= I18n.t("activerecord.enums.credit_variant_order.status.#{@credit_variant_order.status}") %></span></p>
+          <p><span class="tw-w-36 tw-inline-block tw-font-bold ">单价：</span> <span> <%= @credit_variant_order.current_credit_price %></span></p>
+          <p><span class="tw-w-36 tw-inline-block tw-font-bold ">数量：</span> <span> x <%= @credit_variant_order.num %></span></p>
+          <p><span class="tw-w-36 tw-inline-block tw-font-bold ">总价：</span> <span> <%= @credit_variant_order.current_credit_price * @credit_variant_order.num %></span></p>
+          <hr>
+          <%if @credit_variant_order.credit_product.category != "虚拟物品" %>
+            <p><span class="tw-w-36 tw-inline-block tw-font-bold ">收件人：</span> <span> <%= @credit_variant_order.deliver_receiver_name %></span></p>
+            <p><span class="tw-w-36 tw-inline-block tw-font-bold ">电话：</span> <span> <%= @credit_variant_order.deliver_receiver_phone %></span></p>
+            <p><span class="tw-w-36 tw-inline-block tw-font-bold ">快递地址：</span> <span> <%= @credit_variant_order.deliver_address %></span></p>
+            <p><span class="tw-w-36 tw-inline-block tw-font-bold ">快递公司：</span> <span> <%= @credit_variant_order.deliver_category %></span></p>
+            <p><span class="tw-w-36 tw-inline-block tw-font-bold ">快递编号：</span> <span> <%= @credit_variant_order.deliver_no %></span></p>
+          <% else %>
+            <%= markdown(@credit_variant_order.virtual_markup)%>
+          <%end %>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,18 +1,26 @@
+<%= content_for :stylesheets do %>
+  <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+<% end %>
+<%=content_for :title do %>
+  订单：<%= @credit_variant_order.titles.join("-")%>
+<%end %>
+
+
 <div class="tw-flex tw-p-10 tw-bg-white">
-  <div class="tw-mr-8 tw-w-56">
-    <img src="<%= @credit_variant_order.image_url%>" alt="" class='tw-w-full'>
+  <div class='tw-w-56'>
+    <%= image_tag @credit_variant_order.image_url, class: 'tw-h-56 tw-w-full' %>
   </div>
-  <div>
-    <p>
-      <%= @credit_variant_order.titles.join(" ")%> <span> x <%= @credit_variant_order.num%></span>
-    </p>
+  <div class='tw-ml-16'>
+    <h2 class='tw-text-left tw-font-bold tw-text-2xl tw-text-gray-800'>
+      订单：<%= @credit_variant_order.titles.join(" ")%>
+    </h2>
     <p>
       点数消耗: <%= @credit_variant_order.credit_price * @credit_variant_order.num %>
-      <span class='tw-ml-4 tw-text-gray-500'>目前账户拥有点数<%= current_user.credit_sum %></span>
+      <span class='tw-ml-4 tw-text-gray-500'>(账户积分：<%= current_user.credit_sum %>)</span>
     </p>
     <%= form_with model: @credit_variant_order, local: true do |f| %>
       <%= f.hidden_field :credit_variant_id %>
-      <%= f.text_field :num, value: 1 %>
+      <%= f.hidden_field :num, value: 1 %>
 
     <div>
       <%= render "shared/error_messages", target: @credit_variant_order %>
@@ -20,19 +28,19 @@
 
       <div class="form-group">
         <%= f.label :deliver_address, "收件地址" %>
-        <%= f.text_field :deliver_address %>
+        <%= f.text_field :deliver_address, class: 'form-control' %>
       </div>
       <div class="form-group">
         <%= f.label :deliver_receiver_name, "收件人" %>
-        <%= f.text_field :deliver_receiver_name %>
+        <%= f.text_field :deliver_receiver_name,  class: 'form-control'%>
       </div>
       <div class="form-group">
         <%= f.label :deliver_receiver_phone, "手机号" %>
-        <%= f.text_field :deliver_receiver_phone %>
+        <%= f.text_field :deliver_receiver_phone, class: 'form-control' %>
       </div>
       <div class="form-group">
         <%= f.label :deliver_markup, "订单备注" %>
-        <%= f.text_field :deliver_markup %>
+        <%= f.text_area :deliver_markup, class: 'form-control' %>
       </div>
       <div class="form-group">
         <%= f.submit "提交订单", class: "btn btn-primary" %>

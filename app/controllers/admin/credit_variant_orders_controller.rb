@@ -29,6 +29,7 @@ module Admin
     def ship
       @credit_variant_order.deliver_no = params[:credit_variant_order][:deliver_no]
       @credit_variant_order.deliver_category = params[:credit_variant_order][:deliver_category]
+      @credit_variant_order.virtual_markup = params[:credit_variant_order][:virtual_markup]
       @credit_variant_order.ship!
       redirect_to [:admin, @credit_variant_order], notice: '修改状态成功'
     end

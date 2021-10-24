@@ -1,20 +1,35 @@
+<%= content_for :stylesheets do %>
+  <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+<% end %>
 
+<%=content_for :title do %>
+  <%= @credit_product.title%>
+<%end %>
 <div class='tw-bg-white <%= @credit_product.online ? "" : "filter grayscale" %>'>
-  <div class="mx-auto tw-container tw-p-4" data-credit-product-buying-current-user-credit-value="<%= current_user ? current_user.credit_sum : -1 %>" data-controller='credit-product-buying' data-credit-product-buying-current-variant-id-value="<%= @variant_id || @credit_product.credit_variants.first&.id%>" >
+  <div class="mx-auto tw-container tw-p-4"
+      data-credit-product-buying-current-user-credit-value="<%= current_user ? current_user.credit_sum : -1 %>"
+      data-controller='credit-product-buying'
+      data-credit-product-buying-current-variant-id-value="<%= @variant_id || @credit_product.credit_variants.first&.id%>" >
     <div class='tw-flex'>
-      <div class='tw-flex-1 tw-mr-6'>
-        <img class='tw-w-48 tw-h-48 tw-object-cover' data-credit-product-buying-target="variantImage">
+      <div class='tw-w-1/3 tw-mr-6'  data-controller="lightbox">
+        <a href="<%= @credit_product.credit_variants.first&.image_url %>">
+        <img class='tw-w-full tw-object-cover' src="<%= @credit_product.credit_variants.first&.image_url %>" data-credit-product-buying-target="variantImage" >
+        </a>
       </div>
-      <div class='tw-flex-1'>
+      <div class='tw-w-2/3'>
         <!--details-->
         <h2 class='tw-font-bold tw-text-left tw-text-2xl tw-text-gray-900'><%= @credit_product.title%></h2>
-        <div>
-          <%= markdown @credit_product.description%>
-        </div>
         <hr>
         <div>
+        <% if current_user&.admin? %>
+        <div class='tw-mb-10'>
+        <span class='tw-bg-gray-200 tw-p-4'>
+          <%= link_to  "edit product", [:edit, :admin, @credit_product] %>
+        </span>
+        </div>
+        <%end %>
           <ul class='tw-p-0 tw-flex tw-list-none tw-items-center' data-credit-product-buying-target='variants'>
-            <%@credit_product.credit_variants.each do |variant|%>
+            <%@credit_product.credit_variants.where(online: true).each do |variant|%>
               <li class='mr-3 p-2 variant tw-cursor-pointer  <%= variant.stock > 0 ? "" : "tw-opacity-50"%>'
                 data-price='<%=variant.credit_price%>'
                 data-image='<%= variant.image_url%>'
@@ -35,7 +50,12 @@
             "data-credit-product-buying-target" => "buyButton"
             %>
         </div>
+
       </div>
+    </div>
+    <hr>
+    <div class="tw-mt-8">
+      <%= markdown @credit_product.description%>
     </div>
   </div>
 </div>

@@ -43,6 +43,7 @@ export default class extends Controller {
     this.creditPriceTarget.innerText = ele.dataset.price
     this.currentPrice = parseInt(ele.dataset.price)
     this.variantImageTarget.src = ele.dataset.image
+    this.variantImageTarget.parentNode.href = ele.dataset.image
     if (ele.dataset.inStock === "false"){
       this.buyButtonTarget.classList.add("disabled")
       this.buyButtonTarget.innerText = '没有足够的库存'

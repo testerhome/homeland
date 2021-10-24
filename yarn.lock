@@ -4555,6 +4555,11 @@ levenary@^1.1.1:
   dependencies:
     leven "^3.1.0"
 
+lightgallery.js@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.npmmirror.com/lightgallery.js/download/lightgallery.js-1.4.0.tgz#f4b43b01b2acce43bd7e6d8dbcf1d5541cd2fb03"
+  integrity sha1-9LQ7AbKszkO9fm2NvPHVVBzS+wM=
+
 lilconfig@^2.0.3:
   version "2.0.3"
   resolved "https://registry.nlark.com/lilconfig/download/lilconfig-2.0.3.tgz#68f3005e921dafbd2a2afb48379986aa6d2579fd"
@@ -7415,6 +7420,13 @@ stimulus-checkbox-select-all@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmmirror.com/stimulus-checkbox-select-all/download/stimulus-checkbox-select-all-5.0.0.tgz"
   integrity sha1-35h0g/pJqHpJXUS0q6HHb/++XuI=
+
+stimulus-lightbox@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmmirror.com/stimulus-lightbox/download/stimulus-lightbox-2.0.0.tgz#bb7b07260c52aee9069b28d6a7aed5e0e674324a"
+  integrity sha1-u3sHJgxSrukGmyjWp67V4OZ0Mko=
+  dependencies:
+    lightgallery.js "^1.4.0"
 
 stimulus-sortable@^3.1.0:
   version "3.1.0"

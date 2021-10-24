@@ -12,6 +12,7 @@
 #  updated_at     :datetime         not null
 #  position       :integer
 #  online         :boolean          default(TRUE)
+#  uuid           :string
 #
 require "test_helper"
 
