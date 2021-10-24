@@ -38,7 +38,7 @@ class Node < ApplicationRecord
   end
 
   def self.questions_id
-    8
+    20
   end
 
   def self.job_id
