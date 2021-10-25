@@ -17,5 +17,6 @@
 #  balance    :integer
 #
 class CreditRecord < ApplicationRecord
+  attr_accessor :user_login
   belongs_to :user
 end

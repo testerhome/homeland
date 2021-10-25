@@ -135,6 +135,12 @@ Rails.application.routes.draw do
         post :reboot
       end
     end
+    resources :credit_records, only: [:index, :new, :create] do
+
+      collection do
+        get :user_credit_info
+      end
+    end
     resources :credit_products do
       collection do
         get :add_variant
@@ -144,6 +150,7 @@ Rails.application.routes.draw do
     resources :credit_variant_orders do
       collection do
         post :authen
+        post :revoke
       end
       member do
         post :authen

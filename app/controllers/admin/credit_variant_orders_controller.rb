@@ -1,6 +1,6 @@
 module Admin
   class CreditVariantOrdersController < Admin::ApplicationController
-    before_action :set_credit_variant_order, only: [:show, :edit, :update, :authen, :ship, :complete]
+    before_action :set_credit_variant_order, only: [:show, :edit, :update, :authen, :ship, :complete, :revoke]
     def index
       @credit_variant_orders = CreditVariantOrder.ransack(
         user_login_eq: params[:user_login_eq],
@@ -15,10 +15,15 @@ module Admin
 
         credit_product_uuid_eq: params[:credit_product_uuid_eq],
       ).result
-      @credit_variant_orders = @credit_variant_orders.order(:created_at => :desc)
+      @credit_variant_orders = @credit_variant_orders.order(:created_at => :desc).page(params[:page])
     end
 
     def show
+    end
+
+    def revoke
+      @credit_variant_order.do_revoke_operation current_user
+      redirect_to [:admin, @credit_variant_order], notice: '已驳回此订单， 并返还积分给用户'
     end
 
     def authen

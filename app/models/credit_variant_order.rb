@@ -75,8 +75,8 @@ class CreditVariantOrder < ApplicationRecord
     self.num * self.credit_variant.credit_price
   end
 
-  def return_stock_and_credits
-    return {code: 1,msg: "此时订单状态已经不允许撤销"} unless self.may_revoke?
+  def do_revoke_operation(operator)
+    return {code: 1,msg: "此时订单状态已经不允许驳回"} unless self.may_revoke?
 
     $lock_manager.lock!("credit_variant_#{credit_variant.id}", 2000) do |locked|
       self.class.transaction do
@@ -89,9 +89,9 @@ class CreditVariantOrder < ApplicationRecord
 
         self.user.credit_operate(
           category: "order_revork",
-          reason: "订单撤销返还积分 ",
+          reason: "订单被驳回，返还积分 ",
           num: self.num * self.current_credit_price,
-          operator: user.id,
+          operator: operator.id,
           model_id: id,
           model_type: "CreditVariantOrder",
           meta: {

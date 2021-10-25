@@ -1,0 +1,27 @@
+<h2>积分变更</h2>
+<div class='tw-mt-4'>
+<p>注意， 会增加一条积分变化记录， 而不是直接修改积分数量</p>
+<p>积分变更的原因， 可以填写备注信息</p>
+<p class='tw-font-extrabold tw-text-lg'> 正数 为增加积分， 负数为减少积分</p>
+</div>
+
+<%= form_with model: [:admin, @credit_record], remote: true, html: {class: "tw-w-72 form"} do |f| %>
+  <div class="form-group">
+    <%= f.label :user_email, "" %>
+    <%= f.text_field :user_email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :reason, "填写积分变化理由" %>
+    <%= f.text_field :reason, class: "form-control" %>
+  </div>
+
+   <div class="form-group">
+    <%= f.label :num, "积分变化" %>
+    <%= f.text_field :num, class: "form-control", placeholder: "正数为增加， 负数为减少" %>
+  </div>
+
+  <div class="tw-items-center tw-py-5 tw-flex tw-space-x-3">
+    <%=f.submit "提交", class: "btn btn-primary"%>
+  </div>
+<%end%>

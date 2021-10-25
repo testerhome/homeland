@@ -75,6 +75,7 @@
     <td>注册时间</td>
     <td>上次登录ip</td>
     <td>当前登录ip</td>
+    <td>积分</td>
     <td>操作</td>
   </tr>
 
@@ -101,6 +102,11 @@
       <td width="120"><%= user.created_at&.to_date %></td>
       <td width="120"><%= user.last_sign_in_ip %></td>
       <td width="120"><%= user.current_sign_in_ip %></td>
+      <td >
+        <%= link_to admin_credit_records_path(user_email_eq: user.email) do %>
+        <%= user.credit_sum %>
+        <%end %>
+      </td>
       <td>
         <%= link_to '', edit_admin_user_path(user.id), class: "fa fa-edit mr-2", title: "edit user" %>
         <% if user.maintainer? %>

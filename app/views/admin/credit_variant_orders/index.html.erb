@@ -1,6 +1,6 @@
 <%= render "shared/admin/credit_links"%>
 
-<h2>订单</h2>
+<h2>积分订单管理</h2>
 <%=form_with(path: admin_credit_variant_orders_path,local: true, method: "get") do |f|%>
   <div class='tw-gap-4 tw-grid tw-grid-cols-4'>
     <div class="form-groups">
@@ -89,3 +89,5 @@
     <%end%>
   </tbody>
 </table>
+
+<%=paginate @credit_variant_orders%>

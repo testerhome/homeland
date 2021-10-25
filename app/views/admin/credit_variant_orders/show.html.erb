@@ -2,7 +2,7 @@
 <div>
   <div class='tw-flex tw-space-x-4'>
     <%= button_to  "审核通过", authen_admin_credit_variant_order_path(@credit_variant_order), class: "btn btn-primary" if @credit_variant_order.may_authen? %>
-    <%= button_to  "审核驳回", "", class: "btn btn-danger" if @credit_variant_order.may_revoke? %>
+    <%= button_to  "审核驳回", revoke_admin_credit_variant_order_path(@credit_variant_order), class: "btn btn-danger" if @credit_variant_order.may_revoke? %>
     <%= button_to  "完成订单", complete_admin_credit_variant_order_path(@credit_variant_order),method: "post", class: "btn btn-secondary" if @credit_variant_order.may_complete? %>
     <% if @credit_variant_order.may_ship? %>
       <%= form_with model: @credit_variant_order, url: ship_admin_credit_variant_order_path(@credit_variant_order), local: true, method: "post", class: 'tw-w-80'  do |f|%>
