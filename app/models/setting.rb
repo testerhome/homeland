@@ -198,6 +198,8 @@ class Setting < RailsSettings::Base
   field :login_credit, type: :integer, default: 1
   field :registered_credit, type: :integer, default: 500
 
+  field :credit_products_top_ads, type: :array, default: []
+
   field :apns_pem, default: ""
   field :blacklist_ips, default: [], type: :array
 
@@ -261,6 +263,13 @@ class Setting < RailsSettings::Base
   field :recaptcha_secret, default: "6Lcalg8TAAAAAN-nZr547ORtmtpw78mTLWtVWFW2"
   field :google_analytics_key, default: ""
   field :certify_questions, default: "", type: :string
+
+  # static node
+  field :node_ban_id, default: 55, type: :integer
+  field :node_bugs_id, default: 47, type: :integer
+  field :node_opencourse_id, default: 67, type: :integer
+  field :node_questions_id, default: 20, type: :integer
+  field :node_job_id, default: 19, type: :integer
 
   class << self
     def editable_keys

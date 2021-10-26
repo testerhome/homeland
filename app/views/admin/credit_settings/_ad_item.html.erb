@@ -1,0 +1,22 @@
+<div class='row border m-4' data-controller='event-image-upload'>
+  <div class='col-3'>
+    <div class='image-panel'>
+      <img data-event-image-upload-target='preview' style='width: 100px; object-fit: contain;' <%= ad_info[:img_url].nil? ? "" : "src=#{ad_info[:img_url]} " %> />
+    </div>
+    <input data-event-image-upload-target='file' data-action='event-image-upload#changed' type='file' accept="image/png, image/jpg, image/jpeg"  style='width: 0;height:0'>
+  </div>
+  <div class='col-12'>
+    <div class='d-flex'>
+      <%= form.text_field "image_url[]", value: ad_info[:img_url], 'data-event-image-upload-target' => 'urlInput', class: 'form-control w-50', placeholder: "直接填写图片地址或点击图片上传" %>
+      <button class='btn btn-light' data-event-image-upload-target='button' data-action='click->event-image-upload#click'>上传图片</button>
+    </div>
+    <div class='upload-info'>
+      <p>支持  jpg/jpeg/png 格式， 大小不要超过 2MB</p>
+    </div>
+  </div>
+  <div class="col-12">
+    <%= form.text_field "link[]", value: ad_info[:link], placeholder: "广告链接地址", class: 'form-control' %>
+  </div>
+
+  <button class='btn btn-danger mt-4 ml-auto' data-action='click->column-channels-ad#removeItem'>删除该广告项</button>
+</div>

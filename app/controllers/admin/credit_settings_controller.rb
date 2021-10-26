@@ -5,6 +5,11 @@ module Admin
     def index
       @sections = Section.all
       @tech_node_ids = Setting.tech_node_ids
+
+      @credit_products_top_ads = Setting.credit_products_top_ads.map do |item|
+        key, value = item.split("$$$")
+        {img_url: key, link: value}
+      end
     end
 
     def sync_tech_node_ids
@@ -25,7 +30,18 @@ module Admin
       Setting.invite_code_registered_credit = params[:invite_code_registered_credit]
       Setting.login_credit = params[:login_credit]
 
+      Setting.credit_products_top_ads = build_ad_info_from_params
       redirect_to admin_credit_settings_path, notice: "更新完毕"
+    end
+
+    private
+
+    def build_ad_info_from_params
+      arr = []
+      (params[:image_url]|| []).each_with_index do |image_url, index|
+        arr << "#{image_url}$$$#{params[:link][index]}"
+      end
+      arr
     end
 
   end

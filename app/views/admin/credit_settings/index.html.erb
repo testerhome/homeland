@@ -77,5 +77,23 @@
       <%= f.number_field :registered_credit, value: Setting.registered_credit, class: 'tw-w-56 form-control' %>
     </div>
   </div>
+
+  <div class='tw-my-4 ' data-controller='column-channels-ad'>
+    <h2 class='tw-mt-10 tw-mb-4 tw-text-xl tw-font-bold tw-border-0 tw-border-b-2 tw-border-b-blue-400 tw-border-solid'>积分商城顶部轮播图</h2>
+    <div data-column-channels-ad-target='panel'>
+        <%@credit_products_top_ads.each do |ad_info|%>
+          <%= render 'ad_item', ad_info: ad_info, form: f %>
+        <%end%>
+      </div>
+
+      <template data-column-channels-ad-target='template'>
+        <%= render 'ad_item', ad_info: {}, form: f %>
+      </template>
+
+
+      <div class='col-12'>
+        <button type="button" class="mt-2 mr-2 btn btn-secondary" data-action='column-channels-ad#addItem'>添加广告项</button>
+      </div>
+  </div>
   <%= f.submit%>
 <%end %>
