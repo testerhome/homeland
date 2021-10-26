@@ -8,7 +8,7 @@ module Admin
       @credit_products = CreditProduct.ransack(
         title_cont: params[:title_cont],
         credit_variants_sku_eq: params[:credit_variants_sku_eq],
-      ).result
+      ).result.order(position: :desc)
     end
 
     def new
@@ -54,7 +54,7 @@ module Admin
     end
 
     def credit_product_params
-      params.require(:credit_product).permit(:title, :description, :category, :main_image_url, :credit_variants_attributes => [:id, :image_url, :sku, :title, :description, :credit_price, :stock, :online,:_destroy])
+      params.require(:credit_product).permit(:title,:position, :description, :category, :main_image_url, :credit_variants_attributes => [:id, :image_url, :sku, :title, :description, :credit_price, :stock, :online,:_destroy])
     end
   end
 end

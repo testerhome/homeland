@@ -16,7 +16,7 @@
 #
 class CreditProduct < ApplicationRecord
   has_many :credit_variants, -> {order(position: :asc)}
-  acts_as_list
+  # acts_as_list
   before_create :set_uuid
 
 

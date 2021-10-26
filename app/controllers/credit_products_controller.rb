@@ -2,7 +2,7 @@ class CreditProductsController < ApplicationController
   before_action :find_credit_product, only: [:show]
   def index
     load_ads
-    @credit_products = CreditProduct.all.online
+    @credit_products = CreditProduct.all.online.order(:position => :desc)
   end
 
   def show

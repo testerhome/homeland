@@ -12,6 +12,11 @@
     <%= f.select :category, %w[实物 虚拟物品], {}, class: 'form-control' %>
   </div>
 
+  <div class='tw-my-4'>
+    <%= f.label :position, "位置index", class: "tw-font-bold" %>
+    <%= f.number_field :position, class: 'form-control' %>
+  </div>
+
     <div class='tw-my-4'>
     <%= f.label :online, "上线", class: "tw-font-bold" %>
     <%= f.check_box :online %>
