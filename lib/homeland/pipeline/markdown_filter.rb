@@ -59,7 +59,7 @@ module Homeland
         end
 
         def table(header, body)
-          %(<div class="table-responsive"><table class="table table-bordered table-striped">#{header}#{body}</table></div>)
+          %(<div class="table-responsive"><table class="table-responsive table table-bordered table-striped">#{header}#{body}</table></div>)
         end
 
         def header(text, header_level)
