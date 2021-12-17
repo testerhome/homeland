@@ -10,7 +10,7 @@ class BugsController < ApplicationController
 
   def index
     @node = Node.find(Node.bugs_id)
-    @suggest_topics = Topic.where(node_id: @node.id).without_draft.suggest_all_parts.limit(4)
+    @suggest_topics = Topic.where(node_id: @node.id).without_draft.suggest_all_parts.audit_approved.limit(4)
     suggest_topic_ids = @suggest_topics.map(&:id)
     @topics = @node.topics.last_actived.without_draft
     @topics = @topics.where.not(id: suggest_topic_ids) if suggest_topic_ids.count > 0

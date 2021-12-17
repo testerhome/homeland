@@ -8,6 +8,10 @@ module ApplicationHelper
     end
   end
 
+  def audit_chinese_status(status)
+    I18n.t("activerecord.enums.audit.#{status}")
+  end
+
   def sanitize_markdown(html)
     raw Sanitize.fragment(html, Homeland::Sanitize::DEFAULT)
   end

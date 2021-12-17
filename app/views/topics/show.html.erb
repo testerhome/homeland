@@ -22,6 +22,19 @@
     })
   </script>
 <% end %>
+<%if @topic.audit_status == "pending" && @topic.user_id == current_user&.id %>
+  <div class="alert alert-info">
+    <%= "文章暂未审核， 仅自己可见， 审核通过后全体可见" %>
+  </div>
+<%end %>
+
+<% if current_user&.admin?%>
+  <div class="alert alert-info">
+    <%= "管理员提示：此时帖子审核状态为 #{audit_chinese_status @topic.audit_status}" %>
+    <%= link_to "去审核", [:topics, :admin, :audits, id_eq: @topic.id], class: "tw-ml-6 tw-font-bold"%>
+  </div>
+<%end%>
+
 <div class="row">
   <div class="col-lg-9">
     <div class="topic-detail card">
@@ -58,7 +71,7 @@
         </div>
       <% end %>
 
-      <div class="card-footer clearfix">
+      <div class="clearfix card-footer">
         <%= render "buttons" %>
       </div>
     </div>
@@ -104,7 +117,7 @@
             <% else %>
               <div class="alert alert-info">
               <% if current_user.newbie? %>
-                当前设置新手用户不能在 <%= Setting.night_curfew_start.to_i %>:00 ~ <%= Setting.night_curfew_end.to_i %>:00 发帖。
+                当前设置新手或未审核用户不能在 <%= Setting.night_curfew_start.to_i %>:00 ~ <%= Setting.night_curfew_end.to_i %>:00 发帖。
                 <% else %>
                 当前宵禁，不能在 <%= Setting.night_curfew_start.to_i %>:00 ~ <%= Setting.night_curfew_end.to_i %>:00 发帖。
                 <% end %>

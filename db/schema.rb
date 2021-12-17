@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_23_163510) do
+ActiveRecord::Schema.define(version: 2021_12_17_182826) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "actions", id: :serial, force: :cascade do |t|
@@ -290,6 +291,22 @@ ActiveRecord::Schema.define(version: 2021_08_23_163510) do
     t.index ["page_id"], name: "index_page_versions_on_page_id"
   end
 
+  create_table "pages", id: :serial, force: :cascade do |t|
+    t.string "slug", null: false
+    t.string "title", null: false
+    t.text "body", null: false
+    t.boolean "locked", default: false
+    t.integer "version", default: 0, null: false
+    t.integer "editor_ids", default: [], null: false, array: true
+    t.integer "word_count", default: 0, null: false
+    t.integer "changes_cout", default: 1, null: false
+    t.integer "comments_count", default: 0, null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_pages_on_slug", unique: true
+  end
+
   create_table "photos", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "image", null: false
@@ -324,6 +341,10 @@ ActiveRecord::Schema.define(version: 2021_08_23_163510) do
     t.integer "anonymous", default: 0, null: false
     t.boolean "exposed_to_author_only", default: false, null: false
     t.datetime "suggested_at"
+    t.datetime "audited_at"
+    t.integer "audit_user_id"
+    t.string "audit_status", default: "pending"
+    t.string "audit_reason"
     t.index ["deleted_at"], name: "index_replies_on_deleted_at"
     t.index ["topic_id"], name: "index_replies_on_topic_id"
     t.index ["user_id"], name: "index_replies_on_user_id"
@@ -356,6 +377,28 @@ ActiveRecord::Schema.define(version: 2021_08_23_163510) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true
+  end
+
+  create_table "site_nodes", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "sort", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["sort"], name: "index_site_nodes_on_sort"
+  end
+
+  create_table "sites", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "site_node_id"
+    t.string "name", null: false
+    t.string "url", null: false
+    t.string "desc"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["site_node_id", "deleted_at"], name: "index_sites_on_site_node_id_and_deleted_at"
+    t.index ["site_node_id"], name: "index_sites_on_site_node_id"
+    t.index ["url"], name: "index_sites_on_url"
   end
 
   create_table "team_profiles", force: :cascade do |t|
@@ -425,6 +468,10 @@ ActiveRecord::Schema.define(version: 2021_08_23_163510) do
     t.integer "modified_admin_id"
     t.boolean "cannot_be_shared", default: false
     t.integer "suggested_node"
+    t.datetime "audited_at"
+    t.integer "audit_user_id"
+    t.string "audit_status", default: "pending"
+    t.string "audit_reason"
     t.index ["deleted_at"], name: "index_topics_on_deleted_at"
     t.index ["grade"], name: "index_topics_on_grade"
     t.index ["last_active_mark"], name: "index_topics_on_last_active_mark"
@@ -507,13 +554,15 @@ ActiveRecord::Schema.define(version: 2021_08_23_163510) do
     t.string "co"
     t.string "qrcode"
     t.integer "node_assignment_ids", default: [], array: true
+    t.datetime "audited_at"
+    t.integer "audit_user_id"
+    t.string "audit_status", default: "pending"
+    t.string "audit_reason"
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github"], name: "index_users_on_github"
     t.index ["location"], name: "index_users_on_location"
-    t.index ["login"], name: "index_users_on_login", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 

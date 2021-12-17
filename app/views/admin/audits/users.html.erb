@@ -1,0 +1,44 @@
+<h2>帖子审核列表</h2>
+<div class="toolbar">
+ <%= form_with url: "", method: "get",local: true, class: "tw-bg-gray-100 tw-p-4" do |f|%>
+  <div class='tw-grid tw-grid-cols-5 tw-gap-4' data-controller='dependent-select' 
+                                               data-dependent-select-url-value='/nodes'
+                                               data-dependent-select-filter-name-value='section_id'
+                                               data-dependent-select-display-attribute-value='name'
+                                                 >
+    <%= f.text_field :id_eq,value: params[:id_eq], class: "form-control", placeholder: "用户 ID"%>
+    <%= f.select :audit_status_eq, audits_info, {selected: params[:audit_status_eq], include_blank: "选择审核状态"}, class: "form-control"%>
+    <div class='flex tw-col-span-3 tw-items-center'>
+      <span class='tw-mx-3 tw-block '>时间</span>
+      <%= f.date_field :created_at_gteq,value: params[:created_at_gteq], class: 'form-control tw-flex-1' %>
+      <span class='tw-mx-3'>至</span>
+      <%= f.date_field :created_at_lteq,value: params[:created_at_lteq], class: 'form-control tw-flex-1' %>
+    </div>
+  </div>
+  <%= f.submit "搜索", class: "my-4"%>
+<% end %>
+
+</div>
+
+
+
+<table class='table tw-mt-10 table-bordered table-striped table-condensed'>
+  <thead>
+    <tr>
+      <th class="first">#</th>
+      <th>头像</th>
+      <th>帐号</th>
+      <th>审核状态</th>
+      <th>注册时间</th>
+      <td>上次登录ip</td>
+    <td>当前登录ip</td>
+    <td>操作</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <%= render 'user_record', user: user %>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @users %>

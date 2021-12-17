@@ -1,0 +1,2 @@
+var dom = document.querySelector('#<%= dom_id(@user)%>');
+dom.outerHTML = '<%= escape_javascript(render("user_record", user: @user))%>';

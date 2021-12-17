@@ -19,6 +19,9 @@
 - [CHANGELOG](https://github.com/ruby-china/homeland/blob/master/CHANGELOG.md)
 - [CONTRIBUTE GUIDE](https://github.com/ruby-china/homeland/blob/master/CONTRIBUTE.md)
 
+## tailwindcss
+项目增加了 tailwindcss 启动参见 package.json
+
 ## License
 
 Copyright (c) 2011-2017 Ruby China

@@ -2,7 +2,7 @@
 
 require "digest/md5"
 class Reply < ApplicationRecord
-  include SoftDelete, MarkdownBody, Mentionable, MentionTopic, UserAvatarDelegate
+  include SoftDelete, MarkdownBody, Mentionable, MentionTopic, UserAvatarDelegate, Auditable
   include Reply::Notify, Reply::Voteable
 
   belongs_to :real_user, class_name: "User", required: false

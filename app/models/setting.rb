@@ -95,6 +95,16 @@ class Setting < RailsSettings::Base
     invite_code_expired_in_seconds
     profile_fields
     google_analytics_key
+    enable_register_answer_question_cerification
+    enable_audit_topics_create
+    enable_audit_replies_create
+    enable_audit_users_create
+    enable_audit_topic_update
+    audit_topic_update_attributes
+    enable_audit_reply_update
+    audit_reply_update_attributes
+    enable_audit_user_update
+    audit_user_update_attributes
   ]
 
   # = System
@@ -237,6 +247,20 @@ class Setting < RailsSettings::Base
 
   field :column_channel_public_enterprise_column_ids, type: :array, default: []
   field :column_channel_simple_column_ids, type: :array, default: []
+
+  field :enable_register_answer_question_cerification, type: :boolean, default: "false"
+
+  field :enable_audit_topics_create, type: :boolean, default: false
+  field :enable_audit_replies_create, type: :boolean, default: false
+  field :enable_audit_users_create, type: :boolean, default: false
+
+  field :enable_audit_topic_update, type: :boolean, default: false
+  field :enable_audit_reply_update, type: :boolean, default: false
+  field :enable_audit_user_update, type: :boolean, default: false
+  
+  field :audit_topic_update_attributes, type: :array, default: ["title", "body"]
+  field :audit_reply_update_attributes, type: :array, default: ["body"]
+  field :audit_user_update_attributes, type: :array, default: ["name"]
 
 
 

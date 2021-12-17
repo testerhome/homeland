@@ -2,7 +2,8 @@
   "name": "homeland",
   "private": true,
   "scripts": {
-    "start": "./bin/webpack-dev-server"
+    "start": "./bin/webpack-dev-server",
+    "tailwinddev": "yarn tailwind -i app/javascript/packs/tailwindcss.css -o app/javascript/packs/tailwindcss_compile.css --watch"
   },
   "dependencies": {
     "@babel/preset-react": "~7.10",
@@ -34,6 +35,8 @@
     "underscore": "~1.11"
   },
   "devDependencies": {
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.5",
     "webpack-dev-server": "~3.11"
   }
 }

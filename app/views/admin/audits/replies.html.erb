@@ -1,0 +1,24 @@
+<h2>回帖审核列表</h2>
+<div class="toolbar">
+  <%= render 'search_form' %>
+</div>
+<table class='table tw-mt-10 table-bordered table-striped table-condensed'>
+  <thead>
+    <tr>
+      <th class="first">#</th>
+      <th>分类 & 节点</th>
+      <th>帖子ID</th>
+      <th>回帖人</th>
+      <th>回帖内容</th>
+      <th>回帖时间</th>
+      <th>审核状态</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @replies.each do |reply| %>
+      <%= render 'reply_record', reply: reply %>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @replies %>
