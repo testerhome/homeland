@@ -57,6 +57,12 @@
           </div>
         <% end %>
 
+        <%if @topic.audit_status != 'approved'%>
+          <div class="text-center alert alert-warning">
+            当前状态为 <%= audit_chinese_status(@topic.audit_status)%>, 其他人不可见
+          </div>
+        <%end %>
+
         <%= @topic.body_html %>
         <%= raw Setting.after_topic_html %>
       </div>

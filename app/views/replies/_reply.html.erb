@@ -8,7 +8,7 @@
   class_names << 'reply-deleted' if show_deleted
 
   # 判断此时评论是否可以显示 
-  could_show = current_user.admin? || current_user.id == reply.user_id || reply.audit_status == 'approved'
+  could_show = current_user&.admin? || current_user&.id == reply.user_id || reply.audit_status == 'approved'
 %>
   <% if could_show %>
     
@@ -52,8 +52,11 @@
               <span class="opts pull-right">
                 <% if !reply.deleted? %>
                   <span class="hideable">
-                    <%= link_to('', send("edit_#{reply.topic.class.name.downcase}_reply_path", reply.topic, reply), class: "edit fa fa-edit", 'data-uid' => reply.user_id, title: "修改回帖")
+                    <% if can?(:update, reply) %>
+                    
+                    <%= link_to('', send("edit_#{reply.topic.class.name.downcase}_reply_path", reply.topic, reply), class: "edit-reply fa fa-edit", 'data-uid' => reply.user_id, title: "修改回帖")
                     %>
+                    <% end %>
 
                     <% if reply.suggested? %>
                       <%= link_to raw("<i class='fa fa-times-circle'></i>"), send("reply_unsuggest_#{reply.topic.class.name.downcase}_reply_path", reply.topic, reply), 'data-uid' => reply.user_id, method: :post, remote: true, class: "suggest", title: "取消最佳回复" %>
@@ -98,5 +101,12 @@
       </div>
     </div>
 
+
+  <% else %>
+    <div class="<%= class_names.join(' ') %>" data-id="<%= reply.id %>" id="reply<%= floor %>">
+      <div id="reply-<%= reply.id %>" data-floor="<%= floor %>">
+        正在紧张审核中...
+      </div>
+    </div>
   <% end %>
 <% end %>

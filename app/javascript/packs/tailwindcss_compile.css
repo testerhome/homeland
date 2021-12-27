@@ -61,15 +61,6 @@
   grid-column: span 3 / span 3
 }
 
-.tw-m-10 {
-  margin: 2.5rem
-}
-
-.tw-mx-3 {
-  margin-left: 0.75rem;
-  margin-right: 0.75rem
-}
-
 .tw-mx-auto {
   margin-left: auto;
   margin-right: auto
@@ -80,20 +71,21 @@
   margin-bottom: 0.5rem
 }
 
-.tw-mt-10 {
-  margin-top: 2.5rem
+.tw-mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem
 }
 
 .tw-mb-2 {
   margin-bottom: 0.5rem
 }
 
-.tw-ml-2 {
-  margin-left: 0.5rem
-}
-
 .tw-ml-6 {
   margin-left: 1.5rem
+}
+
+.tw-mt-10 {
+  margin-top: 2.5rem
 }
 
 .tw-block {
@@ -120,12 +112,12 @@
   grid-template-columns: repeat(4, minmax(0, 1fr))
 }
 
-.tw-grid-cols-5 {
-  grid-template-columns: repeat(5, minmax(0, 1fr))
-}
-
 .tw-grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr))
+}
+
+.tw-grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr))
 }
 
 .tw-items-center {
@@ -158,21 +150,6 @@
   border-width: 0px
 }
 
-.tw-bg-gray-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity))
-}
-
-.tw-bg-red-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(248 113 113 / var(--tw-bg-opacity))
-}
-
-.tw-bg-yellow-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(234 179 8 / var(--tw-bg-opacity))
-}
-
 .tw-bg-yellow-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 249 195 / var(--tw-bg-opacity))
@@ -183,12 +160,27 @@
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
 }
 
-.tw-p-4 {
-  padding: 1rem
+.tw-bg-yellow-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(234 179 8 / var(--tw-bg-opacity))
+}
+
+.tw-bg-red-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 113 113 / var(--tw-bg-opacity))
+}
+
+.tw-bg-gray-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity))
 }
 
 .tw-p-2 {
   padding: 0.5rem
+}
+
+.tw-p-4 {
+  padding: 1rem
 }
 
 .tw-px-2 {
@@ -200,40 +192,25 @@
   text-align: left
 }
 
-.tw-text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem
-}
-
 .tw-text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem
 }
 
-.tw-font-thin {
-  font-weight: 100
+.tw-text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem
 }
 
 .tw-font-bold {
   font-weight: 700
 }
 
+.tw-font-thin {
+  font-weight: 100
+}
+
 .tw-text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity))
-}
-
-.tw-text-blue-500 {
-  --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity))
-}
-
-.tw-text-gray-400 {
-  --tw-text-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-text-opacity))
-}
-
-.tw-underline {
-  -webkit-text-decoration-line: underline;
-          text-decoration-line: underline
 }
