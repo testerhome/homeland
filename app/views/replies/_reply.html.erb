@@ -16,6 +16,7 @@
       <div id="reply-<%= reply.id %>" data-floor="<%= floor %>">
 
         <% if reply.audit_status != "approved" %>
+          <!--能看到这的要么是管理员要么是作者-->
           <div class="reply-audit-status tw-p-2 tw-mb-2 tw-bg-yellow-100">
             回复状态为 <%= audit_chinese_status(reply.audit_status)%> 仅自己<%= current_user.admin? ? "和管理员" : "" %>可见
 
@@ -105,7 +106,13 @@
   <% else %>
     <div class="<%= class_names.join(' ') %>" data-id="<%= reply.id %>" id="reply<%= floor %>">
       <div id="reply-<%= reply.id %>" data-floor="<%= floor %>">
+      <% if reply.audit_status =='pending' %>
+        
         正在紧张审核中...
+      <% else %>
+        回复内容未通过审核，暂不显示
+      <% end %>
+
       </div>
     </div>
   <% end %>
