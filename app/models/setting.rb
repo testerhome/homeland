@@ -105,6 +105,7 @@ class Setting < RailsSettings::Base
     audit_reply_update_attributes
     enable_audit_user_update
     audit_user_update_attributes
+    search_need_login
   ]
 
   # = System
