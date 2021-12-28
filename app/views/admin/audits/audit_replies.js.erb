@@ -1,0 +1,2 @@
+var dom = document.querySelector('#<%= dom_id(@reply)%>');
+dom.outerHTML = '<%= escape_javascript(render("reply_record", reply: @reply))%>';

@@ -135,9 +135,12 @@ module UsersHelper
 
   alias team_avatar_tag user_avatar_tag
 
-  def user_level_tag(user)
+  def user_level_tag(user, show_whole: true)
     return "" if user.blank?
-    content_tag(:span, user.level_name, class: "badge-role role-#{user.level}", style: "background: #{user.level_color};")
+    level_name = user.level_name
+    level_name = user.level_name.to_s.split('-').first unless show_whole
+
+    content_tag(:span, level_name, class: "badge-role role-#{user.level}", style: "background: #{user.level_color};")
   end
 
   def block_node_tag(node)
@@ -191,8 +194,12 @@ module UsersHelper
 
   # 根据父权限节点，获取子权限节点， 注意 master_state_category 是用 - 连接起来的权限
 
-  def user_states_info()
+  def user_states_info
     User.states.map {|k, v| [k,v,I18n.t("activerecord.enums.user.state.#{k}") ]}
+  end
+
+  def audits_info
+    Topic.audit_statuses.map {|k, v| [I18n.t("activerecord.enums.audit.#{k}"), v ]}
   end
 
   def user_sub_state_options(master_state_category)

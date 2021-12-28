@@ -1,0 +1,29 @@
+<h2>帖子审核列表</h2>
+<div class="toolbar">
+ <%= render 'search_form' %>
+</div>
+
+
+
+<table class='table tw-mt-10 table-bordered table-striped table-condensed'>
+  <thead>
+    <tr>
+      <th class="first">#</th>
+
+      <th>标题</th>
+      <th>分类</th>
+      <th>节点</th>
+      <th colspan='2'>发帖人</th>
+      <th>回帖</th>
+      <th>发帖时间</th>
+      <th>审核状态</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @topics.each do |topic| %>
+      <%= render 'topic_record', topic: topic %>
+  <% end %>
+  </tbody>
+</table>
+<%= paginate @topics %>

@@ -36,6 +36,17 @@ class Ability
     elsif @user.public_cooperation?
       roles_for_members
       role_for_invitecode
+
+    elsif @user.public_person_simple?
+      roles_for_members
+      role_for_invitecode
+    elsif @user.public_person_flow?
+      roles_for_members
+      role_for_invitecode
+    elsif @user.public_person_cooperation?
+      roles_for_members
+      role_for_invitecode
+
     elsif @user.enterprise_non_subscriber?
       roles_for_members
       role_for_invitecode

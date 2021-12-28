@@ -169,6 +169,17 @@
     twitter_api_secret: "Twitter 登录 API secret key"
     wechat_api_key: "微信登录 API key (留空禁用）"
     wechat_api_secret: "微信登录 API secret key"
+    enable_register_answer_question_cerification: "开启注册后需回答问题"
+    enable_audit_topics_create: "开启发帖（文章、专栏）审核后可见"
+    enable_audit_replies_create: "开启回帖审核后可见"
+    enable_audit_users_create: "开启注册用户后需手动审核才能发帖"
+    enable_audit_topic_update: "开启修改帖子指定字段后需重新审核"
+    audit_topic_update_attributes: "帖子更新哪些字段后触发修改审核条件，一行一个字段"
+    enable_audit_reply_update: "开启修改回帖指定字段后需重新审核"
+    audit_reply_update_attributes: "回复更新哪些字段后触发修改审核条件，一行一个字段"
+    enable_audit_user_update: "开启修改用户资料指定字段后需重新审核"
+    audit_user_update_attributes: "用户资料更新哪些字段后触发修改审核条件，一行一个字段"
+
   pagination:
     next: "下一页"
     prev: "上一页"

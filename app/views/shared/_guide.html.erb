@@ -1,7 +1,7 @@
 <section class="jumbotron">
   <div class="container">
     <p class="lead">
-      你好，<strong><%= user_name_tag(current_user) %></strong>，你还没有度过<em>新人期</em>，目前还<strong>无法发帖</strong>！请按照<strong>指引</strong>完成新人任务:
+      你好，<strong><%= user_name_tag(current_user) %></strong>，你还没有度过<em>新人期</em>或暂未通过<em>用户审核</em>，目前还<strong>无法发帖</strong>！请按照<strong>指引</strong>完成新人任务:
       <ul>
         <% if current_user.legacy_omniauth_logined? %>
         <li>
@@ -27,6 +27,10 @@
         <li>
           <p class="lead">注册完成，新人有一天的静默期，期间不能发帖！</p>
         </li>
+        <li>
+          <p class="lead">注册完成后， 需要后台管理人员审核账户，期间不能发帖！ 您现在的审核状态为： <span class='tw-font-bold'><%= audit_chinese_status(current_user.audit_status)%></span></p>
+        </li>
+
         <% end %>
         <li>
           <p class="lead"><a href="http://testerhome.com/topics/982">发帖前请阅读论坛须知</a> </p>

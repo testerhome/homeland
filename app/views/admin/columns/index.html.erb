@@ -16,7 +16,7 @@
   <tr>
     <td class="first"><%= column.id %></td>
     <td><%= link_to column.name, column_path(column) %></td>
-    <td><%= column.user.login %></td>
+    <td><%= column.user&.login %></td>
     <td><%= column.articles_count %></td>
     <% if column.unseal_time %>
       <td class="alert-danger"><%= column.unseal_time.to_date %></td>
