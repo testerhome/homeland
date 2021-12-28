@@ -3,7 +3,7 @@
 require "redcarpet/render_strip"
 
 class Topic < ApplicationRecord
-  include SoftDelete, MarkdownBody, Mentionable, MentionTopic, Closeable, Searchable, UserAvatarDelegate
+  include SoftDelete, MarkdownBody, Mentionable, MentionTopic, Closeable, Searchable, UserAvatarDelegate, Auditable
   include Topic::Actions, Topic::AutoCorrect, Topic::Search, Topic::Notify, Topic::RateLimit
 
   # 临时存储检测用户是否读过的结果
@@ -14,6 +14,7 @@ class Topic < ApplicationRecord
   belongs_to :user, inverse_of: :topics, counter_cache: true, required: false
   belongs_to :team, counter_cache: true, required: false
   belongs_to :node, counter_cache: true, required: false
+  has_one :section, through: :node
   belongs_to :last_reply_user, class_name: "User", required: false
   belongs_to :last_reply, class_name: "Reply", required: false
   has_many :replies, dependent: :destroy

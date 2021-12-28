@@ -1,0 +1,2 @@
+var dom = document.querySelector('#<%= dom_id(@topic)%>');
+dom.outerHTML = '<%= escape_javascript(render("topic_record", topic: @topic))%>';

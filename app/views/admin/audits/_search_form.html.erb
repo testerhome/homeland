@@ -1,0 +1,20 @@
+ <%= form_with url: "", method: "get",local: true, class: "tw-bg-gray-100 tw-p-4" do |f|%>
+  <div class='tw-grid tw-grid-cols-4 tw-gap-4' data-controller='dependent-select' 
+                                               data-dependent-select-url-value='/nodes'
+                                               data-dependent-select-filter-name-value='section_id'
+                                               data-dependent-select-display-attribute-value='name'
+                                                 >
+    <%= f.select :section_id_eq, Section.all.map{|s| [s.name, s.id]}, {selected: params[:section_id_eq], include_blank: "所有分类"},class: "form-control",  "data-dependent-select-target" => 'source', 'data-action' => 'dependent-select#handleSelectChange' %>
+    <%= f.select :node_id_eq, Node.all.map {|n| [n.name, n.id]}, {selected: params[:node_id_eq],include_blank: "所有节点"}, placeholder: "节点", class: "form-control",  "data-dependent-select-target" => 'target' %>
+    <%= f.text_field :id_eq,value: params[:id_eq], class: "form-control", placeholder: "帖子编号"%>
+    <%= f.text_field :user_name_eq,value: params[:user_name_eq], class: "form-control", placeholder: "用户名"%>
+    <%= f.select :audit_status_eq, audits_info, {selected: params[:audit_status_eq], include_blank: "选择审核状态"}, class: "form-control"%>
+    <div class='flex tw-col-span-3 tw-items-center'>
+      <span class='tw-mx-3 tw-block '>时间</span>
+      <%= f.date_field :created_at_gteq,value: params[:created_at_gteq], class: 'form-control tw-flex-1' %>
+      <span class='tw-mx-3'>至</span>
+      <%= f.date_field :created_at_lteq,value: params[:created_at_lteq], class: 'form-control tw-flex-1' %>
+    </div>
+  </div>
+  <%= f.submit "搜索", class: "my-4"%>
+<% end %>

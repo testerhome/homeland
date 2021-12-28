@@ -29,6 +29,7 @@
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-user-menu">
         <%= link_to current_user.login, main_app.user_path(current_user), class: "dropdown-item" %>
         <div class="dropdown-divider"></div>
+        <%= link_to '我的待审核区', main_app.waiting_audit_topics_topics_path, class: "dropdown-item" %>
         <%= link_to t("menu.edit_account_path"), main_app.setting_path, class: "dropdown-item" %>
         <% if current_user.column_editor? %>
         <%= link_to(t("menu.my_columns_path"), main_app.columns_user_path(current_user), class: "dropdown-item") %>

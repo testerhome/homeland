@@ -194,8 +194,12 @@ module UsersHelper
 
   # 根据父权限节点，获取子权限节点， 注意 master_state_category 是用 - 连接起来的权限
 
-  def user_states_info()
+  def user_states_info
     User.states.map {|k, v| [k,v,I18n.t("activerecord.enums.user.state.#{k}") ]}
+  end
+
+  def audits_info
+    Topic.audit_statuses.map {|k, v| [I18n.t("activerecord.enums.audit.#{k}"), v ]}
   end
 
   def user_sub_state_options(master_state_category)
