@@ -1,14 +1,14 @@
 GIT
-  remote: https://github.com/guard/listen.git
-  revision: 041fca566926370963329232309b6cb4e59ebe9b
+  remote: https://e.coding.net/gems-github-mirror/gems-mirror/guard-listen.git
+  revision: 029d60e5a795bd6b744a02d217594d905446f78d
   specs:
-    listen (3.5.1)
+    listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
 
 GIT
-  remote: https://github.com/qiniu/ruby-sdk.git
-  revision: cd7e558fdf8fd3c138ecbe0627c0892416a7cd1f
+  remote: https://e.coding.net/gems-github-mirror/gems-mirror/qiniu-ruby-sdk.git
+  revision: 0accb9b91399581758e8eb8766898936314a8f8c
   branch: develop
   specs:
     qiniu (6.9.1)
@@ -17,21 +17,21 @@ GIT
       rexml (~> 3.2)
 
 GIT
-  remote: https://github.com/resque/redis-namespace.git
-  revision: 6f1bb31bbddd2efc9e16c53759d986b29206a12e
+  remote: https://e.coding.net/gems-github-mirror/gems-mirror/resque-redis-namespace.git
+  revision: f95dcb968b4b2ef41d604cbdc2e22a1f79ae23e6
   specs:
     redis-namespace (1.8.1)
       redis (>= 3.0.4)
 
 GIT
-  remote: https://github.com/testerhome/homeland-opensource_project.git
+  remote: https://e.coding.net/gems-github-mirror/gems-mirror/testerhome-homeland-opensource_project.git
   revision: 06e921832c0b79c7153bfdf8a8007ad7348fd566
   specs:
     homeland-opensource_project (0.1.0)
       rails (~> 6, >= 5)
 
 GIT
-  remote: https://github.com/testerhome/notifications.git
+  remote: https://e.coding.net/gems-github-mirror/gems-mirror/testerhome-notifications.git
   revision: 5284e99b02a5efb310e287f60b9905f1513a3b6a
   specs:
     notifications (1.1.0)
@@ -371,7 +371,7 @@ GEM
       activerecord (>= 5.2.4)
       activesupport (>= 5.2.4)
       i18n
-    rb-fsevent (0.10.4)
+    rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rdoc (6.3.0)

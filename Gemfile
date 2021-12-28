@@ -3,7 +3,8 @@
 # source "https://rubygems.org"
 source "https://gems.ruby-china.com"
 
-git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
+#git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
+git_source(:github) { |repo_name| "https://e.coding.net/gems-github-mirror/gems-mirror/#{repo_name.split("/").join("-")}.git" }
 
 gem "jbuilder"
 gem "rails"
