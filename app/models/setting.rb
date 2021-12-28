@@ -262,7 +262,7 @@ class Setting < RailsSettings::Base
   field :audit_reply_update_attributes, type: :array, default: ["body"]
   field :audit_user_update_attributes, type: :array, default: ["name"]
 
-
+  field :search_need_login, type: :boolean, default: true
 
   # = ReCaptcha
   field :use_recaptcha, default: false, type: :boolean
