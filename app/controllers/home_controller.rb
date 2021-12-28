@@ -23,7 +23,7 @@ class HomeController < ApplicationController
     # This is a temporary solution for help generate image thumb
     # that when you use :file upload_provider and you have no Nginx image_filter configurations.
     # DO NOT use this in production environment.
-    format, version = params[:format].split("!")
+    format, version = params[:format].to_s.split("!")
     filename = [params[:path], format].join(".")
     pragma = request.headers["Pragma"] == "no-cache"
     thumb = Homeland::ImageThumb.new(filename, version, pragma: pragma)
