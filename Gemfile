@@ -4,7 +4,13 @@
 source "https://gems.ruby-china.com"
 
 #git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
-git_source(:github) { |repo_name| "https://e.coding.net/gems-github-mirror/gems-mirror/#{repo_name.split("/").join("-")}.git" }
+git_source(:github) do |repo_name| 
+  if ENV["GEM_GITHUB_PROXY"] == "1"
+    "https://e.coding.net/gems-github-mirror/gems-mirror/#{repo_name.split("/").join("-")}.git" 
+  else
+    "https://github.com/#{repo_name}.git" 
+  end
+end
 
 gem "jbuilder"
 gem "rails"

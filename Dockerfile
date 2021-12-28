@@ -4,6 +4,7 @@ FROM homeland/base:2.7-slim-buster
 ENV RAILS_ENV "production"
 ENV HOMELAND_VERSION "master"
 ENV RUBYOPT "W0"
+ENV GEM_GITHUB_PROXY "1"
 
 WORKDIR /home/app/homeland
 
