@@ -4,6 +4,7 @@ FROM homeland/base:2.7-slim-buster
 ENV RAILS_ENV "production"
 ENV HOMELAND_VERSION "master"
 ENV RUBYOPT "W0"
+ENV GEM_GITHUB_PROXY "1"
 
 WORKDIR /home/app/homeland
 
@@ -15,7 +16,9 @@ RUN mkdir -p /home/app &&\
 
 ADD Gemfile Gemfile.lock package.json yarn.lock /home/app/homeland/
 RUN gem install puma
-RUN bundle config set deployment 'true' && bundle install && yarn &&\
+RUN bundle config set deployment 'true' && bundle install 
+
+RUN yarn &&\
   find /home/app/homeland/vendor/bundle -name tmp -type d -exec rm -rf {} +
 ADD . /home/app/homeland
 ADD ./config/nginx/ /etc/nginx
