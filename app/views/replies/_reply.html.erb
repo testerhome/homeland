@@ -1,4 +1,4 @@
-<% cache([reply, reply.user_avatar_raw, current_user, "raw:#{@show_raw}"]) do %>
+<% cache([reply, reply.audit_status,reply.user_avatar_raw, current_user, "raw:#{@show_raw}"]) do %>
   <%
   floor = reply_counter + 1
   show_deleted = reply.deleted? && !@show_raw
