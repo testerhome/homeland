@@ -15,7 +15,7 @@
     <div class="<%= class_names.join(' ') %>" data-id="<%= reply.id %>" id="reply<%= floor %>">
       <div id="reply-<%= reply.id %>" data-floor="<%= floor %>">
 
-        <% if reply.audit_status != "approved" %>
+        <% if reply.audit_status != "approved" && !reply.deleted? %>
           <!--能看到这的要么是管理员要么是作者-->
           <div class="reply-audit-status tw-p-2 tw-mb-2 tw-bg-yellow-100">
             回复状态为 <%= audit_chinese_status(reply.audit_status)%> 仅自己<%= current_user.admin? ? "和管理员" : "" %>可见
@@ -106,7 +106,9 @@
   <% else %>
     <div class="<%= class_names.join(' ') %>" data-id="<%= reply.id %>" id="reply<%= floor %>">
       <div id="reply-<%= reply.id %>" data-floor="<%= floor %>">
-      <% if reply.audit_status =='pending' %>
+      <% if reply.deleted?%>
+        <div class="text-center deleted"><%= floor %><%= t("common.floor")%> <%= t("common.has_deleted")%></div> 
+      <% elsif reply.audit_status =='pending' && current_user %>
         
         正在紧张审核中...
       <% else %>
