@@ -4,6 +4,9 @@ require "sidekiq/web"
 require "sidekiq/cron/web"
 
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'audits/index'
+  end
   use_doorkeeper do
     controllers applications: "oauth/applications",
                 authorized_applications: "oauth/authorized_applications"
@@ -92,6 +95,7 @@ Rails.application.routes.draw do
     end
 
     collection do
+      get :waiting_audit_topics
       get :no_reply
       get :popular
       get :last
@@ -169,6 +173,16 @@ Rails.application.routes.draw do
     resources :site_configs
     resources :replies
     resource :column_channels
+    resource :audits do
+      get :index
+      get :topics
+      get :replies
+      get :users
+      post :audit_users
+      post :audit_topics
+      post :audit_replies
+      post :forbid_user
+    end
     resources :topics do
       member do
         post :suggest

@@ -23,7 +23,7 @@ class HomeController < ApplicationController
     # This is a temporary solution for help generate image thumb
     # that when you use :file upload_provider and you have no Nginx image_filter configurations.
     # DO NOT use this in production environment.
-    format, version = params[:format].split("!")
+    format, version = params[:format].to_s.split("!")
     filename = [params[:path], format].join(".")
     pragma = request.headers["Pragma"] == "no-cache"
     thumb = Homeland::ImageThumb.new(filename, version, pragma: pragma)
@@ -48,7 +48,7 @@ class HomeController < ApplicationController
   private
 
     def topics_scope(base_scope = Topic)
-      scope = base_scope.fields_for_list.without_hide_nodes.without_draft.without_ban.with_public_articles
+      scope = base_scope.fields_for_list.without_hide_nodes.without_draft.without_ban.with_public_articles.audit_approved
       if current_user
         scope = scope.without_nodes(current_user.block_node_ids)
         scope = scope.without_users(current_user.block_user_ids)

@@ -5,6 +5,9 @@ class NodesController < ApplicationController
 
   def index
     @nodes = Node.all
+    if params[:section_id].present?
+      @nodes = @nodes.where(section_id: params[:section_id])
+    end
     render json: @nodes, only: [:name], methods: [:id]
   end
 

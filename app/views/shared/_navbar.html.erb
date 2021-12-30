@@ -12,7 +12,7 @@
     Homeland.navbar_plugins.each do |plugin|
       if Setting.has_module?(plugin.name)
         if plugin.name.strip.in?(new_tags)
-          li << link_to(sanitize(plugin.display_name + content_tag(:span,"新",class:"badge badge-danger")), plugin.root_path, class: "nav-link")
+          li << link_to(sanitize(plugin.display_name + content_tag(:span,"新",class:"new-tag badge badge-danger")), plugin.root_path, class: "nav-link")
         else
           li << link_to(plugin.display_name, plugin.root_path, class: "nav-link")
         end

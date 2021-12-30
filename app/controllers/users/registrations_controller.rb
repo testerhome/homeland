@@ -61,7 +61,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       respond_with resource
       return
     end
-
+    resource.certified_at = Time.now unless Setting.enable_register_answer_question_cerification
     resource.save
     yield resource if block_given?
     if resource.persisted?

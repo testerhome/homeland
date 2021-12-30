@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "./bin/webpack-dev-server",
-    "tailwinddev": "npx tailwindcss --output app/javascript/admin/tailwind.css --watch"
+    "tailwinddev": "yarn tailwind -i app/javascript/packs/tailwindcss.css -o app/javascript/packs/tailwindcss_compile.css --watch"
   },
   "dependencies": {
     "@babel/preset-react": "~7.10",
@@ -30,13 +30,14 @@
     "stimulus-lightbox": "^2.0.0",
     "stimulus-sortable": "^3.1.0",
     "swiper": "^7.0.9",
+    "tailwindcss-tables": "^0.4.0",
     "turbolinks": "~5.2",
     "turbolinks-prefetch": "~1.0",
     "underscore": "~1.11"
   },
   "devDependencies": {
-    "postcss": "^8.3.9",
-    "tailwindcss": "^2.2.16",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.5",
     "webpack-dev-server": "~3.11"
   }
 }

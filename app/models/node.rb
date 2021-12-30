@@ -12,7 +12,7 @@ class Node < ApplicationRecord
   validates :name, uniqueness: true
 
   scope :hots, -> { where("id != #{Setting.article_node}").order(topics_count: :desc) }
-  scope :sorted, -> { where("id != #{Setting.article_node}").where("id != 55 and id != 61").order(sort: :desc) }
+  scope :sorted, -> { where("nodes.id != #{Setting.article_node}").where("nodes.id != 55 and nodes.id != 61").order(sort: :desc) }
 
 
   form_select :name

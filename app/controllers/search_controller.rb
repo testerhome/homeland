@@ -4,6 +4,7 @@ class SearchController < ApplicationController
   before_action :authenticate_user!, only: [:users]
 
   def index
+    authenticate_user! if Setting.search_need_login
     params[:q] ||= ""
 
     @search = Homeland::Search.new(params[:q])

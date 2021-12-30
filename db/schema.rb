@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_24_141329) do
+ActiveRecord::Schema.define(version: 2021_12_17_182826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -409,6 +409,10 @@ ActiveRecord::Schema.define(version: 2021_10_24_141329) do
     t.integer "anonymous", default: 0, null: false
     t.boolean "exposed_to_author_only", default: false, null: false
     t.datetime "suggested_at"
+    t.datetime "audited_at"
+    t.integer "audit_user_id"
+    t.string "audit_status", default: "pending"
+    t.string "audit_reason"
     t.index ["deleted_at"], name: "index_replies_on_deleted_at"
     t.index ["topic_id"], name: "index_replies_on_topic_id"
     t.index ["user_id"], name: "index_replies_on_user_id"
@@ -532,6 +536,10 @@ ActiveRecord::Schema.define(version: 2021_10_24_141329) do
     t.integer "modified_admin_id"
     t.boolean "cannot_be_shared", default: false
     t.integer "suggested_node"
+    t.datetime "audited_at"
+    t.integer "audit_user_id"
+    t.string "audit_status", default: "pending"
+    t.string "audit_reason"
     t.index ["deleted_at"], name: "index_topics_on_deleted_at"
     t.index ["grade"], name: "index_topics_on_grade"
     t.index ["last_active_mark"], name: "index_topics_on_last_active_mark"
@@ -615,6 +623,10 @@ ActiveRecord::Schema.define(version: 2021_10_24_141329) do
     t.string "qrcode"
     t.integer "node_assignment_ids", default: [], array: true
     t.integer "credit_sum"
+    t.datetime "audited_at"
+    t.integer "audit_user_id"
+    t.string "audit_status", default: "pending"
+    t.string "audit_reason"
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

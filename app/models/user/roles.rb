@@ -27,6 +27,10 @@ class User
         public_flow: 121, # 公众倒流账号
         public_cooperation: 122, # 公众合作账号
 
+        public_person_simple: 125, # 个人普通账号
+        public_person_flow: 126, # 个人倒流账号
+        public_person_cooperation: 127, # 个人合作账号
+
         enterprise_non_subscriber: 130, # 企业非签约号
         enterprise_subscriber: 131 # 企业签约号, 注意， 企业号权限编号最大不能超过MAX_STATE_FOR_ENTERPRISE
       }
@@ -83,7 +87,9 @@ class User
 
     # 是否能发帖
     def newbie?
-      return false if self.vip? || self.hr? || self.admin?
+
+      return false if %w[vip hr admin public_simple public_cooperation enterprise_subscriber].include?(self.state)
+      return true unless self.audit_approved?
       time_limit? || have_not_bind_wechat? || legacy_omniauth_logined? || !certified?
     end
 

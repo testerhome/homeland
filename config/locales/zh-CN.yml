@@ -18,6 +18,11 @@
       extension_whitelist_error: "仅允许图片文件上传 [jpg, jpeg, gif, png, svg]"
   activerecord:
     enums:
+      audit:
+        pending: 等待审核
+        approved: 审核通过
+        rejected: 审核拒绝
+        punished: 审核封禁
       user:
         state:
           deleted: 已注销
@@ -32,6 +37,11 @@
           public_simple: 公众号-普通账号
           public_flow: 公众号-倒流账号
           public_cooperation: 公众号-合作账号
+
+          public_person_simple: 会员-普通账号
+          public_person_flow: 会员-倒流账号
+          public_person_cooperation: 会员-合作账号
+
           enterprise_non_subscriber: 企业号-非签约
           enterprise_subscriber: 企业号-签约账号
         state_color:

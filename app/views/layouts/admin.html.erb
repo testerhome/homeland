@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title><%= Setting.app_name %> - 控制台</title>
     <%= stylesheet_pack_tag "admin" %>
+    <%= stylesheet_pack_tag "tailwindcss_compile", "data-turbolinks-track": "reload" %>
     <%= javascript_packs_with_chunks_tag "application" %>
     <%= csrf_meta_tag %>
 </head>
@@ -34,6 +35,7 @@
                 li << link_to(t("admin.menu.locations"), main_app.admin_locations_path, class: "nav-link")
                 li << link_to(t("admin.menu.column_channels"), main_app.admin_column_channels_path, class: "nav-link")
                 li << link_to(t("admin.menu.credit_settings"), main_app.admin_credit_settings_path, class: "nav-link")
+                li << link_to("Audits", main_app.admin_audits_path, class: "nav-link")
                 Homeland.admin_navbar_plugins.each do |plugin|
                   li << link_to(plugin.display_name, plugin.admin_path, class: "nav-link")
                 end

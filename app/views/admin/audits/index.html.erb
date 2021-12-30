@@ -1,0 +1,37 @@
+<div class="tw-container tw-mx-auto">
+  <div class="tw-flex tw-justify-between">
+    <div class='tw-w-48'>
+      <h2>审核概要</h2>
+    </div>
+    <div class='tw-flex-1'>
+      <ul class='tw-space-y-5'>
+        <li>未审核文章： <span> <%= link_to  @audit_pending_topics_count, [:topics, :admin, :audits, audit_status_eq: "pending"] %> </span></li>
+        <li>未审核回帖： <span> <%= link_to  @audit_pending_replies_count, [:replies, :admin, :audits, audit_status_eq: "pending"] %> </span></li>
+        <li>未审核用户： <span> <%= link_to  @audit_pending_users_count, [:users, :admin, :audits, audit_status_eq: "pending"] %> </span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="tw-mt-10 tw-flex tw-justify-between">
+    <div class='tw-w-48'>
+      <h2>审核开关</h2>
+    </div>
+    <div class='tw-flex-1'>
+      <% 
+        %w[enable_register_answer_question_cerification enable_audit_topics_create enable_audit_replies_create enable_audit_users_create enable_audit_topic_update audit_topic_update_attributes enable_audit_reply_update audit_reply_update_attributes enable_audit_user_update audit_user_update_attributes].each do |key| %>
+        <% if !Setting::SYSTEM_KEYS.include?(key) %>
+          <li class="list-group-item tw-border-0 tw-grid tw-grid-cols-2 tw-gap-3">
+            <div class="mb-1">
+              <%= icon_tag("cog") %><a href="<%= edit_admin_site_config_path(key) %>"><%= key %></a>
+              <% if key == "timezone" %>
+                <div class="badge">
+                  当前时区: <%= Time.zone %>
+                </div>
+              <% end %>
+            </div>
+            <div class="text-gray"><%= t("setting.#{key}") %></div>
+          </li>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

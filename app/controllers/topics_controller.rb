@@ -10,6 +10,11 @@ class TopicsController < ApplicationController
   load_and_authorize_resource only: %i[new edit create update destroy favorite unfavorite follow unfollow raw_markdown]
   before_action :set_topic, only: %i[edit update read destroy follow unfollow action ban append]
 
+  def waiting_audit_topics
+    @topics = Topic.where(user_id: current_user.id, deleted_at: nil).where.not(audit_status: "approved").order("created_at desc")
+
+  end
+
   def index
     @suggest_topics = []
     if params[:page].to_i > Topic.total_pages
@@ -249,6 +254,8 @@ class TopicsController < ApplicationController
     def common_logic_for_show(class_scope)
       topic = class_scope.unscoped.includes(:user).find(params[:id])
       render_404 if topic.deleted?
+      return redirect_to(topics_path, notice: t("topics.cannot_read_ban_topics")) if topic.user.state == 'deleted'
+
 
       # Logic just for topic
       if class_scope == Topic
@@ -268,9 +275,12 @@ class TopicsController < ApplicationController
       end
 
       if topic.draft && topic.user_id != current_user&.id
-        redirect_to(topics_path, notice: t("topics.cannot_read_others_drafts"))
+        return redirect_to(topics_path, notice: t("topics.cannot_read_others_drafts"))
       end
 
+      if topic.user_id != current_user&.id && topic.audit_status != "approved"
+        return redirect_to(topics_path, notice: t("topics.cannot_read_not_approved_topics")) unless current_user&.admin?
+      end
       # topic.hits.incr(1)
       @node = topic.node
       @show_raw = params[:raw] == "1"

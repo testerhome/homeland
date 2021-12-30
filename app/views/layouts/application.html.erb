@@ -24,6 +24,7 @@
     <meta content='True' name='HandheldFriendly' />
     <link rel="alternate" type="application/rss+xml" title="订阅最新帖" href="<%= main_app.feed_topics_url %>" />
     <%= stylesheet_pack_tag "front", "data-turbolinks-track": "reload" %>
+    <%= stylesheet_pack_tag "tailwindcss_compile", "data-turbolinks-track": "reload" %>
     <%= stylesheet_pack_tag "turbolinks-app", 'data-turbolinks-track': 'reload' if turbolinks_app? %>
     <%= yield :stylesheets %>
     <%= action_cable_meta_tag %>
@@ -50,7 +51,7 @@
           <%= render "shared/navbar" %>
         </div>
         <div class="ml-auto d-flex navbar-right">
-          <form class="navbar-form d-none d-lg-flex mr-2 form-search active" action="/search" method="GET">
+          <form class="mr-2 navbar-form d-none d-lg-flex form-search active" action="/search" method="GET">
             <i class="fa btn-search fa-search"></i>
             <input type="text" name="q" class="form-control" value="<%= params[:q] %>" placeholder="搜索"></input>
         </form>
@@ -61,7 +62,7 @@
 
   <%= yield :sub_navbar %>
 
-  <div id="main" class="main-container container">
+  <div id="main" class="container main-container">
     <%= birthday_tag %>
     <%= notice_message %>
     <% if current_user && current_user.newbie?%>

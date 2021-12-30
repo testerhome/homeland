@@ -23,6 +23,7 @@ module Homeland::Activities
 
     before_save :clean_empty_cooperators
 
+
     scope :pinned, -> { where("suggested_at is not null").order("suggested_at desc").limit(5) }
     scope :allowed, -> { where("status = ? ", 'success')}
     scope :incoming_events, -> { where("end_at >= ? ", Time.current.at_beginning_of_day).order("end_at asc")}
@@ -34,6 +35,11 @@ module Homeland::Activities
     def check_operator_info
       if self.status_changed? && self.status_was == "edit_operator"
       end
+    end
+
+    def sync_to_topic
+      node = Node.find_by_name("活动沙龙")
+      Topic.create(draft: false, title: self.title, body: self.description, node_id: node.id, user_id: self.user_id)
     end
 
 
