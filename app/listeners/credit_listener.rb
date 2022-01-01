@@ -1,9 +1,11 @@
 class CreditListener
   # 创建了帖子 走的model， 方便API 也进入
   # 注意， 这块是排除了 question 的 得分的
-  def topic_created(topic)
+  def topic_created_and_audited(topic)
     user = topic.user
     return unless topic.tech_node?
+    return if topic.has_earn_create_credit
+
 
     num = Setting.tech_topic_created_credit
 
@@ -14,14 +16,13 @@ class CreditListener
       operator: user.id,
       model_id: topic.id,
       model_type: "Topic",
-      meta: {
-
-      }
-    )
+      meta: {}
+    ) do
+      topic.update!(:has_earn_create_credit => true)
+    end
   end
 
   def topic_deleted(topic)
-
     # 找到基于帖子的所有积分操作
     CreditRecord.where(model_type: "Topic", model_id: topic.id).group(:user_id).sum(:num).each do |user_id, sum|
       user = User.find_by_id user_id
@@ -38,7 +39,6 @@ class CreditListener
         }
       )
     end
-
   end
 
   def reply_deleted(reply)
@@ -51,8 +51,8 @@ class CreditListener
     author_reward_record = CreditRecord.where(user: user, model_type: "Topic", category: "topic_user_reply_record").first
     if author_reward_record
       user.credit_operate(
-        category: 'cancel_topic_user_reply_reward_for_deleting_reply',
-        reason: '您帖子的评论被删除， 这条评论积分被撤回',
+        category: "cancel_topic_user_reply_reward_for_deleting_reply",
+        reason: "您帖子的评论被删除， 这条评论积分被撤回",
         num: author_reward_record.num * -1,
         operator: user.id,
         model_id: topic.id,
@@ -69,8 +69,8 @@ class CreditListener
     reply_reward_record = CreditRecord.where(user: reply_user, model_type: "Topic", category: "topic_reply").where("meta->> 'reply_id' = '?' ", reply.id).first
     if reply_reward_record
       reply_user.credit_operate(
-        category: 'cancel_reply_reward_for_deleting_reply',
-        reason: '帖子的评论被删除， 回复积分被撤回',
+        category: "cancel_reply_reward_for_deleting_reply",
+        reason: "帖子的评论被删除， 回复积分被撤回",
         num: reply_reward_record.num * -1,
         operator: reply_user.id,
         model_id: topic.id,
@@ -82,8 +82,10 @@ class CreditListener
     end
   end
 
-  def question_created(question)
+  def question_created_and_audited(question)
     user = question.user
+    return if question.has_earn_create_credit
+
     num = Setting.question_created_credit
 
     user.credit_operate(
@@ -96,7 +98,9 @@ class CreditListener
       meta: {
 
       }
-    )
+    ) do
+      question.update!(has_earn_create_credit: true)
+    end
   end
 
   # 加精
@@ -151,8 +155,9 @@ class CreditListener
   end
 
 
-  #评论创建, 走的model， 方便API 也进入
-  def reply_created(reply)
+  # 评论创建, 走的model， 方便API 也进入
+  def reply_created_and_audited(reply)
+    return if reply.has_earn_create_credit
     # 注意， 此处应该有两处， 一个是作者本身， 一个是参与者
 
     # 先处理 帖子的
@@ -170,7 +175,9 @@ class CreditListener
         meta: {
           reply_id: reply.id
         }
-      )
+      ) do
+        reply.update!(has_earn_create_credit: true)
+      end
     end
     # 再处理参与评论的评论人
     reply_user = reply.user
@@ -266,7 +273,7 @@ class CreditListener
     end
   end
 
-  #最佳答案, 走的 model
+  # 最佳答案, 走的 model
   def reply_suggested(reply)
     user = reply.user
     num = Setting.question_best_answer_credit
@@ -286,7 +293,6 @@ class CreditListener
 
   # 取消最佳答案, 走的 model
   def reply_suggested_canceled(reply)
-
     user = reply.user
     num = Setting.question_best_answer_credit
 
@@ -304,7 +310,8 @@ class CreditListener
   end
 
 
-  def user_created(user)
+  def user_created_and_audited(user)
+    return if user.has_earn_create_credit
     # 一个是默认奖励
     user.credit_operate(
       category: "user_create",
@@ -315,7 +322,9 @@ class CreditListener
       model_type: "User",
       meta: {
       }
-    )
+    ) do
+      user.update!(has_earn_create_credit: true)
+    end
   end
 
   # 用户登录

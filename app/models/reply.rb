@@ -42,7 +42,7 @@ class Reply < ApplicationRecord
 
   after_commit :update_parent_topic, on: :create, unless: -> { system_event? }
 
-  after_create_commit :broadcast_create_reply
+  after_save :calc_credit_reward
 
   def update_parent_topic
     topic.update_last_reply(self) if topic.present?
@@ -98,7 +98,9 @@ class Reply < ApplicationRecord
 
   private
 
-  def broadcast_create_reply
-    broadcast(:reply_created, self)
+  def calc_credit_reward
+    return unless saved_change_to_attribute(:audit_status) && self.audit_status == 'approved'
+    broadcast(:reply_created_and_audited, self)
   end
+
 end

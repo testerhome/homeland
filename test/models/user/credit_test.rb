@@ -4,6 +4,8 @@ require "test_helper"
 class CreditTest < ActiveSupport::TestCase
   setup do
     Setting.stubs(:registered_credit).returns(100)
+
+
     @user = create(:user)
     @user2 = create(:user)
   end
@@ -12,10 +14,51 @@ class CreditTest < ActiveSupport::TestCase
     assert_equal @user.credit_records.first.num, 100
   end
 
+  test 'user credit adds when new user audited' do
+
+    Setting.enable_audit_users_create = true 
+    user = create(:user)
+    assert_equal user.reload.credit_sum, 0
+    user.audit_status = 'approved'
+    user.save
+    assert_equal user.reload.credit_sum, 100
+
+  end
+
+  test 'credits added when audited' do
+    node = create(:node)
+    Setting.stubs(:tech_node_ids).returns([])
+    Setting.stubs(:tech_topic_created_credit).returns(20)
+    Setting.enable_audit_topics_create = true
+    Setting.enable_audit_users_create = true 
+    Setting.enable_audit_replies_create = true
+    user = create(:user)
+    @topic = create(:topic, user: user, node: node)
+    assert_equal user.reload.credit_sum, 0
+  end
+
+  test 'credits will not add twice when reaudited' do
+    Setting.enable_audit_topics_create = true
+    Setting.enable_audit_users_create = true 
+    Setting.enable_audit_replies_create = true
+    user = create(:user)
+    assert_equal user.reload.credit_sum, 0
+    user.audit_status = 'approved'
+    user.save
+    assert_equal user.reload.credit_sum, 100
+    user.audit_status = 'rejected' 
+    user.save
+    assert_equal user.reload.credit_sum, 100
+    user.audit_status = 'approved'
+    user.save
+    assert_equal user.reload.credit_sum, 100
+  end
+
   test 'receive post rewards when node is tech node' do
     node = create(:node)
     Setting.stubs(:tech_topic_created_credit).returns(20)
     Setting.stubs(:tech_node_ids).returns([node.id])
+
 
     @topic = create(:topic, user: @user, node: node)
     assert_equal @user.reload.credit_sum, 120
@@ -95,8 +138,5 @@ class CreditTest < ActiveSupport::TestCase
     @reply = create(:reply, topic: @topic, user: @user2)
     assert_equal @user.reload.credit_sum, 125
     assert_equal @user2.reload.credit_sum, 102
-
-    @topic.ban!(reason: '测试被ban')
-    broadcast(:ban_topic, @topic, operator: current_user, reason: params[:reason_text].strip)
   end
 end

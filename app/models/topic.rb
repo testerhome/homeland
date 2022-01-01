@@ -76,7 +76,10 @@ class Topic < ApplicationRecord
 
   before_save { self.node_name = node.try(:name) || "" }
   before_create { self.last_active_mark = Time.now.to_i }
-  after_create_commit :broadcast_topic_created
+
+  after_save :calc_credit_reward
+
+  # after_create_commit :broadcast_topic_created
 
   def self.fields_for_list
     columns = %w[body who_deleted]
@@ -223,12 +226,17 @@ class Topic < ApplicationRecord
 
   private
 
-  def broadcast_topic_created
+  def calc_credit_reward
+    return unless saved_change_to_attribute(:audit_status) && self.audit_status == 'approved'
+    broadcast_topic_created_and_audited
+  end
+
+  def broadcast_topic_created_and_audited
     if self.node.id != Node.questions_id
-      broadcast(:topic_created, self)
+      broadcast(:topic_created_and_audited, self)
       # 将创建的 topic 创建广播， 可以监听此广播用来处理复杂的逻辑
     else
-      broadcast(:question_created, self)
+      broadcast(:question_created_and_audited, self)
     end
   end
 end

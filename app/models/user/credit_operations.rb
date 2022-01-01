@@ -29,6 +29,7 @@ class User
           credit_record.user = user
           credit_record.balance = credit_sum
           credit_record.save!
+          yield if block_given?
         end
       end
       credit_record

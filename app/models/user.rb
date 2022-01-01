@@ -47,7 +47,10 @@ class User < ApplicationRecord
   validates_numericality_of :credit_sum, greater_than_or_equal_to: 0, message: "不能小于0"
 
   after_commit :send_welcome_mail, on: :create
-  after_create_commit :broadcast_user_created
+
+  after_save :calc_credits_reward
+
+  
 
   # after_commit :send_new_password_mail,
   #              if: proc { |record|
@@ -115,9 +118,12 @@ class User < ApplicationRecord
     save(validate: false)
   end
 
-  def broadcast_user_created
-    broadcast(:user_created, self)
+  def calc_credits_reward
+    return unless saved_change_to_attribute(:audit_status) && self.audit_status == 'approved'
+    broadcast(:user_created_and_audited, self)
   end
+
+
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
