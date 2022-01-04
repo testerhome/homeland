@@ -5,7 +5,7 @@ class ColumnChannelsController < TopicsController
     @simple_columns = Setting.column_channel_simple_column_ids.map {|id| Column.find_by_id(id) }.reject(&:nil?)
     @public_enterprise_columns = Setting.column_channel_public_enterprise_column_ids.map {|id| Column.find_by_id(id) }.reject(&:nil?)
 
-    @sections = Section.all.reject {|s| ['私密圈子', '测试服务'].include? s.name }
+    @sections = Section.all.select {|s| Setting.column_channels_show_node_names.include? s.name }
 
     if params[:section_id].blank?
       @topics = fetch_public_or_enterprise_topics
@@ -53,6 +53,6 @@ class ColumnChannelsController < TopicsController
     # 55是违规处理区， 61 是 NoPoint
     where.not(node_id: [Setting.article_node, 55, 61]).
 
-    order(Arel.sql("date(topics.created_at) desc"))
+    order(Arel.sql("date(topics.created_at) desc")).limit(1500)
   end
 end

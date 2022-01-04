@@ -1,5 +1,5 @@
 
-<div class="row mb-3">
+<div class="mb-3 row">
 <%unless @column_channel_top_ads.blank?%>
   <div class="col-12 ">
     <%= render "top_ad_slide"%>
@@ -27,8 +27,8 @@
       </div>
 
       <% if  @topics.total_pages > 1 %>
-      <div class="card-footer clearfix">
-        <%= paginate @topics %>
+      <div class="clearfix card-footer">
+        <%= paginate @topics,window: 1, outer_window: 2, total_pages: @topics.total_pages >=60 ? 60 : @topics.total_pages  %>
       </div>
       <% end %>
 
