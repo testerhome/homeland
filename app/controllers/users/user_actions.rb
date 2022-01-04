@@ -12,7 +12,7 @@ module Users
     end
 
     def topics
-      @topics = @user.topics.without_draft.fields_for_list.recent
+      @topics = @user.topics.without_draft.fields_for_list.audit_approved.recent
       @topics = @topics.page(params[:page])
     end
 
@@ -21,12 +21,12 @@ module Users
     end
 
     def replies
-      @replies = @user.replies.without_system.fields_for_list.recent
+      @replies = @user.replies.audit_approved.without_system.fields_for_list.recent
       @replies = @replies.page(params[:page])
     end
 
     def favorites
-      @topics = @user.favorite_topics.without_draft.order("actions.id desc")
+      @topics = @user.favorite_topics.audit_approved.without_draft.order("actions.id desc")
       @topics = @topics.page(params[:page])
     end
 
@@ -92,8 +92,8 @@ module Users
       end
 
       def user_show
-        @topics = @user.topics.without_draft.fields_for_list.high_likes.page(params[:page])
-        @replies = @user.replies.without_system.fields_for_list.recent.includes(:topic).limit(10)
+        @topics = @user.topics.audit_approved.without_draft.fields_for_list.high_likes.page(params[:page])
+        @replies = @user.replies.audit_approved.without_system.fields_for_list.recent.includes(:topic).limit(10)
       end
   end
 end

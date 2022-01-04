@@ -55,7 +55,7 @@ module Api
         optional! :offset, type: Integer, default: 0
         optional! :limit, type: Integer, default: 20, values: 1..150
 
-        @topics = @user.topics.fields_for_list
+        @topics = @user.topics.fields_for_list.audit_approved
         @topics =
           if params[:order] == "likes"
             @topics.high_likes
@@ -83,7 +83,7 @@ module Api
         optional! :limit, type: Integer, default: 20, values: 1..150
 
         @replies = @user.replies.recent
-        @replies = @replies.includes(:user, :topic).offset(params[:offset]).limit(params[:limit])
+        @replies = @replies.includes(:user, :topic).audit_approved.offset(params[:offset]).limit(params[:limit])
 
         @replies = @replies.map do |r|
           if not r.exposed_to_author_only? || (current_user && (r.topic && r.topic.user == current_user || r.user == current_user))
