@@ -19,7 +19,7 @@ module Auditable
     if modelClass = [User, Topic, Reply, Comment].find{|klass| self.is_a? klass}
 
       if self.respond_to? :user
-        Setting.audit_user_whitelist.include? self.user&.login
+        (Setting.audit_user_whitelist || []).include? self.user&.login
         self.audit_reason = "whitelist"
         return self.audit_status = 'approved' 
       end
