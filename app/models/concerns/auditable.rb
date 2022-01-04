@@ -17,9 +17,7 @@ module Auditable
 
   def set_default_audit_status
     if modelClass = [User, Topic, Reply, Comment].find{|klass| self.is_a? klass}
-
-      if self.respond_to? :user
-        (Setting.audit_user_whitelist || []).include? self.user&.login
+      if self.respond_to? :user && (Setting.audit_user_whitelist || []).include? self.user&.login
         self.audit_reason = "whitelist"
         return self.audit_status = 'approved' 
       end
