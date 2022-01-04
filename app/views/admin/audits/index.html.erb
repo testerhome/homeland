@@ -17,7 +17,7 @@
     </div>
     <div class='tw-flex-1'>
       <% 
-        %w[enable_register_answer_question_cerification enable_audit_topics_create enable_audit_replies_create enable_audit_users_create enable_audit_topic_update audit_topic_update_attributes enable_audit_reply_update audit_reply_update_attributes enable_audit_user_update audit_user_update_attributes].each do |key| %>
+        %w[enable_register_answer_question_cerification enable_audit_topics_create enable_audit_replies_create enable_audit_users_create enable_audit_topic_update audit_topic_update_attributes enable_audit_reply_update audit_reply_update_attributes enable_audit_user_update audit_user_update_attributes audit_user_whitelist].each do |key| %>
         <% if !Setting::SYSTEM_KEYS.include?(key) %>
           <li class="list-group-item tw-border-0 tw-grid tw-grid-cols-2 tw-gap-3">
             <div class="mb-1">
