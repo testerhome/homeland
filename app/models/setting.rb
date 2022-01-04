@@ -106,6 +106,7 @@ class Setting < RailsSettings::Base
     enable_audit_user_update
     audit_user_update_attributes
     search_need_login
+    audit_user_whitelist
     column_channels_show_node_names
   ]
 
@@ -264,7 +265,7 @@ class Setting < RailsSettings::Base
   field :audit_reply_update_attributes, type: :array, default: ["body"]
   field :audit_user_update_attributes, type: :array, default: ["name"]
 
-  field :audit_user_whitelist, type: :array
+  field :audit_user_whitelist, type: :array, default: []
 
   field :search_need_login, type: :boolean, default: true
 
