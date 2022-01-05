@@ -44,7 +44,7 @@ class Admin::AuditsController < Admin::ApplicationController
   end
 
   def topics
-    @topics = Topic.ransack(
+    @topics = Topic.without_draft.ransack(
       section_id_eq: params[:section_id_eq],
       id_eq: params[:id_eq],
       node_id_eq: params[:node_id_eq],
