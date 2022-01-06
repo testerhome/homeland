@@ -1,6 +1,6 @@
 class Admin::AuditsController < Admin::ApplicationController
   def index
-    @audit_pending_topics_count = Topic.audit_pending.count
+    @audit_pending_topics_count = Topic.without_draft.audit_pending.count
     @audit_pending_replies_count = Reply.audit_pending.count
     @audit_pending_users_count = User.audit_pending.count
   end
