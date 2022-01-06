@@ -11,7 +11,7 @@ module Topics
     # GET /topics/no_reply
     %i[no_reply popular].each do |name|
       define_method(name) do
-        @topics = topics_scope.send(name).last_actived.page(params[:page])
+        @topics = topics_scope.with_filter_public_end_enterprise.send(name).last_actived.page(params[:page])
 
         render_index(name)
       end
@@ -19,7 +19,7 @@ module Topics
 
     # GET /topics/last_reply
     def last_reply
-      @topics = topics_scope.last_reply.page(params[:page])
+      @topics = topics_scope.with_filter_public_end_enterprise.last_reply.page(params[:page])
       render_index("last_reply")
     end
 
@@ -31,7 +31,7 @@ module Topics
 
     # GET /topics/last
     def last
-      @topics = topics_scope.recent.page(params[:page])
+      @topics = topics_scope.with_filter_public_end_enterprise.recent.page(params[:page])
       render_index("recent")
     end
 

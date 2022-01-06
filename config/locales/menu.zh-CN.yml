@@ -180,6 +180,7 @@
     audit_reply_update_attributes: "回复更新哪些字段后触发修改审核条件，一行一个字段"
     enable_audit_user_update: "开启修改用户资料指定字段后需重新审核"
     audit_user_update_attributes: "用户资料更新哪些字段后触发修改审核条件，一行一个字段"
+    audit_user_whitelist: " 审核白名单， 填写 user 的 login 值， 一行一个用户"
 
   pagination:
     next: "下一页"

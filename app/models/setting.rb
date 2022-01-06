@@ -106,6 +106,8 @@ class Setting < RailsSettings::Base
     enable_audit_user_update
     audit_user_update_attributes
     search_need_login
+    audit_user_whitelist
+    column_channels_show_node_names
   ]
 
   # = System
@@ -280,7 +282,11 @@ class Setting < RailsSettings::Base
   field :audit_reply_update_attributes, type: :array, default: ["body"]
   field :audit_user_update_attributes, type: :array, default: ["name"]
 
+  field :audit_user_whitelist, type: :array, default: []
+
   field :search_need_login, type: :boolean, default: true
+
+  field :column_channels_show_node_names, type: :array, default: %w[研发效能 测试技术&方案 测试基础&方法 专题测试 职业发展 社区活动]
 
   # = ReCaptcha
   field :use_recaptcha, default: false, type: :boolean

@@ -32,7 +32,7 @@ class Reply < ApplicationRecord
     end
 
     if topic&.closed?
-      errors.add(:topic, "已关闭，不再接受回帖或修改回帖。") unless system_event?
+      errors.add(:topic, "已关闭，不再接受回帖或修改回帖。") unless system_event? || audit_status_changed?
     end
 
     if reply_to_id
