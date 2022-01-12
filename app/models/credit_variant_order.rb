@@ -124,8 +124,7 @@ class CreditVariantOrder < ApplicationRecord
       $lock_manager.lock!("credit_variant_#{variant.id}", 2000) do |locked|
         order = nil
         self.transaction do
-          variant.stock -= num
-          variant.save!
+
           current_credit_price = variant.credit_price
           order = self.new(
             credit_variant: variant,
@@ -138,6 +137,9 @@ class CreditVariantOrder < ApplicationRecord
             deliver_receiver_phone: deliver_receiver_phone
           )
           order.save!
+
+          variant.stock -= num
+          variant.save!
 
           user.credit_operate(
             category: "buy_variant_order",
