@@ -90,7 +90,7 @@ class CreditListener
 
     user.credit_operate(
       category: "question_created",
-      reason: "创建技术节点",
+      reason: "创建了一个问题",
       num: num,
       operator: user.id,
       model_id: question.id,
@@ -167,7 +167,7 @@ class CreditListener
     if reply.user.id != user.id
       user.credit_operate(
         category: "topic_user_reply_reward",
-        reason: "人员参与评论帖子#{topic.title}奖励 ",
+        reason: "有人参与评论帖子“#{topic.title}”的奖励 ",
         num: Setting.topic_user_reply_reward_credit,
         operator: user.id,
         model_id: topic.id,
@@ -175,9 +175,7 @@ class CreditListener
         meta: {
           reply_id: reply.id
         }
-      ) do
-        reply.update!(has_earn_create_credit: true)
-      end
+      )
     end
     # 再处理参与评论的评论人
     reply_user = reply.user
@@ -186,7 +184,7 @@ class CreditListener
       num = Setting.topic_reply_credit
       reply_user.credit_operate(
         category: "topic_reply",
-        reason: "参与帖子#{topic.title}评论奖励",
+        reason: "您参与帖子“#{topic.title}” 讨论的奖励",
         num: num,
         operator: reply_user.id,
         model_id: topic.id,
@@ -196,6 +194,7 @@ class CreditListener
         }
       )
     end
+    reply.update!(has_earn_create_credit: true)
   end
 
   # 赞, 走的 likeable

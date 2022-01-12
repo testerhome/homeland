@@ -94,7 +94,7 @@
         <td><%= record.model_id %></td>
         <td><%= record.meta.blank? ? "" : record.meta.to_json%></td>
         <td>
-          <%= record.created_at %>
+          <%= l record.created_at, format: :short %>
         </td>
 
       </tr>
