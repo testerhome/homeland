@@ -274,6 +274,8 @@ class CreditListener
 
   # 最佳答案, 走的 model
   def reply_suggested(reply)
+    return if reply.user_id == reply.topic.user_id
+    
     user = reply.user
     num = Setting.question_best_answer_credit
 
