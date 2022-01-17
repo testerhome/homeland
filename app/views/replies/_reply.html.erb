@@ -59,7 +59,7 @@
                     %>
                     <% end %>
 
-                    <% if current_user %>
+                    <% if current_user && can?(:reply_suggest, reply) %>
                       <% if reply.suggested? %>
                         <%= link_to raw("<i class='fa fa-times-circle'> </i>"), send("reply_unsuggest_#{reply.topic.class.name.downcase}_reply_path", reply.topic, reply), 'data-uid' => reply.user_id, method: :post, remote: true, class: "", title: "取消最佳回复" %>
                       <% else %>
