@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  include Wisper::Publisher # 加入监听器
   before_action :require_no_sso!, only: %i[new create]
 
   def create
@@ -19,6 +20,7 @@ class Users::SessionsController < Devise::SessionsController
     end
 
     sign_in(resource_name, resource)
+    broadcast(:user_login, resource)
     yield resource if block_given?
     respond_to do |format|
       format.html { redirect_back_or_default(root_url) }

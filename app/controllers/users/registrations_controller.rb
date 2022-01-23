@@ -5,7 +5,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-
     if Setting.shutdown_register?
       message = "社区关闭注册，如需注册请联系社区公众号！"
       logger.warn message
@@ -48,7 +47,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       respond_with resource
       return
     end
-
     unless verify_complex_captcha?(resource)
       Rails.cache.write(cache_key, sign_up_count + 1)
       clean_up_passwords resource

@@ -1,0 +1,31 @@
+<h2>订单</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>商品名</th>
+      <th>具体型号</th>
+      <th>个数</th>
+      <th>交易价格</th>
+      <th>状态</th>
+      <th>时间</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%@credit_variant_orders.includes(:credit_variant).each do |order|%>
+      <tr>
+        <td><%= order.credit_product.title %></td>
+        <td><%= order.credit_variant.title %></td>
+        <td><%= order.num %></td>
+        <td>
+          <span><%= order.credit_price.to_i * order.num %></span>
+          <span>(<%= order.credit_price.to_i %> )</span>
+        </td>
+        <td><%= order.status %></td>
+        <td><%= order.created_at %></td>
+        <td><%= link_to "详情", [order] %></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>

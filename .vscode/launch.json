@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "cwd": "${workspaceRoot}",
+      "name": "Minitest - Run at cursor position",
+      "type": "Ruby",
+      "request": "launch",
+      "program": "${workspaceRoot}/bin/rails",
+      "args": [
+        "test",
+        "${file}:${lineNumber}"
+      ]
+    },
+  ]
+}

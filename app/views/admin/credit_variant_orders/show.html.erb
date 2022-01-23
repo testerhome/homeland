@@ -1,0 +1,65 @@
+<h2>订单: <%= @credit_variant_order.uuid%></h2>
+<div>
+  <div class='tw-flex tw-space-x-4'>
+    <%= button_to  "审核通过", authen_admin_credit_variant_order_path(@credit_variant_order), class: "btn btn-primary" if @credit_variant_order.may_authen? %>
+    <%= button_to  "审核驳回", revoke_admin_credit_variant_order_path(@credit_variant_order), class: "btn btn-danger" if @credit_variant_order.may_revoke? %>
+    <%= button_to  "完成订单", complete_admin_credit_variant_order_path(@credit_variant_order),method: "post", class: "btn btn-secondary" if @credit_variant_order.may_complete? %>
+    <% if @credit_variant_order.may_ship? %>
+      <%= form_with model: @credit_variant_order, url: ship_admin_credit_variant_order_path(@credit_variant_order), local: true, method: "post", class: 'tw-w-80'  do |f|%>
+      <% if @credit_variant_order.credit_product.category != "虚拟物品" %>
+        <div class="form-group">
+          <%= f.hidden_field :id %>
+          <%= f.label :deliver_no, "快递编号"%>
+          <%= f.text_field :deliver_no %>
+        </div>
+        <div class="form-group">
+          <%= f.label :deliver_category, "快递公司"%>
+          <%= f.text_field :deliver_category %>
+        </div>
+      <% else %>
+        <div class="form-group">
+          <%= f.label :virtual_markup, "虚拟物品信息备注(支持markdown)"%>
+          <%= f.text_area :virtual_markup, class: 'form-control' %>
+        </div>
+      <% end %>
+
+        <div class="form-groups">
+          <%= f.submit "发货" , class: "btn btn-secondary"%>
+        </div>
+      <%end %>
+    <%end %>
+  </div>
+  <div class="tw-flex tw-mt-4">
+    <div class='tw-w-56'>
+      <%= image_tag @credit_variant_order.image_url, class: 'tw-h-56 tw-w-full' %>
+    </div>
+    <div class='tw-ml-16'>
+      <h2 class='tw-text-left tw-font-bold tw-text-2xl tw-text-gray-800'>
+        订单：<%= @credit_variant_order.titles.join(" ")%>
+      </h2>
+      <hr>
+      <div>
+        <p><span class="tw-w-36 tw-inline-block tw-font-bold ">订单编号：</span> <span> <%= @credit_variant_order.uuid %></span></p>
+        <p><span class="tw-w-36 tw-inline-block tw-font-bold ">下单时间：</span> <span> <%= @credit_variant_order.created_at %></span></p>
+        <p><span class="tw-w-36 tw-inline-block tw-font-bold ">订单状态：</span> <span> <%= I18n.t("activerecord.enums.credit_variant_order.status.#{@credit_variant_order.status}") %></span></p>
+        <p><span class="tw-w-36 tw-inline-block tw-font-bold ">单价：</span> <span> <%= @credit_variant_order.current_credit_price %></span></p>
+        <p><span class="tw-w-36 tw-inline-block tw-font-bold ">数量：</span> <span> x <%= @credit_variant_order.num %></span></p>
+        <p><span class="tw-w-36 tw-inline-block tw-font-bold ">总价：</span> <span> <%= @credit_variant_order.current_credit_price * @credit_variant_order.num %></span></p>
+        <hr>
+        <%if @credit_variant_order.credit_product.category != "虚拟物品" %>
+          <p><span class="tw-w-36 tw-inline-block tw-font-bold ">收件人：</span> <span> <%= @credit_variant_order.deliver_receiver_name %></span></p>
+          <p><span class="tw-w-36 tw-inline-block tw-font-bold ">电话：</span> <span> <%= @credit_variant_order.deliver_receiver_phone %></span></p>
+          <p><span class="tw-w-36 tw-inline-block tw-font-bold ">快递地址：</span> <span> <%= @credit_variant_order.deliver_address %></span></p>
+          <p><span class="tw-w-36 tw-inline-block tw-font-bold ">快递公司：</span> <span> <%= @credit_variant_order.deliver_category %></span></p>
+          <p><span class="tw-w-36 tw-inline-block tw-font-bold ">快递编号：</span> <span> <%= @credit_variant_order.deliver_no %></span></p>
+        <% else %>
+          <%= markdown(@credit_variant_order.virtual_markup)%>
+        <%end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <p>
+  </p>
+</div>

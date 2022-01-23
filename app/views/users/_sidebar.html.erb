@@ -2,7 +2,7 @@
   <div class="card profile">
     <div class="card-body">
       <div class="media">
-        <div class="avatar media-left mr-3">
+        <div class="mr-3 avatar media-left">
           <div class='image'><%= user_avatar_tag(@user, :lg, link: false) %></div>
           <div class="level"><%= user_level_tag(@user, show_whole: false) %></div>
         </div>
@@ -27,6 +27,15 @@
           <div class="item counts">
             <span><%= @user.topics_count %></span> 篇帖子 • <span><%= @user.replies_count %></span> 条回帖
           </div>
+
+          <% if current_user && current_user == @user %>
+          <div class="item credits">
+            <%= link_to  credits_path do %>
+            <span class='tw-text-green-500'><%= current_user.credit_sum.to_i%></span> 积分
+            <%end %>
+          </div>
+          <%end%>
+
           <div class="item social">
             <% if !@user.twitter.blank? %>
               <%= link_to raw('<i class="fab fa-twitter"></i>'), @user.twitter_url, class: "twitter", rel: "nofollow" %>

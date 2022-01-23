@@ -1,0 +1,28 @@
+<div class=' tw-border-solid tw-border-red-50 hover:tw-border-red-300 tw-container tw-p-4'>
+  <%= form_with url: sync_tech_node_ids_admin_credit_settings_path, local: true do |f|%>
+  <h2 class='tw-text-xl tw-font-bold'>技术节点设置</h2>
+  <p>选择有哪些节点属于技术节点， 属于技术节点后， 发起帖子会增加积分</p>
+  <div class='tw-grid tw-grid-cols-4'>
+    <%@sections.each do |section|%>
+      <div data-controller='checkbox-select-all'>
+        <label>
+          <input type="checkbox" data-checkbox-select-all-target="checkboxAll" />
+          <span><%= section.name%></span>
+        </label>
+        <ul>
+          <% section.nodes.each do |node|%>
+            <li>
+              <label>
+                <% checked = @tech_node_ids.include?(node.id) %>
+                <input type="checkbox" name="tech_nodes[]" data-checkbox-select-all-target="checkbox" <%= checked ? "checked" : "" %>  value="<%= node.id%>" />
+                <span><%= node.name%></span>
+              </label>
+            </li>
+          <%end %>
+        </ul>
+      </div>
+    <%end %>
+  </div>
+  <%= f.submit%>
+  <%end %>
+</div>

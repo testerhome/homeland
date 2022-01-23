@@ -2,6 +2,7 @@
 
 require "digest/md5"
 class Reply < ApplicationRecord
+  include Wisper::Publisher # 加入监听器
   include SoftDelete, MarkdownBody, Mentionable, MentionTopic, UserAvatarDelegate, Auditable
   include Reply::Notify, Reply::Voteable
 
@@ -40,6 +41,9 @@ class Reply < ApplicationRecord
   end
 
   after_commit :update_parent_topic, on: :create, unless: -> { system_event? }
+
+  after_save :calc_credit_reward
+
   def update_parent_topic
     topic.update_last_reply(self) if topic.present?
   end
@@ -75,6 +79,12 @@ class Reply < ApplicationRecord
   end
 
   def update_suggested_at(time)
+    if time.nil?
+      broadcast(:reply_suggested_canceled, self)
+    else
+      broadcast(:reply_suggested, self)
+    end
+
     self.update_attribute(:suggested_at, time)
   end
 
@@ -85,4 +95,12 @@ class Reply < ApplicationRecord
     return false if opts[:user].blank?
     self.create!(opts)
   end
+
+  private
+
+  def calc_credit_reward
+    return unless saved_change_to_attribute(:audit_status) && self.audit_status == 'approved'
+    broadcast(:reply_created_and_audited, self)
+  end
+
 end

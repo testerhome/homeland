@@ -93,6 +93,9 @@ gem "redis", "~>4.1.0"
 gem "redis-namespace", github: "resque/redis-namespace"
 gem "redis-objects"
 
+# 基于 redis 的锁
+gem 'redlock'
+
 # Cache
 gem "second_level_cache"
 
@@ -105,6 +108,8 @@ gem "html-pipeline"
 gem "html-pipeline-auto-correct"
 gem "redcarpet"
 gem "rouge"
+
+gem 'acts_as_list'
 
 # 队列
 gem "sidekiq", "6.0.7"
@@ -132,14 +137,21 @@ gem "exception-track"
 
 gem "bootsnap"
 gem "lograge"
-gem 'groupdate'
-gem 'ransack'
+gem "groupdate"
+gem "ransack"
+gem "wisper"
+gem "cocoon"
+gem "aasm"
 
 group :development, :test do
   gem "pry"
   gem "pry-byebug"
   gem "spring"
   gem "byebug"
+  gem 'ruby-debug-ide'
+  gem 'debase'
+  gem 'database_cleaner-active_record'
+
 
   gem "sdoc"
   gem "letter_opener"
@@ -148,6 +160,8 @@ group :development, :test do
   gem "mocha"
   gem "minitest-spec-rails"
   gem "factory_bot_rails"
+
+  gem 'annotate'
 
   gem "rubocop", require: false
   gem "codecov", require: false

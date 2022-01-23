@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       get :password
       get :profile
       get :reward
+      get :credits
     end
   end
 
@@ -68,6 +69,15 @@ Rails.application.routes.draw do
 
   get "topics/node:id", to: "topics#node", as: "node_topics"
   get "topics/node:id/feed", to: "topics#node_feed", as: "feed_node_topics", defaults: { format: "xml" }
+
+  resources :credit_products do
+  end
+
+  resources :credit_variant_orders do
+    member do
+      post :pay
+    end
+  end
 
   resources :topics do
     member do
@@ -115,6 +125,7 @@ Rails.application.routes.draw do
   resources :questions
   resources :tip_offs
   resources :invite_codes
+  resources :credits
 
   get "/search", to: "search#index", as: "search"
   get "/search/users", to: "search#users", as: "search_users"
@@ -126,6 +137,37 @@ Rails.application.routes.draw do
     resource :dashboards do
       collection do
         post :reboot
+      end
+    end
+    resources :credit_records, only: [:index, :new, :create] do
+
+      collection do
+        get :user_credit_info
+      end
+    end
+    resources :credit_products do
+      collection do
+        get :add_variant
+      end
+    end
+
+    resources :credit_variant_orders do
+      collection do
+        post :authen
+        post :revoke
+      end
+      member do
+        post :authen
+        post :ship
+        post :complete
+        post :revoke
+        post :drop
+      end
+    end
+
+    resources :credit_settings do
+      collection do
+        post :sync_tech_node_ids
       end
     end
     resources :site_configs

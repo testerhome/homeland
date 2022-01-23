@@ -34,6 +34,7 @@
                 li << link_to(t("admin.menu.photos"), main_app.admin_photos_path, class: "nav-link")
                 li << link_to(t("admin.menu.locations"), main_app.admin_locations_path, class: "nav-link")
                 li << link_to(t("admin.menu.column_channels"), main_app.admin_column_channels_path, class: "nav-link")
+                li << link_to(t("admin.menu.credit_settings"), main_app.admin_credit_settings_path, class: "nav-link")
                 li << link_to("Audits", main_app.admin_audits_path, class: "nav-link")
                 Homeland.admin_navbar_plugins.each do |plugin|
                   li << link_to(plugin.display_name, plugin.admin_path, class: "nav-link")
@@ -46,7 +47,7 @@
         </div>
     </div>
 
-    <div class="main-container container">
+    <div class="container main-container">
         <div id="main" class="card">
             <div class="card-body">
                 <% if Setting.require_restart == true %>

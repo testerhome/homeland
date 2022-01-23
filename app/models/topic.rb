@@ -3,8 +3,9 @@
 require "redcarpet/render_strip"
 
 class Topic < ApplicationRecord
+  include Wisper::Publisher # 加入监听器
   include SoftDelete, MarkdownBody, Mentionable, MentionTopic, Closeable, Searchable, UserAvatarDelegate, Auditable
-  include Topic::Actions, Topic::AutoCorrect, Topic::Search, Topic::Notify, Topic::RateLimit
+  include Topic::Actions, Topic::AutoCorrect, Topic::Search, Topic::Notify, Topic::RateLimit, Topic::CreditOperations
 
   # 临时存储检测用户是否读过的结果
   attr_accessor :read_state
@@ -75,6 +76,10 @@ class Topic < ApplicationRecord
 
   before_save { self.node_name = node.try(:name) || "" }
   before_create { self.last_active_mark = Time.now.to_i }
+
+  after_save :calc_credit_reward
+
+  # after_create_commit :broadcast_topic_created
 
   def self.fields_for_list
     columns = %w[body who_deleted]
@@ -217,5 +222,21 @@ class Topic < ApplicationRecord
       @total_pages = 60
     end
     @total_pages.to_i
+  end
+
+  private
+
+  def calc_credit_reward
+    return unless saved_change_to_attribute(:audit_status) && self.audit_status == 'approved'
+    broadcast_topic_created_and_audited
+  end
+
+  def broadcast_topic_created_and_audited
+    if self.node.id != Node.questions_id
+      broadcast(:topic_created_and_audited, self)
+      # 将创建的 topic 创建广播， 可以监听此广播用来处理复杂的逻辑
+    else
+      broadcast(:question_created_and_audited, self)
+    end
   end
 end

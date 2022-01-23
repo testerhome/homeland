@@ -59,10 +59,12 @@
                     %>
                     <% end %>
 
-                    <% if reply.suggested? %>
-                      <%= link_to raw("<i class='fa fa-times-circle'></i>"), send("reply_unsuggest_#{reply.topic.class.name.downcase}_reply_path", reply.topic, reply), 'data-uid' => reply.user_id, method: :post, remote: true, class: "suggest", title: "取消最佳回复" %>
-                    <% else %>
-                      <%= link_to raw("<i class='fa fa-check'></i>"), send("reply_suggest_#{reply.topic.class.name.downcase}_reply_path", reply.topic, reply), 'data-uid' => reply.user_id, method: :post, remote: true, class: "suggest", title: "设为最佳回复" %>
+                    <% if current_user && can?(:reply_suggest, reply) %>
+                      <% if reply.suggested? %>
+                        <%= link_to raw("<i class='fa fa-times-circle'> </i>"), send("reply_unsuggest_#{reply.topic.class.name.downcase}_reply_path", reply.topic, reply), 'data-uid' => reply.user_id, method: :post, remote: true, class: "", title: "取消最佳回复" %>
+                      <% else %>
+                        <%= link_to raw("<i class='fa fa-check'> </i>"), send("reply_suggest_#{reply.topic.class.name.downcase}_reply_path", reply.topic, reply), 'data-uid' => reply.user_id, method: :post, remote: true, class: "", title: "设为最佳回复" %>
+                      <% end %>
                     <% end %>
 
                     <%= link_to('', "#", 'data-id' => reply.id, 'data-login' => reply.user_login,

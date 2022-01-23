@@ -196,6 +196,23 @@ class Setting < RailsSettings::Base
   field :topic_create_rate_limit, default: "false", type: :boolean
   field :node_ids_hide_in_topics_index, type: :array, default: []
 
+  # 积分相关权限
+  field :tech_node_ids, type: :array, default: []
+  field :tech_topic_created_credit, type: :integer, default: 100
+  field :question_created_credit, type: :integer, default: 10
+  field :excellent_topic_credit, type: :integer, default: 500
+  field :topic_user_reply_reward_credit, type: :integer, default: 5
+  field :topic_reply_credit, type: :integer, default: 2
+  field :topic_reply_credit_limit, type: :integer, default: 20
+  field :topic_like_credit, type: :integer, default: 2
+  field :reply_like_credit, type: :integer, default: 2
+  field :question_best_answer_credit, type: :integer, default: 100
+  field :invite_code_registered_credit, type: :integer, default: 50
+  field :login_credit, type: :integer, default: 1
+  field :registered_credit, type: :integer, default: 500
+
+  field :credit_products_top_ads, type: :array, default: []
+
   field :apns_pem, default: ""
   field :blacklist_ips, default: [], type: :array
 
@@ -278,6 +295,13 @@ class Setting < RailsSettings::Base
   field :recaptcha_secret, default: "6Lcalg8TAAAAAN-nZr547ORtmtpw78mTLWtVWFW2"
   field :google_analytics_key, default: ""
   field :certify_questions, default: "", type: :string
+
+  # static node
+  field :node_ban_id, default: 55, type: :integer
+  field :node_bugs_id, default: 47, type: :integer
+  field :node_opencourse_id, default: 67, type: :integer
+  field :node_questions_id, default: 20, type: :integer
+  field :node_job_id, default: 19, type: :integer
 
   class << self
     def editable_keys

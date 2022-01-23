@@ -3,6 +3,7 @@
 class User
   # 对话题、回帖点赞
   module Likeable
+    include Wisper::Publisher # 加入监听器
     extend ActiveSupport::Concern
 
     included do
@@ -20,12 +21,15 @@ class User
     def like(likeable)
       return false if likeable.blank?
       return false if likeable.user_id == self.id
+      broadcast(:action_like, likeable)
       self.create_action(:like, target: likeable)
     end
 
     # 取消赞
     def unlike(likeable)
       return false if likeable.blank?
+      return false if likeable.user_id == self.id
+      broadcast(:action_unlike, likeable)
       self.destroy_action(:like, target: likeable)
     end
 

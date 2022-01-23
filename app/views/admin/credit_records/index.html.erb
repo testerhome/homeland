@@ -1,0 +1,105 @@
+<%= render "shared/admin/credit_links"%>
+<h2>积分变动管理</h2>
+<%= form_with path: admin_credit_records_path,method: "get", local: true do |f|%>
+  <div class='tw-gap-4 tw-grid tw-grid-cols-4'>
+    <div class="form-groups">
+      <%=f.label :user_login_eq, "用户名称"%>
+      <%=f.text_field :user_login_eq, value: params[:user_login_eq], class: "form-control"%>
+    </div>
+
+    <div class="form-groups">
+      <%=f.label :user_email_eq, "用户Email"%>
+      <%=f.text_field :user_email_eq, value: params[:user_email_eq], class: "form-control"%>
+    </div>
+
+    <div class='form-groups'>
+      <%=f.label :model_type_eq, "模型唤起"%>
+      <%=f.text_field :model_type_eq, value: params[:model_type_eq], class: "form-control"%>
+    </div>
+
+    <div class='form-groups'>
+      <%=f.label :model_id_eq, "模型id"%>
+      <%=f.text_field :model_id_eq, value: params[:model_id_eq], class: "form-control"%>
+    </div>
+
+      <div class='form-groups'>
+      <%=f.label :category_eq, "类型"%>
+      <%=f.text_field :category_eq, value: params[:category_eq], class: "form-control"%>
+    </div>
+
+    <div class=" form-groups">
+      <%=f.label :num_gteq, "积分介于区间"%>
+      <div class="tw-flex">
+        <%=f.number_field :num_gteq, value: params[:num_gteq],  class: "form-control"%>
+
+        <%=f.number_field :num_lteq, value: params[:num_lteq],  class: "form-control"%>
+      </div>
+    </div>
+
+
+    <div class="tw-col-start-1 tw-row-span-2 form-groups">
+      <%=f.label :created_at_gteq, "积分获得时间区间"%>
+      <div class="tw-flex">
+        <%=f.datetime_field :created_at_gteq, value: params[:created_at_gteq],  class: "form-control"%>
+        <%=f.datetime_field :created_at_lteq, value: params[:created_at_lteq],  class: "form-control"%>
+      </div>
+    </div>
+  </div>
+  <div class="tw-items-center tw-py-5 tw-flex tw-space-x-3">
+    <%=f.submit "搜索", class: "btn btn-primary"%>
+    <%= link_to "重置搜索", admin_credit_records_path %>
+  </div>
+<%end%>
+<div class='tw-text-right'>
+  <%= link_to "对用户积分变更", new_admin_credit_record_path%>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>用户</th>
+      <th>类型</th>
+      <th>原因</th>
+      <th>数量</th>
+      <th>模型唤起</th>
+      <th>模型id</th>
+      <th>meta</th>
+      <th>时间</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%@credit_records.each do |record|%>
+      <tr>
+        <td>
+          <%= link_to params.permit!.merge(user_login_eq: record.user.login) do %>
+            <%= record.user.login %>
+          <%end %>
+        </td>
+        <td>
+          <%= link_to params.permit!.merge(category_eq: record.category) do %>
+            <%=record.category%>
+          <%end %>
+        </td>
+        <td><%=record.reason%></td>
+        <td>
+          <%= link_to params.permit!.merge(num_gteq: record.num, num_lteq: record.num) do %>
+            <%= record.num%>
+          <%end %>
+        </td>
+        <td>
+          <%= link_to params.permit!.merge(model_type_eq: record.model_type) do %>
+            <%= record.model_type %>
+          <%end %>
+        </td>
+        <td><%= record.model_id %></td>
+        <td><%= record.meta.blank? ? "" : record.meta.to_json%></td>
+        <td>
+          <%= l record.created_at, format: :short %>
+        </td>
+
+      </tr>
+    <%end%>
+  </tbody>
+</table>
+
+<%= paginate @credit_records%>

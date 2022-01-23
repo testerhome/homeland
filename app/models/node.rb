@@ -26,23 +26,23 @@ class Node < ApplicationRecord
   end
 
   def self.ban_id
-    55
+    Setting.node_ban_id
   end
 
   def self.bugs_id
-    47
+    Setting.node_bugs_id
   end
 
   def self.opencourse_id
-    67
+    Setting.node_opencourse_id
   end
 
   def self.questions_id
-    20
+    Setting.node_questions_id
   end
 
   def self.job_id
-    19
+    Setting.node_job_id
   end
 
   def self.find_builtin_node(id, name)

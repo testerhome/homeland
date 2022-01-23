@@ -12,6 +12,8 @@ $redis = Redis.new(url: redis_config["url"], db: 0)
 sidekiq_url = redis_config["url"]
 Redis::Objects.redis = $redis
 
+$lock_manager = Redlock::Client.new([redis_config["url"]])
+
 Sidekiq.configure_server do |config|
   config.redis = { namespace: "sidekiq", url: sidekiq_url, db: 0 }
 end

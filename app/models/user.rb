@@ -3,10 +3,11 @@
 require "digest/md5"
 
 class User < ApplicationRecord
+  include Wisper::Publisher # 加入监听器
   include Searchable
   include User::Roles, User::Blockable, User::Likeable, User::Followable, User::TopicActions,
           User::GitHubRepository, User::ProfileFields, User::RewardFields, User::Deviseable,
-          User::Avatar, Auditable
+          User::Avatar, Auditable, User::CreditOperations
 
   second_level_cache version: 5, expires_in: 2.weeks
 
@@ -30,6 +31,9 @@ class User < ApplicationRecord
   has_many :devices
   has_many :team_users
   has_many :teams, through: :team_users
+  has_many :credit_records
+  has_many :credit_variant_orders
+
   has_one :sso, class_name: "UserSSO", dependent: :destroy
 
   has_many :invite_codes, dependent: :destroy, foreign_key: "creater_id"
@@ -40,8 +44,13 @@ class User < ApplicationRecord
                     presence: true,
                     uniqueness: { case_sensitive: false }
   validates :name, length: { maximum: 20 }
+  validates_numericality_of :credit_sum, greater_than_or_equal_to: 0, message: "不能小于0"
 
   after_commit :send_welcome_mail, on: :create
+
+  after_save :calc_credits_reward
+
+  
 
   # after_commit :send_new_password_mail,
   #              if: proc { |record|
@@ -108,6 +117,13 @@ class User < ApplicationRecord
     self.certified_at = Time.now
     save(validate: false)
   end
+
+  def calc_credits_reward
+    return unless saved_change_to_attribute(:audit_status) && self.audit_status == 'approved'
+    broadcast(:user_created_and_audited, self)
+  end
+
+
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
@@ -245,4 +261,6 @@ class User < ApplicationRecord
     end
     false
   end
+
+
 end

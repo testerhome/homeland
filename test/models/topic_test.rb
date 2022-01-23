@@ -217,8 +217,9 @@ class TopicTest < ActiveSupport::TestCase
 
   test "RateLimit should limtest by minute" do
     Setting.stubs(:topic_create_limit_interval).returns(60)
-    user_id = 11
-    t = build(:topic, user_id: user_id)
+    user = create(:user)
+    user_id = user.id
+    t = build(:topic, user_id: user.id)
     assert_equal true, t.save
     assert_equal false, t.new_record?
     assert_equal 1, Rails.cache.read("users:#{user_id}:topic-create")
@@ -237,7 +238,8 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test "RateLimit should limtest by hour" do
-    user_id = 12
+    user = create(:user)
+    user_id = user.id
 
     create(:topic, user_id: user_id)
     count = Rails.cache.read("users:#{user_id}:topic-create-by-hour")

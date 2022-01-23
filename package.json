@@ -8,6 +8,7 @@
   "dependencies": {
     "@babel/preset-react": "~7.10",
     "@fortawesome/fontawesome-free": "~5.15",
+    "@nathanvda/cocoon": "^1.2.14",
     "@rails/actioncable": "~6.0",
     "@rails/ujs": "~6.0",
     "@rails/webpacker": "~5.2",

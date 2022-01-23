@@ -2,6 +2,7 @@
 <%= render 'team_selector', node: @topic.team %>
 
 <%= form_for @topic, remote: true, html: { class: "form", tb: 'edit-topic' } do |f| %>
+
   <%= render "shared/error_messages", target: @topic %>
   <%= f.hidden_field :node_id %>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_17_182826) do
+ActiveRecord::Schema.define(version: 2022_01_01_033923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -88,6 +88,73 @@ ActiveRecord::Schema.define(version: 2021_12_17_182826) do
     t.index ["commentable_id"], name: "index_comments_on_commentable_id"
     t.index ["commentable_type"], name: "index_comments_on_commentable_type"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "credit_products", force: :cascade do |t|
+    t.string "title"
+    t.string "main_image_url"
+    t.string "category"
+    t.string "description"
+    t.string "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "position"
+    t.boolean "online", default: true
+    t.string "uuid"
+  end
+
+  create_table "credit_records", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "category"
+    t.string "reason"
+    t.integer "num"
+    t.string "operator"
+    t.jsonb "meta"
+    t.string "markup"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "model_id"
+    t.string "model_type"
+    t.integer "balance"
+    t.index ["model_id"], name: "index_credit_records_on_model_id"
+    t.index ["model_type"], name: "index_credit_records_on_model_type"
+    t.index ["user_id"], name: "index_credit_records_on_user_id"
+  end
+
+  create_table "credit_variant_orders", force: :cascade do |t|
+    t.bigint "credit_variant_id", null: false
+    t.integer "num"
+    t.string "status"
+    t.bigint "user_id", null: false
+    t.string "deliver_address"
+    t.string "deliver_category"
+    t.string "deliver_markup"
+    t.string "deliver_no"
+    t.string "deliver_receiver_name"
+    t.string "deliver_receiver_phone"
+    t.decimal "current_credit_price"
+    t.integer "authen_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "uuid"
+    t.string "virtual_markup"
+    t.index ["credit_variant_id"], name: "index_credit_variant_orders_on_credit_variant_id"
+    t.index ["user_id"], name: "index_credit_variant_orders_on_user_id"
+  end
+
+  create_table "credit_variants", force: :cascade do |t|
+    t.string "sku"
+    t.string "image_url"
+    t.string "title"
+    t.string "description"
+    t.bigint "credit_product_id"
+    t.decimal "credit_price", precision: 8, scale: 2, default: "0.0", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "stock"
+    t.integer "position"
+    t.boolean "online", default: true
+    t.index ["credit_product_id"], name: "index_credit_variants_on_credit_product_id"
   end
 
   create_table "devices", id: :serial, force: :cascade do |t|
@@ -345,6 +412,7 @@ ActiveRecord::Schema.define(version: 2021_12_17_182826) do
     t.integer "audit_user_id"
     t.string "audit_status", default: "pending"
     t.string "audit_reason"
+    t.boolean "has_earn_create_credit", default: false
     t.index ["deleted_at"], name: "index_replies_on_deleted_at"
     t.index ["topic_id"], name: "index_replies_on_topic_id"
     t.index ["user_id"], name: "index_replies_on_user_id"
@@ -472,6 +540,7 @@ ActiveRecord::Schema.define(version: 2021_12_17_182826) do
     t.integer "audit_user_id"
     t.string "audit_status", default: "pending"
     t.string "audit_reason"
+    t.boolean "has_earn_create_credit", default: false
     t.index ["deleted_at"], name: "index_topics_on_deleted_at"
     t.index ["grade"], name: "index_topics_on_grade"
     t.index ["last_active_mark"], name: "index_topics_on_last_active_mark"
@@ -558,6 +627,8 @@ ActiveRecord::Schema.define(version: 2021_12_17_182826) do
     t.integer "audit_user_id"
     t.string "audit_status", default: "pending"
     t.string "audit_reason"
+    t.integer "credit_sum", default: 0
+    t.boolean "has_earn_create_credit", default: false
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
@@ -567,4 +638,7 @@ ActiveRecord::Schema.define(version: 2021_12_17_182826) do
   end
 
   add_foreign_key "appends", "topics"
+  add_foreign_key "credit_records", "users"
+  add_foreign_key "credit_variant_orders", "credit_variants"
+  add_foreign_key "credit_variant_orders", "users"
 end
