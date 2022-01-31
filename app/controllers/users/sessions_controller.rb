@@ -11,14 +11,13 @@ class Users::SessionsController < Devise::SessionsController
     if session[:omniauth]
       @auth = Authorization.find_or_create_by!(provider: session[:omniauth]["provider"], uid: session[:omniauth]["uid"], user_id: resource.id)
       if @auth.blank?
-        redirect_to new_user_session_path, alter: "Sign in and bind OAuth account failed."
+        redirect_to new_user_session_path, alert: "Sign in and bind OAuth account failed."
         return
       end
 
       set_flash_message(:notice, :signed_in_bind_oauth)
       session[:omniauth] = nil
     end
-
     sign_in(resource_name, resource)
     broadcast(:user_login, resource)
     yield resource if block_given?

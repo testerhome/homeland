@@ -24,6 +24,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
         @user = User.find_or_create_by_omniauth(omniauth_auth)
         if @user&.persisted?
+          if not @user.confirmed?
+            redirect_to new_user_session_path, alert: I18n.t("devise.failure.email_not_active", login: @user.login, email: @user.email)
+            return
+          end
           # Sign in @user when exists binding or successfully created a user with binding
           sign_in_and_redirect @user, event: :authentication
         else

@@ -10,6 +10,7 @@
       user:
         failure: "三方登录过程异常，请重试。"
     failure:
+      email_not_active: "%{login}的邮箱 %{email} 没有激活，请先点击\"未收到激活邮件?\"激活邮箱"
       already_authenticated: "登录成功。"
       unauthenticated: "继续操作前请注册或者登录。"
       unconfirmed: "请前往注册邮箱，激活您的账号。"
