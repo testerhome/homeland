@@ -138,5 +138,10 @@ class CreditTest < ActiveSupport::TestCase
     @reply = create(:reply, topic: @topic, user: @user2)
     assert_equal @user.reload.credit_sum, 125
     assert_equal @user2.reload.credit_sum, 102
+    @topic.ban! reason: 'test'
+    CreditListener.new().ban_topic(@topic,operator: @user, reason: "test") # 注意， 此处因为是后台， 所以是绑定的controller
+
+    assert_equal @user.reload.credit_sum, 100
+    assert_equal @user2.reload.credit_sum, 100
   end
 end

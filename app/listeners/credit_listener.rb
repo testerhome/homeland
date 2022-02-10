@@ -140,10 +140,13 @@ class CreditListener
   # 帖子被ban
   def ban_topic(topic,  operator:, reason:)
     CreditRecord.where(model_type: "Topic", model_id: topic.id).group(:user_id).sum(:num).each do |user_id, sum|
+      user = User.find_by_id user_id
+      next if user.nil?
+
       user.credit_operate(
         category: "topic_ban",
         reason: "#{topic.title} 被禁止， 相关得分被扣除",
-        num: num * -1,
+        num: sum * -1,
         operator: user.id,
         model_id: topic.id,
         model_type: "Topic",
