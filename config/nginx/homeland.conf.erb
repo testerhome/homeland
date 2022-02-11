@@ -11,7 +11,8 @@ log_format timed_combined '$remote_addr - $remote_user [$time_local] '
                           '"$request" $status $body_bytes_sent '
                           '"$http_referer" "$http_user_agent" '
                           '$request_time $upstream_response_time $pipe';
-
+limit_req_zone $binary_remote_addr zone=one:10m rate=10r/s;
+limit_conn_zone $binary_remote_addr zone=addr:10m;
 server {
   listen 80 default_server;
 
@@ -148,6 +149,11 @@ server {
 
   # DO NOT CHANGE THIS
   location / {
+    limit_req zone=one burst=100 nodelay;
+    limit_conn addr 10;
+    deny 60.174.248.98;
+    deny 216.244.66.241;
+    deny 220.181.108.0/24;
     proxy_redirect     off;
     proxy_set_header   Host $http_host;
     proxy_set_header   X-Forwarded-Host $http_host;
