@@ -4,7 +4,7 @@
 # 专栏文章称为 article ，model 层继续用 topic
 class ArticlesController < TopicsController
   before_action :set_article, only: [:ban, :append, :edit, :update, :destroy, :follow,
-                                   :unfollow, :action, :down]
+                                   :unfollow, :action, :down, :show]
 
   def index
     @articles = Article.all
