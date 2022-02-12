@@ -253,7 +253,11 @@ class TopicsController < ApplicationController
 
     def common_logic_for_show(class_scope)
       topic = class_scope.unscoped.includes(:user).find(params[:id])
-      render_404 if topic.deleted?
+      if topic.deleted?
+        render_404
+        # 如果找不到topic，就404了，代码不要继续，用return
+        return
+      end
       # topic 都会展示就算用户被删除
       # return redirect_to(topics_path, notice: t("topics.cannot_read_ban_topics")) if topic.user.state == 'deleted'
 
