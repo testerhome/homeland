@@ -4,7 +4,7 @@ class TopicsController < ApplicationController
   include Wisper::Publisher # 加入监听器
   include Topics::ListActions
 
-  before_action :authenticate_user!, only: %i[new edit create update destroy
+  before_action :authenticate_user!, only: %i[new edit create update destroy waiting_audit_topics
                                               favorite unfavorite follow unfollow
                                               action favorites raw_markdown]
   load_and_authorize_resource only: %i[new edit create update destroy favorite unfavorite follow unfollow raw_markdown]
