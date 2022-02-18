@@ -166,6 +166,10 @@ class CreditListener
     # 先处理 帖子的
     topic = reply.topic
     user = reply.topic.user
+
+    # 有可能出现 topic 没有 user, 或者 reply 没有 user 的情况， 需要排除
+    return if user.nil? || reply.user.nil?
+
     # 当回复的人不是作者时
     if reply.user.id != user.id
       user.credit_operate(
