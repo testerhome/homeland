@@ -14,7 +14,7 @@
       comments: "評論"
       locations: "城市"
       exception_logs: "異常"
-      column_channels: "专案"
+      column_channels: "测试服务"
     overview: "概覽"
     recent_topics: "最近帖子"
     statics: "統計信息"

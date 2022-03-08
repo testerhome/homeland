@@ -1,10 +1,10 @@
 <ul id="main-nav-menu" class="navbar-nav d-flex">
   <%= render_list_items do |li|
     li << link_to(t("menu.topics"), Setting.has_module?(:home) ? main_app.topics_path : main_app.root_path, class: "nav-link")
-    li << link_to(t("menu.column_channel"), main_app.column_channels_path, class: "nav-link") if Setting.has_module?(:column_channels)
     li << link_to(t("menu.bugs"), main_app.bugs_path, class: "nav-link") if Setting.has_module?(:bug)
     li << link_to(t("menu.questions"), main_app.questions_path, class: "nav-link") if Setting.has_module?(:question)
     li << link_to(t("menu.teams"), main_app.teams_path, class: "nav-link") if Setting.has_module?(:team)
+    li << link_to(t("menu.column_channel"), main_app.column_channels_path, class: "nav-link") if Setting.has_module?(:column_channels)
     li << link_to(t("menu.credit_products"), main_app.credit_products_path, class: "nav-link") if Setting.has_module?(:credit_products)
 
     new_tags = (Setting.new_tags || "").split("\n").collect(&:strip)

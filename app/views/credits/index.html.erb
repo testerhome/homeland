@@ -2,6 +2,8 @@
   <div class='tw-flex tw-justify-between tw-items-center'>
     <h1 class='tw-text-lg tw-font-medium'>我的积分</h1>
     <p>您现在拥有积分: <span class="tw-font-bold"><%= current_user.credit_sum.to_i %></span></p>
+
+    <%=link_to(">> " + t("menu.credit_products"), main_app.credit_products_path, class: "nav-link")%>
   </div>
   <div class="tw-mt-4">
     <h2 class='tw-text-lg'>积分兑换历史</h2>
