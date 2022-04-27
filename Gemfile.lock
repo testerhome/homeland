@@ -24,10 +24,10 @@ GIT
       redis (>= 3.0.4)
 
 GIT
-  remote: https://e.coding.net/gems-github-mirror/gems-mirror/testerhome-homeland-opensource_project.git
-  revision: f14cb8463e8f9a2548dbc4006bc39f23569baa2e
+  remote: https://github.com/testerhome/homeland-opensource_project.git
+  revision: b730d9f9a988a20c1016a6bce109155b9b5a152f
   specs:
-    homeland-opensource_project (0.1.0)
+    homeland-opensource_project (0.1.1)
       rails (~> 6, >= 5)
 
 GIT
