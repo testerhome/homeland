@@ -57,10 +57,17 @@ module Topics
       def topics_scope(base_scope = Topic, without_nodes: true)
         scope = base_scope.without_draft.without_ban.fields_for_list.audit_approved
         scope = scope.without_hide_nodes if without_nodes
+        private_teams = Team.all.private_teams
 
         if current_user
           scope = scope.without_nodes(current_user.block_node_ids) if without_nodes
           scope = scope.without_users(current_user.block_user_ids)
+          # 屏蔽掉当前用户不在的私人社团的帖子
+          private_teams_user_not_in = private_teams.without(current_user.teams.where({ private: true }))
+          scope = scope.without_team_ids(private_teams_user_not_in.map { |team| team.id } )
+        else
+          # 屏蔽掉所有私人社团的帖子
+          scope = scope.without_team_ids(private_teams.map { |team| team.id })
         end
 
         # must include :user, because it's uses for _topic.html.erb fragment cache_key
