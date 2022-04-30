@@ -36,8 +36,17 @@ module Auditable
 
       # 当启用了修改检查
       if Setting.send("enable_audit_#{modelClass.name.underscore}_update")
+
+        # 如果在白名单， 就不管了
+        if self.respond_to?(:user) && (Setting.audit_user_whitelist || []).include?(self.user&.login)
+          self.audit_reason = "whitelist"
+          return self.audit_status = "approved"
+        end
+
         attributes = Setting.send("audit_#{modelClass.name.underscore}_update_attributes")
-        self.audit_status = "pending" if attributes.find { |attribute| self.send("#{attribute}_changed?") }
+        if attributes.find { |attribute| self.send("#{attribute}_changed?") }
+          self.audit_status = "pending" 
+        end
       end
     end
   end
