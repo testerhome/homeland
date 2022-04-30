@@ -4,7 +4,9 @@
     <div>
       您现在拥有积分: <span class="tw-font-bold tw-font-medium"><%= current_user.credit_sum.to_i %></span>
     </div>
-    <%=link_to(t("menu.credit_products") + " >>", main_app.credit_products_path, class: "nav-link")%>
+    <div>
+      <%= link_to t('menu.credit_products'), main_app.credit_products_path, class: 'btn btn-primary btn-block' %>
+    </div>
   </div>
   <div class="tw-mt-4">
     <h2 class='tw-text-lg'>积分兑换历史</h2>
