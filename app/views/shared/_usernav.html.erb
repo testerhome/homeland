@@ -38,6 +38,7 @@
         <% Homeland.user_menu_plugins.each do |plugin| %>
           <%= link_to plugin.display_name, plugin.root_path, class: "dropdown-item" %>
         <% end %>
+        <%= link_to(t("menu.credit"), main_app.credits_path, class: "dropdown-item") %>
 
         <% if current_user&.admin? %>
           <div class="dropdown-divider"></div>

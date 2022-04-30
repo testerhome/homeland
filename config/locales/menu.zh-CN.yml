@@ -88,7 +88,7 @@
     topics: "社区"
     wiki: "Wiki"
     gems: "Gems"
-    column_channel: "测试服务"
+    column_channel: "专栏 | 测试服务"
     bugs: "Bug 曝光台"
     open_course: "公开课"
     questions: "问答"
@@ -101,6 +101,7 @@
     my_columns_path: "我的专栏"
     likes: "我的收藏"
     teams: "社团"
+    credit: "积分兑礼"
   comments:
     create_comment: "发表评论"
     no_comment: "暂无评论"
