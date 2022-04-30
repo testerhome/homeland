@@ -5,7 +5,7 @@
 <%=content_for :title do %>
   <%= @credit_product.title%>
 <%end %>
-<div class='tw-bg-white <%= @credit_product.online ? "" : "filter grayscale" %>'>
+<div class='card <%= @credit_product.online ? "" : "filter grayscale" %>'>
   <div class="mx-auto tw-container tw-p-4"
       data-credit-product-buying-current-user-credit-value="<%= current_user ? current_user.credit_sum : -1 %>"
       data-controller='credit-product-buying'

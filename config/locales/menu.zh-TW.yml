@@ -84,7 +84,7 @@ ug"zh-TW":
     topics: "社區"
     wiki: "Wiki"
     gems: "Gems"
-    column_channel: "测试服务"
+    column_channel: "专栏 | 测试服务"
     bugs: "Bug 曝光台"
     open_course: "公開課"
     questions: "問答"
@@ -95,6 +95,7 @@ ug"zh-TW":
     edit_account_path: "個人資料設置"
     likes: "我的收藏"
     teams: "團體 / 組織"
+    credit: "積分兌禮"
   comments:
     create_comment: "發表評論"
     no_comment: "暫無評論"
