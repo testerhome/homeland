@@ -65,6 +65,8 @@ class Topic < ApplicationRecord
   scope :public_members_topic, -> {joins(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_PUBLIC_MEMBER, User::MAX_STATE_FOR_PUBLIC_MEMBER)}
   scope :enterprise_members_topic, -> {joins(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_ENTERPRISE, User::MAX_STATE_FOR_ENTERPRISE)}
 
+  scope :without_team_ids, -> (ids) { where(team_id: nil).or(exclude_column_ids("team_id", ids)) }
+
   # 首页， 节点使用的正常帖子， + 公众合作号+ 企业签约号+任意角色加精
   scope :with_filter_public_end_enterprise, -> {
     joins(:user).where("users.state between ? and ?", 1, 99)

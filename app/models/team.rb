@@ -8,6 +8,8 @@ class Team < User
   has_one :team_profile, dependent: :destroy
   accepts_nested_attributes_for :team_profile
 
+  scope :private_teams, -> { where( private: true ) }
+
   attr_accessor :owner_id
   after_create do
     self.team_users.create(user_id: owner_id, role: :owner, status: :accepted) if self.owner_id.present?
