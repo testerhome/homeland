@@ -35,7 +35,7 @@
         <div class="follow-info row hide-ios">
 
           <div class="col-sm-4 articles">
-            <span class="counter"><%= @column.articles.without_draft.count %></span>
+            <span class="counter"><%= @column.articles.without_draft.audit_approved.count %></span>
             <span class="text">文章</span>
           </div>
 
