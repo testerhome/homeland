@@ -40,10 +40,10 @@ class User < ApplicationRecord
   attr_accessor :password_confirmation, :invite_code
 
   validates :login, format: { with: ALLOW_LOGIN_FORMAT_REGEXP, message: "只允许数字、大小写字母" },
-                    length: { in: 2..20 },
+                    length: { in: 2..200 },
                     presence: true,
-                    uniqueness: { case_sensitive: false }
-  validates :name, length: { maximum: 20 }
+                    uniqueness: { case_sensitive: true }
+  validates :name, length: { maximum: 200 }
   validates_numericality_of :credit_sum, greater_than_or_equal_to: 0, message: "不能小于0"
 
   after_commit :send_welcome_mail, on: :create
