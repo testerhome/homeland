@@ -80,7 +80,6 @@ class TopicsController < ApplicationController
   end
 
   def read
-    @topic.hits.incr(1)
     # 通知处理
     current_user&.read_topic(@topic)
     render plain: "1"
@@ -286,7 +285,10 @@ class TopicsController < ApplicationController
       if topic.user_id != current_user&.id && topic.audit_status != "approved"
         return redirect_to(topics_path, notice: t("topics.cannot_read_not_approved_topics")) unless current_user&.admin?
       end
-      # topic.hits.incr(1)
+
+      # 展示一次，就算作阅读一次
+      topic.hits.incr(1)
+
       @node = topic.node
       @show_raw = params[:raw] == "1"
       @can_reply = can?(:create, Reply)
