@@ -225,6 +225,10 @@
   width: 5rem
 }
 
+.tw-w-\[500px\] {
+  width: 500px
+}
+
 .tw-flex-1 {
   flex: 1 1 0%
 }
@@ -387,6 +391,11 @@
 .tw-py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem
+}
+
+.tw-py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem
 }
 
 .tw-text-left {

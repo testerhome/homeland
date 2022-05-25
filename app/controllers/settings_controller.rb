@@ -10,6 +10,19 @@ class SettingsController < ApplicationController
   def account
   end
 
+  def edit_phone
+  end
+
+  def update_phone
+    phone_number = params[:user][:phone_number]
+    phone_code = params[:user][:phone_code]
+
+    if phone_code = "helloworld" && phone_number.present?
+      current_user.update(phone_number: phone_number)
+      redirect_to account_setting_path, notice: "手机号码更新成功"
+    end
+  end
+
   def profile
   end
 

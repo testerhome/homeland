@@ -78,9 +78,7 @@
 
 
                     
-          <div data-controller='phonecheck'><button data-action='click->phonecheck#sendSMS' class='btn btn-secondary btn-lg'>
-                    发送短信验证
-                  </button>
+          <div data-controller='phonecheck'>
 
           <%= form_group(f, :phone_number) do %>
             <%= f.text_field :phone_number, class: "form-control form-control-lg", placeholder: t("activerecord.attributes.user.phone_number"), "data-phonecheck-target" => "phoneNumber" %>

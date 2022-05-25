@@ -11,6 +11,7 @@ class Reply < ApplicationRecord
   belongs_to :topic, touch: true
   belongs_to :target, polymorphic: true, optional: true
   belongs_to :reply_to, class_name: "Reply", optional: true
+  validate :phone_check, on: :create
 
   delegate :title, to: :topic, prefix: true, allow_nil: true
   delegate :login, to: :user, prefix: true, allow_nil: true
@@ -97,6 +98,12 @@ class Reply < ApplicationRecord
   end
 
   private
+
+  def phone_check
+    if self.user.phone_number.blank?
+      errors.add(:user_id, "请先在个人资料中绑定手机号")
+    end
+  end
 
   def calc_credit_reward
     return unless saved_change_to_attribute(:audit_status) && self.audit_status == 'approved'

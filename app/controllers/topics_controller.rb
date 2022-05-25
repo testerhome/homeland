@@ -86,6 +86,11 @@ class TopicsController < ApplicationController
   end
 
   def new
+    if current_user.phone_number.blank?
+      return redirect_to edit_phone_setting_path, notice: "请先绑定手机号"
+    end
+
+
     @topic = Topic.new(user_id: current_user.id)
     unless params[:node].blank?
       @topic.node_id = params[:node]

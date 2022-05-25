@@ -45,6 +45,8 @@ Rails.application.routes.draw do
       get :profile
       get :reward
       get :credits
+      get :edit_phone
+      post :update_phone
     end
   end
 

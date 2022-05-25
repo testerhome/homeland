@@ -22,6 +22,7 @@ class Topic < ApplicationRecord
   has_many :appends
 
   validates :user_id, :title, :body, :node_id, presence: true
+  validate :phone_check
 
   validate :check_topic_ban_words
 
@@ -106,6 +107,12 @@ class Topic < ApplicationRecord
 
   def topic_type
     (self[:type] || "Topic").underscore.to_sym
+  end
+
+  def phone_check
+    if self.user.phone_number.blank?
+      errors.add(:user_id, "请先在个人资料中绑定手机号")
+    end
   end
 
   def is_article?

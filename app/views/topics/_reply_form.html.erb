@@ -1,3 +1,8 @@
+<% if current_user.phone_number.blank? %>
+  <p>根据国家相关法律法规，需要进一步完善个人基本信息，以正常使用社区相关功能。社区不会以任何名义进行用户信息收集以及用户资料转发。</p>
+  <%= link_to "请完成手机实名", edit_phone_setting_path %>
+<% else %>
+
 <%= render "/shared/editor_toolbar" %>
 <%= form_with(model: Reply.new, remote: true, url: topic_replies_path(@topic), id: "new_reply") do |f| %>
 
@@ -6,7 +11,7 @@
   </div>
   <%= f.hidden_field :reply_to_id %>
   <div class="submit-buttons">
-    <button type="submit" id="reply-button" class="btn btn-primary" tabindex="2", data-disable-with='<%= t("topics.submit_reply") %>'><%= t("topics.submit_reply")%></button>
+    <button type="submit" id="reply-button" class="btn btn-primary" tabindex="2", data-disable-with='<%= t("topics.submit_reply") %>'><%= t("topics.submit_reply") %></button>
     <span class="help-inline" style="padding-left: 5px;" title="或者 Ctrl + Enter"><kbd>Command</kbd> + <kbd>Enter</kbd></span>
 
     <div class="pull-right"><a href="/markdown" target="_blank">排版说明</a></div>
@@ -24,4 +29,5 @@
       </label>
     </span>
   </div>
+<% end %>
 <% end %>
