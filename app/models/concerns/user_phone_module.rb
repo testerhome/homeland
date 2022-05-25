@@ -20,19 +20,30 @@ class UserPhoneModule
 
   def send_phone_code(phone, code)
     sendcloud_user = Setting.sendcloud_user
-    sendcloud_key = Setting.sendcloud_key
+    
     sendcloud_sms_template_id = Setting.sendcloud_sms_template_id
 
-    params_str = {
+    dict = {
       'phone' => phone,
       'smsUser' => sendcloud_user,
       'templateId' => sendcloud_sms_template_id,
       'vars' => {
         'code' => code
       }.to_json
-    }.sort {| a, b| => a.to_s <=> b.to_s}.map { |item| "#{item[0]}=#{item[1]}" }.join('&')
+    }
+    sign = calc_send_cloud_sign(dict)
 
+    
+   
+  end
+
+  private 
+
+  def calc_send_cloud_sign(dict)
+    sendcloud_key = Setting.sendcloud_key
+    params_str = dict.sort {| a, b| a.to_s <=> b.to_s}.map { |item| "#{item[0]}=#{item[1]}" }.join('&')
     params_str = "#{sendcloud_key}&#{params_str}&#{send_phone_code}"
     Digest::MD5.new.update(param_str)
   end
+
 end

@@ -264,6 +264,7 @@ Rails.application.routes.draw do
       resources :users do
         collection do
           get :me
+          post :send_phone_code
         end
         member do
           get :topics

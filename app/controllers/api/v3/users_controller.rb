@@ -3,8 +3,10 @@
 module Api
   module V3
     class UsersController < Api::V3::ApplicationController
+      # skip_before_action :authenticate_user!, only: [:send_phone_code]
       before_action :doorkeeper_authorize!, only: %i[me follow unfollow block unblock blocked]
-      before_action :set_user, except: %i[index me]
+      
+      before_action :set_user, except: %i[index me send_phone_code]
 
       # 获取热门用户
       #
@@ -26,6 +28,25 @@ module Api
       def me
         @user = current_user
         render "show"
+      end
+
+      def send_phone_code
+        sendTime = Rails.cache.read("send_phone_code_#{params[:phone]}")
+
+        if sendTime && sendTime > Time.now - 60
+          return render json: { error: "请求过于频繁，请稍后再试" }, status: 422
+        end
+        
+        Rails.cache.write("send_phone_code_#{params[:phone]}", Time.now)
+
+
+        if verify_rucaptcha?
+
+          render json: {msg: "ok"}
+        else
+          render json: {msg: "验证码错误"}, status: 422
+        end
+
       end
 
       # 获取某个用户的详细信息

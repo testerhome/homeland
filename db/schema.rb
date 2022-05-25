@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_01_033923) do
+ActiveRecord::Schema.define(version: 2022_05_24_150321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -629,6 +629,7 @@ ActiveRecord::Schema.define(version: 2022_01_01_033923) do
     t.string "audit_reason"
     t.integer "credit_sum", default: 0
     t.boolean "has_earn_create_credit", default: false
+    t.string "phone_number"
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

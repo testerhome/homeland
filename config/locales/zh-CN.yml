@@ -84,6 +84,8 @@
         password: "密码"
         password_confirmation: "确认密码"
         invite_code: "邀请码"
+        phone_number: "手机号"
+        phone_code: "短信验证码"
         website: "个人主页"
         last_logined_at: "上次登录时间"
         tagline: "签名"

@@ -28,6 +28,8 @@
         password: "密碼"
         password_confirmation: "確認密碼"
         invite_code: "邀请码"
+        phone_code: "短信驗證碼"
+        phone_number: "手機"
         website: "個人主頁"
         last_logined_at: "上次登錄時間"
         tagline: "簽名"
