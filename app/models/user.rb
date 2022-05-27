@@ -6,6 +6,7 @@ class User < ApplicationRecord
   attr_accessor :phone_code, :phone_captcha
   include Wisper::Publisher # 加入监听器
   include Searchable
+  include UserPhoneModule
   include User::Roles, User::Blockable, User::Likeable, User::Followable, User::TopicActions,
           User::GitHubRepository, User::ProfileFields, User::RewardFields, User::Deviseable,
           User::Avatar, Auditable, User::CreditOperations

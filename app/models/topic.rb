@@ -22,7 +22,7 @@ class Topic < ApplicationRecord
   has_many :appends
 
   validates :user_id, :title, :body, :node_id, presence: true
-  validate :phone_check
+  validate :phone_check, on: :create
 
   validate :check_topic_ban_words
 

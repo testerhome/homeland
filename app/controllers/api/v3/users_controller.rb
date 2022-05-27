@@ -41,7 +41,10 @@ module Api
 
 
         if verify_rucaptcha?
+          # Send SMS
+          
 
+          
           render json: {msg: "ok"}
         else
           render json: {msg: "验证码错误"}, status: 422
