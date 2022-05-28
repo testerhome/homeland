@@ -23,7 +23,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
 
     build_resource(sign_up_params)
-    byebug
 
 
     # 因为启用了手机短信验证， 则无需验证邀请码 2022年05月25日

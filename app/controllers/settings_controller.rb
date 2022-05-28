@@ -17,9 +17,14 @@ class SettingsController < ApplicationController
     phone_number = params[:user][:phone_number]
     phone_code = params[:user][:phone_code]
 
-    if phone_code = "helloworld" && phone_number.present?
+    real_code = Rails.cache.read("phone_code_#{phone_number}")
+
+
+    if real_code.present? &&  phone_code == real_code && phone_number.present?
       current_user.update(phone_number: phone_number)
       redirect_to account_setting_path, notice: "手机号码更新成功"
+    else
+      redirect_to edit_phone_setting_path, notice: "验证码错误"
     end
   end
 

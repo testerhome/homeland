@@ -42,8 +42,10 @@ module Api
 
         if verify_rucaptcha?
           # Send SMS
-          
 
+          Rails.cache.write("phone_code_#{params[:phone]}", rand(10000..99999), expires_in: 5.minutes)          
+          
+          User.send_phone_code(params[:phone])
           
           render json: {msg: "ok"}
         else
