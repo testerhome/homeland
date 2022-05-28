@@ -51,11 +51,3 @@ module UserPhoneModule
 
 end
 
-response = RestClient.post ,
-:smsUser => "***",
-:templateId => "11",
-:msgType => '0',
-:phone => '13412345678',
-:vars =>'{"%code%":"123456"}',
-:signature => sign
-                 
