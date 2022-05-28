@@ -20,7 +20,7 @@ class SettingsController < ApplicationController
     real_code = Rails.cache.read("phone_code_#{phone_number}")
 
 
-    if real_code.present? &&  phone_code == real_code && phone_number.present?
+    if real_code.present? &&  phone_code.to_s == real_code.to_s && phone_number.present?
       current_user.update(phone_number: phone_number)
       redirect_to account_setting_path, notice: "手机号码更新成功"
     else
