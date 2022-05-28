@@ -35,7 +35,7 @@ module UserPhoneModule
       sign = calc_send_cloud_sign(dict)
       dict['signature'] = sign
 
-      response = RestClient.post dict
+      response = RestClient.post "https://api.sendcloud.net/smsapi/send?", dict
 
       JSON.parse(response.to_s)['statusCode']
     
@@ -50,3 +50,12 @@ module UserPhoneModule
   end
 
 end
+
+response = RestClient.post ,
+:smsUser => "***",
+:templateId => "11",
+:msgType => '0',
+:phone => '13412345678',
+:vars =>'{"%code%":"123456"}',
+:signature => sign
+                 
