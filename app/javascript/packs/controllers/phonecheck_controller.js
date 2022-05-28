@@ -34,7 +34,7 @@ export default class extends Controller {
       success: (data) => {
         if (data.msg === 'ok') {
           alert('发送成功')
-          this._countDown(6, 0)
+          this._countDown(60, 0)
         }else {
           alert(data.message)
           this._resetCaptcha()
