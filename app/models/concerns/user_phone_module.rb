@@ -18,7 +18,7 @@ module UserPhoneModule
       true_code == code && true_code.present?
     end
 
-    def send_phone_code(phone, code)
+    def send_phone_code(phone, code, name = 'testerhome用户')
       sendcloud_user = Setting.sendcloud_user
       
       sendcloud_sms_template_id = Setting.sendcloud_sms_template_id
@@ -28,6 +28,7 @@ module UserPhoneModule
         'smsUser' => sendcloud_user,
         'templateId' => sendcloud_sms_template_id,
         'vars' => {
+          '%name%' => name,
           '%code%' => code
         }.to_json
       }
@@ -43,8 +44,8 @@ module UserPhoneModule
     def calc_send_cloud_sign(dict)
       sendcloud_key = Setting.sendcloud_key
       params_str = dict.sort {| a, b| a.to_s <=> b.to_s}.map { |item| "#{item[0]}=#{item[1]}" }.join('&')
-      params_str = "#{sendcloud_key}&#{params_str}&#{send_phone_code}"
-      Digest::MD5.new.update(param_str)
+      params_str = "#{sendcloud_key}&#{params_str}&#{sendcloud_key}"
+      Digest::MD5.new.update(params_str)
     end
   end
 
