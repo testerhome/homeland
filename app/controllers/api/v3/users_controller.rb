@@ -31,28 +31,31 @@ module Api
       end
 
       def send_phone_code
-        sendTime = Rails.cache.read("send_phone_code_#{params[:phone]}")
 
-        if sendTime && sendTime > Time.now - 60
+        unless verify_rucaptcha?(nil, keep_session: true)
+          return render json: {msg: "验证码错误"}, status: 422
+        end
+        
+        send_time = Rails.cache.read("send_phone_code_time_#{params[:phone]}")
+        
+        if send_time && send_time > Time.now - 60
           return render json: { error: "请求过于频繁，请稍后再试" }, status: 422
         end
         
-        Rails.cache.write("send_phone_code_#{params[:phone]}", Time.now)
+        Rails.cache.write("send_phone_code_#{params[:phone]}", Time.now) 
 
 
-        if verify_rucaptcha?
-          # Send SMS
+        # Send SMS
 
-          code = rand(10000..99999)
+        code = rand(10000..99999)
+        Rails.logger.info "Send phone code: #{code} #{params[:phone]}"
 
-          Rails.cache.write("phone_code_#{params[:phone]}", code, expires_in: 5.minutes)          
-          
-          User.send_phone_code(params[:phone], code)
-          
-          render json: {msg: "ok"}
-        else
-          render json: {msg: "验证码错误"}, status: 422
-        end
+        Rails.cache.write("phone_code_#{params[:phone]}", code, expires_in: 5.minutes)          
+        
+        User.send_phone_code(params[:phone], code) if Rails.env.production?
+        
+        render json: {msg: "ok"}
+       
 
       end
 

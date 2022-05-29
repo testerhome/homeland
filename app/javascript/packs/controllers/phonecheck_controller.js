@@ -34,6 +34,7 @@ export default class extends Controller {
       success: (data) => {
         if (data.msg === 'ok') {
           alert('发送成功')
+          this._resetCaptcha()
           this._countDown(60, 0)
         }else {
           alert(data.message)
@@ -41,8 +42,14 @@ export default class extends Controller {
         }
       },
       error: (data) => {
+        
         this._resetCaptcha()
-        alert('验证码错误')
+        
+        if (data && data.responseJSON && data.responseJSON.error) {
+          alert(data.responseJSON.error)
+        }else {
+          alert('验证码错误')
+        }
       }
     });
   }
@@ -58,12 +65,11 @@ export default class extends Controller {
   }
 
   _countDown(timestamp = 60, type = 0) {
+
+
+    this.disable_click = true
     let seconds = timestamp // 倒计时总秒数
-    if (type == 1) {
-      let currentTimestamp = Math.round(new Date() / 1000) // 当前时间戳，单位秒
-      seconds = timestamp - currentTimestamp
-    }
-  
+
     // 如果目标时间小于等于当前时间，不需要继续进行了
     if (seconds <= 0) return
   
@@ -79,8 +85,11 @@ export default class extends Controller {
       this.sendButtonTarget.innerHTML = result
   
       if (seconds <= 0) {
+        this.sendButtonTarget.disabled = false
+
         clearInterval(this.timer)
         this.sendButtonTarget.innerText = '重新发送'
+        this.disable_click = false
         $(this.sendButtonTarget).attr('disabled', false)
       }
     }, 1000)
@@ -88,6 +97,7 @@ export default class extends Controller {
   disconnect(){
     if (this.timer) {
       clearInterval(this.timer)
+      this.disable_click = false
       $(this.sendButtonTarget).attr('disabled', false)
       $(this.sendButtonTarget).text('重新发送')
     }
