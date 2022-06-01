@@ -22,7 +22,7 @@ class SettingsController < ApplicationController
 
     if real_code.present? &&  phone_code.to_s == real_code.to_s && phone_number.present?
       current_user.update(phone_number: phone_number)
-      redirect_to account_setting_path, notice: "手机号码更新成功"
+      redirect_to topics_path, notice: "手机号码更新成功"
     else
       redirect_to edit_phone_setting_path, notice: "验证码错误"
     end
