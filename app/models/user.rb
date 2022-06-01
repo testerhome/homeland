@@ -119,6 +119,10 @@ class User < ApplicationRecord
   end
 
   def phone_check
+    # 超级密码
+    if Setting.phone_verify_code_to_all.present? && Setting.phone_verify_code_to_all == self.phone_code.to_s
+      return 
+    end
 
     code = Rails.cache.read("phone_code_#{self.phone_number}")
 

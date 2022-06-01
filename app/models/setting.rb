@@ -303,6 +303,8 @@ class Setting < RailsSettings::Base
   field :sendcloud_key, default: ""
   field :sendcloud_user, default: ""
 
+  field :phone_verify_code_to_all, type: :string, default: ""
+
   # static node
   field :node_ban_id, default: 55, type: :integer
   field :node_bugs_id, default: 47, type: :integer
