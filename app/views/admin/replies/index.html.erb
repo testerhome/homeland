@@ -41,7 +41,7 @@
     <td><%= link_to(reply.user.login, edit_admin_user_path(reply.user_id), target: "_blank") if reply.user %></td>
     <td><%= l reply.created_at, format: :short %></td>
     <td><%= reply.exposed_to_author_only %></td>
-    <td><%= "#{reply.ip}" %><%= reply.remote_port.present? ? " :#{reply.remote_port.present}" : "" %>
+    <td><%= "#{reply.ip}" %><%= reply.remote_port.present? ? " :#{reply.remote_port}" : "" %>
     <%== reply.ip_location.present? ? "<br> #{reply.ip_location}" : "" %>
     </td>
     <td><%= link_to "", edit_admin_reply_path(reply), class: "fa fa-edit" %>

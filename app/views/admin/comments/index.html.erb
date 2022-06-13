@@ -19,7 +19,7 @@
     <td><%= item.body %></td>
     <td><%= l item.created_at, format: :short %></td>
 
- <td><%= "#{item.ip}" %><%= item.remote_port.present? ? " :#{item.remote_port.present}" : "" %>
+ <td><%= "#{item.ip}" %><%= item.remote_port.present? ? " :#{item.remote_port}" : "" %>
     <%== item.ip_location.present? ? "<br> #{item.ip_location}" : "" %>
     </td>
 

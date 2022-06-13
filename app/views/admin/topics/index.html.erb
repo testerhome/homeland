@@ -32,7 +32,7 @@
         <%= l topic.deleted_at, format: :short %>
       <% end %>
     </td>
-    <td><%= "#{topic.ip}" %><%= topic.remote_port.present? ? " :#{topic.remote_port.present}" : "" %>
+    <td><%= "#{topic.ip}" %><%= topic.remote_port.present? ? " :#{topic.remote_port}" : "" %>
     <%== topic.ip_location.present? ? "<br> #{topic.ip_location}" : "" %>
     </td>
   <td>
