@@ -4,11 +4,11 @@
 source "https://gems.ruby-china.com"
 
 #git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
-git_source(:github) do |repo_name| 
+git_source(:github) do |repo_name|
   if ENV["GEM_GITHUB_PROXY"] == "1"
-    "https://e.coding.net/gems-github-mirror/gems-mirror/#{repo_name.split("/").join("-")}.git" 
+    "https://e.coding.net/gems-github-mirror/gems-mirror/#{repo_name.split("/").join("-")}.git"
   else
-    "https://github.com/#{repo_name}.git" 
+    "https://github.com/#{repo_name}.git"
   end
 end
 
@@ -56,7 +56,7 @@ gem "rucaptcha"
 gem "recaptcha"
 
 # 用户系统
-gem 'devise'
+gem "devise"
 gem "devise-encryptable"
 
 # 通知系统
@@ -94,7 +94,7 @@ gem "redis-namespace", github: "resque/redis-namespace"
 gem "redis-objects"
 
 # 基于 redis 的锁
-gem 'redlock'
+gem "redlock"
 
 # Cache
 gem "second_level_cache"
@@ -109,7 +109,7 @@ gem "html-pipeline-auto-correct"
 gem "redcarpet"
 gem "rouge"
 
-gem 'acts_as_list'
+gem "acts_as_list"
 
 # 队列
 gem "sidekiq", "6.0.7"
@@ -148,10 +148,9 @@ group :development, :test do
   gem "pry-byebug"
   gem "spring"
   gem "byebug"
-  gem 'ruby-debug-ide'
-  gem 'debase'
-  gem 'database_cleaner-active_record'
-
+  gem "ruby-debug-ide"
+  gem "debase"
+  gem "database_cleaner-active_record"
 
   gem "sdoc"
   gem "letter_opener"
@@ -161,7 +160,7 @@ group :development, :test do
   gem "minitest-spec-rails"
   gem "factory_bot_rails"
 
-  gem 'annotate'
+  gem "annotate"
 
   gem "rubocop", require: false
   gem "codecov", require: false

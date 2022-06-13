@@ -1,5 +1,5 @@
 <% content_for :sitemap do %>
-  <span class="current"><%= t('admin.menu.comments') %></span>
+  <span class="current"><%= t("admin.menu.comments") %></span>
 <% end %>
 
 <table class='table table-bordered table-striped table-condensed'>
@@ -8,6 +8,7 @@
     <th>评论人</th>
     <th>内容</th>
     <td style="width:120px;">At</td>
+    <td>ip info</td>
     <td style="width:60px;"></td>
   </tr>
 
@@ -17,8 +18,13 @@
     <td><%= item.user.login if !item.user.blank? %></td>
     <td><%= item.body %></td>
     <td><%= l item.created_at, format: :short %></td>
-    <td><%= link_to '', edit_admin_comment_path(item), class: "fa fa-edit" %>
-    <%= link_to '', admin_comment_path(item), 'data-confirm' => 'Are you sure?', method: :delete, remote: true, class: "fa fa-trash" %></td>
+
+ <td><%= "#{item.ip}" %><%= item.remote_port.present? ? " :#{item.remote_port.present}" : "" %>
+    <%== item.ip_location.present? ? "<br> #{item.ip_location}" : "" %>
+    </td>
+
+    <td><%= link_to "", edit_admin_comment_path(item), class: "fa fa-edit" %>
+    <%= link_to "", admin_comment_path(item), "data-confirm" => "Are you sure?", method: :delete, remote: true, class: "fa fa-trash" %></td>
   </tr>
 <% end %>
 </table>
