@@ -9,6 +9,8 @@ class RepliesController < ApplicationController
 
   def create
     @reply = Reply.new(reply_params)
+    @reply.log_ip(request.remote_ip, request.headers["X-Client-Request-Port"])
+
     @reply.topic_id = @topic.id
     @reply.user_id = current_user.id
 
@@ -51,6 +53,8 @@ class RepliesController < ApplicationController
   end
 
   def update
+    @reply.log_ip(request.remote_ip, request.headers["X-Client-Request-Port"])
+
     @reply.update(reply_params)
   end
 
@@ -74,20 +78,20 @@ class RepliesController < ApplicationController
 
   protected
 
-    def set_topic
-      # 兼容 topic 和 article
-      if (params[:topic_id])
-        @topic = Topic.find(params[:topic_id])
-      else
-        @topic = Topic.find(params[:article_id])
-      end
+  def set_topic
+    # 兼容 topic 和 article
+    if (params[:topic_id])
+      @topic = Topic.find(params[:topic_id])
+    else
+      @topic = Topic.find(params[:article_id])
     end
+  end
 
-    def set_reply
-      @reply = Reply.find(params[:id])
-    end
+  def set_reply
+    @reply = Reply.find(params[:id])
+  end
 
-    def reply_params
-      params.require(:reply).permit(:body, :reply_to_id, :anonymous, :exposed_to_author_only)
-    end
+  def reply_params
+    params.require(:reply).permit(:body, :reply_to_id, :anonymous, :exposed_to_author_only)
+  end
 end

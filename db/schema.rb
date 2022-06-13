@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_24_150321) do
+ActiveRecord::Schema.define(version: 2022_06_13_140600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -413,6 +413,9 @@ ActiveRecord::Schema.define(version: 2022_05_24_150321) do
     t.string "audit_status", default: "pending"
     t.string "audit_reason"
     t.boolean "has_earn_create_credit", default: false
+    t.string "ip"
+    t.string "ip_location"
+    t.string "remote_port"
     t.index ["deleted_at"], name: "index_replies_on_deleted_at"
     t.index ["topic_id"], name: "index_replies_on_topic_id"
     t.index ["user_id"], name: "index_replies_on_user_id"
@@ -541,6 +544,9 @@ ActiveRecord::Schema.define(version: 2022_05_24_150321) do
     t.string "audit_status", default: "pending"
     t.string "audit_reason"
     t.boolean "has_earn_create_credit", default: false
+    t.string "ip"
+    t.string "ip_location"
+    t.string "remote_port"
     t.index ["deleted_at"], name: "index_topics_on_deleted_at"
     t.index ["grade"], name: "index_topics_on_grade"
     t.index ["last_active_mark"], name: "index_topics_on_last_active_mark"
