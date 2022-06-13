@@ -6,6 +6,7 @@ class Reply < ApplicationRecord
   include Wisper::Publisher # 加入监听器
   include SoftDelete, MarkdownBody, Mentionable, MentionTopic, UserAvatarDelegate, Auditable
   include Reply::Notify, Reply::Voteable
+  include LogIp
 
   belongs_to :real_user, class_name: "User", required: false
   belongs_to :user, counter_cache: true
