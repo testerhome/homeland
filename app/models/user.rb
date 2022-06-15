@@ -127,7 +127,7 @@ class User < ApplicationRecord
     code = Rails.cache.read("phone_code_#{self.phone_number}")
 
     if code.blank? || phone_code.to_s != code.to_s # 检查手机短信是否匹配正确
-      errors.add(:phone_code, '短信验证码错误')
+      errors.add(:phone_code, '不匹配')
     end
   end
 
