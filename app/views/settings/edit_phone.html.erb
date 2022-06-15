@@ -5,7 +5,7 @@
     <div class="card card-lg">
       <div class="card-body">
         <h1 class='tw-text-lg'>绑定手机</h1>
-        <p class='tw-py-4'>根据国家相关法律法规，需要进一步完善个人基本信息，以正常使用社区相关功能。社区不会以任何名义进行用户信息收集以及用户资料转发。</p>
+        <p class='tw-py-4'>根据国家相关法律法规，需要进一步完善个人基本信息，以正常使用社区相关功能。</p>
         <%= form_for current_user, url: update_phone_setting_path, method: "post" do |f| %>
           <%= render "shared/error_messages", target: current_user %>
           <div data-controller='phonecheck' class='tw-w-[500px]'>
