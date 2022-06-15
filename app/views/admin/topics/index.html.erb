@@ -1,8 +1,8 @@
 <% content_for :sitemap do %>
-  <span class="current"><%= t("admin.menu.topics")%></span>
+  <span class="current"><%= t("admin.menu.topics") %></span>
 <% end %>
 <div class="toolbar">
-<%= render 'search_form' %>
+<%= render "search_form" %>
 </div>
 <table class="table table-bordered table-striped table-condensed">
   <tr class="head">
@@ -12,10 +12,11 @@
     <td>发帖人</td>
     <td>回帖</td>
     <td>时间</td>
+    <td>ip info</td>
     <td style="width:100px"></td>
   </tr>
   <% @topics.each do |topic| %>
-    <tr class="<%= 'deleted' if !topic.deleted_at.blank? %> <%= 'ban' if topic.ban? %>">
+    <tr class="<%= "deleted" if !topic.deleted_at.blank? %> <%= "ban" if topic.ban? %>">
     <td class="first"><%= topic.id %></td>
     <td>
       <%= link_to truncate(topic.title, length: 30), topic, target: "_blank" %>
@@ -28,22 +29,25 @@
         <%= l topic.created_at, format: :short %>
       <% else %>
         <%= link_to topic.who_deleted, user_path(topic.who_deleted) if not topic.who_deleted.blank? %> 删除于 <br />
-    <%= l topic.deleted_at, format: :short %>
-  <% end %>
-</td>
-<td>
-  <% if !topic.suggested_at.blank? %>
-    <%= link_to t("common.un_top"), unsuggest_admin_topic_path(topic), 'data-confirm' => 'Are you sure?', method: :post %>
-  <% else %>
-    <%= link_to t("common.place_top"), suggest_admin_topic_path(topic), 'data-confirm' => 'Are you sure?', method: :post %>
-  <% end %>
-  <%= link_to "", edit_admin_topic_path(topic), class: "fa fa-edit" %>
-  <% if topic.deleted_at.blank? %>
-    <%= link_to "", admin_topic_path(topic), 'data-confirm' => 'Are you sure?', method: :delete, class: "fa fa-trash" %>
-  <% else %>
-    <%= link_to "", undestroy_admin_topic_path(topic), title: t("common.undelete"), 'data-confirm' => 'Are you sure?', method: :post, class: "fa fa-undo" %>
-  <% end %>
-</td>
+        <%= l topic.deleted_at, format: :short %>
+      <% end %>
+    </td>
+    <td><%= "#{topic.ip}" %><%= topic.remote_port.present? ? " :#{topic.remote_port}" : "" %>
+    <%== topic.ip_location.present? ? "<br> #{topic.ip_location}" : "" %>
+    </td>
+  <td>
+    <% if !topic.suggested_at.blank? %>
+      <%= link_to t("common.un_top"), unsuggest_admin_topic_path(topic), "data-confirm" => "Are you sure?", method: :post %>
+    <% else %>
+      <%= link_to t("common.place_top"), suggest_admin_topic_path(topic), "data-confirm" => "Are you sure?", method: :post %>
+    <% end %>
+    <%= link_to "", edit_admin_topic_path(topic), class: "fa fa-edit" %>
+    <% if topic.deleted_at.blank? %>
+      <%= link_to "", admin_topic_path(topic), "data-confirm" => "Are you sure?", method: :delete, class: "fa fa-trash" %>
+    <% else %>
+      <%= link_to "", undestroy_admin_topic_path(topic), title: t("common.undelete"), "data-confirm" => "Are you sure?", method: :post, class: "fa fa-undo" %>
+    <% end %>
+  </td>
 </tr>
 <% end %>
 </table>

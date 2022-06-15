@@ -1,0 +1,50 @@
+<div class="row">
+  <%= render "menu" %>
+
+  <div class="col-md-10">
+    <div class="card card-lg">
+      <div class="card-body">
+        <h1 class='tw-text-lg'>绑定手机</h1>
+        <p class='tw-py-4'>根据国家相关法律法规，需要进一步完善个人基本信息，以正常使用社区相关功能。社区不会以任何名义进行用户信息收集以及用户资料转发。</p>
+        <%= form_for current_user, url: update_phone_setting_path, method: "post" do |f| %>
+          <%= render "shared/error_messages", target: current_user %>
+          <div data-controller='phonecheck' class='tw-w-[500px]'>
+          <%= form_group(f, :phone_number) do %>
+            <%= f.text_field :phone_number, class: "form-control form-control-lg", placeholder: t("activerecord.attributes.user.phone_number"), "data-phonecheck-target" => "phoneNumber" %>
+          <% end %>
+
+          <%= form_group(f, :phone_captcha, label: false) do %>
+            <div class="input-group input-group-lg">
+              <div class='tw-w-full tw-flex tw-justify-between'>
+                <div class='tw-flex '>
+                  <%= rucaptcha_input_tag(class: "form-control tw-w-48 form-control-lg", placeholder: t("common.captcha"), "data-phonecheck-target" => "captcha") %>
+                  <div class="input-group-append input-group-captcha">
+                    <span class="input-group-text" style="padding: 3px 4px; background: #fff;">
+                      <a class="rucaptcha-image-box" href="#"><%= rucaptcha_image_tag %></a>
+                    </span>
+                  </div>
+                </div>
+                
+                <div>
+                  <a data-action='click->phonecheck#sendMsg' data-phonecheck-target='sendButton'  class='btn btn-secondary btn-lg'>
+                    发送短信验证
+                  </a>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <%= form_group(f, :phone_code, label: false) do %>
+            <%= f.text_field :phone_code, class: "form-control form-control-lg", placeholder: t("activerecord.attributes.user.phone_code") %>
+          <% end %>
+
+           <div class="form-actions">
+
+            <%= f.submit "提交", class: "btn btn-lg btn-primary", "data-disable-with" => t("common.submitting") %>
+          </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

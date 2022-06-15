@@ -1,5 +1,5 @@
 <%= form_for [:admin, @user], url: admin_user_path(@user) do |f| %>
-  <%= render 'shared/error_messages', target: @user %>
+  <%= render "shared/error_messages", target: @user %>
   <div class="form-group">
     <%= f.label :login %>
     <%= f.text_field :login, class: "form-control" %>
@@ -13,6 +13,11 @@
   <div class="form-group">
     <%= f.label :email %>
     <%= f.email_field :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :phone_number %>
+    <%= f.text_field :phone_number, class: "form-control" %>
   </div>
 
   <% if Setting.has_profile_field? :location %>
@@ -80,19 +85,19 @@
   <% if @user.user_type == :user %>
   <div class='d-flex'
       data-controller='roles-filter'
-      data-roles-filter-selected-state-value='<%= @user.state_before_type_cast || ""%>'
+      data-roles-filter-selected-state-value='<%= @user.state_before_type_cast || "" %>'
       data-roles-filter-state-blank-value='false'
-      data-roles-filter-states-info-value='<%= user_states_info.to_json%>' >
+      data-roles-filter-states-info-value='<%= user_states_info.to_json %>' >
     <div class="pr-4 form-group w-100">
-      <%= f.label "category", '类别'%>
+      <%= f.label "category", "类别" %>
       <%= select_tag(:category,
-                      options_for_select([['全部类别',''], ['个人账号','-1--99'], ['公众号','120--122'],['个人公众号','125--127'], ['企业号','130--139']], @user.fetch_role_category),
-                      data: {"roles-filter-target" => "main", "action" => 'change->roles-filter#select'},  class: 'form-control') %>
+                     options_for_select([["全部类别", ""], ["个人账号", "-1--99"], ["公众号", "120--122"], ["个人公众号", "125--127"], ["企业号", "130--139"]], @user.fetch_role_category),
+                     data: { "roles-filter-target" => "main", "action" => "change->roles-filter#select" }, class: "form-control") %>
     </div>
 
     <div class="form-group w-100">
       <%= f.label :state %>
-      <%= f.select :state, "", {}, data: {"roles-filter-target" => "sub"}, class: "form-control" %>
+      <%= f.select :state, "", {}, data: { "roles-filter-target" => "sub" }, class: "form-control" %>
     </div>
   </div>
 
@@ -138,11 +143,11 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <%= f.submit t("common.save"), class: "btn btn-block btn-primary", 'data-disable-with' => t("common.saving") %>
+      <%= f.submit t("common.save"), class: "btn btn-block btn-primary", "data-disable-with" => t("common.saving") %>
     </div>
     <div class="col-sm-6">
       <% if !@user.deleted? %>
-        <%= link_to '删除此用户', admin_user_path(@user.id), 'data-confirm' => '警告！此动作无法撤销，确定要删除么?', method: :delete, class: "btn btn-danger"  %>
+        <%= link_to "删除此用户", admin_user_path(@user.id), "data-confirm" => "警告！此动作无法撤销，确定要删除么?", method: :delete, class: "btn btn-danger" %>
       <% end %>
     </div>
   </div>

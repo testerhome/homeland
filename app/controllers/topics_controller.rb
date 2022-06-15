@@ -12,7 +12,6 @@ class TopicsController < ApplicationController
 
   def waiting_audit_topics
     @topics = Topic.where(user_id: current_user.id, deleted_at: nil).where.not(audit_status: "approved").order("created_at desc")
-
   end
 
   def index
@@ -42,7 +41,7 @@ class TopicsController < ApplicationController
       params[:page] = Topic.total_pages
     end
     @topics = topics_scope(@node.topics, without_nodes: false).with_filter_public_end_enterprise.last_actived.page(params[:page])
-    @page_title = "#{@node.name} &raquo; #{t('menu.topics')}"
+    @page_title = "#{@node.name} &raquo; #{t("menu.topics")}"
     @page_title = [@node.name, t("menu.topics")].join(" · ")
     render action: "index"
   end
@@ -86,6 +85,10 @@ class TopicsController < ApplicationController
   end
 
   def new
+    if current_user.phone_number.blank?
+      return redirect_to edit_phone_setting_path, notice: "请先绑定手机号"
+    end
+
     @topic = Topic.new(user_id: current_user.id)
     unless params[:node].blank?
       @topic.node_id = params[:node]
@@ -205,108 +208,109 @@ class TopicsController < ApplicationController
 
   private
 
-    def set_topic
-      @topic ||= Topic.find(params[:id])
+  def set_topic
+    @topic ||= Topic.find(params[:id])
+  end
+
+  def topic_params
+    params.require(:topic).permit(:title, :body, :node_id, :team_id, :cannot_be_shared)
+  end
+
+  def ability_team_id
+    team = Team.find_by_id(topic_params[:team_id])
+    return nil if team.blank?
+    return nil if cannot?(:show, team)
+    team.id
+  end
+
+  def check_current_user_status_for_topic(resource)
+    return false unless current_user
+    # 通知处理
+    current_user.read_topic(resource)
+    # 是否关注过
+    @has_followed = current_user.follow_topic?(resource)
+    # 是否收藏
+    @has_favorited = current_user.favorite_topic?(resource)
+  end
+
+  def append
+  end
+
+  def draft_and_anonymous_save
+    if params[:commit] && params[:commit] == "draft"
+      @topic.draft = true
+    else
+      @topic.draft = false
     end
 
-    def topic_params
-      params.require(:topic).permit(:title, :body, :node_id, :team_id, :cannot_be_shared)
+    if @topic.belongs_to_nickname_node? && @topic.draft == false
+      @topic.user_id = User.anonymous_user_id
+      @topic.real_user_id = current_user.id
     end
 
-    def ability_team_id
-      team = Team.find_by_id(topic_params[:team_id])
-      return nil if team.blank?
-      return nil if cannot?(:show, team)
-      team.id
-    end
+    @topic.log_ip(request.remote_ip, request.headers["X-Client-Request-Port"])
 
-    def check_current_user_status_for_topic(resource)
-      return false unless current_user
-      # 通知处理
-      current_user.read_topic(resource)
-      # 是否关注过
-      @has_followed = current_user.follow_topic?(resource)
-      # 是否收藏
-      @has_favorited = current_user.favorite_topic?(resource)
-    end
-
-    def append
-    end
-
-    def draft_and_anonymous_save
-      if params[:commit] && params[:commit] == "draft"
-        @topic.draft = true
-      else
-        @topic.draft = false
-      end
-
-      if @topic.belongs_to_nickname_node? && @topic.draft == false
-        @topic.user_id = User.anonymous_user_id
-        @topic.real_user_id = current_user.id
-      end
-
-      @topic.save_with_checking_node
-    end
+    @topic.save_with_checking_node
+  end
 
   protected
 
-    def common_logic_for_show(class_scope)
-      topic = class_scope.unscoped.includes(:user).find(params[:id])
-      if topic.deleted?
-        render_404
-        # 如果找不到topic，就404了，代码不要继续，用return
-        return
-      end
-      # topic 都会展示就算用户被删除
-      # return redirect_to(topics_path, notice: t("topics.cannot_read_ban_topics")) if topic.user.state == 'deleted'
+  def common_logic_for_show(class_scope)
+    topic = class_scope.unscoped.includes(:user).find(params[:id])
+    if topic.deleted?
+      render_404
+      # 如果找不到topic，就404了，代码不要继续，用return
+      return
+    end
+    # topic 都会展示就算用户被删除
+    # return redirect_to(topics_path, notice: t("topics.cannot_read_ban_topics")) if topic.user.state == 'deleted'
 
-
-      # Logic just for topic
-      if class_scope == Topic
-        if !topic.team.blank?
-          if topic.team.private?
-            if !current_user
-              redirect_to(new_user_session_url, alert: t("common.access_denied"))
-            elsif !topic.team.has_member?(current_user) && !current_user.admin?
-              redirect_to(team_path(topic.team), alert: t("teams.access_denied"))
-            end
+    # Logic just for topic
+    if class_scope == Topic
+      if !topic.team.blank?
+        if topic.team.private?
+          if !current_user
+            redirect_to(new_user_session_url, alert: t("common.access_denied"))
+          elsif !topic.team.has_member?(current_user) && !current_user.admin?
+            redirect_to(team_path(topic.team), alert: t("teams.access_denied"))
           end
         end
-
-        if topic.user_id != current_user&.id && topic.node_id == Node.ban_id && !current_user&.admin?
-          redirect_to(topics_path, notice: t("topics.cannot_read_ban_topics"))
-        end
       end
 
-      if topic.draft && topic.user_id != current_user&.id
-        return redirect_to(topics_path, notice: t("topics.cannot_read_others_drafts"))
+      if topic.user_id != current_user&.id && topic.node_id == Node.ban_id && !current_user&.admin?
+        redirect_to(topics_path, notice: t("topics.cannot_read_ban_topics"))
       end
-
-      if topic.user_id != current_user&.id && topic.audit_status != "approved"
-        return redirect_to(topics_path, notice: t("topics.cannot_read_not_approved_topics")) unless current_user&.admin?
-      end
-
-      # 展示一次，就算作阅读一次
-      topic.hits.incr(1)
-
-      @node = topic.node
-      @show_raw = params[:raw] == "1"
-      @can_reply = can?(:create, Reply)
-
-      if params[:order_by] == "like"
-        @replies = Reply.unscoped.where(topic_id: topic.id).order(likes_count: :desc).all
-      elsif params[:order_by] == "created_at"
-        @replies = Reply.unscoped.where(topic_id: topic.id).order(created_at: :desc).all
-      else
-        @replies = Reply.unscoped.where(topic_id: topic.id).order(:id).all
-      end
-
-      @suggest_replies = Reply.unscoped.where(topic_id: topic.id).order(:suggested_at).suggest
-      @without_suggest_replies = Reply.unscoped.where(topic_id: topic.id).order(:id).without_suggest
-
-      @user_like_reply_ids = current_user&.like_reply_ids_by_replies(@replies) || []
-
-      check_current_user_status_for_topic(topic)
-      instance_variable_set("@#{class_scope.name.downcase}", topic)
     end
+
+    if topic.draft && topic.user_id != current_user&.id
+      return redirect_to(topics_path, notice: t("topics.cannot_read_others_drafts"))
+    end
+
+    if topic.user_id != current_user&.id && topic.audit_status != "approved"
+      return redirect_to(topics_path, notice: t("topics.cannot_read_not_approved_topics")) unless current_user&.admin?
+    end
+
+    # 展示一次，就算作阅读一次
+    topic.hits.incr(1)
+
+    @node = topic.node
+    @show_raw = params[:raw] == "1"
+    @can_reply = can?(:create, Reply)
+
+    if params[:order_by] == "like"
+      @replies = Reply.unscoped.where(topic_id: topic.id).order(likes_count: :desc).all
+    elsif params[:order_by] == "created_at"
+      @replies = Reply.unscoped.where(topic_id: topic.id).order(created_at: :desc).all
+    else
+      @replies = Reply.unscoped.where(topic_id: topic.id).order(:id).all
+    end
+
+    @suggest_replies = Reply.unscoped.where(topic_id: topic.id).order(:suggested_at).suggest
+    @without_suggest_replies = Reply.unscoped.where(topic_id: topic.id).order(:id).without_suggest
+
+    @user_like_reply_ids = current_user&.like_reply_ids_by_replies(@replies) || []
+
+    check_current_user_status_for_topic(topic)
+    instance_variable_set("@#{class_scope.name.downcase}", topic)
+  end
 end

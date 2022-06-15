@@ -49,3 +49,4 @@ app.local.env
 yarn-debug.log*
 .yarn-integrity
 TAGS
+.vscode/settings.json

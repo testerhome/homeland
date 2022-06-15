@@ -296,6 +296,15 @@ class Setting < RailsSettings::Base
   field :google_analytics_key, default: ""
   field :certify_questions, default: "", type: :string
 
+
+  # sendcloud
+
+  field :sendcloud_sms_template_id, default: ""
+  field :sendcloud_key, default: ""
+  field :sendcloud_user, default: ""
+
+  field :phone_verify_code_to_all, type: :string, default: ""
+
   # static node
   field :node_ban_id, default: 55, type: :integer
   field :node_bugs_id, default: 47, type: :integer

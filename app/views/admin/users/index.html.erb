@@ -20,7 +20,7 @@
 <div class="toolbar">
   <form class="form-inline" action="<%= admin_users_path %>">
     <div class="form-group mr-sm-2">
-      <%= select_tag(:field, options_for_select([['用户名','login'], ['Email','email'], ['姓名','name']], params[:field]), class: 'form-control') %>
+      <%= select_tag(:field, options_for_select([['用户名','login'], ['Email','email'], ['姓名','name'], ['手机号','phone_number']], params[:field]), class: 'form-control') %>
     </div>
 
     <div class="form-group mr-sm-2">

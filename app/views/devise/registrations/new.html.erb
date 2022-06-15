@@ -1,19 +1,17 @@
 <% title_tag t("users.register_user") %>
 
-<%
-auth_session = session[:omniauth] || {}
-auth_info = auth_session["info"] || {}
-if auth_info
-  resource.omniauth_provider = auth_session["provider"]
-  resource.omniauth_uid = auth_session["uid"]
-
-  resource.email = auth_info["email"] if resource.email.blank?
-  resource.name = auth_info["name"] if resource.name.blank?
-  if resource.login.blank?
-    resource.login = auth_info["login"] || auth_info["name"]
-  end
-end
-%>
+<% auth_session = session[:omniauth] || {}
+   auth_info = auth_session["info"] || {}
+   if auth_info
+     resource.omniauth_provider = auth_session["provider"]
+     resource.omniauth_uid = auth_session["uid"]
+   
+     resource.email = auth_info["email"] if resource.email.blank?
+     resource.name = auth_info["name"] if resource.name.blank?
+     if resource.login.blank?
+       resource.login = auth_info["login"] || auth_info["name"]
+     end
+   end %>
 
 
 <div class="row">
@@ -72,18 +70,52 @@ end
             <%= f.password_field :password_confirmation, class: "form-control form-control-lg", placeholder: t("activerecord.attributes.user.password_confirmation") %>
           <% end %>
 
+<!--
           <%= form_group(f, :invite_code) do %>
             <%= f.text_field :invite_code, class: "form-control form-control-lg", placeholder: t("activerecord.attributes.user.invite_code") %>
           <% end %>
+-->
 
-          <%= form_group(f, :base, label: false) do %>
-            <div class="input-group input-group-lg">
-              <%= render "/shared/captcha_input" %>
-            </div>
+
+
+                    
+          <div data-controller='phonecheck'>
+
+          <%= form_group(f, :phone_number) do %>
+            <%= f.text_field :phone_number, class: "form-control form-control-lg", placeholder: t("activerecord.attributes.user.phone_number"), "data-phonecheck-target" => "phoneNumber" %>
           <% end %>
 
+          <%= form_group(f, :phone_captcha, label: false) do %>
+            <div class="input-group input-group-lg">
+              <div class='tw-w-full tw-flex tw-justify-between'>
+                <div class='tw-flex '>
+                  <%= rucaptcha_input_tag(class: "form-control tw-w-48 form-control-lg", placeholder: t("common.captcha"), "data-phonecheck-target" => "captcha") %>
+                  <div class="input-group-append input-group-captcha">
+                    <span class="input-group-text" style="padding: 3px 4px; background: #fff;">
+                      <a class="rucaptcha-image-box" href="#"><%= rucaptcha_image_tag %></a>
+                    </span>
+                  </div>
+                </div>
+                
+                <div>
+                  <a data-action='click->phonecheck#sendMsg' data-phonecheck-target='sendButton'  class='btn btn-secondary btn-lg'>
+                    发送短信验证
+                  </a>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          </div>
+
+          <%= form_group(f, :phone_code, label: false) do %>
+            <%= f.text_field :phone_code, class: "form-control form-control-lg", placeholder: t("activerecord.attributes.user.phone_code") %>
+          <% end %>
+
+          
+
           <div class="form-actions">
-            <%= f.submit t('users.submit_new_user'), class: "btn btn-lg btn-primary", 'data-disable-with' => t("common.submitting") %>
+
+            <%= f.submit t("users.submit_new_user"), class: "btn btn-lg btn-primary", "data-disable-with" => t("common.submitting") %>
           </div>
         <% end %>
       </div>

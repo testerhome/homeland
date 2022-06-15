@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_01_033923) do
+ActiveRecord::Schema.define(version: 2022_06_13_153056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -85,6 +85,9 @@ ActiveRecord::Schema.define(version: 2022_01_01_033923) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "ip"
+    t.string "ip_location"
+    t.string "remote_port"
     t.index ["commentable_id"], name: "index_comments_on_commentable_id"
     t.index ["commentable_type"], name: "index_comments_on_commentable_type"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -413,6 +416,9 @@ ActiveRecord::Schema.define(version: 2022_01_01_033923) do
     t.string "audit_status", default: "pending"
     t.string "audit_reason"
     t.boolean "has_earn_create_credit", default: false
+    t.string "ip"
+    t.string "ip_location"
+    t.string "remote_port"
     t.index ["deleted_at"], name: "index_replies_on_deleted_at"
     t.index ["topic_id"], name: "index_replies_on_topic_id"
     t.index ["user_id"], name: "index_replies_on_user_id"
@@ -541,6 +547,9 @@ ActiveRecord::Schema.define(version: 2022_01_01_033923) do
     t.string "audit_status", default: "pending"
     t.string "audit_reason"
     t.boolean "has_earn_create_credit", default: false
+    t.string "ip"
+    t.string "ip_location"
+    t.string "remote_port"
     t.index ["deleted_at"], name: "index_topics_on_deleted_at"
     t.index ["grade"], name: "index_topics_on_grade"
     t.index ["last_active_mark"], name: "index_topics_on_last_active_mark"
@@ -629,6 +638,7 @@ ActiveRecord::Schema.define(version: 2022_01_01_033923) do
     t.string "audit_reason"
     t.integer "credit_sum", default: 0
     t.boolean "has_earn_create_credit", default: false
+    t.string "phone_number"
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

@@ -15,7 +15,7 @@ limit_req_zone $binary_remote_addr zone=reqone:10m rate=10r/s;
 server {
   listen 80 default_server;
 
-  <% if ENV['https'] == "true" || ENV["https"] == "1" %>
+  <% if ENV["https"] == "true" || ENV["https"] == "1" %>
   include /etc/nginx/ssl.conf;
   <% end %>
 
@@ -164,6 +164,7 @@ server {
     proxy_set_header   Upgrade $http_upgrade;
     proxy_set_header   Connection "Upgrade";
     proxy_set_header   X-Forwarded-Proto $scheme;
+    proxy_set_header   X-Client-Request-Port $remote_port;
     proxy_pass         http://app_backend;
     gzip on;
   }

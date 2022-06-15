@@ -21,32 +21,36 @@ class Users::RegistrationsController < Devise::RegistrationsController
       return render status: 403, plain: message
     end
 
+
     build_resource(sign_up_params)
 
-    invite_flag = false
-    if sign_up_params["invite_code"].blank?
-      resource.errors.add(:base, t("invite_code.empty"))
-      invite_flag = true
-    else
-      invite_code = InviteCode.find_by_code sign_up_params["invite_code"]
-      if invite_code.blank?
-        resource.errors.add(:base, t("invite_code.not_exist"))
-        invite_flag = true
-      elsif invite_code.expired?
-        resource.errors.add(:base, t("invite_code.expired"))
-        invite_flag = true
-      elsif invite_code.consumed?
-        resource.errors.add(:base, t("invite_code.consumed"))
-        invite_flag = true
-      end
-    end
 
-    if invite_flag
-      Rails.cache.write(cache_key, sign_up_count + 1)
-      clean_up_passwords resource
-      respond_with resource
-      return
-    end
+    # 因为启用了手机短信验证， 则无需验证邀请码 2022年05月25日
+    # invite_flag = false
+    # if sign_up_params["invite_code"].blank?
+    #   resource.errors.add(:base, t("invite_code.empty"))
+    #   invite_flag = true
+    # else
+    #   invite_code = InviteCode.find_by_code sign_up_params["invite_code"]
+    #   if invite_code.blank?
+    #     resource.errors.add(:base, t("invite_code.not_exist"))
+    #     invite_flag = true
+    #   elsif invite_code.expired?
+    #     resource.errors.add(:base, t("invite_code.expired"))
+    #     invite_flag = true
+    #   elsif invite_code.consumed?
+    #     resource.errors.add(:base, t("invite_code.consumed"))
+    #     invite_flag = true
+    #   end
+    # end
+
+    # if invite_flag
+    #   Rails.cache.write(cache_key, sign_up_count + 1)
+    #   clean_up_passwords resource
+    #   respond_with resource
+    #   return
+    # end
+
     unless verify_complex_captcha?(resource)
       Rails.cache.write(cache_key, sign_up_count + 1)
       clean_up_passwords resource
@@ -65,7 +69,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource.save
     yield resource if block_given?
     if resource.persisted?
-      if resource_class == User
+      if resource_class == User && sign_up_params["invite_code"].present?
         invite_code = InviteCode.find_by_code sign_up_params["invite_code"]
         r_user = User.find_by_login sign_up_params["login"]
         invite_code.consumer_id = r_user.id
@@ -91,5 +95,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def after_inactive_sign_up_path_for(resource_or_scope)
     new_user_session_path
+  end
+
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :invite_code, :password, :password_confirmation, :phone_number, :phone_code])
   end
 end

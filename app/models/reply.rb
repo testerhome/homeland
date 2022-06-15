@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
 require "digest/md5"
+
 class Reply < ApplicationRecord
   include Wisper::Publisher # 加入监听器
   include SoftDelete, MarkdownBody, Mentionable, MentionTopic, UserAvatarDelegate, Auditable
   include Reply::Notify, Reply::Voteable
+  include LogIp
 
   belongs_to :real_user, class_name: "User", required: false
   belongs_to :user, counter_cache: true
   belongs_to :topic, touch: true
   belongs_to :target, polymorphic: true, optional: true
   belongs_to :reply_to, class_name: "Reply", optional: true
+  validate :phone_check, on: :create
 
   delegate :title, to: :topic, prefix: true, allow_nil: true
   delegate :login, to: :user, prefix: true, allow_nil: true
@@ -19,9 +22,9 @@ class Reply < ApplicationRecord
   scope :fields_for_list, -> { select(:topic_id, :id, :body, :user_id, :exposed_to_author_only, :updated_at, :created_at) }
 
   # 最佳回复
-  scope :suggest,            -> { where("suggested_at IS NOT NULL").order(suggested_at: :desc) }
-  scope :no_suggest,         -> { where("suggested_at IS NULL") }
-  scope :without_suggest,    -> { where(suggested_at: nil) }
+  scope :suggest, -> { where("suggested_at IS NOT NULL").order(suggested_at: :desc) }
+  scope :no_suggest, -> { where("suggested_at IS NULL") }
+  scope :without_suggest, -> { where(suggested_at: nil) }
 
   validates :body, presence: true, unless: -> { system_event? }
   validates :body, uniqueness: { scope: %i[topic_id user_id], message: "不能重复提交。" }, unless: -> { system_event? }
@@ -50,6 +53,7 @@ class Reply < ApplicationRecord
 
   # 删除的时候也要更新 Topic 的 updated_at 以便清理缓存
   after_destroy :update_parent_topic_updated_at
+
   def update_parent_topic_updated_at
     unless topic.blank?
       topic.update_deleted_last_reply(self)
@@ -98,9 +102,14 @@ class Reply < ApplicationRecord
 
   private
 
-  def calc_credit_reward
-    return unless saved_change_to_attribute(:audit_status) && self.audit_status == 'approved'
-    broadcast(:reply_created_and_audited, self)
+  def phone_check
+    if self.user.phone_number.blank?
+      errors.add(:user_id, "请先在个人资料中绑定手机号")
+    end
   end
 
+  def calc_credit_reward
+    return unless saved_change_to_attribute(:audit_status) && self.audit_status == "approved"
+    broadcast(:reply_created_and_audited, self)
+  end
 end

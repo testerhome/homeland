@@ -3,8 +3,10 @@
 require "digest/md5"
 
 class User < ApplicationRecord
+  attr_accessor :phone_code, :phone_captcha
   include Wisper::Publisher # 加入监听器
   include Searchable
+  include UserPhoneModule
   include User::Roles, User::Blockable, User::Likeable, User::Followable, User::TopicActions,
           User::GitHubRepository, User::ProfileFields, User::RewardFields, User::Deviseable,
           User::Avatar, Auditable, User::CreditOperations
@@ -44,6 +46,9 @@ class User < ApplicationRecord
                     presence: true,
                     uniqueness: { case_sensitive: true }
   validates :name, length: { maximum: 200 }
+
+  validate :phone_check, on: :create
+
   validates_numericality_of :credit_sum, greater_than_or_equal_to: 0, message: "不能小于0"
 
   after_commit :send_welcome_mail, on: :create
@@ -111,6 +116,19 @@ class User < ApplicationRecord
 
   def certified?
     self.certified_at.present?
+  end
+
+  def phone_check
+    # 超级密码
+    if Setting.phone_verify_code_to_all.present? && Setting.phone_verify_code_to_all == self.phone_code.to_s
+      return 
+    end
+
+    code = Rails.cache.read("phone_code_#{self.phone_number}")
+
+    if code.blank? || phone_code.to_s != code.to_s # 检查手机短信是否匹配正确
+      errors.add(:phone_code, '短信验证码错误')
+    end
   end
 
   def certified

@@ -27,6 +27,8 @@ module Admin
             scope.where("lower(email) LIKE ?", qstr)
           when "name"
             scope.where("lower(name) LIKE ?", qstr)
+          when 'phone_number'
+            scope.where("phone_number LIKE ?", qstr)
           end
         end
       end

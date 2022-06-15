@@ -20,6 +20,7 @@
     published_at: "发表于"
     register: "注册"
     login: "登录"
+    bind_phone: "手机绑定"
     logining: "正在登录"
     logout: "退出"
     remember_me: "记住登录状态（60 天）"

@@ -97,6 +97,7 @@ module Api
 
         @topic = current_user.topics.new(title: params[:title], body: params[:body])
         @topic.node_id = params[:node_id]
+        @topic.log_ip(request.remote_ip, request.headers["X-Client-Request-Port"])
         @topic.save!
 
         render "show"
@@ -128,6 +129,8 @@ module Api
         end
         @topic.title = params[:title]
         @topic.body = params[:body]
+        @topic.log_ip(request.remote_ip, request.headers["X-Client-Request-Port"])
+        
         @topic.save!
 
         render "show"
@@ -261,21 +264,21 @@ module Api
 
       private
 
-        def set_topic
-          @topic = Topic.find(params[:id])
-        end
+      def set_topic
+        @topic = Topic.find(params[:id])
+      end
 
-        def scope_method_by_type
-          case params[:type]
-          when "last_actived" then :last_actived
-          when "recent" then :recent
-          when "no_reply" then :no_reply
-          when "popular" then :popular
-          when "excellent" then :excellent
-          else
-            :last_actived
-          end
+      def scope_method_by_type
+        case params[:type]
+        when "last_actived" then :last_actived
+        when "recent" then :recent
+        when "no_reply" then :no_reply
+        when "popular" then :popular
+        when "excellent" then :excellent
+        else
+          :last_actived
         end
+      end
     end
   end
 end

@@ -6,6 +6,7 @@ class Topic < ApplicationRecord
   include Wisper::Publisher # 加入监听器
   include SoftDelete, MarkdownBody, Mentionable, MentionTopic, Closeable, Searchable, UserAvatarDelegate, Auditable
   include Topic::Actions, Topic::AutoCorrect, Topic::Search, Topic::Notify, Topic::RateLimit, Topic::CreditOperations
+  include LogIp
 
   # 临时存储检测用户是否读过的结果
   attr_accessor :read_state
@@ -22,6 +23,7 @@ class Topic < ApplicationRecord
   has_many :appends
 
   validates :user_id, :title, :body, :node_id, presence: true
+  validate :phone_check, on: :create
 
   validate :check_topic_ban_words
 
@@ -31,25 +33,25 @@ class Topic < ApplicationRecord
   delegate :body, to: :last_reply, prefix: true, allow_nil: true
 
   # scopes
-  scope :last_actived,       -> { order(last_active_mark: :desc) }
-  scope :suggest,            -> { where("suggested_at IS NOT NULL").order(suggested_at: :desc) }
-  scope :no_suggest,         -> { where("suggested_at IS NULL and suggested_node is NULL") }
-  scope :without_suggest,    -> { where(suggested_at: nil) }
-  scope :suggest_all_parts,  -> { where("suggested_at IS NOT NULL").order(suggested_at: :desc) }
-  scope :high_likes,         -> { order(likes_count: :desc).order(id: :desc) }
-  scope :high_replies,       -> { order(replies_count: :desc).order(id: :desc) }
-  scope :last_reply,         -> { where("last_reply_id IS NOT NULL").order(last_reply_id: :desc) }
-  scope :with_replies_or_likes,       -> { where("topics.replies_count >= 1 or topics.likes_count >= 1") }
-  scope :no_reply,           -> { where(replies_count: 0) }
-  scope :popular,            -> { where("likes_count > 5") }
-  scope :without_ban,        -> { where.not(grade: :ban) }
+  scope :last_actived, -> { order(last_active_mark: :desc) }
+  scope :suggest, -> { where("suggested_at IS NOT NULL").order(suggested_at: :desc) }
+  scope :no_suggest, -> { where("suggested_at IS NULL and suggested_node is NULL") }
+  scope :without_suggest, -> { where(suggested_at: nil) }
+  scope :suggest_all_parts, -> { where("suggested_at IS NOT NULL").order(suggested_at: :desc) }
+  scope :high_likes, -> { order(likes_count: :desc).order(id: :desc) }
+  scope :high_replies, -> { order(replies_count: :desc).order(id: :desc) }
+  scope :last_reply, -> { where("last_reply_id IS NOT NULL").order(last_reply_id: :desc) }
+  scope :with_replies_or_likes, -> { where("topics.replies_count >= 1 or topics.likes_count >= 1") }
+  scope :no_reply, -> { where(replies_count: 0) }
+  scope :popular, -> { where("likes_count > 5") }
+  scope :without_ban, -> { where.not(grade: :ban) }
   scope :without_hide_nodes, -> { exclude_column_ids("node_id", Topic.topic_index_hide_node_ids) }
 
-  scope :in_seven_days,         -> { where("topics.created_at >= ?", 1.week.ago) }
+  scope :in_seven_days, -> { where("topics.created_at >= ?", 1.week.ago) }
   scope :open, -> { where("closed_at IS NULL").order(created_at: :desc) }
 
-  scope :without_node_ids,   ->(ids) { exclude_column_ids("node_id", ids) }
-  scope :without_users,      ->(ids) { exclude_column_ids("user_id", ids) }
+  scope :without_node_ids, ->(ids) { exclude_column_ids("node_id", ids) }
+  scope :without_users, ->(ids) { exclude_column_ids("user_id", ids) }
   scope :exclude_column_ids, ->(column, ids) { ids.empty? ? all : where.not(column => ids) }
   scope :without_columns, ->(ids) { where.not("column_id" => ids).or(where(column_id: nil)) }
 
@@ -61,20 +63,19 @@ class Topic < ApplicationRecord
   scope :without_draft, -> { where(draft: false) }
   scope :with_public_articles, -> { where(article_public: true) }
 
-  scope :public_and_enterprise_topics, -> {joins(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_PUBLIC_MEMBER, User::MAX_STATE_FOR_ENTERPRISE)}
-  scope :public_members_topic, -> {joins(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_PUBLIC_MEMBER, User::MAX_STATE_FOR_PUBLIC_MEMBER)}
-  scope :enterprise_members_topic, -> {joins(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_ENTERPRISE, User::MAX_STATE_FOR_ENTERPRISE)}
+  scope :public_and_enterprise_topics, -> { joins(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_PUBLIC_MEMBER, User::MAX_STATE_FOR_ENTERPRISE) }
+  scope :public_members_topic, -> { joins(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_PUBLIC_MEMBER, User::MAX_STATE_FOR_PUBLIC_MEMBER) }
+  scope :enterprise_members_topic, -> { joins(:user).where("users.state between ? and ?", User::MIN_STATE_FOR_ENTERPRISE, User::MAX_STATE_FOR_ENTERPRISE) }
 
-  scope :without_team_ids, -> (ids) { where(team_id: nil).or(exclude_column_ids("team_id", ids)) }
+  scope :without_team_ids, ->(ids) { where(team_id: nil).or(exclude_column_ids("team_id", ids)) }
 
   # 首页， 节点使用的正常帖子， + 公众合作号+ 企业签约号+任意角色加精
   scope :with_filter_public_end_enterprise, -> {
-    joins(:user).where("users.state between ? and ?", 1, 99)
-    # 其中 public_cooperation  是 工种合作账号， enterprise——subscriber 为企业签约账号， 这两个是需要显示的
-    .or(where("users.state" => [User.states[:public_cooperation], User.states[:enterprise_subscriber]]))
-    .or(where("topics.grade" => :excellent))
+      joins(:user).where("users.state between ? and ?", 1, 99)
+      # 其中 public_cooperation  是 工种合作账号， enterprise——subscriber 为企业签约账号， 这两个是需要显示的
+        .or(where("users.state" => [User.states[:public_cooperation], User.states[:enterprise_subscriber]]))
+        .or(where("topics.grade" => :excellent))
     }
-
 
   before_save { self.node_name = node.try(:name) || "" }
   before_create { self.last_active_mark = Time.now.to_i }
@@ -108,6 +109,12 @@ class Topic < ApplicationRecord
     (self[:type] || "Topic").underscore.to_sym
   end
 
+  def phone_check
+    if self.user.phone_number.blank?
+      errors.add(:user_id, "请先在个人资料中绑定手机号")
+    end
+  end
+
   def is_article?
     topic_type == :article
   end
@@ -116,11 +123,11 @@ class Topic < ApplicationRecord
     # replied_at 用于最新回复的排序，如果帖着创建时间在一个月以前，就不再往前面顶了
     return false if reply.blank? && !force
 
-    self.last_active_mark      = Time.now.to_i if created_at > 1.month.ago
-    self.replied_at            = reply.try(:created_at)
-    self.replies_count         = replies.without_system.count
-    self.last_reply_id         = reply.try(:id)
-    self.last_reply_user_id    = reply.try(:user_id)
+    self.last_active_mark = Time.now.to_i if created_at > 1.month.ago
+    self.replied_at = reply.try(:created_at)
+    self.replies_count = replies.without_system.count
+    self.last_reply_id = reply.try(:id)
+    self.last_reply_user_id = reply.try(:user_id)
     self.last_reply_user_login = reply.try(:user_login)
 
     save
@@ -229,7 +236,7 @@ class Topic < ApplicationRecord
   private
 
   def calc_credit_reward
-    return unless saved_change_to_attribute(:audit_status) && self.audit_status == 'approved'
+    return unless saved_change_to_attribute(:audit_status) && self.audit_status == "approved"
     broadcast_topic_created_and_audited
   end
 

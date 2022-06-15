@@ -197,6 +197,10 @@
   width: 9rem
 }
 
+.tw-w-\[500px\] {
+  width: 500px
+}
+
 .tw-w-48 {
   width: 12rem
 }
@@ -308,11 +312,6 @@
   border-bottom-color: rgb(96 165 250 / var(--tw-border-opacity))
 }
 
-.tw-bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity))
-}
-
 .tw-bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity))
@@ -366,6 +365,11 @@
 
 .tw-p-5 {
   padding: 1.25rem
+}
+
+.tw-py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem
 }
 
 .tw-px-2 {
