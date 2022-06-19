@@ -22,6 +22,7 @@ module Homeland::Activities
     has_many :comments, as: :commentable
 
     before_save :clean_empty_cooperators
+    after_create :sync_to_topic
 
 
     scope :pinned, -> { where("suggested_at is not null").order("suggested_at desc").limit(5) }
@@ -39,7 +40,11 @@ module Homeland::Activities
 
     def sync_to_topic
       node = Node.find_by_name("活动沙龙")
+      return if node.nil?
+      
       Topic.create(draft: false, title: self.title, body: self.description, node_id: node.id, user_id: self.user_id)
+    rescue => e
+      Rails.logger.error e.message
     end
 
 
