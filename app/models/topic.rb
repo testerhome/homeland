@@ -110,6 +110,15 @@ class Topic < ApplicationRecord
   end
 
   def phone_check
+    if real_user_id.present?
+      user = User.find(real_user_id)
+      if user&.phone.blank?
+        errors.add(:user_id, "请先在个人资料中绑定手机号")
+      else
+        return
+      end
+    end
+
     if self.user.phone_number.blank?
       errors.add(:user_id, "请先在个人资料中绑定手机号")
     end
