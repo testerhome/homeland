@@ -31,8 +31,7 @@ module Api
       end
 
       def send_phone_code
-        
-        unless verify_rucaptcha?(nil, keep_session: true)
+        unless verify_rucaptcha?(nil)
           return render json: { msg: "验证码错误" }, status: 422
         end
 
