@@ -1,12 +1,12 @@
-<tr id='<%=dom_id topic%>' class="<%= 'deleted' if !topic.deleted_at.blank? %> <%= 'ban' if topic.ban? %>">
-        <td class='first'><%= topic.id%></td>
+<tr id='<%= dom_id topic %>' class="<%= "deleted" if !topic.deleted_at.blank? %> <%= "ban" if topic.ban? %>">
+        <td class='first'><%= topic.id %></td>
         <td>
           <%= link_to truncate(topic.title, length: 30), topic, target: "_blank" %>
         </td>
         <td><%= topic.section&.name %></td>
         <td><%= topic.node_name %></td>
         <td><%= user_name_tag(topic.user) %></td>
-        <td class='tw-text-xs tw-font-thin'><%= topic.user.created_at.strftime(("%Y-%m-%d")) %>
+        <td class='tw-text-xs tw-font-thin'><%= topic.user&.created_at&.strftime(("%Y-%m-%d")) %>
         <td><%= topic.replies_count %></td>
         <td>
           <% if topic.deleted_at.blank? %>
@@ -17,18 +17,19 @@
           <% end %>
         </td>
         <td>
-          <%= audits_info.select {|x| x[1] ==topic.audit_status}.dig(0,0)  %>
+          <%= audits_info.select { |x| x[1] == topic.audit_status }.dig(0, 0) %>
         </td>
         <td>
           <% if topic.audit_approved? || topic.audit_rejected? %>
-            <%= button_to "重置审核", audit_topics_admin_audits_path(request.query_parameters), remote: true, params: {topic_id: topic.id, audit_status: "pending"} %>
+            <%= button_to "重置审核", audit_topics_admin_audits_path(request.query_parameters), remote: true, params: { topic_id: topic.id, audit_status: "pending" } %>
           <% end %>
           <% if topic.audit_pending? %>
-            <%= button_to "审核通过", audit_topics_admin_audits_path(request.query_parameters), remote: true, params: {topic_id: topic.id, audit_status: "approved"} %>
-            <%= button_to "审核拒绝", audit_topics_admin_audits_path(request.query_parameters), remote: true, params: {topic_id: topic.id, audit_status: "rejected"}, class: "tw-bg-yellow-500" %>
+            <%= button_to "审核通过", audit_topics_admin_audits_path(request.query_parameters), remote: true, params: { topic_id: topic.id, audit_status: "approved" } %>
+            <%= button_to "审核拒绝", audit_topics_admin_audits_path(request.query_parameters), remote: true, params: { topic_id: topic.id, audit_status: "rejected" }, class: "tw-bg-yellow-500" %>
           <% end %>
-          <%= button_to "封禁用户", forbid_user_admin_audits_path(user_id: topic.user.id), remote: true, class: "tw-my-2 tw-bg-red-400 tw-text-white tw-border-0 tw-px-2", "data-confirm" => "你确定要封禁用户么? 封禁后， 该用户的资源（帖子，回帖） 都会被封禁"%>
-
+          <% if topic.user %>
+            <%= button_to "封禁用户", forbid_user_admin_audits_path(user_id: topic.user.id), remote: true, class: "tw-my-2 tw-bg-red-400 tw-text-white tw-border-0 tw-px-2", "data-confirm" => "你确定要封禁用户么? 封禁后， 该用户的资源（帖子，回帖） 都会被封禁" %>
+          <% end %>
 
         </td>
       </tr>
