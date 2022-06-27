@@ -5,7 +5,7 @@ require "sidekiq/cron/web"
 
 Rails.application.routes.draw do
   namespace :admin do
-    get 'audits/index'
+    get "audits/index"
   end
   use_doorkeeper do
     controllers applications: "oauth/applications",
@@ -26,17 +26,17 @@ Rails.application.routes.draw do
     root to: "topics#index"
   end
   match "/uploads/:path(![large|lg|md|sm|xs])", to: "home#uploads", via: :get, constraints: {
-    path: /[\w\d\.\/\-]+/i
-  }
+                                                  path: /[\w\d\.\/\-]+/i,
+                                                }
   get "status", to: "home#status"
 
   devise_for :users, path: "account", controllers: {
-    registrations: "users/registrations",
-    confirmations: "users/confirmations",
-    sessions: "users/sessions",
-    passwords: "users/passwords",
-    omniauth_callbacks: "users/omniauth_callbacks"
-  }
+                       registrations: "users/registrations",
+                       confirmations: "users/confirmations",
+                       sessions: "users/sessions",
+                       passwords: "users/passwords",
+                       omniauth_callbacks: "users/omniauth_callbacks",
+                     }
 
   resource :setting do
     member do
@@ -80,6 +80,8 @@ Rails.application.routes.draw do
       post :pay
     end
   end
+
+  resources :lessons, only: [:index, :show]
 
   resources :topics do
     member do
@@ -142,7 +144,6 @@ Rails.application.routes.draw do
       end
     end
     resources :credit_records, only: [:index, :new, :create] do
-
       collection do
         get :user_credit_info
       end

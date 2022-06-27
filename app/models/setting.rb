@@ -2,10 +2,9 @@
 
 # RailsSettings Model
 class Setting < RailsSettings::Base
-
   LEGECY_ENVS = {
     github_token: "github_api_key",
-    github_secret: "github_api_secret"
+    github_secret: "github_api_secret",
   }
 
   concerning :Legacy do
@@ -108,6 +107,8 @@ class Setting < RailsSettings::Base
     search_need_login
     audit_user_whitelist
     column_channels_show_node_names
+    geekbang_app_id
+    geekbang_app_secret
   ]
 
   # = System
@@ -128,9 +129,9 @@ class Setting < RailsSettings::Base
 
   # = Rack Attach
   field :rack_attack, type: :hash, default: {
-    limit: ENV["rack_attack.limit"] || 0,
-    period: ENV["rack_attack.period"] || 3.minutes,
-  }
+                        limit: ENV["rack_attack.limit"] || 0,
+                        period: ENV["rack_attack.period"] || 3.minutes,
+                      }
 
   # = Uploader
   # can be  upyun/aliyun
@@ -148,24 +149,23 @@ class Setting < RailsSettings::Base
   field :mailer_provider, default: (ENV["mailer_provider"] || "smtp"), readonly: true
   field :mailer_sender, default: (ENV["mailer_sender"] || "no-reply@localhost"), readonly: true
   field :mailer_options, type: :hash, readonly: true, default: {
-    api_key: (ENV["mailer_options_api_key"] || ENV["mailer_options.api_key"]),
-    address: (ENV["mailer_options_address"] || ENV["mailer_options.address"]),
-    port: (ENV["mailer_options_port"] || ENV["mailer_options.port"]),
-    domain: (ENV["mailer_options_domain"] || ENV["mailer_options.domain"]),
-    user_name: (ENV["mailer_options_user_name"] || ENV["mailer_options.user_name"]),
-    password: (ENV["mailer_options_password"] || ENV["mailer_options.password"]),
-    authentication: (ENV["mailer_options_authentication"] || ENV["mailer_options.authentication"] || "login"),
-    enable_starttls_auto: (ENV["mailer_options_enable_starttls_auto"] || ENV["mailer_options.enable_starttls_auto"])
-  }
+                           api_key: (ENV["mailer_options_api_key"] || ENV["mailer_options.api_key"]),
+                           address: (ENV["mailer_options_address"] || ENV["mailer_options.address"]),
+                           port: (ENV["mailer_options_port"] || ENV["mailer_options.port"]),
+                           domain: (ENV["mailer_options_domain"] || ENV["mailer_options.domain"]),
+                           user_name: (ENV["mailer_options_user_name"] || ENV["mailer_options.user_name"]),
+                           password: (ENV["mailer_options_password"] || ENV["mailer_options.password"]),
+                           authentication: (ENV["mailer_options_authentication"] || ENV["mailer_options.authentication"] || "login"),
+                           enable_starttls_auto: (ENV["mailer_options_enable_starttls_auto"] || ENV["mailer_options.enable_starttls_auto"]),
+                         }
 
   # = SSO
   field :sso, type: :hash, readonly: true, default: {
-    enable: (ENV["sso_enable"] || ENV["sso.enable"] || false),
-    enable_provider: (ENV["sso_enable_provider"] || ENV["sso_enable.provider"] || false),
-    url: (ENV["sso_url"] || ENV["sso.url"]),
-    secret: (ENV["sso_secret"] || ENV["sso.secret"]),
-  }
-
+                enable: (ENV["sso_enable"] || ENV["sso.enable"] || false),
+                enable_provider: (ENV["sso_enable_provider"] || ENV["sso_enable.provider"] || false),
+                url: (ENV["sso_url"] || ENV["sso.url"]),
+                secret: (ENV["sso_secret"] || ENV["sso.secret"]),
+              }
 
   field :github_stats_repos, default: "", type: :string
   field :new_from_github_notices, default: "", type: :string
@@ -277,7 +277,7 @@ class Setting < RailsSettings::Base
   field :enable_audit_topic_update, type: :boolean, default: false
   field :enable_audit_reply_update, type: :boolean, default: false
   field :enable_audit_user_update, type: :boolean, default: false
-  
+
   field :audit_topic_update_attributes, type: :array, default: ["title", "body"]
   field :audit_reply_update_attributes, type: :array, default: ["body"]
   field :audit_user_update_attributes, type: :array, default: ["name"]
@@ -296,7 +296,6 @@ class Setting < RailsSettings::Base
   field :google_analytics_key, default: ""
   field :certify_questions, default: "", type: :string
 
-
   # sendcloud
 
   field :sendcloud_sms_template_id, default: ""
@@ -304,6 +303,11 @@ class Setting < RailsSettings::Base
   field :sendcloud_user, default: ""
 
   field :phone_verify_code_to_all, type: :string, default: ""
+
+  # geekbang
+
+  field :geekbang_app_id, default: ""
+  field :geekbang_app_secret, default: ""
 
   # static node
   field :node_ban_id, default: 55, type: :integer
@@ -396,7 +400,6 @@ class Setting < RailsSettings::Base
         return false
       end
     end
-
   end
 
   def require_restart?

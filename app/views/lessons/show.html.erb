@@ -1,0 +1,13 @@
+
+
+<div class='tw-bg-white tw-my-4 tw-p-3 tw-rounded-sm'>
+  <h1 class='tw-m-3 tw-text-lg'><%= @details.dig(:course, :title) %></h1>
+
+  <div class="player">
+  </div>
+
+  <div class=' tw-w-full tw-overflow-auto tw-prose-base course-details'>
+    <%== @article_info[:content] %>
+  </div>
+</div>
+  
