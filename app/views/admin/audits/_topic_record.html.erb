@@ -27,8 +27,9 @@
             <%= button_to "审核通过", audit_topics_admin_audits_path(request.query_parameters), remote: true, params: { topic_id: topic.id, audit_status: "approved" } %>
             <%= button_to "审核拒绝", audit_topics_admin_audits_path(request.query_parameters), remote: true, params: { topic_id: topic.id, audit_status: "rejected" }, class: "tw-bg-yellow-500" %>
           <% end %>
-          <%= button_to "封禁用户", forbid_user_admin_audits_path(user_id: topic.user.id), remote: true, class: "tw-my-2 tw-bg-red-400 tw-text-white tw-border-0 tw-px-2", "data-confirm" => "你确定要封禁用户么? 封禁后， 该用户的资源（帖子，回帖） 都会被封禁" %>
-
+          <% if topic.user %>
+            <%= button_to "封禁用户", forbid_user_admin_audits_path(user_id: topic.user.id), remote: true, class: "tw-my-2 tw-bg-red-400 tw-text-white tw-border-0 tw-px-2", "data-confirm" => "你确定要封禁用户么? 封禁后， 该用户的资源（帖子，回帖） 都会被封禁" %>
+          <% end %>
 
         </td>
       </tr>
