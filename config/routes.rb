@@ -153,6 +153,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :third_login_apps
+
     resources :credit_variant_orders do
       collection do
         post :authen

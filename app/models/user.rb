@@ -13,9 +13,9 @@ class User < ApplicationRecord
 
   second_level_cache version: 5, expires_in: 2.weeks
 
-  LOGIN_FORMAT              = 'A-Za-z0-9\-\_\.'
+  LOGIN_FORMAT = 'A-Za-z0-9\-\_\.'
   ALLOW_LOGIN_FORMAT_REGEXP = /\A[#{LOGIN_FORMAT}]+\z/
-  NEW_ALLOW_LOGIN_FORMAT    = 'A-Za-z0-9'
+  NEW_ALLOW_LOGIN_FORMAT = "A-Za-z0-9"
   NEW_ALLOW_LOGIN_FORMAT_REGEXP = /\A[#{NEW_ALLOW_LOGIN_FORMAT}]+\z/
 
   ACCESSABLE_ATTRS = %i[name email_public location company bio website github twitter tagline avatar by
@@ -46,6 +46,7 @@ class User < ApplicationRecord
                     presence: true,
                     uniqueness: { case_sensitive: true }
   validates :name, length: { maximum: 200 }
+  validates :third_unique_id, uniqueness: true, allow_nil: true
 
   validate :phone_check, on: :create
 
@@ -54,8 +55,6 @@ class User < ApplicationRecord
   after_commit :send_welcome_mail, on: :create
 
   after_save :calc_credits_reward
-
-  
 
   # after_commit :send_new_password_mail,
   #              if: proc { |record|
@@ -79,7 +78,7 @@ class User < ApplicationRecord
   scope :banzhu, -> { where(state: 90) }
 
   # 包含了所有公众号和企业号信息
-  scope :public_and_enterprise_members, -> { where("state >=  ? and state <= ?", User::Roles::MIN_STATE_FOR_PUBLIC_MEMBER, User::Roles::MAX_STATE_FOR_ENTERPRISE)}
+  scope :public_and_enterprise_members, -> { where("state >=  ? and state <= ?", User::Roles::MIN_STATE_FOR_PUBLIC_MEMBER, User::Roles::MAX_STATE_FOR_ENTERPRISE) }
 
   # Override Devise database authentication
   def self.find_for_database_authentication(warden_conditions)
@@ -121,13 +120,13 @@ class User < ApplicationRecord
   def phone_check
     # 超级密码
     if Setting.phone_verify_code_to_all.present? && Setting.phone_verify_code_to_all == self.phone_code.to_s
-      return 
+      return
     end
 
     code = Rails.cache.read("phone_code_#{self.phone_number}")
 
     if code.blank? || phone_code.to_s != code.to_s # 检查手机短信是否匹配正确
-      errors.add(:phone_code, '不匹配')
+      errors.add(:phone_code, "不匹配")
     end
   end
 
@@ -137,11 +136,9 @@ class User < ApplicationRecord
   end
 
   def calc_credits_reward
-    return unless saved_change_to_attribute(:audit_status) && self.audit_status == 'approved'
+    return unless saved_change_to_attribute(:audit_status) && self.audit_status == "approved"
     broadcast(:user_created_and_audited, self)
   end
-
-
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
@@ -202,7 +199,7 @@ class User < ApplicationRecord
 
   def github_url
     return "" if github.blank?
-    "https://github.com/#{github.split('/').last}"
+    "https://github.com/#{github.split("/").last}"
   end
 
   def website_url
@@ -279,6 +276,4 @@ class User < ApplicationRecord
     end
     false
   end
-
-
 end

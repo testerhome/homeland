@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_13_153056) do
+ActiveRecord::Schema.define(version: 2022_07_06_164752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -496,6 +496,15 @@ ActiveRecord::Schema.define(version: 2022_06_13_153056) do
     t.index ["user_id"], name: "index_team_users_on_user_id"
   end
 
+  create_table "third_login_apps", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "api_token"
+    t.string "login_url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tip_offs", force: :cascade do |t|
     t.integer "reporter_id"
     t.string "reporter_email"
@@ -639,11 +648,13 @@ ActiveRecord::Schema.define(version: 2022_06_13_153056) do
     t.integer "credit_sum", default: 0
     t.boolean "has_earn_create_credit", default: false
     t.string "phone_number"
+    t.string "third_unique_id"
     t.index "lower((login)::text) varchar_pattern_ops", name: "index_users_on_lower_login_varchar_pattern_ops"
     t.index "lower((name)::text) varchar_pattern_ops", name: "index_users_on_lower_name_varchar_pattern_ops"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["github"], name: "index_users_on_github"
     t.index ["location"], name: "index_users_on_location"
+    t.index ["third_unique_id"], name: "index_users_on_third_unique_id", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 

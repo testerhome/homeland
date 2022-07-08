@@ -16,6 +16,15 @@ class UsersController < ApplicationController
     @active_users = User.without_team.fields_for_list.hot.limit(100)
   end
 
+  def thrid_app_login
+    name = params[:name]
+    return render_404 if name.blank?
+
+    current_user.generate_third_unique_id_if_necessary!
+
+    redirect_to "#{current_user.thrid_app_login_url}?source=#{name}&ticket=#{current_user.fetch_third_ticket}"
+  end
+
   def city
     location = Location.location_find_by_name(params[:id])
     return render_404 if location.nil?
@@ -31,28 +40,28 @@ class UsersController < ApplicationController
 
   protected
 
-    def set_user
-      @user = User.find_by_login!(params[:id])
+  def set_user
+    @user = User.find_by_login!(params[:id])
 
-      # 转向正确的拼写
-      if @user.login != params[:id]
-        redirect_to user_path(@user.login), status: 301
-        return
-      end
-
-      @user_type = @user.user_type
+    # 转向正确的拼写
+    if @user.login != params[:id]
+      redirect_to user_path(@user.login), status: 301
+      return
     end
 
-    def check_exist!
-      render_404 if @user.deleted?
-    end
+    @user_type = @user.user_type
+  end
 
-    # Override render method to render difference view path
-    def render(*args)
-      options = args.extract_options!
-      if @user_type
-        options[:template] ||= "/#{@user_type.to_s.tableize}/#{params[:action]}"
-      end
-      super(*(args << options))
+  def check_exist!
+    render_404 if @user.deleted?
+  end
+
+  # Override render method to render difference view path
+  def render(*args)
+    options = args.extract_options!
+    if @user_type
+      options[:template] ||= "/#{@user_type.to_s.tableize}/#{params[:action]}"
     end
+    super(*(args << options))
+  end
 end
