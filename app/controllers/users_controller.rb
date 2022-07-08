@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, except: %i[index city]
-  before_action :check_exist!, except: %i[index city block unblock
+  before_action :set_user, except: %i[index city third_app_login ticket_to_user]
+  before_action :check_exist!, except: %i[index city block unblock third_app_login ticket_to_user
                                           follow unfollow]
+
+  skip_before_action :verify_authenticity_token, only: :ticket_to_user
 
   etag { @user }
   etag { @user&.teams if @user&.user_type == :user }
@@ -16,13 +18,32 @@ class UsersController < ApplicationController
     @active_users = User.without_team.fields_for_list.hot.limit(100)
   end
 
-  def thrid_app_login
+  def third_app_login
+    authenticate_user!
+
     name = params[:name]
     return render_404 if name.blank?
 
-    current_user.generate_third_unique_id_if_necessary!
+    third_app = ThirdLoginApp.find_by(name: name)
+    return render_404 if third_app.nil?
 
-    redirect_to "#{current_user.thrid_app_login_url}?source=#{name}&ticket=#{current_user.fetch_third_ticket}"
+    redirect_to "#{third_app.login_url}?source=#{name}&ticket=#{current_user.fetch_third_ticket}"
+  end
+
+  def ticket_to_user
+    ticket = params[:ticket]
+    return render_404 if ticket.blank?
+
+    user = User.find_by_third_ticket(ticket, params[:source], params[:api_token])
+    return render_404 if user.nil?
+
+    render json: {
+      loginName: user.login,
+      userName: user.name,
+      mobile: user.phone_number,
+      email: user.email,
+      sourceId: user.third_unique_id,
+    }
   end
 
   def city

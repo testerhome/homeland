@@ -5,7 +5,7 @@ require "sidekiq/cron/web"
 
 Rails.application.routes.draw do
   namespace :admin do
-    get 'audits/index'
+    get "audits/index"
   end
   use_doorkeeper do
     controllers applications: "oauth/applications",
@@ -26,17 +26,17 @@ Rails.application.routes.draw do
     root to: "topics#index"
   end
   match "/uploads/:path(![large|lg|md|sm|xs])", to: "home#uploads", via: :get, constraints: {
-    path: /[\w\d\.\/\-]+/i
-  }
+                                                  path: /[\w\d\.\/\-]+/i,
+                                                }
   get "status", to: "home#status"
 
   devise_for :users, path: "account", controllers: {
-    registrations: "users/registrations",
-    confirmations: "users/confirmations",
-    sessions: "users/sessions",
-    passwords: "users/passwords",
-    omniauth_callbacks: "users/omniauth_callbacks"
-  }
+                       registrations: "users/registrations",
+                       confirmations: "users/confirmations",
+                       sessions: "users/sessions",
+                       passwords: "users/passwords",
+                       omniauth_callbacks: "users/omniauth_callbacks",
+                     }
 
   resource :setting do
     member do
@@ -142,7 +142,6 @@ Rails.application.routes.draw do
       end
     end
     resources :credit_records, only: [:index, :new, :create] do
-
       collection do
         get :user_credit_info
       end
@@ -229,6 +228,8 @@ Rails.application.routes.draw do
 
   get "api", to: "home#api", as: "api"
   get "markdown", to: "home#markdown", as: "markdown"
+  get "/users/third_app_login/:name", to: "users#third_app_login"
+  post "/users/ticket_to_user", to: "users#ticket_to_user", as: :ticket_to_user
 
   namespace :api do
     namespace :v3 do
@@ -337,6 +338,7 @@ Rails.application.routes.draw do
   # WARRING! 请保持 User 的 routes 在所有路由的最后，以便于可以让用户名在根目录下面使用，而又不影响到其他的 routes
   # 比如 http://localhost:3000/huacnlee
   get "users/city/:id", to: "users#city", as: "location_users"
+
   get "users", to: "users#index", as: "users"
 
   post "/people/join/:user_id", to: "team_users#join", as: "join"
