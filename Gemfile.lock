@@ -114,6 +114,9 @@ GEM
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
+    api_tools (0.1.1)
+      multi_json
+      rest-client (~> 2.0)
     ast (2.4.2)
     auto-correct (0.3.1)
       nokogiri (>= 1.4)
@@ -516,6 +519,7 @@ DEPENDENCIES
   action-store
   acts_as_list
   annotate
+  api_tools
   auto-correct
   bootsnap
   bulk_insert

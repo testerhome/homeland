@@ -1,0 +1,32 @@
+
+
+<div class='tw-bg-white tw-my-4 tw-p-3 tw-rounded-sm'>
+  <h1 class='tw-m-3 tw-text-lg'>课程列表</h1>
+
+
+  <div class='tw-grid tw-grid-cols-4 tw-gap-7'>
+    <% @list.each do |item| %>
+    <div class='tw-transition hover:tw-shadow-lg tw-transform ' >
+    <a href="<%= "/lessons/#{item[:course_id]}" %>">
+      <div>
+        <img src="<%= item.dig(:details, :articles, 0, :cover) %>" alt="" class='object-cover tw-rounded tw-w-full tw-h-32' />
+      </div>
+      <div class='tw-ml-2'>
+        <h2 class=' tw-mt-4 tw-text-sm tw-text-left tw-text-gray-700 tw-truncate'>
+        <a href="<%= "/lessons/#{item[:course_id]}" %>">
+          <%= truncate item[:title], length: 65 %>
+        </a>
+        </h2>
+
+        <p class='tw-text-sm tw-text-gray-400 tw-truncate'><%= item[:subtitle] %></p>
+      </div>
+    </a>
+    </div>
+    
+
+    <% end %>
+  </div>
+
+
+
+</div>

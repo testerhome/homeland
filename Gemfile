@@ -108,6 +108,7 @@ gem "html-pipeline"
 gem "html-pipeline-auto-correct"
 gem "redcarpet"
 gem "rouge"
+gem "api_tools"
 
 gem "acts_as_list"
 
