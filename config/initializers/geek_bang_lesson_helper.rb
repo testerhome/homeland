@@ -16,7 +16,7 @@ class GeekBangLessonHelper
         if answer[:code] == 0
           answer[:data][:token]
         else
-          Raise "获取 GeekBang token 失败"
+          raise "获取 GeekBang token 失败"
         end
       end
     end
