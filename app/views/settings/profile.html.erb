@@ -1,15 +1,20 @@
 <div class="row">
-  <%= render 'menu' %>
+  <%= render "menu" %>
   <div class="col-md-10">
     <div class="card card-lg">
       <div class="card-body">
+        <p>
+          <%= link_to "登录龙测", "/users/third_app_login/dragontesting" %>
+        </p>
+
+
         <%= form_for @user, url: setting_path, method: :put, html: { enctype: "multipart/form-data" } do |f| %>
           <%= render "shared/error_messages", target: @user %>
           <input type="hidden" name="by" value="profile" />
           <% if Setting.has_profile_field? :location %>
             <div class="form-group">
               <%= f.label :location %>
-              <%= f.text_field :location, class: "form-control", style: "width: 200px"  %>
+              <%= f.text_field :location, class: "form-control", style: "width: 200px" %>
             </div>
           <% end %>
           <% if Setting.has_profile_field? :company %>
@@ -43,10 +48,8 @@
             </div>
           <% end %>
           <% Profile::CONTACT_FIELDS.each do |field| %>
-            <%
-              next if !Setting.has_profile_field? field
-              field_prefix = Profile.contact_field_prefix(field)
-            %>
+            <% next if !Setting.has_profile_field? field
+               field_prefix = Profile.contact_field_prefix(field) %>
             <div class="form-group form-group-profile-field-<%= field %>">
               <label for="user_profile_<%= field %>"><%= Profile.contact_field_label(field) %></label>
               <% if field_prefix %>
@@ -59,7 +62,7 @@
             </div>
           <% end %>
           <div class="form-actions hide-ios">
-            <button type="submit" class="btn btn-primary" data-disable-with="<%= t("common.saving") %>"><%= t("users.update_profile")%></button>
+            <button type="submit" class="btn btn-primary" data-disable-with="<%= t("common.saving") %>"><%= t("users.update_profile") %></button>
           </div>
         <% end %>
       </div>
