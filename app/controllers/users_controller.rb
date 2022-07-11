@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     third_app = ThirdLoginApp.find_by(name: name)
     return render_404 if third_app.nil?
 
-    redirect_to "#{third_app.login_url}?source=#{name}&ticket=#{current_user.fetch_third_ticket}"
+    redirect_to "#{third_app.login_url}?to=#{name}&soure=testerhome&ticket=#{current_user.fetch_third_ticket}"
   end
 
   def ticket_to_user
