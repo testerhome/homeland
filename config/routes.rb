@@ -154,6 +154,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :third_login_apps
+
     resources :credit_variant_orders do
       collection do
         post :authen
@@ -228,6 +230,8 @@ Rails.application.routes.draw do
 
   get "api", to: "home#api", as: "api"
   get "markdown", to: "home#markdown", as: "markdown"
+  get "/users/third_app_login/:name", to: "users#third_app_login"
+  post "/users/ticket_to_user", to: "users#ticket_to_user", as: :ticket_to_user
 
   namespace :api do
     namespace :v3 do
@@ -336,6 +340,7 @@ Rails.application.routes.draw do
   # WARRING! 请保持 User 的 routes 在所有路由的最后，以便于可以让用户名在根目录下面使用，而又不影响到其他的 routes
   # 比如 http://localhost:3000/huacnlee
   get "users/city/:id", to: "users#city", as: "location_users"
+
   get "users", to: "users#index", as: "users"
 
   post "/people/join/:user_id", to: "team_users#join", as: "join"

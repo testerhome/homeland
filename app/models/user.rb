@@ -6,7 +6,7 @@ class User < ApplicationRecord
   attr_accessor :phone_code, :phone_captcha
   include Wisper::Publisher # 加入监听器
   include Searchable
-  include UserPhoneModule
+  include UserPhoneModule, SimpleThirdLogin
   include User::Roles, User::Blockable, User::Likeable, User::Followable, User::TopicActions,
           User::GitHubRepository, User::ProfileFields, User::RewardFields, User::Deviseable,
           User::Avatar, Auditable, User::CreditOperations
@@ -46,6 +46,7 @@ class User < ApplicationRecord
                     presence: true,
                     uniqueness: { case_sensitive: true }
   validates :name, length: { maximum: 200 }
+  validates :third_unique_id, uniqueness: true, allow_nil: true
 
   validate :phone_check, on: :create
 

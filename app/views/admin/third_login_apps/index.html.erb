@@ -1,0 +1,34 @@
+.<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">简易第三方登录</h4>
+    <p class="card-text">
+      <%= link_to "新建简易第三方登录配置", new_admin_third_login_app_path %>
+    </p>
+
+    <div>
+    
+      <table class='table'>
+        <thead>
+          <tr>
+            <th>平台名称</th>
+            <th>备注</th>
+            <th>api_token</th>
+            <th>登录url</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @third_login_apps.each do |app| %>
+          <tr>
+            <td><%= app.name %></td>
+            <td><%= app.description %></td>
+            <td><%= app.api_token %></td>
+            <td><%= app.login_url %></td>
+            <td><%= button_to "删除", [:admin, app], method: :delete, confirm: "你确定删除么？" %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
