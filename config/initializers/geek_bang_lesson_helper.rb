@@ -38,7 +38,7 @@ class GeekBangLessonHelper
       return answer if answer.present?
 
       token = fetch_token
-      courses = DefaultRest.post(url, token: token, type: 7, size: 10)
+      courses = DefaultRest.post(url, token: token, type: 7, size: 99)
       if courses[:code] == 0
         list = courses[:data][:list]
 
