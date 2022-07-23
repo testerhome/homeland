@@ -14,7 +14,7 @@ class CreditVariantOrdersController < ApplicationController
     @credit_variant_order = CreditVariantOrder.new(
       credit_variant: @credit_variant,
       num: @num,
-      deliver_receiver_name: last_order.deliver_address,
+      deliver_address: last_order.deliver_address,
       deliver_receiver_name: last_order.deliver_receiver_name,
       deliver_receiver_phone: last_order.deliver_receiver_phone
 

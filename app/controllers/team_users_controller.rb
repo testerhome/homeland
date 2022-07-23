@@ -103,10 +103,10 @@ class TeamUsersController < ApplicationController
 
   def accept_all_join
     team_users = TeamUser.where(team_id: @team.id, status: :pendding_owner_approved, role: :member)
-    Rails.logger.error "13123123000000   ------- #{team_users}"
     team_users.each do |team_user|
-      Rails.logger.error "13123123000000   ------- #{team_user}"
-      team_user.accepted!
+      if team_user.user
+        team_user.accepted!
+      end
     end
     redirect_to(user_team_users_path(@team), notice: "批准申请，全部已加入社团")
   end
