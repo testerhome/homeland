@@ -206,5 +206,12 @@ module Admin
 
       redirect_to(admin_users_url, notice: "发送完毕！")
     end
+    def auth_unbind
+      provider = params[:provider]
+      user = User.find(params[:id])
+      user.authorizations.where(provider: provider).delete_all
+      redirect_to admin_users_url, notice: t("users.unbind_success", provider: provider.titleize)
+    end
+
   end
 end

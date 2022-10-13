@@ -133,6 +133,7 @@
           <tr>
             <td style="width:100px;"><%= auth.provider %></td>
             <td><%= auth.uid %></td>
+            <td><%= link_to(raw('<i class="fas fa-minus-circle"></i>'), auth_unbind_by_admin_admin_user_path( @user.id,auth.provider), rel: "twitsy", title: ("users.click_to_unbind"), method: 'delete' )%></td>
           </tr>
         <% end %>
       </table>

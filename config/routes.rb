@@ -210,6 +210,7 @@ Rails.application.routes.draw do
         delete :clean
         put :assign_nodes
         get :edit_assign_nodes
+        delete "/:provider", to: "users#auth_unbind", as: "auth_unbind_by_admin"
       end
       collection do
         get :ip_status
