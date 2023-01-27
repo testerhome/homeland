@@ -11,6 +11,7 @@ module Oauth
       @applications = current_user.oauth_applications
       @authorized_applications = Doorkeeper::Application.authorized_for(current_user)
       @devices = current_user.devices.all
+      @user = current_user
     end
 
     def show
