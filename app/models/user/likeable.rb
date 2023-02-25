@@ -23,6 +23,7 @@ class User
       return false if likeable.user_id == self.id
       broadcast(:action_like, likeable)
       self.create_action(:like, target: likeable)
+      Notification.notify_likeable(likeable.user_id, likeable.class.name ,likeable.id, self.id)
     end
 
     # 取消赞

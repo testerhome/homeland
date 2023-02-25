@@ -15,7 +15,7 @@ class Notification < ActiveRecord::Base
                                "opensource_project_published", "admin_opensource_project_published", "admin_opensource_project_created"
                               ], "icon" => "fas fa-globe-europe" },
     "team" => { "types" => ["team_invite", "team_join", "reject_user_join"], "icon" => "fas fa-users" },
-    "personal" => { "types" => ["append", "comment", "follow", "mention", "topic", "topic_reply"], "icon" => "fas fa-user" }
+    "personal" => { "types" => ["append", "comment", "follow", "mention", "topic", "topic_reply", "likeable"], "icon" => "fas fa-user" }
   }
 
   def self.default_group
@@ -70,23 +70,6 @@ class Notification < ActiveRecord::Base
       "#{self.actor.login} 提及了你"
     elsif notify_type == "node_changed"
       "你的话题被移动了节点到 #{self.second_target.name}"
-    else
-      ""
-    end
-  end
-
-  def notify_title
-    return "" if self.actor.blank?
-    if notify_type == "topic"
-      "#{self.actor.login} 创建了话题 《#{self.target.title}》"
-    elsif notify_type == "topic_reply"
-      "#{self.actor.login} 回复了话题 《#{self.second_target.title}》"
-    elsif notify_type == "follow"
-      "#{self.actor.login} 开始关注你了"
-    elsif notify_type == "mention"
-      "#{self.actor.login} 提及了你"
-    elsif notify_type == "node_changed"
-      "你的话题被移动了节点到 #{self.second_target.name}"
     elsif notify_type == "article_like"
       "#{self.actor.login} 赞了专栏文章 《#{self.target.title}》"
     elsif notify_type == "article_favorite"
@@ -105,6 +88,18 @@ class Notification < ActiveRecord::Base
       notify_type: "follow",
       user_id: user_id,
       actor_id: follower_id
+    }
+    return if Notification.where(opts).count > 0
+    Notification.create opts
+  end
+
+  def self.notify_likeable(likeable_user_id, target_type, target_id, user_id)
+    opts = {
+      notify_type: "likeable",
+      target_type: target_type,
+      target_id: target_id,
+      user_id: likeable_user_id,
+      actor_id: user_id
     }
     return if Notification.where(opts).count > 0
     Notification.create opts

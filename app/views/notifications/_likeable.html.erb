@@ -1,0 +1,17 @@
+<% likeable = notification.target %>
+<% if likeable.blank? %>
+  <div class="media-body">相关信息已删除</div>
+<% else %>
+
+  <div class="media-heading">
+
+  <span class="info">
+    <% if likeable.class.name == "Reply" %>
+      给你在 <%= likeable.topic&.is_article? ? article_title_tag(likeable.topic, reply: likeable) : topic_title_tag(likeable.topic, reply: likeable) %> 的回复点了个赞！
+    <% else %>
+    给你发表的 <%= likeable&.is_article? ? article_title_tag(likeable) : topic_title_tag(likeable) %>
+    点了个赞！
+    <% end %>
+  </span>
+  </div>
+<% end %>
