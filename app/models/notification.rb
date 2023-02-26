@@ -68,6 +68,8 @@ class Notification < ActiveRecord::Base
       "#{self.actor.login} 开始关注你了"
     elsif notify_type == "mention"
       "#{self.actor.login} 提及了你"
+    elsif notify_type == "likeable"
+      "你有新的点赞哦！"
     elsif notify_type == "node_changed"
       "你的话题被移动了节点到 #{self.second_target.name}"
     elsif notify_type == "article_like"
