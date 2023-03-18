@@ -22,12 +22,13 @@
           <%= f.check_box :anonymous %>  <%= t("topics.real_name") %>
         </label>
       </span>
+    <% else %>
+      <span class="help-inline">
+        <label>
+          <%= f.check_box :exposed_to_author_only %>  <%= t("topics.exposed_to_author_only") %>
+        </label>
+      </span>
     <% end %>
-    <span class="help-inline">
-      <label>
-        <%= f.check_box :exposed_to_author_only %>  <%= t("topics.exposed_to_author_only") %>
-      </label>
-    </span>
   </div>
 <% end %>
 <% end %>
