@@ -6,11 +6,12 @@
   <div class="media-heading">
 
   <span class="info">
-    <% if likeable.class.name == "Reply" %>
+    <% if likeable.class.name == "OpensourceProject" %>
+      给你的开源项目 《<%= link_to(likeable.title, homeland_opensource_project.opensource_project_path(likeable)) %>》点了个赞！
+    <% elsif likeable.class.name == "Reply" %>
       给你在 <%= likeable.topic&.is_article? ? article_title_tag(likeable.topic, reply: likeable) : topic_title_tag(likeable.topic, reply: likeable) %> 的回复点了个赞！
-    <% else %>
-    给你发表的 <%= likeable&.is_article? ? article_title_tag(likeable) : topic_title_tag(likeable) %>
-    点了个赞！
+    <% elsif likeable.class.name == "Article" or likeable.class.name == "Topic" %>
+    给你发表的 <%= likeable&.is_article? ? article_title_tag(likeable) : topic_title_tag(likeable) %> 点了个赞！
     <% end %>
   </span>
   </div>
