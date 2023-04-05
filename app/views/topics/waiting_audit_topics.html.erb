@@ -1,6 +1,6 @@
 <div class="tw-container card tw-mx-auto tw-p-4 tw-rounded-sm">
   <h2 class='tw-text-left tw-text-lg '>帖子待审核列表</h2>
-  <table class='table tw-mt-10 table-bordered table-striped table-condensed'>
+  <table class='table table-bordered table-striped table-condensed'>
     <thead>
       <tr>
         <th class="first">#</th>
@@ -26,5 +26,41 @@
     <% end %>
   </tbody>
 </table>
+
+  <% if current_user.roles? :maintainer %>
+  <h2 class='tw-text-left tw-text-lg '>您要审核的帖子列表</h2>
+  <table class='table table-bordered table-striped table-condensed'>
+    <thead>
+    <tr>
+      <th class="first">#</th>
+      <th>标题</th>
+      <th>分类</th>
+      <th>节点</th>
+      <th>作者</th>
+      <th>发帖时间</th>
+      <th>审核状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @topics_to_be_approved_by_u.each do |topic| %>
+      <tr>
+        <td class="first"><%= topic.id %></td>
+        <td>
+          <%= link_to truncate(topic.title, length: 30), topic, target: "_blank" %>
+        </td>
+        <td><%= topic.section&.name %></td>
+        <td><%= topic.node_name %></td>
+        <td><%= user_name_tag(topic.user) %></td>
+        <td><%= timeago(topic.created_at) %></td>
+        <td><%= audit_chinese_status(topic.audit_status) %></td>
+        <td>
+            <%= link_to  "去审核", topic, target: "_blank" %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <% end %>
 </div>
 

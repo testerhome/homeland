@@ -52,8 +52,8 @@ module Auditable
   end
 
   def audit(audit_user_id, audit_status, audit_reason)
-    self.update(audit_status: audit_status,
+    self.update!(audit_status: audit_status,
                 audited_at: Time.now,
-                audit_by: audit_user_id)
+                audit_user_id: audit_user_id)
   end
 end

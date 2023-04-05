@@ -12,6 +12,10 @@ class TopicsController < ApplicationController
 
   def waiting_audit_topics
     @topics = Topic.where(user_id: current_user.id, deleted_at: nil).where.not(audit_status: "approved").order("created_at desc")
+    if current_user.roles? :maintainer
+      node_ids = current_user.node_assignment_ids
+      @topics_to_be_approved_by_u = Topic.where(node: node_ids, deleted_at: nil).where.not(audit_status: "approved").order("created_at desc")
+    end
   end
 
   def index
@@ -184,7 +188,6 @@ class TopicsController < ApplicationController
       params[:reason_text] ||= params[:reason] || ""
       @topic.ban!(reason: params[:reason_text].strip)
       broadcast(:ban_topic, @topic, operator: current_user, reason: params[:reason_text].strip)
-
       redirect_to @topic, notice: "话题已放进屏蔽栏目。"
     when "append"
       content = params[:append_body]
@@ -203,6 +206,12 @@ class TopicsController < ApplicationController
     when "open"
       @topic.open!
       redirect_to @topic, notice: "话题已重启开启。"
+    when "audit_pass"
+      @topic.audit(current_user.id, "approved", "审核通过")
+      redirect_to @topic, notice: "审核通过。"
+    when "audit_reject"
+      @topic.audit(current_user.id, "rejected", "审核拒绝")
+      redirect_to @topic, notice: "审核拒绝。"
     end
   end
 
@@ -287,7 +296,7 @@ class TopicsController < ApplicationController
     end
 
     if topic.user_id != current_user&.id && topic.audit_status != "approved"
-      return redirect_to(topics_path, notice: t("topics.cannot_read_not_approved_topics")) unless current_user&.admin?
+      return redirect_to(topics_path, notice: t("topics.cannot_read_not_approved_topics")) unless can?(:manage, topic)
     end
 
     # 展示一次，就算作阅读一次

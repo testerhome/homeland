@@ -55,11 +55,13 @@
           <div class="text-center alert alert-warning">
             当前状态为 <i class="fas fa-file"></i> 草稿，仅作者可见，请前往 <%= link_to "", edit_topic_path(@topic), class: "fa fa-edit", title: "编辑发布" %> 编辑发布</a>
           </div>
-        <% end %>
-
-        <%if @topic.audit_status != 'approved'%>
+        <%elsif @topic.audit_status != 'approved'%>
           <div class="text-center alert alert-warning">
-            当前状态为 <%= audit_chinese_status(@topic.audit_status)%>, 其他人不可见
+            当前状态：<%= audit_chinese_status(@topic.audit_status)%>，其他人不可见
+            <%if can?(:manage, @topic) %>
+              <%= link_to raw("<i class='fa fa-check'></i> 审核通过"), action_topic_path(@topic, type: 'audit_pass'), method: 'post', remote: true, title: "审核通过" %>
+              <%= link_to raw("<i class='fa fa-ban'></i> 审核拒绝"), action_topic_path(@topic, type: 'audit_reject'), method: 'post', remote: true, title: "审核拒绝" %>
+            <%end %>
           </div>
         <%end %>
 

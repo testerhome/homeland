@@ -15,6 +15,15 @@ class HomeController < ApplicationController
     if Setting.has_module?(:opensource_project)
       @opensource_projects = OpensourceProject.includes(:user).published.latest.limit(5).to_a
     end
+    if current_user
+      if current_user.roles? :maintainer
+        node_ids = current_user.node_assignment_ids
+        @topics_to_be_approved_by_u = Topic.where(node: node_ids, deleted_at: nil).where.not(audit_status: "approved").order("created_at desc")
+        if not @topics_to_be_approved_by_u.blank?
+          flash[:notice] = "你还有文章待审核！请前往我的待审核区操作！"
+        end
+      end
+    end
   end
 
   def uploads
