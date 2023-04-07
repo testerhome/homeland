@@ -4,8 +4,8 @@ class RepliesController < ApplicationController
   include Wisper::Publisher # 加入监听器
   load_and_authorize_resource :reply
 
-  before_action :set_topic
-  before_action :set_reply, only: [:edit, :reply_to, :update, :destroy, :reply_suggest, :reply_unsuggest]
+  before_action :set_topic, except: [:action]
+  before_action :set_reply, only: [:edit, :reply_to, :update, :destroy, :reply_suggest, :reply_unsuggest, :action]
 
   def create
     @reply = Reply.new(reply_params)
@@ -74,6 +74,18 @@ class RepliesController < ApplicationController
   def reply_unsuggest
     @reply.update_suggested_at(nil)
     redirect_to(topic_path(@reply.topic_id), notice: "取消最佳回复成功。")
+  end
+
+  def action
+    authorize! params[:type].to_sym, @reply
+    case params[:type]
+    when "audit_pass"
+      @reply.audit(current_user.id, "approved", "审核通过")
+      redirect_to topic_path(@reply.topic, anchor: "reply-#{@reply.id}"), notice: "审核通过。"
+    when "audit_reject"
+      @reply.audit(current_user.id, "rejected", "审核拒绝")
+      redirect_to topic_path(@reply.topic, anchor: "reply-#{@reply.id}"), notice: "审核拒绝。"
+    end
   end
 
   protected

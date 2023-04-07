@@ -14,7 +14,9 @@ class TopicsController < ApplicationController
     @topics = Topic.where(user_id: current_user.id, deleted_at: nil).where.not(audit_status: "approved").order("created_at desc")
     if current_user.roles? :maintainer
       node_ids = current_user.node_assignment_ids
-      @topics_to_be_approved_by_u = Topic.where(node: node_ids, deleted_at: nil).where.not(audit_status: "approved").order("created_at desc")
+      @topics_to_be_approved_by_u = Topic.where(node: node_ids, deleted_at: nil).where.not(audit_status: "approved").order("created_at desc").page(params[:page])
+      topics_can_be_managed_by_u = Topic.where(node: node_ids, deleted_at: nil).order("created_at desc")
+      @replies_to_be_approved_by_u = Reply.where(topic_id: topics_can_be_managed_by_u.ids).where.not(audit_status: "approved").order("created_at desc").page(params[:page])
     end
   end
 

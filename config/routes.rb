@@ -120,6 +120,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :replies do
+    member do
+      post :action
+    end
+  end
   resources :photos
   resources :likes
   resources :column_channels

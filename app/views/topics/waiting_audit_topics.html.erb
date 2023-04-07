@@ -61,6 +61,50 @@
     <% end %>
     </tbody>
   </table>
-  <% end %>
+    <%= paginate @topics_to_be_approved_by_u %>
+
+    <h2  class='tw-text-left tw-text-lg '>回帖审核列表</h2>
+    <table class='table table-bordered table-striped table-condensed'>
+      <thead>
+      <tr>
+        <th class="first">#</th>
+        <th>分类 & 节点</th>
+        <th>帖子</th>
+        <th>回帖人</th>
+        <th>回帖内容</th>
+        <th>回帖时间</th>
+        <th>审核状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @replies_to_be_approved_by_u.each do |reply| %>
+        <tr id='<%= dom_id(reply)%>' class="<%= 'deleted' if !reply.deleted_at.blank? %> ">
+          <td><%= reply.id%></td>
+          <td>
+            <%= reply.topic.section&.name %>
+            <%= reply.topic.node_name %>
+          </td>
+          <td><%= reply.topic.title %></td>
+          <td><%= user_name_tag(reply.user) %></td>
+          <td> <%= link_to truncate(reply.body, length: 150), topic_path(reply.topic, anchor: "reply-#{reply.id}"), target: "_blank" %> </td>
+          <td>
+            <%= l reply.created_at, format: :short %>
+          </td>
+          <td>
+            <%= audits_info.select {|x| x[1] ==reply.audit_status}.dig(0,0)  %>
+          </td>
+          <td>
+            <%= link_to  "去审核", topic_path(reply.topic, anchor: "reply-#{reply.id}"), target: "_blank" %>
+          </td>
+        </tr>
+
+      <% end %>
+      </tbody>
+    </table>
+    <%= paginate @replies_to_be_approved_by_u %>
+
+
+<% end %>
 </div>
 
