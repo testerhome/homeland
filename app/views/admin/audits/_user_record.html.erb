@@ -1,24 +1,29 @@
-<tr id='<%=dom_id user%>'>
-      <td class="first"><%= user.id %></td>
-      <td width="32"><%= user_avatar_tag(user, :sm) %></td>
-      <td >
-        <%= link_to user.fullname, user_path(user), target: "_blank" %> <%= user_level_tag(user) unless user.member? %>
-      </td>
-      <td>
-        <%= audit_chinese_status(user.audit_status)%>
-      </td>
-      <td width="120"><%= user.created_at&.to_date %></td>
-      <td width="120"><%= user.last_sign_in_ip %></td>
-      <td width="120"><%= user.current_sign_in_ip %></td>
-      <td>
-      
-       <% if user.audit_approved? %>
-            <%= button_to "重置审核", audit_users_admin_audits_path(request.query_parameters), remote: true, params: {user_id: user.id, audit_status: "pending"} %>
-          <% end %>
-          <% if user.audit_pending? %>
-            <%= button_to "审核通过", audit_users_admin_audits_path(request.query_parameters),remote: true,  params: {user_id: user.id, audit_status: "approved"} %>
-            <%= button_to "审核拒绝", audit_users_admin_audits_path(request.query_parameters),remote: true,  params: {user_id: user.id, audit_status: "rejected"}, class: "tw-bg-yellow-500" %>
-          <% end %>
-                    <%= button_to "封禁用户", forbid_user_admin_audits_path(user_id: user.id), remote: true, class: "tw-my-2 tw-bg-red-400 tw-text-white tw-border-0 tw-px-2", "data-confirm" => "你确定要封禁用户么? 封禁后， 该用户的资源（帖子，回帖） 都会被封禁"%>
-      </td>
-    </tr>
+<tr id='<%= dom_id user %>'>
+  <td class="first"><%= user.id %></td>
+  <td width="32"><%= user_avatar_tag(user, :sm) %></td>
+  <td>
+    <%= link_to user.fullname, user_path(user), target: "_blank" %> <%= user_level_tag(user) unless user.member? %>
+  </td>
+  <td>
+    <%= audit_chinese_status(user.audit_status) %>
+  </td>
+  <td>
+    <% if not user.audit_pending? %>
+      <%= user_name_tag(User.find_by_id(user.audit_user_id)) %>
+    <% end %>
+  </td>
+  <td width="120"><%= user.created_at&.to_date %></td>
+  <td width="120"><%= user.last_sign_in_ip %></td>
+  <td width="120"><%= user.current_sign_in_ip %></td>
+  <td>
+
+    <% if user.audit_approved? %>
+      <%= button_to "重置审核", audit_users_admin_audits_path(request.query_parameters), remote: true, params: { user_id: user.id, audit_status: "pending" } %>
+    <% end %>
+    <% if user.audit_pending? %>
+      <%= button_to "审核通过", audit_users_admin_audits_path(request.query_parameters), remote: true, params: { user_id: user.id, audit_status: "approved" } %>
+      <%= button_to "审核拒绝", audit_users_admin_audits_path(request.query_parameters), remote: true, params: { user_id: user.id, audit_status: "rejected" }, class: "tw-bg-yellow-500" %>
+    <% end %>
+    <%= button_to "封禁用户", forbid_user_admin_audits_path(user_id: user.id), remote: true, class: "tw-my-2 tw-bg-red-400 tw-text-white tw-border-0 tw-px-2", "data-confirm" => "你确定要封禁用户么? 封禁后， 该用户的资源（帖子，回帖） 都会被封禁" %>
+  </td>
+</tr>

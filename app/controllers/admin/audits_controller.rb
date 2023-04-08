@@ -58,8 +58,8 @@ class Admin::AuditsController < Admin::ApplicationController
 
   def audit_topics
     @topic = Topic.find params[:topic_id]
-    @topic.update(audit_status: params[:audit_status])
-
+    # @topic.update(audit_status: params[:audit_status])
+    @topic.audit(current_user.id, params[:audit_status], "管理员操作")
     respond_to do |format|
       format.html { 
         redirect_to [:topics, :admin, :audits, request.query_parameters], notice: "审核成功"
@@ -70,8 +70,8 @@ class Admin::AuditsController < Admin::ApplicationController
 
   def audit_users
     @user = User.find params[:user_id]
-    @user.update(audit_status: params[:audit_status])
-
+    # @user.update(audit_status: params[:audit_status])
+    @user.audit(current_user.id, params[:audit_status], "管理员操作")
     respond_to do |format|
       format.html { 
         redirect_to [:users, :admin, :audits, request.query_parameters], notice: "审核成功"
@@ -82,7 +82,8 @@ class Admin::AuditsController < Admin::ApplicationController
 
   def audit_replies
     @reply = Reply.find params[:reply_id]
-    @reply.update(audit_status: params[:audit_status])
+    # @reply.update(audit_status: params[:audit_status])
+    @reply.audit(current_user.id, params[:audit_status], "管理员操作")
     respond_to do |format|
       format.html {
         redirect_to [:replies, :admin, :audits, request.query_parameters], notice: "审核成功"
