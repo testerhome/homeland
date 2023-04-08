@@ -20,6 +20,11 @@
           <%= audits_info.select { |x| x[1] == topic.audit_status }.dig(0, 0) %>
         </td>
         <td>
+          <% if not topic.audit_pending? %>
+            <%= user_name_tag(User.find_by_id(topic.audit_user_id)) %>
+          <% end %>
+        </td>
+        <td>
           <% if topic.audit_approved? || topic.audit_rejected? %>
             <%= button_to "重置审核", audit_topics_admin_audits_path(request.query_parameters), remote: true, params: { topic_id: topic.id, audit_status: "pending" } %>
           <% end %>
