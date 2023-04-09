@@ -1,4 +1,4 @@
-<% if reply.topic.blank? %>
+<% if not reply.topic.blank? %>
   <% Rails.logger.error "#{reply.id}" %>
 
 
