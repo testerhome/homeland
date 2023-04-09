@@ -1,8 +1,8 @@
 <tr id='<%= dom_id(reply)%>' class="<%= 'deleted' if !reply.deleted_at.blank? %> ">
         <td><%= reply.id%></td>
         <td>
-          <%= reply.topic.section&.name %>
-          <%= reply.topic.node_name %>
+          <%= reply.topic&.section&.name %>
+          <%= reply.topic&.node_name %>
         </td>
         <td><%= reply.topic_id %></td>
         <td><%= user_name_tag(reply.user) %></td>
@@ -26,6 +26,6 @@
             <%= button_to "审核通过", audit_replies_admin_audits_path(request.query_parameters),remote: true,  params: {reply_id: reply.id, audit_status: "approved"} %>
             <%= button_to "审核拒绝", audit_replies_admin_audits_path(request.query_parameters),remote: true,  params: {reply_id: reply.id, audit_status: "rejected"}, class: "tw-bg-yellow-500" %>
           <% end %>
-          <%= button_to "封禁用户", forbid_user_admin_audits_path(user_id: reply.user.id), remote: true, class: "tw-my-2 tw-bg-red-400 tw-text-white tw-border-0 tw-px-2", "data-confirm" => "你确定要封禁用户么? 封禁后， 该用户的资源（帖子，回帖） 都会被封禁"%>
+          <%= button_to "封禁用户", forbid_user_admin_audits_path(user_id: reply&.user&.id), remote: true, class: "tw-my-2 tw-bg-red-400 tw-text-white tw-border-0 tw-px-2", "data-confirm" => "你确定要封禁用户么? 封禁后， 该用户的资源（帖子，回帖） 都会被封禁"%>
         </td>
       </tr>
