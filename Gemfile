@@ -129,7 +129,7 @@ gem "faker", "~> 2.14"
 
 # Homeland Plugins
 gem "homeland-opensource_project", github: "testerhome/homeland-opensource_project"
-# gem "homeland-opensource_project", path: "../homeland-opensource_project"
+gem "testerhome-edu", github: "testerhome/edu"
 
 # API cors
 gem "rack-cors", require: "rack/cors"
@@ -150,7 +150,7 @@ group :development, :test do
   gem "spring"
   gem "byebug"
   gem "ruby-debug-ide"
-  gem "debase"
+  gem 'debase', '0.2.5.beta2'
   gem "database_cleaner-active_record"
 
   gem "sdoc"

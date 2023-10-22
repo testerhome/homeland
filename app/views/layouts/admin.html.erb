@@ -8,6 +8,7 @@
     <%= stylesheet_pack_tag "admin" %>
     <%= stylesheet_pack_tag "tailwindcss_compile", "data-turbolinks-track": "reload" %>
     <%= javascript_packs_with_chunks_tag "application" %>
+    <%= yield :stylesheets %>
     <%= csrf_meta_tag %>
 </head>
 
