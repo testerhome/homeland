@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/guard/listen.git
+  remote: https://e.coding.net/hengwen2020/testerhome/guard-listen.git
   revision: fd85e1cb2375767e3cbc4b5743ff50061e8a6c75
   specs:
     listen (3.8.0)
@@ -7,7 +7,7 @@ GIT
       rb-inotify (~> 0.9, >= 0.9.10)
 
 GIT
-  remote: https://github.com/qiniu/ruby-sdk.git
+  remote: https://e.coding.net/hengwen2020/testerhome/qiniu-ruby-sdk.git
   revision: 922ba11ace72432db87433f0dae76b651fa3d7e1
   branch: develop
   specs:
@@ -17,28 +17,28 @@ GIT
       rexml (~> 3.2)
 
 GIT
-  remote: https://github.com/resque/redis-namespace.git
+  remote: https://e.coding.net/hengwen2020/testerhome/resque-redis-namespace.git
   revision: 44447f2a739b76dd8069ce349734e091d52fc957
   specs:
     redis-namespace (1.11.0)
       redis (>= 4)
 
 GIT
-  remote: https://github.com/testerhome/edu.git
+  remote: https://e.coding.net/hengwen2020/testerhome/testerhome-edu.git
   revision: aefdb1b31e2993861351c43f1264b657d1438a5c
   specs:
     testerhome-edu (0.1.0)
       rails (~> 6, >= 5)
 
 GIT
-  remote: https://github.com/testerhome/homeland-opensource_project.git
+  remote: https://e.coding.net/hengwen2020/testerhome/testerhome-homeland-opensource_project.git
   revision: 67bb47faacd7622c413a43f72927f6a6966d951e
   specs:
     homeland-opensource_project (0.1.1)
       rails (~> 6, >= 5)
 
 GIT
-  remote: https://github.com/testerhome/notifications.git
+  remote: https://e.coding.net/hengwen2020/testerhome/testerhome-notifications.git
   revision: 5284e99b02a5efb310e287f60b9905f1513a3b6a
   specs:
     notifications (1.1.0)
