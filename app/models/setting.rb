@@ -109,6 +109,8 @@ class Setting < RailsSettings::Base
     column_channels_show_node_names
     geekbang_app_id
     geekbang_app_secret
+    business_cooperate_detail_html
+    teacher_cooperate_detail_html
   ]
 
   # = System
@@ -308,6 +310,10 @@ class Setting < RailsSettings::Base
 
   field :geekbang_app_id, default: ""
   field :geekbang_app_secret, default: ""
+
+  # 商业合作
+  field :teacher_cooperate_detail_html, default: ""
+  field :business_cooperate_detail_html, default: ""
 
   # static node
   field :node_ban_id, default: 55, type: :integer

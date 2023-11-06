@@ -25,7 +25,7 @@ GIT
 
 GIT
   remote: https://e.coding.net/hengwen2020/testerhome/testerhome-edu.git
-  revision: aefdb1b31e2993861351c43f1264b657d1438a5c
+  revision: bc4b345ed3f1328b90198bf57550a860d0a47a08
   specs:
     testerhome-edu (0.1.0)
       rails (~> 6, >= 5)
@@ -610,4 +610,4 @@ DEPENDENCIES
   wisper
 
 BUNDLED WITH
-   2.3.11
+   2.4.21
