@@ -111,6 +111,7 @@ class Setting < RailsSettings::Base
     geekbang_app_secret
     business_cooperate_detail_html
     teacher_cooperate_detail_html
+    module_manager
   ]
 
   # = System
@@ -314,6 +315,7 @@ class Setting < RailsSettings::Base
   # 商业合作
   field :teacher_cooperate_detail_html, default: ""
   field :business_cooperate_detail_html, default: ""
+  field :module_manager, default: ""
 
   # static node
   field :node_ban_id, default: 55, type: :integer
@@ -388,6 +390,21 @@ class Setting < RailsSettings::Base
 
     def certify_questions_list
       self.certify_questions.split("\n")
+    end
+
+    # edu:hengwen,laoxu,wangjin
+    # opencourse:hengwen3,laoxu2,wangjin
+    def is_module_manager(module_name, login)
+      lines = self.module_manager.split(/[\s]/)
+      lines.each do |line|
+        key_module_name, value_module_managers = line.split(":")
+        value_module_managers_arr = value_module_managers.split(",")
+        if key_module_name == module_name && value_module_managers_arr.include?(login)
+          return true
+        else
+          return false
+        end
+      end
     end
 
     def rails_initialized?
