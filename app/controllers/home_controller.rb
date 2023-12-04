@@ -10,7 +10,8 @@ class HomeController < ApplicationController
 
     bugs_node = Node.find_by_id Node.bugs_id
     if bugs_node
-      @open_bugs = bugs_node.topics.without_draft.open.limit(5).to_a
+      # 临时方案
+      @open_bugs = bugs_node.topics.with_filter_public_end_enterprise.limit(5).to_a
     end
     if Setting.has_module?(:opensource_project)
       @opensource_projects = OpensourceProject.includes(:user).published.latest.limit(5).to_a
