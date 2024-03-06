@@ -13,7 +13,7 @@ class Ability
     elsif @user.admin?
       can :manage, :all
       ids = User.where(state: :maintainer).pluck(:node_assignment_ids).reduce { |x, y| x | y }
-      cannot [:destroy, :update], Node, id: ids
+      cannot [:destroy], Node, id: ids
     elsif @user.member?
       roles_for_members
       role_for_invitecode
