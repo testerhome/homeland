@@ -25,7 +25,7 @@ GIT
 
 GIT
   remote: https://e.coding.net/hengwen2020/testerhome/testerhome-edu.git
-  revision: 00ea66ea5a5ca851e119a90b1791ad30d7d255f2
+  revision: 9d8fc110964303c2d187a2ec8ff652ee3cc7d679
   specs:
     testerhome-edu (0.1.0)
       rails (~> 6, >= 5)
