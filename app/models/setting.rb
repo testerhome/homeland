@@ -111,6 +111,7 @@ class Setting < RailsSettings::Base
     geekbang_app_secret
     business_cooperate_detail_html
     teacher_cooperate_detail_html
+    edu_base_url
     module_manager
   ]
 
@@ -313,6 +314,7 @@ class Setting < RailsSettings::Base
   field :geekbang_app_secret, default: ""
 
   # 商业合作
+  field :edu_base_url, default: "https://edu.testerhome.com"
   field :teacher_cooperate_detail_html, default: ""
   field :business_cooperate_detail_html, default: ""
   field :module_manager, default: ""
